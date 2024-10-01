@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arcalite", "Arcalite.csproj", "{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal

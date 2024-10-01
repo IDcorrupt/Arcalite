@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://dbunyy0mgmnu1"]
+
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_e7w0v"]
+[ext_resource type="Texture2D" uid="uid://ccmt4ma2jpt0u" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/penguin.png" id="1_vhobf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h8j3f"]
+size = Vector2(18, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vs0xq"]
+atlas = ExtResource("1_vhobf")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xftf"]
+atlas = ExtResource("1_vhobf")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dkts"]
+atlas = ExtResource("1_vhobf")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7ke5"]
+atlas = ExtResource("1_vhobf")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqroa"]
+atlas = ExtResource("1_vhobf")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2jewc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vs0xq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xftf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4dkts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7ke5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqroa")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_e7w0v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_h8j3f")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+position = Vector2(1, -8)
+sprite_frames = SubResource("SpriteFrames_2jewc")
