@@ -4,17 +4,23 @@ using System;
 public partial class Player : CharacterBody2D
 {
     private int _speed = 300;
+
     
     public void GetInput()
     {
-        Vector2 inputdir = Input.GetVector("ui_left","ui_right"."ui_up","ui_down");
-        Velocity = inputdir * _speed;
+        float inputDir = Input.GetAxis("ui_left","ui_right");
+        Velocity = Transform.X * inputDir * _speed;
+        if(Input.IsActionPressed("Primary_attack")){
+            
+        }
     }
+
+
 
     public override void _PhysicsProcess(double delta)
     {
         GetInput();
-        MoveAndCollide(Velocity * (float)delta);
+        MoveAndSlide();
     }
 
 }
