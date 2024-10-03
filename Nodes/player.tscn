@@ -68,3 +68,19 @@ shape = SubResource("RectangleShape2D_h8j3f")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 position = Vector2(1, -8)
 sprite_frames = SubResource("SpriteFrames_2jewc")
+
+[node name="flordebug" type="Control" parent="CharacterBody2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="isonfloorlabel" type="RichTextLabel" parent="CharacterBody2D/flordebug"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = -40.5
+offset_right = 86.0
+offset_bottom = -1.5
+theme_override_font_sizes/normal_font_size = 10
+text = "Velocity X : 000
+Velocity X : 000"
