@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdxubpb3tjdl3"]
+
+[ext_resource type="Script" path="res://Scripts/DebugScreen.cs" id="1_pmqjt"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="debug_screen" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 632.0
+offset_bottom = 213.0
+theme_override_font_sizes/normal_font_size = 50
+text = "TEST"
+script = ExtResource("1_pmqjt")

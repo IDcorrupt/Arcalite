@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=4 uid="uid://cqum6syxua463"]
+[gd_scene load_steps=10 format=4 uid="uid://cqum6syxua463"]
 
 [ext_resource type="Texture2D" uid="uid://bm61jaa36wan2" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_forest.png" id="1_6pvc7"]
 [ext_resource type="Texture2D" uid="uid://xw0yamxevqgy" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_lava.png" id="2_bissq"]
 [ext_resource type="PackedScene" uid="uid://dbunyy0mgmnu1" path="res://Nodes/player.tscn" id="3_iuu0j"]
+[ext_resource type="PackedScene" uid="uid://bdxubpb3tjdl3" path="res://Nodes/Debug_UI.tscn" id="4_35tix"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6mjdd"]
 texture = ExtResource("1_6pvc7")
@@ -121,4 +122,6 @@ position = Vector2(570, 4)
 polygon = PackedVector2Array(68, -65, 68, -32, 99, -32, 99, 63, -252, 63, -252, -32, -220, -32, -220, -65)
 
 [node name="Player" parent="." instance=ExtResource("3_iuu0j")]
-position = Vector2(386, 444)
+position = Vector2(440, 248)
+
+[node name="Control" parent="." instance=ExtResource("4_35tix")]
