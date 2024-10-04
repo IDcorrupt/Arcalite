@@ -62,7 +62,7 @@ disable_mode = 2
 collision_layer = 0
 script = ExtResource("1_e7w0v")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="HitBox" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("RectangleShape2D_h8j3f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
