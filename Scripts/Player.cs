@@ -4,14 +4,14 @@ using System.Text;
 
 public partial class Player : CharacterBody2D
 {
-    private int max_speed = 500;
+    private int max_speed = 250;
     private int isCrouching = 1;
-    private int acceleration = 1600;
+    private int acceleration = 800;
     private int friction = 4000;
-    private int jump_strength = 610;
-    private float GRAVITY = 2000f;
-    private int defHB_X = 18;
-    private int defHB_Y = 17;
+    private int jump_strength = 450;
+    private float GRAVITY = 1500f;
+    private int defHB_X = 31;
+    private int defHB_Y = 30;
 
     private CollisionShape2D HitBox;
 
@@ -81,6 +81,7 @@ public partial class Player : CharacterBody2D
             Velocity = new Vector2 (Velocity.X,Velocity.Y -jump_strength);
         }
         //execute move
+        CrouchApply();
         MoveAndSlide();
 
     }
@@ -94,23 +95,20 @@ public partial class Player : CharacterBody2D
     {
         if (isCrouching == 2)
         {
-            Velocity = new Vector2 (Velocity.X/2, Velocity.Y);
+            Velocity = new Vector2 ((float)(Velocity.X/1.3), Velocity.Y);
             if (Velocity.Y > 0)
             {
-                Velocity = new Vector2(Velocity.X, Velocity.Y * 2);
+                Velocity = new Vector2(Velocity.X, (float)(Velocity.Y * 1.2));
             }
             if (HitBox.Shape is RectangleShape2D rectangleShape)
             {
-                GD.Print("fasz");
                 rectangleShape.Size = new Vector2(defHB_X, defHB_Y/2);
-                
             }
         }
         else
         {
             if (HitBox.Shape is RectangleShape2D rectangleShape)
             {
-                GD.Print("fasz");
                 rectangleShape.Size = new Vector2(defHB_X, defHB_Y);
 
             }
@@ -124,13 +122,9 @@ public partial class Player : CharacterBody2D
         //controls
         fall(delta);
         playerMovement(delta);
-       
 
-        RectangleShape2D rectshape = HitBox.Shape as RectangleShape2D;
-        GD.Print(HitBox.Shape is RectangleShape2D rectangleShape);
-        RichTextLabel text = GetNode<RichTextLabel>("./flordebug/isonfloorlabel");
-        //text.Text = $"Velocity X: {Velocity.X} \n Velocity Y: {Velocity.Y}";
-        //text.Text = 
+
+
     }
 
 }

@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://cos7up0ym3ra5"]
+
+[ext_resource type="Script" path="res://Scripts/Start.cs" id="1_ex4h7"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 235.0
+offset_top = 35.0
+offset_right = 405.0
+offset_bottom = 99.0
+theme_override_font_sizes/normal_font_size = 46
+text = "Arcalite"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 0
+offset_left = 270.0
+offset_top = 111.0
+offset_right = 370.0
+offset_bottom = 142.0
+text = "Start"
+script = ExtResource("1_ex4h7")
+
+[node name="Settings" type="Button" parent="."]
+offset_left = 270.0
+offset_top = 151.0
+offset_right = 370.0
+offset_bottom = 182.0
+text = "Settings"
+
+[node name="Website" type="Button" parent="."]
+offset_left = 270.0
+offset_top = 191.0
+offset_right = 370.0
+offset_bottom = 222.0
+text = "Website"
+
+[node name="Quit" type="Button" parent="."]
+offset_left = 270.0
+offset_top = 231.0
+offset_right = 370.0
+offset_bottom = 262.0
+text = "Quit"

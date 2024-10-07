@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ccmt4ma2jpt0u" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/penguin.png" id="1_vhobf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h8j3f"]
-size = Vector2(18, 17)
+size = Vector2(31, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vs0xq"]
 atlas = ExtResource("1_vhobf")
@@ -55,7 +55,6 @@ animations = [{
 }]
 
 [node name="Node2D" type="Node2D"]
-scale = Vector2(2, 2)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 disable_mode = 2
@@ -66,21 +65,6 @@ script = ExtResource("1_e7w0v")
 shape = SubResource("RectangleShape2D_h8j3f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-position = Vector2(1, -8)
+position = Vector2(1, -14)
+scale = Vector2(1.8125, 1.8125)
 sprite_frames = SubResource("SpriteFrames_2jewc")
-
-[node name="flordebug" type="Control" parent="CharacterBody2D"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="isonfloorlabel" type="RichTextLabel" parent="CharacterBody2D/flordebug"]
-layout_mode = 0
-offset_left = -40.0
-offset_top = -40.5
-offset_right = 86.0
-offset_bottom = -1.5
-theme_override_font_sizes/normal_font_size = 10
-text = "Velocity X : 000
-Velocity X : 000"
