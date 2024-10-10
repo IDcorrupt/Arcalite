@@ -15,6 +15,11 @@ run/main_scene="res://Nodes/main.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globals="*res://Scripts/Globals.cs"
+ConfigFileHandler="*res://Scripts/ConfigFileHandler.cs"
+
 [display]
 
 window/size/viewport_width=640

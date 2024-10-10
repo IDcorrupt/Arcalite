@@ -1,0 +1,138 @@
+[gd_scene load_steps=2 format=3 uid="uid://cq6v83jpmn4qv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6es0t"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6es0t")
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 110
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 30
+
+[node name="SettingsContainer" type="VBoxContainer" parent="Panel/Margin"]
+layout_mode = 2
+
+[node name="Categories" type="PanelContainer" parent="Panel/Margin/SettingsContainer"]
+layout_mode = 2
+
+[node name="Vbox" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/Categories"]
+layout_mode = 2
+alignment = 1
+
+[node name="Game" type="Button" parent="Panel/Margin/SettingsContainer/Categories/Vbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Game"
+
+[node name="Video" type="Button" parent="Panel/Margin/SettingsContainer/Categories/Vbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Video"
+
+[node name="Audio" type="Button" parent="Panel/Margin/SettingsContainer/Categories/Vbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Audio"
+
+[node name="Controls" type="Button" parent="Panel/Margin/SettingsContainer/Categories/Vbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Controls"
+
+[node name="Accessibility" type="Button" parent="Panel/Margin/SettingsContainer/Categories/Vbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Accessibility"
+
+[node name="GameSettings" type="PanelContainer" parent="Panel/Margin/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Margin" type="MarginContainer" parent="Panel/Margin/SettingsContainer/GameSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Margin/SettingsContainer/GameSettings/Margin"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Panel/Margin/SettingsContainer/GameSettings/Margin/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 11.41
+
+[node name="Hbox" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/GameSettings/Margin/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/GameSettings/Margin/ScrollContainer/Vbox/Hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Difficulty
+"
+
+[node name="Hbox2" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/GameSettings/Margin/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/GameSettings/Margin/ScrollContainer/Vbox/Hbox2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Difficulty
+"
+
+[node name="Hbox3" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/GameSettings/Margin/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/GameSettings/Margin/ScrollContainer/Vbox/Hbox3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Difficulty
+"
+
+[node name="Hbox4" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/GameSettings/Margin/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/GameSettings/Margin/ScrollContainer/Vbox/Hbox4"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Difficulty
+"
+
+[node name="Hbox5" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/GameSettings/Margin/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/GameSettings/Margin/ScrollContainer/Vbox/Hbox5"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Difficulty
+"

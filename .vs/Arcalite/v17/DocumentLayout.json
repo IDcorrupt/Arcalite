@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\IDcor\\Documents\\arcalite\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|c:\\users\\idcor\\documents\\arcalite\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|solutionrelative:scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|c:\\users\\idcor\\documents\\arcalite\\scripts\\submenustart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|solutionrelative:scripts\\submenustart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|c:\\users\\idcor\\documents\\arcalite\\scripts\\start.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|solutionrelative:scripts\\start.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|c:\\users\\idcor\\documents\\arcalite\\scripts\\configfilehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|solutionrelative:scripts\\configfilehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|c:\\users\\idcor\\documents\\arcalite\\scripts\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|solutionrelative:scripts\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|c:\\users\\idcor\\documents\\arcalite\\scripts\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|solutionrelative:scripts\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|c:\\users\\idcor\\documents\\arcalite\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63FC690B-3A2D-4FCB-8FD2-E766BBECDFDA}|Arcalite.csproj|solutionrelative:scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,19 +30,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Start.cs",
-              "DocumentMoniker": "C:\\Users\\IDcor\\Documents\\arcalite\\Scripts\\Start.cs",
-              "RelativeDocumentMoniker": "Scripts\\Start.cs",
-              "ToolTip": "C:\\Users\\IDcor\\Documents\\arcalite\\Scripts\\Start.cs",
-              "RelativeToolTip": "Scripts\\Start.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAALAAAAAAAAAA==",
+              "Title": "ConfigFileHandler.cs",
+              "DocumentMoniker": "C:\\Users\\IDcor\\Documents\\arcalite\\Scripts\\ConfigFileHandler.cs",
+              "RelativeDocumentMoniker": "Scripts\\ConfigFileHandler.cs",
+              "ToolTip": "C:\\Users\\IDcor\\Documents\\arcalite\\Scripts\\ConfigFileHandler.cs",
+              "RelativeToolTip": "Scripts\\ConfigFileHandler.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAIwDIAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-07T11:35:03.185Z",
+              "WhenOpened": "2024-10-10T09:13:06.549Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SubmenuStart.cs",
+              "DocumentMoniker": "C:\\Users\\IDcor\\Documents\\arcalite\\Scripts\\SubmenuStart.cs",
+              "RelativeDocumentMoniker": "Scripts\\SubmenuStart.cs",
+              "ToolTip": "C:\\Users\\IDcor\\Documents\\arcalite\\Scripts\\SubmenuStart.cs",
+              "RelativeToolTip": "Scripts\\SubmenuStart.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAYwCsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-10T08:28:06.502Z",
               "EditorCaption": ""
             },
             {
@@ -45,20 +66,33 @@
               "RelativeDocumentMoniker": "Scripts\\MainMenu.cs",
               "ToolTip": "C:\\Users\\IDcor\\Documents\\arcalite\\Scripts\\MainMenu.cs",
               "RelativeToolTip": "Scripts\\MainMenu.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBcAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwCYAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-07T10:23:06.399Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
+              "Title": "Globals.cs",
+              "DocumentMoniker": "C:\\Users\\IDcor\\Documents\\arcalite\\Scripts\\Globals.cs",
+              "RelativeDocumentMoniker": "Scripts\\Globals.cs",
+              "ToolTip": "C:\\Users\\IDcor\\Documents\\arcalite\\Scripts\\Globals.cs",
+              "RelativeToolTip": "Scripts\\Globals.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-10T06:43:03.044Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Player.cs",
               "DocumentMoniker": "C:\\Users\\IDcor\\Documents\\arcalite\\Scripts\\Player.cs",
               "RelativeDocumentMoniker": "Scripts\\Player.cs",
               "ToolTip": "C:\\Users\\IDcor\\Documents\\arcalite\\Scripts\\Player.cs",
               "RelativeToolTip": "Scripts\\Player.cs",
-              "ViewState": "AgIAAHUAAAAAAAAAAAAowH4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwIAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-03T06:18:05.216Z",
               "EditorCaption": ""

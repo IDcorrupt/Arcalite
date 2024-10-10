@@ -4,6 +4,7 @@ using System.Text;
 
 public partial class Player : CharacterBody2D
 {
+    //values
     private int max_speed = 250;
     private int isCrouching = 1;
     private int acceleration = 800;
@@ -13,8 +14,10 @@ public partial class Player : CharacterBody2D
     private int defHB_X = 31;
     private int defHB_Y = 30;
 
+    //nodes
     private CollisionShape2D HitBox;
 
+    
     public override void _Ready()
     {
         // Get the CollisionShape2D node
@@ -82,6 +85,7 @@ public partial class Player : CharacterBody2D
         }
         //execute move
         CrouchApply();
+        fall(delta);
         MoveAndSlide();
 
     }
@@ -119,9 +123,10 @@ public partial class Player : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        //controls
-        fall(delta);
-        playerMovement(delta);
+        if (Globals.playerControl)
+        {
+            playerMovement(delta);
+        }
 
 
 
