@@ -1,0 +1,414 @@
+[gd_scene load_steps=4 format=3 uid="uid://cq6v83jpmn4qv"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/SubmenuSettings.cs" id="1_dt0n4"]
+[ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_ikgue"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6es0t"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Control" type="Control"]
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 320.0
+offset_top = 160.0
+offset_right = 320.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ikgue")
+script = ExtResource("1_dt0n4")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6es0t")
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 110
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 30
+
+[node name="SettingsContainer" type="VBoxContainer" parent="Panel/Margin"]
+layout_mode = 2
+
+[node name="SettingTabs" type="TabContainer" parent="Panel/Margin/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+tab_alignment = 1
+current_tab = 0
+clip_tabs = false
+
+[node name="Game" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
+layout_mode = 2
+tab_alignment = 1
+clip_tabs = false
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Game"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 11.41
+
+[node name="Difficulty" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/Difficulty"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+bbcode_enabled = true
+text = "[center]Difficulty[/center]
+"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Selector" type="OptionButton" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/Difficulty"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_vertical = 0
+flat = true
+alignment = 1
+fit_to_longest_item = false
+item_count = 3
+popup/item_0/text = "Easy"
+popup/item_0/id = 1
+popup/item_1/text = "Normal"
+popup/item_1/id = 2
+popup/item_2/text = "Hard"
+popup/item_2/id = 3
+
+[node name="Video" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
+visible = false
+layout_mode = 2
+tab_alignment = 1
+clip_tabs = false
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Video"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 11.41
+
+[node name="windowmode" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/windowmode"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+bbcode_enabled = true
+text = "[center]Window mode[/center]
+"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Selector" type="OptionButton" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/windowmode"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_vertical = 0
+flat = true
+alignment = 1
+fit_to_longest_item = false
+item_count = 3
+popup/item_0/text = "Windowed"
+popup/item_1/text = "Borderless"
+popup/item_1/id = 1
+popup/item_2/text = "Exclusive"
+popup/item_2/id = 2
+
+[node name="resolution" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/resolution"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+bbcode_enabled = true
+text = "[center]Resolution[/center]
+"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Selector" type="OptionButton" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/resolution"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_vertical = 0
+flat = true
+alignment = 1
+fit_to_longest_item = false
+item_count = 5
+popup/item_0/text = "3840 x 2160"
+popup/item_1/text = "2560 x 1440"
+popup/item_1/id = 1
+popup/item_2/text = "1920 x 1080"
+popup/item_2/id = 2
+popup/item_3/text = "1366 x 768"
+popup/item_3/id = 3
+popup/item_4/text = "1280 x 720"
+popup/item_4/id = 4
+
+[node name="Vsync" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/Vsync"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+bbcode_enabled = true
+text = "[center]Vsync[/center]
+"
+fit_content = true
+autowrap_mode = 0
+
+[node name="CheckButton" type="CheckButton" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/Vsync"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "On  / Off"
+
+[node name="Audio" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
+visible = false
+layout_mode = 2
+tab_alignment = 1
+clip_tabs = false
+metadata/_tab_index = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 11.41
+
+[node name="Master volume" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/Master volume"]
+custom_minimum_size = Vector2(111, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "[right]Master volume"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HSlider" type="HSlider" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/Master volume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="SpinBox" type="SpinBox" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/Master volume"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Music volume" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/Music volume"]
+custom_minimum_size = Vector2(111, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "[right]Music volume"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HSlider" type="HSlider" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/Music volume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="SpinBox" type="SpinBox" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/Music volume"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+alignment = 1
+
+[node name="SFX volume" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/SFX volume"]
+custom_minimum_size = Vector2(111, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "[right]SFX volume"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HSlider" type="HSlider" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/SFX volume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="SpinBox" type="SpinBox" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/SFX volume"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Controls" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
+visible = false
+layout_mode = 2
+tab_alignment = 1
+clip_tabs = false
+metadata/_tab_index = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 11.41
+
+[node name="Accessibility" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
+visible = false
+layout_mode = 2
+tab_alignment = 1
+clip_tabs = false
+metadata/_tab_index = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Accessibility"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Accessibility/MarginContainer"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Accessibility/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 11.41
+
+[node name="idek" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Accessibility/MarginContainer/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Accessibility/MarginContainer/ScrollContainer/Vbox/idek"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+bbcode_enabled = true
+text = "[center]idk[/center]
+"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Actions" type="PanelContainer" parent="Panel/Margin/SettingsContainer"]
+layout_mode = 2
+
+[node name="Hbox" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/Actions"]
+layout_mode = 2
+alignment = 1
+
+[node name="Back" type="Button" parent="Panel/Margin/SettingsContainer/Actions/Hbox"]
+layout_mode = 2
+text = "Back"
+flat = true
+
+[node name="Reset" type="Button" parent="Panel/Margin/SettingsContainer/Actions/Hbox"]
+layout_mode = 2
+text = "Reset to default"
+flat = true
+
+[node name="Save" type="Button" parent="Panel/Margin/SettingsContainer/Actions/Hbox"]
+layout_mode = 2
+text = "Save"
+flat = true
+
+[connection signal="item_selected" from="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/Difficulty/Selector" to="." method="DiffSelect"]

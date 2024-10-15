@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ngtukvv8yava"]
+
+[ext_resource type="FontFile" uid="uid://b557uxq0l23ew" path="res://Assets/Resources/fonts/Jacquard12-Regular.ttf" id="1_sjd2d"]
+
+[resource]
+default_font = ExtResource("1_sjd2d")
+default_font_size = 20
+/fonts/Font = ExtResource("1_sjd2d")

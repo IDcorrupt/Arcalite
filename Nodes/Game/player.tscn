@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dbunyy0mgmnu1"]
+[gd_scene load_steps=11 format=3 uid="uid://dbunyy0mgmnu1"]
 
-[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_e7w0v"]
+[ext_resource type="Script" path="res://Scripts/Game/Player.cs" id="1_e7w0v"]
 [ext_resource type="Texture2D" uid="uid://ccmt4ma2jpt0u" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/penguin.png" id="1_vhobf"]
+[ext_resource type="Texture2D" uid="uid://3usmmqxmemtl" path="res://Assets/Sprites/Lajos.png" id="2_dlbyb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h8j3f"]
-size = Vector2(31, 30)
+size = Vector2(16, 38)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vs0xq"]
 atlas = ExtResource("1_vhobf")
@@ -28,6 +29,14 @@ region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2jewc"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_dlbyb")
+}],
+"loop": true,
+"name": &"Lajos",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vs0xq")
@@ -65,6 +74,6 @@ script = ExtResource("1_e7w0v")
 shape = SubResource("RectangleShape2D_h8j3f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-position = Vector2(1, -14)
 scale = Vector2(1.8125, 1.8125)
 sprite_frames = SubResource("SpriteFrames_2jewc")
+animation = &"Lajos"

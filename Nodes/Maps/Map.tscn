@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=4 uid="uid://d371iehcx1ly2"]
+[gd_scene load_steps=10 format=4 uid="uid://d371iehcx1ly2"]
 
 [ext_resource type="Texture2D" uid="uid://bm61jaa36wan2" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_forest.png" id="1_8rrmi"]
 [ext_resource type="Texture2D" uid="uid://xw0yamxevqgy" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_lava.png" id="2_l66xn"]
+[ext_resource type="PackedScene" uid="uid://dbunyy0mgmnu1" path="res://Nodes/Game/player.tscn" id="3_lmxb3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8y2ji"]
 texture = ExtResource("1_8rrmi")
@@ -125,3 +126,6 @@ polygon = PackedVector2Array(68, -65, 68, -32, 99, -32, 99, 63, -252, 63, -252, 
 [node name="temp bottom barrier" type="CollisionShape2D" parent="Terrain"]
 position = Vector2(-77, -85)
 shape = SubResource("WorldBoundaryShape2D_3w6l2")
+
+[node name="Node2D" parent="." instance=ExtResource("3_lmxb3")]
+position = Vector2(171, 244)

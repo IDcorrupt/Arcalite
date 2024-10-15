@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cos7up0ym3ra5"]
+[gd_scene load_steps=3 format=3 uid="uid://cos7up0ym3ra5"]
 
-[ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_ily1d"]
+[ext_resource type="Script" path="res://Scripts/Menus/MainMenu.cs" id="1_ily1d"]
+[ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="2_rnbbc"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -9,11 +10,12 @@ script = ExtResource("1_ily1d")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 235.0
+offset_left = 232.0
 offset_top = 35.0
-offset_right = 405.0
+offset_right = 409.0
 offset_bottom = 99.0
-theme_override_font_sizes/normal_font_size = 46
+theme = ExtResource("2_rnbbc")
+theme_override_font_sizes/normal_font_size = 61
 text = "Arcalite"
 fit_content = true
 autowrap_mode = 0
@@ -24,6 +26,7 @@ offset_left = 270.0
 offset_top = 111.0
 offset_right = 370.0
 offset_bottom = 142.0
+theme = ExtResource("2_rnbbc")
 text = "Start"
 
 [node name="Settings" type="Button" parent="."]
@@ -32,6 +35,7 @@ offset_left = 270.0
 offset_top = 151.0
 offset_right = 370.0
 offset_bottom = 182.0
+theme = ExtResource("2_rnbbc")
 text = "Settings"
 
 [node name="Website" type="Button" parent="."]
@@ -40,6 +44,7 @@ offset_left = 270.0
 offset_top = 191.0
 offset_right = 370.0
 offset_bottom = 222.0
+theme = ExtResource("2_rnbbc")
 text = "Website"
 
 [node name="Quit" type="Button" parent="."]
@@ -48,4 +53,5 @@ offset_left = 270.0
 offset_top = 231.0
 offset_right = 370.0
 offset_bottom = 262.0
+theme = ExtResource("2_rnbbc")
 text = "Quit"

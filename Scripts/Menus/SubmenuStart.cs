@@ -41,20 +41,16 @@ public partial class SubmenuStart : Control
     }
     public void NewGamePressed()
     {
-
+        Globals.playerControl = true;
+        GetTree().ChangeSceneToFile("res://Nodes/Maps/Map.tscn");
     }
     public void BackPressed()
     {
-        foreach (var item in Parent.GetChildren())
-        {
-            GD.Print(item);
-        }
         if (Parent is MainMenu parentscript)
         {
             parentscript.submenuOpen = false;
-            this.QueueFree();
+            QueueFree();
         }
-        else GD.Print("ggwp");
     }
 
 }

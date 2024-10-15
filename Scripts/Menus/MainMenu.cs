@@ -10,10 +10,10 @@ public partial class MainMenu : Control
 
     public bool submenuOpen = false;
 
-    private PackedScene submenuStart = (PackedScene)ResourceLoader.Load("res://Nodes/submenuStart.tscn");
-    //private PackedScene submenuSettings = (PackedScene)ResourceLoader.Load("");
-    //private PackedScene submenuWebsite = (PackedScene)ResourceLoader.Load("");
-    //private PackedScene submenuUser = (PackedScene)ResourceLoader.Load("");
+    private PackedScene submenuStart = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/submenuStart.tscn");
+    private PackedScene submenuSettings = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/submenuSettings.tscn");
+    private PackedScene submenuWebsite = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/submenuWebsite.tscn");
+    private PackedScene submenuUser = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/submenuUser.tscn");
 
     public override void _Ready()
     {
@@ -36,11 +36,15 @@ public partial class MainMenu : Control
     }
     public void SettingsPressed()
     {
-        
+        Node settingNode = submenuSettings.Instantiate();
+        AddChild(settingNode);
+        submenuOpen = true;
     }
     public void WebsitePressed()
     {
-        
+        Node websiteNode = submenuWebsite.Instantiate();
+        AddChild(websiteNode);
+        submenuOpen = true;
     }
     public void QuitPressed()
     {

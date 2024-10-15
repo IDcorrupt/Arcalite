@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dj82j1mm8e8bf"]
+[gd_scene load_steps=3 format=3 uid="uid://dj82j1mm8e8bf"]
 
-[ext_resource type="Script" path="res://Scripts/SubmenuStart.cs" id="1_gv5dj"]
+[ext_resource type="Script" path="res://Scripts/Menus/SubmenuStart.cs" id="1_gv5dj"]
+[ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="2_1lcve"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_1lcve")
 script = ExtResource("1_gv5dj")
 
 [node name="Continue" type="Button" parent="."]
@@ -17,18 +19,23 @@ offset_left = 270.0
 offset_top = 111.0
 offset_right = 370.0
 offset_bottom = 142.0
+theme = ExtResource("2_1lcve")
 text = "Continue"
 
 [node name="NewGame" type="Button" parent="."]
+layout_mode = 0
 offset_left = 270.0
 offset_top = 151.0
 offset_right = 370.0
 offset_bottom = 182.0
+theme = ExtResource("2_1lcve")
 text = "New Game"
 
 [node name="Back" type="Button" parent="."]
+layout_mode = 0
 offset_left = 270.0
 offset_top = 191.0
 offset_right = 370.0
 offset_bottom = 222.0
+theme = ExtResource("2_1lcve")
 text = "Back"

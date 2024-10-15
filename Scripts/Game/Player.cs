@@ -11,8 +11,8 @@ public partial class Player : CharacterBody2D
     private int friction = 4000;
     private int jump_strength = 450;
     private float GRAVITY = 1500f;
-    private int defHB_X = 31;
-    private int defHB_Y = 30;
+    private int defHB_X = 16;
+    private int defHB_Y = 38;
 
     //nodes
     private CollisionShape2D HitBox;
