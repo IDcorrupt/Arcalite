@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3 uid="uid://8c218to3jbgh"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/Popup.cs" id="1_wmrel"]
+
+[node name="Popup-control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wmrel")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -64.0
+offset_right = 115.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
+layout_mode = 2
+
+[node name="Title" type="RichTextLabel" parent="Panel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 0
+bbcode_enabled = true
+text = "[center]Title[/center]"
+fit_content = true
+
+[node name="Content" type="RichTextLabel" parent="Panel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[center]Content[/center]"
+fit_content = true
+
+[node name="HBox" type="HBoxContainer" parent="Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="Cancel" type="Button" parent="Panel/Margin/VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Cancel	"
+
+[node name="Confirm" type="Button" parent="Panel/Margin/VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Confirm"

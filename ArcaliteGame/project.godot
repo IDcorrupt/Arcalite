@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Globals="*res://Scripts/Globals.cs"
-ConfigFileHandler="*res://Scripts/ConfigFileHandler.cs"
+Globals="*res://Scripts/Globals/Globals.cs"
+ConfigFileHandler="*res://Scripts/Globals/ConfigFileHandler.cs"
 
 [display]
 
