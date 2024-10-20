@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using System;
+using static Godot.HttpRequest;
 
 public partial class SubmenuSettings : Node
 {
@@ -11,7 +12,8 @@ public partial class SubmenuSettings : Node
 	private PackedScene popupScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/popup.tscn");
 
 
-	private bool isSaved = false;
+
+    private bool isSaved = true;
 
 	private Button Back;
 	private Button Reset;
@@ -22,6 +24,7 @@ public partial class SubmenuSettings : Node
 
 	public override void _Ready()
 	{
+		isSaved = true;
 		//get buttons
 		Back = GetNode<Button>("Panel/Margin/SettingsContainer/Actions/Hbox/Back");
 		Reset = GetNode<Button>("Panel/Margin/SettingsContainer/Actions/Hbox/Reset");
@@ -51,6 +54,7 @@ public partial class SubmenuSettings : Node
 	public void DiffSelect(int index)
 	{
 		ConfigFileHandler.settingChanges["game"]["difficulty"] = index+1;
+		isSaved = false;
 	}
 
 
@@ -58,31 +62,44 @@ public partial class SubmenuSettings : Node
 	//button controls   
 	public void BackPressed()
 	{
-		bool exit = false;
 		if (!isSaved) {
+			Control popup = (Control)popupScene.Instantiate();
+			((Popup)popup).SetMessageType("nosave");
+			AddChild(popup);
 
-			Node popup = popupScene.Instantiate();
+            if (Globals.PopupResult)
+            {
+                if (Parent is MainMenu parentscript)
+                {
+                    parentscript.submenuOpen = false;
+                    QueueFree();
+                }
+                else
+                {
+                    //ERROR HANDLING TBD HERE
+                    GD.Print("node path changed?");
+                    GetTree().Quit();
+                }
+				Globals.PopupResult = false;
+            }
 
 
-			if(exit){
-				if (Parent is MainMenu parentscript)
-				{
-					parentscript.submenuOpen = false;
-					QueueFree();
-				}
-				else
-				{
-					//ERROR HANDLING TBD HERE
-					GD.Print("node path changed?");
-					GetTree().Quit();
-				}
-			}
-			else
-			{
-			}
-		}
+
+
+        }
+		else
+		{
+            if (Parent is MainMenu parentscript)
+            {
+                parentscript.submenuOpen = false;
+                QueueFree();
+            }
+        }
 
 	}
+
+
+
 	public void ResetPressed()
 	{
 		ConfigFileHandler.DefaultSettings();
