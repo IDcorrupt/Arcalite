@@ -1,4 +1,5 @@
 using Godot;
+using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
 
@@ -18,46 +19,47 @@ public partial class ConfigFileHandler : Node
         else
         {
             config.Load(SETTINGS_FILE_PATH);
+            foreach (var item in new string[5] {"game", "video", "audio", "controls", "accessibility"})
+            {
+                settingChanges[item] = LoadSetting(item);
+            }
         }
 
-        foreach (var item in new string[5] {"game", "video", "audio", "controls", "accessibility"})
-        {
-            settingChanges[item] = LoadSetting(item);
-        }
     }
 
     public static void DefaultSettings()
     {
-        config.SetValue("game", "difficulty", "2"); //easy = 1 | normal = 2 | hard = 3
+        config.SetValue("game", "difficulty", 2); //easy = 1 | normal = 2 | hard = 3
 
-        config.SetValue("video", "windowmode", "windowed"); //windowed | borderless | exclusive
-        config.SetValue("video", "resolutionX", 1280);
-        config.SetValue("video", "resolutionY", 720);
-        config.SetValue("video", "Vsync", true);
+        config.SetValue("video", "windowmode", 1); //windowed = 1 | borderless = 2 | exclusive = 3
+        config.SetValue("video", "resolutionX", 4); //4k = 1 | 2k = 2 | 1080p = 3 | 720p = 4 | 360p(source res) = 5
+        config.SetValue("video", "resolutionY", 4);
+        config.SetValue("video", "vsync", true);
 
 
         config.SetValue("audio", "master_volume", 50);
         config.SetValue("audio", "music_volume", 100);
         config.SetValue("audio", "sfx_volume", 100);
 
-        config.SetValue("controls", "game_left", "A");
-        config.SetValue("controls", "game_left", "Arrow_left");
-        config.SetValue("controls", "game_right", "D");
-        config.SetValue("controls", "game_right", "Arrow_right");
-        config.SetValue("controls", "game_jump", "W");
-        config.SetValue("controls", "game_jump", "Arrow_up");
-        config.SetValue("controls", "game_crouch", "S");
-        config.SetValue("controls", "game_crouch", "Arrow_down");
-        config.SetValue("controls", "game_dash", "LShift");
-        config.SetValue("controls", "game_oracle", "Space");
-        config.SetValue("controls", "game_spellslot1", "Q");
-        config.SetValue("controls", "game_spellslot2", "E");
-        config.SetValue("controls", "Primary_attack", "mouse_1");
-        config.SetValue("controls", "Charge_attack", "mouse_2");
+        config.SetValue("controls", "game_left", "A|Left");
+        config.SetValue("controls", "game_right", "D|Right");
+        config.SetValue("controls", "game_jump", "W|Up");
+        config.SetValue("controls", "game_crouch", "S|Down");
+        config.SetValue("controls", "game_dash", "LShift|");
+        config.SetValue("controls", "game_oracle", "Space|");
+        config.SetValue("controls", "game_spellslot1", "Q|");
+        config.SetValue("controls", "game_spellslot2", "E|");
+        config.SetValue("controls", "primary_attack", "mouse_1|");
+        config.SetValue("controls", "charge_attack", "mouse_2|");
 
         config.SetValue("accessibility", "lang", "en");
 
         config.Save(SETTINGS_FILE_PATH);
+
+        foreach (var item in new string[5] { "game", "video", "audio", "controls", "accessibility" })
+        {
+            settingChanges[item] = LoadSetting(item);
+        }
     }
 
 
@@ -72,6 +74,7 @@ public partial class ConfigFileHandler : Node
             
         }
         config.Save(SETTINGS_FILE_PATH);
+        ApplySettings();
     }
     public static Dictionary<string,Variant> LoadSetting(string section)
     {
@@ -83,5 +86,27 @@ public partial class ConfigFileHandler : Node
         return settings;
     }
 
+    public static bool checkSettings()
+    {
+        bool check = true;
+        foreach (var item in new string[5] { "game", "video", "audio", "controls", "accessibility" })
+        {
+            foreach (KeyValuePair<string,Variant> setting in settingChanges[item])
+            {
+                if(setting.Value.ToString() != LoadSetting(item)[setting.Key].ToString())
+                {
+                    check = false;
+                }
+            }
+        }
 
+
+        return check;
+    }
+
+
+    private static void ApplySettings()
+    {
+
+    }
 }

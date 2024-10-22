@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://cq6v83jpmn4qv"]
+[gd_scene load_steps=6 format=3 uid="uid://cq6v83jpmn4qv"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/SubmenuSettings.cs" id="1_dt0n4"]
 [ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_ikgue"]
+[ext_resource type="PackedScene" uid="uid://d3thwbk86iidg" path="res://Nodes/Menus/hotkeyRebindButton.tscn" id="3_jecdu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6es0t"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0v2bk"]
 
 [node name="Control" type="Control"]
 custom_minimum_size = Vector2(640, 360)
@@ -44,10 +47,11 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
-current_tab = 0
+current_tab = 3
 clip_tabs = false
 
 [node name="Game" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
+visible = false
 layout_mode = 2
 tab_alignment = 1
 clip_tabs = false
@@ -74,12 +78,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 11.41
 
-[node name="Difficulty" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox"]
+[node name="difficulty" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/Difficulty"]
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/difficulty"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
@@ -89,7 +93,7 @@ text = "[center]Difficulty[/center]
 fit_content = true
 autowrap_mode = 0
 
-[node name="Selector" type="OptionButton" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/Difficulty"]
+[node name="Selector" type="OptionButton" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/difficulty"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_vertical = 0
@@ -188,17 +192,17 @@ popup/item_1/text = "2560 x 1440"
 popup/item_1/id = 1
 popup/item_2/text = "1920 x 1080"
 popup/item_2/id = 2
-popup/item_3/text = "1366 x 768"
+popup/item_3/text = "1280 x 720"
 popup/item_3/id = 3
-popup/item_4/text = "1280 x 720"
+popup/item_4/text = "640 x 360"
 popup/item_4/id = 4
 
-[node name="Vsync" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox"]
+[node name="vsync" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/Vsync"]
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/vsync"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
@@ -208,10 +212,10 @@ text = "[center]Vsync[/center]
 fit_content = true
 autowrap_mode = 0
 
-[node name="CheckButton" type="CheckButton" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/Vsync"]
+[node name="CheckButton" type="CheckButton" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/vsync"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-text = "On  / Off"
+text = "Off  / On"
 
 [node name="Audio" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
 visible = false
@@ -240,12 +244,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 11.41
 
-[node name="Master volume" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox"]
+[node name="master_volume" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/Master volume"]
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/master_volume"]
 custom_minimum_size = Vector2(111, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -255,23 +259,23 @@ text = "[right]Master volume"
 fit_content = true
 autowrap_mode = 0
 
-[node name="HSlider" type="HSlider" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/Master volume"]
+[node name="HSlider" type="HSlider" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/master_volume"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="SpinBox" type="SpinBox" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/Master volume"]
+[node name="SpinBox" type="SpinBox" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/master_volume"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 alignment = 1
 
-[node name="Music volume" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox"]
+[node name="music_volume" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/Music volume"]
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/music_volume"]
 custom_minimum_size = Vector2(111, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -281,23 +285,23 @@ text = "[right]Music volume"
 fit_content = true
 autowrap_mode = 0
 
-[node name="HSlider" type="HSlider" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/Music volume"]
+[node name="HSlider" type="HSlider" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/music_volume"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="SpinBox" type="SpinBox" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/Music volume"]
+[node name="SpinBox" type="SpinBox" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/music_volume"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 alignment = 1
 
-[node name="SFX volume" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox"]
+[node name="sfx_volume" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/SFX volume"]
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/sfx_volume"]
 custom_minimum_size = Vector2(111, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -307,19 +311,18 @@ text = "[right]SFX volume"
 fit_content = true
 autowrap_mode = 0
 
-[node name="HSlider" type="HSlider" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/SFX volume"]
+[node name="HSlider" type="HSlider" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/sfx_volume"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="SpinBox" type="SpinBox" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/SFX volume"]
+[node name="SpinBox" type="SpinBox" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/sfx_volume"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 alignment = 1
 
 [node name="Controls" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
-visible = false
 layout_mode = 2
 tab_alignment = 1
 clip_tabs = false
@@ -334,17 +337,57 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 30
+theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer"]
 layout_mode = 2
+horizontal_scroll_mode = 0
 
 [node name="Vbox" type="VBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 11.41
+theme_override_constants/separation = 0
+
+[node name="HSeparator" type="HSeparator" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_0v2bk")
+
+[node name="game_jump" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+layout_mode = 2
+size_flags_vertical = 1
+actionName = "game_jump"
+
+[node name="game_left" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+layout_mode = 2
+size_flags_vertical = 1
+actionName = "game_left"
+
+[node name="game_crouch" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+layout_mode = 2
+size_flags_vertical = 1
+actionName = "game_crouch"
+
+[node name="game_right" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+layout_mode = 2
+size_flags_vertical = 1
+actionName = "game_right"
+
+[node name="game_dash" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+layout_mode = 2
+size_flags_vertical = 1
+actionName = "game_dash"
+
+[node name="game_oracle" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+layout_mode = 2
+size_flags_vertical = 1
+actionName = "game_oracle"
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_0v2bk")
 
 [node name="Accessibility" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
 visible = false
@@ -411,4 +454,16 @@ layout_mode = 2
 text = "Save"
 flat = true
 
-[connection signal="item_selected" from="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/Difficulty/Selector" to="." method="DiffSelect"]
+[connection signal="item_selected" from="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/difficulty/Selector" to="." method="DiffSelect"]
+[connection signal="item_selected" from="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/windowmode/Selector" to="." method="WindowSelect"]
+[connection signal="item_selected" from="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/resolution/Selector" to="." method="ResSelect"]
+[connection signal="toggled" from="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/vsync/CheckButton" to="." method="VsyncToggle"]
+[connection signal="drag_ended" from="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/master_volume/HSlider" to="." method="MasterVolumeSlideEnded"]
+[connection signal="value_changed" from="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/master_volume/HSlider" to="." method="MasterVolumeSliding"]
+[connection signal="value_changed" from="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/master_volume/SpinBox" to="." method="MasterVolumeChanged"]
+[connection signal="drag_ended" from="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/music_volume/HSlider" to="." method="MusicVolumeSlideEnded"]
+[connection signal="value_changed" from="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/music_volume/HSlider" to="." method="MusicVolumeSliding"]
+[connection signal="value_changed" from="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/music_volume/SpinBox" to="." method="MusicVolumeChanged"]
+[connection signal="drag_ended" from="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/sfx_volume/HSlider" to="." method="SFXVolumeSlideEnded"]
+[connection signal="value_changed" from="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/sfx_volume/HSlider" to="." method="SFXVolumeSliding"]
+[connection signal="value_changed" from="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/sfx_volume/SpinBox" to="." method="SFXVolumeChanged"]
