@@ -8,12 +8,15 @@ public partial class HotkeyRebindButton : Control
     Label label;
     Button button1;
     Button button2;
+    SubmenuSettings SettingsNode;
+    
     [Export]
     string actionName = "";
 
 
     public override void _Ready()
     {
+        SettingsNode = GetNode("/root/MainNode/MainMenu/Control") as SubmenuSettings; 
         SetProcessUnhandledKeyInput(false);
         label = GetNode<Label>("HBox/Text");
         button1 = GetNode<Button>("HBox/Buttons/BindButton1");
@@ -21,8 +24,10 @@ public partial class HotkeyRebindButton : Control
         button2 = GetNode<Button>("HBox/Buttons/BindButton2");
 
         SetActionName();
-        SetKeyText();
+        SetKeyText2();
     }
+
+
     public override void _UnhandledKeyInput(InputEvent @event)
     {
         rebindActionKey(@event);
@@ -46,34 +51,34 @@ public partial class HotkeyRebindButton : Control
         label.Text = "Unassigned";
         switch (actionName)
         {
-            case "game_left":
+            case "move_left":
                 label.Text = "Move left";
                 break;
-            case "game_right":
+            case "move_right":
                 label.Text = "Move right";
                 break;
-            case "game_jump":
+            case "move_jump":
                 label.Text = "Move up / Jump";
                 break;
-            case "game_crouch":
+            case "move_crouch":
                 label.Text = "Move down / Crouch";
                 break;
-            case "game_dash":
+            case "move_dash":
                 label.Text = "Dash";
                 break;
-            case "game_oracle":
+            case "spell_oracle":
                 label.Text = "Oracle";
                 break;
-            case "game_spellslot1":
+            case "spell_slot1":
                 label.Text = "Spellslot 1";
                 break;
-            case "game_spellslot2":
+            case "spell_slot2":
                 label.Text = "Spellslot 2";
                     break;
-            case "primary_attack":
+            case "attack_normal":
                 label.Text = "Primary attack";
                 break;
-            case "charge_attack":
+            case "attack_charge":
                 label.Text = "Charge attack";
                 break;
 
@@ -82,32 +87,80 @@ public partial class HotkeyRebindButton : Control
         }
     }
 
+    public void SetKeyText2()
+    {
+        button1.Text = ConfigFileHandler.settingChanges["controls"][actionName].ToString();
+        button2.Text = ConfigFileHandler.settingChanges["controls"][actionName+"-alt"].ToString();
+    }
     public void SetKeyText()
     {
         Godot.Collections.Array<Godot.InputEvent> actionEvents = InputMap.ActionGetEvents(actionName);
+        Godot.Collections.Array<Godot.InputEvent> actionEventsAlt = InputMap.ActionGetEvents(actionName+"-alt");
+        InputEvent actionEvent;
+        InputEvent actionEventAlt;
+        if (actionEvents.Count != 0)
+        {
+            actionEvent = actionEvents[0];
+        }else
+        {
+            actionEvent = null;
+        }
+        if (actionEventsAlt.Count != 0)
+        {
+            actionEventAlt = actionEventsAlt[0];
+        }
+        else
+        {
+            actionEventAlt = null;
+        }
+        
+        string actionKeycode = "";
+        string actionKeycodeAlt = "";
+        if (actionEvent is InputEventKey keyEvent)
+        {
+            actionKeycode = OS.GetKeycodeString(keyEvent.PhysicalKeycode);
+            GD.Print(actionKeycode);
+        }
+        if (actionEventAlt is InputEventKey keyEventAlt)
+        {
+            actionKeycodeAlt = OS.GetKeycodeString(keyEventAlt.PhysicalKeycode);
+            GD.Print(actionKeycodeAlt);
 
-        //2 kbm inputs && 1 controller input
-        InputEvent actionEvent1 = actionEvents[0];
-        InputEvent actionEvent2= actionEvents[1];
-        string actionKeycode1 = "";
-        string actionKeycode2 = "";
-        if (actionEvent1 is InputEventKey keyEvent1)
-        {
-            actionKeycode1 = OS.GetKeycodeString(keyEvent1.PhysicalKeycode);
-            GD.Print(actionKeycode1);
         }
-        if (actionEvent2 is InputEventKey keyEvent2)
-        {
-            actionKeycode2 = OS.GetKeycodeString(keyEvent2.PhysicalKeycode);
-            GD.Print(actionKeycode2);
-        }
-        button1.Text = actionKeycode1;
-        button2.Text = actionKeycode2;      
+        button1.Text = actionKeycode;
+        button2.Text = actionKeycodeAlt;
     }
     
     public void rebindActionKey(InputEvent @event)
     {
-
+        switch (buttontoggle)
+        {
+            case 1:
+                InputMap.ActionEraseEvents(actionName);
+                ConfigFileHandler.settingChanges["controls"][actionName] = "";
+                if (@event is InputEventKey key && key.PhysicalKeycode != Key.Escape)
+                {
+                    InputMap.ActionAddEvent(actionName, @event);
+                    ConfigFileHandler.settingChanges["controls"][actionName] = key.PhysicalKeycode.ToString();
+                    SettingsNode.isSaved = false;
+                }
+                break;
+            case 2:
+                ConfigFileHandler.settingChanges["controls"][actionName+"-alt"] = "";
+                InputMap.ActionEraseEvents(actionName + "-alt");
+                if(@event is InputEventKey keyalt && keyalt.PhysicalKeycode != Key.Escape)
+                {
+                    InputMap.ActionAddEvent(actionName + "-alt", @event);
+                    ConfigFileHandler.settingChanges["controls"][actionName+"-alt"] = keyalt.PhysicalKeycode.ToString();
+                    SettingsNode.isSaved = false;
+                }
+                break;
+            default:
+                break;
+        }
+        SetProcessUnhandledKeyInput(false);
+        SetKeyText2();
+        SetActionName();
     }
     public void Button1Toggled(bool toggled)
     {
@@ -122,7 +175,12 @@ public partial class HotkeyRebindButton : Control
                 if(item is HotkeyRebindButton hotkeyButton && hotkeyButton.actionName != actionName)
                 {
                     hotkeyButton.button1.ToggleMode = false;
+                    hotkeyButton.button2.ToggleMode = false;
                     hotkeyButton.SetProcessUnhandledInput(false);
+                }else if(item is HotkeyRebindButton hotkeyButtonExact)
+                {
+                    hotkeyButtonExact.button2.ToggleMode = false;
+                    hotkeyButtonExact.SetProcessUnhandledInput(false);
                 }
             }
         }
@@ -134,10 +192,16 @@ public partial class HotkeyRebindButton : Control
                 if (item is HotkeyRebindButton hotkeyButton && hotkeyButton.actionName != actionName)
                 {
                     hotkeyButton.button1.ToggleMode = true;
+                    hotkeyButton.button2.ToggleMode = true;
                     hotkeyButton.SetProcessUnhandledInput(false);
                 }
+                else if (item is HotkeyRebindButton hotkeyButtonExact)
+                {
+                    hotkeyButtonExact.button2.ToggleMode = true;
+                    hotkeyButtonExact.SetProcessUnhandledInput(false);
+                }
             }
-            SetKeyText(); 
+            SetKeyText2(); 
         }
     }
     public void Button2Toggled(bool toggled)
@@ -145,7 +209,7 @@ public partial class HotkeyRebindButton : Control
         if (toggled)
         {
             buttontoggle = 2;
-            button1.Text = "listening...";
+            button2.Text = "listening...";
             SetProcessUnhandledKeyInput(toggled);
 
             foreach (Node item in GetTree().GetNodesInGroup("hotkeyButton"))
@@ -153,7 +217,13 @@ public partial class HotkeyRebindButton : Control
                 if (item is HotkeyRebindButton hotkeyButton && hotkeyButton.actionName != actionName)
                 {
                     hotkeyButton.button1.ToggleMode = false;
+                    hotkeyButton.button2.ToggleMode = false;
                     hotkeyButton.SetProcessUnhandledInput(false);
+                }
+                else if (item is HotkeyRebindButton hotkeyButtonExact)
+                {
+                    hotkeyButtonExact.button1.ToggleMode = false;
+                    hotkeyButtonExact.SetProcessUnhandledInput(false);
                 }
             }
         }
@@ -165,10 +235,16 @@ public partial class HotkeyRebindButton : Control
                 if (item is HotkeyRebindButton hotkeyButton && hotkeyButton.actionName != actionName)
                 {
                     hotkeyButton.button1.ToggleMode = true;
+                    hotkeyButton.button2.ToggleMode = true;
                     hotkeyButton.SetProcessUnhandledInput(false);
                 }
+                else if (item is HotkeyRebindButton hotkeyButtonExact)
+                {
+                    hotkeyButtonExact.button1.ToggleMode = true;
+                    hotkeyButtonExact.SetProcessUnhandledInput(false);
+                }
             }
-            SetKeyText();
+            SetKeyText2();
         }
     }
 }

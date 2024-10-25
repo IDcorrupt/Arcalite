@@ -13,7 +13,7 @@ public partial class SubmenuSettings : Node
 
 
 
-    private bool isSaved = true;
+    public bool isSaved = true;
 
 	private Button Back;
 	private Button Reset;
@@ -51,7 +51,6 @@ public partial class SubmenuSettings : Node
         //exit if popup returned yes
         if (Globals.PopupResult)
         {
-            GD.Print("Popup true, calling exit func");
             Exit();
         }
     }
@@ -213,7 +212,6 @@ public partial class SubmenuSettings : Node
 
 			//if changes are not saved
 			Control popup = (Control)popupScene.Instantiate();
-			GD.Print("popup instanced");
 			((Popup)popup).SetMessageType("nosave");
 			AddChild(popup);
 			//popup will initiate exit() func if promted
@@ -221,11 +219,7 @@ public partial class SubmenuSettings : Node
 		else
 		{
 			//if changes are saved
-            if (Parent is MainMenu parentscript)
-            {
-                parentscript.submenuOpen = false;
-                QueueFree();
-            }
+			Exit();
         }
 
 	}
@@ -236,7 +230,7 @@ public partial class SubmenuSettings : Node
 	}
 	public void SavePressed()
 	{
-		foreach (var item in new string[5] { "game", "video", "audio", "controls", "accessibility" })
+        foreach (var item in new string[5] { "game", "video", "audio", "controls", "accessibility" })
 		{
 			ConfigFileHandler.SaveSetting(item);
 		}
@@ -246,11 +240,10 @@ public partial class SubmenuSettings : Node
 	//exit func for nosave exit
 	public void Exit()
 	{
-        GD.Print("exit called");
+        ConfigFileHandler.ResetSTChanges();
         if (Parent is MainMenu parentscript)
         {
             parentscript.submenuOpen = false;
-            GD.Print("exiting settings");
 			QueueFree();
         }
         else

@@ -21,14 +21,12 @@ public partial class Popup : Control
 
 	public void OnCancelPressed()
 	{
-		GD.Print("popup deny");
 		Globals.PopupResult = false;
 		QueueFree();
 	}
 
 	public void OnConfirmPressed()
 	{
-        GD.Print("popup accept");
 		Globals.PopupResult = true;
         QueueFree();
     }

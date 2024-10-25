@@ -19,12 +19,9 @@ public partial class ConfigFileHandler : Node
         else
         {
             config.Load(SETTINGS_FILE_PATH);
-            foreach (var item in new string[5] {"game", "video", "audio", "controls", "accessibility"})
-            {
-                settingChanges[item] = LoadSetting(item);
-            }
+            
         }
-
+        ApplySettings();
     }
 
     public static void DefaultSettings()
@@ -41,25 +38,33 @@ public partial class ConfigFileHandler : Node
         config.SetValue("audio", "music_volume", 100);
         config.SetValue("audio", "sfx_volume", 100);
 
-        config.SetValue("controls", "game_left", "A|Left");
-        config.SetValue("controls", "game_right", "D|Right");
-        config.SetValue("controls", "game_jump", "W|Up");
-        config.SetValue("controls", "game_crouch", "S|Down");
-        config.SetValue("controls", "game_dash", "LShift|");
-        config.SetValue("controls", "game_oracle", "Space|");
-        config.SetValue("controls", "game_spellslot1", "Q|");
-        config.SetValue("controls", "game_spellslot2", "E|");
-        config.SetValue("controls", "primary_attack", "mouse_1|");
-        config.SetValue("controls", "charge_attack", "mouse_2|");
+        //1 is for primary keys, 1 is for secondaries, 3 is for controller (idk how to do that one yet)
+        config.SetValue("controls", "move_left", "A");
+        config.SetValue("controls", "move_left-alt", "Left");
+        config.SetValue("controls", "move_right", "D");
+        config.SetValue("controls", "move_right-alt", "Right");
+        config.SetValue("controls", "move_jump", "W");
+        config.SetValue("controls", "move_jump-alt", "Up");
+        config.SetValue("controls", "move_crouch", "S");
+        config.SetValue("controls", "move_crouch-alt", "Down");
+        config.SetValue("controls", "move_dash", "LShift");
+        config.SetValue("controls", "move_dash-alt", "");
+        config.SetValue("controls", "spell_oracle", "Space");
+        config.SetValue("controls", "spell_oracle-alt", "");
+        config.SetValue("controls", "spell_slot1", "Q");
+        config.SetValue("controls", "spell_slot1-alt", "");
+        config.SetValue("controls", "spell_slot2", "E");
+        config.SetValue("controls", "spell_slot2-alt", "");
+        config.SetValue("controls", "attack_normal", "mouse_1");
+        config.SetValue("controls", "attack_normal-alt", "");
+        config.SetValue("controls", "attack_charge", "mouse_2");
+        config.SetValue("controls", "attack_charge-alt", "");
 
         config.SetValue("accessibility", "lang", "en");
 
         config.Save(SETTINGS_FILE_PATH);
 
-        foreach (var item in new string[5] { "game", "video", "audio", "controls", "accessibility" })
-        {
-            settingChanges[item] = LoadSetting(item);
-        }
+        
     }
 
 
@@ -69,7 +74,7 @@ public partial class ConfigFileHandler : Node
         {
             string key = item.Key;
             Variant value = item.Value;
-            GD.Print($"saving setting --> section: {section}, key: {key}, value: {value}");
+            //GD.Print($"saving setting --> section: {section}, key: {key}, value: {value}");
             config.SetValue(section, key, value);
             
         }
@@ -107,6 +112,22 @@ public partial class ConfigFileHandler : Node
 
     private static void ApplySettings()
     {
+        
+        ResetSTChanges();
+    }
 
+    public static void ResetSTChanges()
+    {
+        foreach (var item in new string[5] { "game", "video", "audio", "controls", "accessibility" })
+        {
+            //why does a print break everything???
+
+            /*foreach (KeyValuePair<string, Variant> setting in settingChanges[item])
+            {
+                GD.Print($"Setting: {item} | {setting.Key} | {setting.Value}\n" +
+                    $" reverted to: {item} | {setting.Key} | {LoadSetting(item)[setting.Key]}");
+            }*/
+            settingChanges[item] = LoadSetting(item);
+        }
     }
 }

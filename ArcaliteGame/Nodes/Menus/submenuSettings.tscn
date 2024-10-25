@@ -355,35 +355,35 @@ theme_override_constants/separation = 0
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_0v2bk")
 
-[node name="game_jump" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+[node name="move_jump" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
 layout_mode = 2
 size_flags_vertical = 1
-actionName = "game_jump"
+actionName = "move_jump"
 
-[node name="game_left" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+[node name="move_left" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
 layout_mode = 2
 size_flags_vertical = 1
-actionName = "game_left"
+actionName = "move_left"
 
-[node name="game_crouch" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+[node name="move_crouch" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
 layout_mode = 2
 size_flags_vertical = 1
-actionName = "game_crouch"
+actionName = "move_crouch"
 
-[node name="game_right" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+[node name="move_right" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
 layout_mode = 2
 size_flags_vertical = 1
-actionName = "game_right"
+actionName = "move_right"
 
-[node name="game_dash" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+[node name="move_dash" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
 layout_mode = 2
 size_flags_vertical = 1
-actionName = "game_dash"
+actionName = "move_dash"
 
-[node name="game_oracle" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+[node name="spell_oracle" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
 layout_mode = 2
 size_flags_vertical = 1
-actionName = "game_oracle"
+actionName = "spell_oracle"
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox"]
 layout_mode = 2
