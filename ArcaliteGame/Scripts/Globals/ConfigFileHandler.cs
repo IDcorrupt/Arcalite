@@ -21,7 +21,9 @@ public partial class ConfigFileHandler : Node
             config.Load(SETTINGS_FILE_PATH);
             
         }
+        ResetSTChanges();
         ApplySettings();
+        
     }
 
     public static void DefaultSettings()
@@ -68,18 +70,20 @@ public partial class ConfigFileHandler : Node
     }
 
 
-    public static void SaveSetting(string section)
+    public static void SaveSettings()
     {
-        foreach (KeyValuePair<string, Variant> item in settingChanges[section])
-        {
-            string key = item.Key;
-            Variant value = item.Value;
-            //GD.Print($"saving setting --> section: {section}, key: {key}, value: {value}");
-            config.SetValue(section, key, value);
-            
+        foreach (var section in new string[5] { "game", "video", "audio", "controls", "accessibility" })
+        { 
+            foreach (KeyValuePair<string, Variant> item in settingChanges[section])
+            {
+                string key = item.Key;
+                Variant value = item.Value;
+                config.SetValue(section, key, value);
+            }
         }
         config.Save(SETTINGS_FILE_PATH);
         ApplySettings();
+        ResetSTChanges();
     }
     public static Dictionary<string,Variant> LoadSetting(string section)
     {
@@ -90,7 +94,6 @@ public partial class ConfigFileHandler : Node
         }
         return settings;
     }
-
     public static bool checkSettings()
     {
         bool check = true;
@@ -108,26 +111,52 @@ public partial class ConfigFileHandler : Node
 
         return check;
     }
-
-
     private static void ApplySettings()
     {
-        
-        ResetSTChanges();
+        //custom keyevent creation not finished yet do that plz
+
+        //controls
+        foreach (KeyValuePair<string, Variant> setting in settingChanges["control"])
+        {
+            string keyString = LoadSetting("control")[setting.Key].ToString();
+            GD.Print("key: " + keyString);
+            if (keyString.Length > 0)
+            {
+                InputEventKey inputEventKey = new InputEventKey()
+                {
+                    AltPressed = false,
+                    ShiftPressed = false,
+                    CtrlPressed = false,
+                    MetaPressed = false,
+                    Pressed = true,
+                };
+                InputMap.ActionGetEvents(setting.Key);
+                if (keyString.Length == 1)
+                {
+                    Key key = (Key)(char)keyString[0];
+                    inputEventKey.Keycode = key;
+                }
+                else
+                {
+                    Key key = (Key)Enum.Parse(typeof(Key), keyString.ToUpper(), true);
+                    inputEventKey.Keycode = key;
+                }
+
+                
+
+            }
+
+        }
     }
 
     public static void ResetSTChanges()
     {
         foreach (var item in new string[5] { "game", "video", "audio", "controls", "accessibility" })
         {
-            //why does a print break everything???
-
-            /*foreach (KeyValuePair<string, Variant> setting in settingChanges[item])
-            {
-                GD.Print($"Setting: {item} | {setting.Key} | {setting.Value}\n" +
-                    $" reverted to: {item} | {setting.Key} | {LoadSetting(item)[setting.Key]}");
-            }*/
             settingChanges[item] = LoadSetting(item);
         }
+        string section = "controls";
+        string setting = "move_dash-alt";
+        GD.Print($"{setting} value in settingChanges: {settingChanges[section][setting].ToString()}");
     }
 }

@@ -11,5 +11,6 @@ public partial class Globals : Node
 
     //settings
     public static int Difficulty = 2;
-
+    //for controls - decides which button is being rebound
+    public static int buttontoggle = 0;
 }

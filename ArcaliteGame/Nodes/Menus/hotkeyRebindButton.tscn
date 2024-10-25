@@ -51,5 +51,6 @@ size_flags_horizontal = 3
 toggle_mode = true
 text = "none"
 
+[connection signal="tree_exiting" from="." to="." method="OnExiting"]
 [connection signal="toggled" from="HBox/Buttons/BindButton1" to="." method="Button1Toggled"]
 [connection signal="toggled" from="HBox/Buttons/BindButton2" to="." method="Button2Toggled"]

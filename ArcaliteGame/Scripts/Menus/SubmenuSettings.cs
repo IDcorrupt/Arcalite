@@ -203,6 +203,8 @@ public partial class SubmenuSettings : Node
         GetNode<SpinBox>("Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/sfx_volume/SpinBox").Value = value;
     }
 
+
+
     //button controls   
     public void BackPressed()
 	{
@@ -230,10 +232,7 @@ public partial class SubmenuSettings : Node
 	}
 	public void SavePressed()
 	{
-        foreach (var item in new string[5] { "game", "video", "audio", "controls", "accessibility" })
-		{
-			ConfigFileHandler.SaveSetting(item);
-		}
+		ConfigFileHandler.SaveSettings();
 		isSaved = true;
 	}
 	

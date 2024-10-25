@@ -4,24 +4,39 @@ using System.Text.RegularExpressions;
 
 public partial class HotkeyRebindButton : Control
 {
-    private int buttontoggle = 0;
     Label label;
     Button button1;
     Button button2;
     SubmenuSettings SettingsNode;
-    
+    InputEventKey prevKey;
+    InputEventKey prevKeyAlt;
     [Export]
     string actionName = "";
 
 
     public override void _Ready()
     {
-        SettingsNode = GetNode("/root/MainNode/MainMenu/Control") as SubmenuSettings; 
+        SettingsNode = GetNode("/root/MainNode/MainMenu/Control") as SubmenuSettings;
         SetProcessUnhandledKeyInput(false);
         label = GetNode<Label>("HBox/Text");
+
         button1 = GetNode<Button>("HBox/Buttons/BindButton1");
-        
         button2 = GetNode<Button>("HBox/Buttons/BindButton2");
+
+        if (InputMap.ActionGetEvents(actionName).Count > 0)
+        {
+            InputEvent @event = InputMap.ActionGetEvents(actionName)[0];
+            prevKey = @event as InputEventKey;
+            GD.Print(prevKey.PhysicalKeycode.ToString());
+        }else prevKey = null;
+
+        if (InputMap.ActionGetEvents(actionName + "-alt").Count > 0)
+        {
+            InputEvent @eventAlt = InputMap.ActionGetEvents(actionName + "-alt")[0];
+            prevKeyAlt = @eventAlt as InputEventKey;
+            GD.Print(prevKeyAlt.PhysicalKeycode.ToString());
+        }else prevKeyAlt = null;
+
 
         SetActionName();
         SetKeyText2();
@@ -31,15 +46,15 @@ public partial class HotkeyRebindButton : Control
     public override void _UnhandledKeyInput(InputEvent @event)
     {
         rebindActionKey(@event);
-        switch (buttontoggle)
+        switch (Globals.buttontoggle)
         {
             case 1:
                 button1.ButtonPressed = false;
-                buttontoggle = 0;
+                Globals.buttontoggle = 0;
                 break;
             case 2:
                 button2.ButtonPressed = false;
-                buttontoggle = 0;
+                Globals.buttontoggle = 0;
                 break;
 
             default:
@@ -74,7 +89,7 @@ public partial class HotkeyRebindButton : Control
                 break;
             case "spell_slot2":
                 label.Text = "Spellslot 2";
-                    break;
+                break;
             case "attack_normal":
                 label.Text = "Primary attack";
                 break;
@@ -90,18 +105,19 @@ public partial class HotkeyRebindButton : Control
     public void SetKeyText2()
     {
         button1.Text = ConfigFileHandler.settingChanges["controls"][actionName].ToString();
-        button2.Text = ConfigFileHandler.settingChanges["controls"][actionName+"-alt"].ToString();
+        button2.Text = ConfigFileHandler.settingChanges["controls"][actionName + "-alt"].ToString();
     }
     public void SetKeyText()
     {
         Godot.Collections.Array<Godot.InputEvent> actionEvents = InputMap.ActionGetEvents(actionName);
-        Godot.Collections.Array<Godot.InputEvent> actionEventsAlt = InputMap.ActionGetEvents(actionName+"-alt");
+        Godot.Collections.Array<Godot.InputEvent> actionEventsAlt = InputMap.ActionGetEvents(actionName + "-alt");
         InputEvent actionEvent;
         InputEvent actionEventAlt;
         if (actionEvents.Count != 0)
         {
             actionEvent = actionEvents[0];
-        }else
+        }
+        else
         {
             actionEvent = null;
         }
@@ -113,7 +129,7 @@ public partial class HotkeyRebindButton : Control
         {
             actionEventAlt = null;
         }
-        
+
         string actionKeycode = "";
         string actionKeycodeAlt = "";
         if (actionEvent is InputEventKey keyEvent)
@@ -130,30 +146,40 @@ public partial class HotkeyRebindButton : Control
         button1.Text = actionKeycode;
         button2.Text = actionKeycodeAlt;
     }
-    
+
     public void rebindActionKey(InputEvent @event)
     {
-        switch (buttontoggle)
+        string none = "[NONE]";
+        switch (Globals.buttontoggle)
         {
             case 1:
-                InputMap.ActionEraseEvents(actionName);
+
+            InputMap.ActionEraseEvents(actionName);
                 ConfigFileHandler.settingChanges["controls"][actionName] = "";
                 if (@event is InputEventKey key && key.PhysicalKeycode != Key.Escape)
                 {
+                    //=======================
+                    if (prevKeyAlt != null) GD.Print($"Rebinding key: {actionName} from {(prevKey!=null ? prevKey.PhysicalKeycode.ToString(): none.ToString())} to: {key.PhysicalKeycode.ToString()}");
+                    //=======================
                     InputMap.ActionAddEvent(actionName, @event);
                     ConfigFileHandler.settingChanges["controls"][actionName] = key.PhysicalKeycode.ToString();
                     SettingsNode.isSaved = false;
                 }
+                else GD.Print($"Rebinding key: {actionName} from {(prevKey != null ? prevKey.PhysicalKeycode.ToString() : none.ToString())} to [NONE]");
                 break;
             case 2:
-                ConfigFileHandler.settingChanges["controls"][actionName+"-alt"] = "";
+                ConfigFileHandler.settingChanges["controls"][actionName + "-alt"] = "";
                 InputMap.ActionEraseEvents(actionName + "-alt");
-                if(@event is InputEventKey keyalt && keyalt.PhysicalKeycode != Key.Escape)
+                if (@event is InputEventKey keyalt && keyalt.PhysicalKeycode != Key.Escape)
                 {
+                    //=======================
+                    GD.Print($"Rebinding key: {actionName+"-alt"} from {(prevKeyAlt!=null ? prevKeyAlt.PhysicalKeycode.ToString(): none.ToString())} to: {keyalt.PhysicalKeycode.ToString()}");
+                    //=======================
                     InputMap.ActionAddEvent(actionName + "-alt", @event);
-                    ConfigFileHandler.settingChanges["controls"][actionName+"-alt"] = keyalt.PhysicalKeycode.ToString();
+                    ConfigFileHandler.settingChanges["controls"][actionName + "-alt"] = keyalt.PhysicalKeycode.ToString();
                     SettingsNode.isSaved = false;
                 }
+                else GD.Print($"Rebinding key: {actionName+"-alt"} from {(prevKeyAlt!=null ? prevKeyAlt.PhysicalKeycode.ToString() : none.ToString())}to [NONE]");
                 break;
             default:
                 break;
@@ -166,27 +192,28 @@ public partial class HotkeyRebindButton : Control
     {
         if (toggled)
         {
-            buttontoggle = 1;
+            Globals.buttontoggle = 1;
             button1.Text = "listening...";
             SetProcessUnhandledKeyInput(toggled);
 
             foreach (Node item in GetTree().GetNodesInGroup("hotkeyButton"))
             {
-                if(item is HotkeyRebindButton hotkeyButton && hotkeyButton.actionName != actionName)
+                if (item is HotkeyRebindButton hotkeyButton && hotkeyButton.actionName != actionName)
                 {
                     hotkeyButton.button1.ToggleMode = false;
                     hotkeyButton.button2.ToggleMode = false;
                     hotkeyButton.SetProcessUnhandledInput(false);
-                }else if(item is HotkeyRebindButton hotkeyButtonExact)
+                }
+                else if (item is HotkeyRebindButton hotkeyButtonExact)
                 {
                     hotkeyButtonExact.button2.ToggleMode = false;
                     hotkeyButtonExact.SetProcessUnhandledInput(false);
                 }
             }
         }
-        else 
+        else
         {
-            buttontoggle = 0;
+            Globals.buttontoggle = 0;
             foreach (Node item in GetTree().GetNodesInGroup("hotkeyButton"))
             {
                 if (item is HotkeyRebindButton hotkeyButton && hotkeyButton.actionName != actionName)
@@ -201,14 +228,14 @@ public partial class HotkeyRebindButton : Control
                     hotkeyButtonExact.SetProcessUnhandledInput(false);
                 }
             }
-            SetKeyText2(); 
+            SetKeyText2();
         }
     }
     public void Button2Toggled(bool toggled)
     {
         if (toggled)
         {
-            buttontoggle = 2;
+            Globals.buttontoggle = 2;
             button2.Text = "listening...";
             SetProcessUnhandledKeyInput(toggled);
 
@@ -229,7 +256,7 @@ public partial class HotkeyRebindButton : Control
         }
         else
         {
-            buttontoggle = 0;
+            Globals.buttontoggle = 0;
             foreach (Node item in GetTree().GetNodesInGroup("hotkeyButton"))
             {
                 if (item is HotkeyRebindButton hotkeyButton && hotkeyButton.actionName != actionName)
@@ -245,6 +272,24 @@ public partial class HotkeyRebindButton : Control
                 }
             }
             SetKeyText2();
+        }
+    }
+
+    public void OnExiting()
+    {
+        GD.Print("bind tab exiting");
+        if (!SettingsNode.isSaved)
+        {
+            GD.Print("bind tab resetting");
+            InputMap.ActionEraseEvents(actionName);
+            ConfigFileHandler.settingChanges["controls"][actionName] = "";
+            InputMap.ActionAddEvent(actionName, prevKey);
+            if (prevKey != null) ConfigFileHandler.settingChanges["controls"][actionName] = prevKey.PhysicalKeycode.ToString();
+            InputMap.ActionEraseEvents(actionName + "-alt");
+            ConfigFileHandler.settingChanges["controls"][actionName + "-alt"] = "";
+            InputMap.ActionAddEvent(actionName + "-alt", prevKeyAlt);
+            if (prevKey != null) ConfigFileHandler.settingChanges["controls"][actionName + "-alt"] = prevKeyAlt.PhysicalKeycode.ToString();
+
         }
     }
 }
