@@ -1,0 +1,23 @@
+-----FIÓKKEZELÉS-----
+
+get - bejelentkezés
+
+- megnézi van-e username-mel fiók -F-> "rósz név"
+- ha van megnézi van-e a jelszóval fiók -F-> "rósz jelszó"
+- ha van megnézi egy van-e, ha igen, lyo, ha több van, akkor ki kell választatni pl. email címmel társítva stb.
+
+post - regisztráció
+
+- feltölti qo.op
+
+patch - név/jelszó/email változtatás
+
+delete - fiók törlés
+
+-----MENTÉS/BETÖLTÉS/STATISZTIKA-----
+
+get - lekérés
+
+put - teljes mentés módosítása (tehát mentés <o.O>)
+
+delete - törlés (csak hogy legyen)    
