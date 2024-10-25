@@ -1,0 +1,221 @@
+html{
+    scrollbar-width: none; /*no scrollbar for Firefox*/
+    overflow-x: hidden;
+}
+
+/* Hide scrollbar for webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar width */
+    height: 0; /* Remove scrollbar height */
+}
+
+body{
+    width: 100vw;
+    margin: 0;
+}
+main{
+    height:fit-content;
+    flex-wrap: wrap;
+}
+header{
+    height: 20vh;
+    width: 100vw;
+    min-height: 150px;
+    background-color:aquamarine;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar{
+    position: sticky; /* This makes the navbar sticky */
+    top: 0; /* Stick the navbar to the top */
+    width: 100%;
+    z-index: 1000; /* Ensure it stays on top of other content */
+}
+
+.navbar-nav{
+    width: 100%;
+    
+}
+
+li{
+    list-style-type: none;
+}
+
+#video{
+    display: flex;
+    width: 40%;
+    
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically if needed */
+    margin: 25px;
+}
+
+h1{
+    margin: 0;
+}
+
+h2{
+    text-align: center;
+    align-self: baseline;
+}
+
+.control{
+    background-color: beige;
+    width: 402px;
+    height: fit-content;
+    display: grid;
+    margin: 10px;
+    grid-template-columns: repeat(3, 134px);
+    grid-template-rows: 30px 90px 60px;
+}
+
+.control p{
+    grid-column: 1;
+    grid-row: 1;
+    text-align: center;
+    margin: 0;
+}
+
+.control d{
+    grid-column: 1/4;
+    grid-row: 3/4;
+    text-align: center;
+}
+
+.control img{
+    height: 60px;
+    width: 60px;
+    grid-column: 1;
+    grid-row: 2;
+    margin-left: 37px;
+}
+
+#gif{
+    height: 120px;
+    width: 268px;
+    margin-left: 0;
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+
+#controls{
+    flex-wrap: wrap;
+}
+
+#login{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#login h2{
+    align-self: baseline;
+    margin-left: 6vw;
+}
+
+.login{
+    height: 75vh;
+    width: 30vw;
+    min-width: 350px;
+    min-height: 500px;
+    background-color: bisque;
+    border: 1px solid black;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+form{
+    width: 18vw;
+    height: 60vh;
+    min-height: 400px;
+    min-width: 225px;
+    display:flex;
+    flex-wrap: wrap;
+}
+input{
+    width: 100%;
+    margin: 3% 0;
+    line-height: 35px;
+    font-size: 20px;
+    height: 7%
+}
+
+input[type="submit"]{
+    height: 60px;
+    width: 100px;
+}
+
+label{
+    font-size: 20px;
+    margin-bottom: 0;
+    text-align: center;
+    align-self: last baseline;
+}
+
+.flex-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.character{
+    height: 60vh;
+    width: 20vw; /*auto*/
+    background-color:blue;
+    flex-direction: column;
+}
+
+.character img{
+    height: 250px;
+    width: 180px;
+}
+
+footer{
+    height: 45vh;
+    background-color:brown;
+}
+
+#devs{
+    width: 66.67vw;
+    height: 100%;
+}
+
+#dev{
+    height: 100%;
+}
+
+#link{
+    width: 33.32vw;
+    height: 100%;
+    background-color: aquamarine;
+}
+
+#devs img{
+    height: 50px;
+    width: 50px;
+}
+
+#devs h2{
+    position: absolute;
+    left: 33.32%;
+    text-align: center;
+    transform: translate(-50%, 5%);
+}
+
+@media (max-width: 768px) {
+    .navbar-expand-lg .navbar-nav {
+        display: none; 
+    }
+    .navbar-expand-lg .navbar-toggler {
+        display: block; 
+    }
+}
+
