@@ -40,7 +40,7 @@ public partial class ConfigFileHandler : Node
         config.SetValue("audio", "music_volume", 100);
         config.SetValue("audio", "sfx_volume", 100);
 
-        //1 is for primary keys, 1 is for secondaries, 3 is for controller (idk how to do that one yet)
+        //normal is primary keybind, -alt is secondary, and idk how to do controller yet
         config.SetValue("controls", "move_left", "A");
         config.SetValue("controls", "move_left-alt", "Left");
         config.SetValue("controls", "move_right", "D");
@@ -49,7 +49,7 @@ public partial class ConfigFileHandler : Node
         config.SetValue("controls", "move_jump-alt", "Up");
         config.SetValue("controls", "move_crouch", "S");
         config.SetValue("controls", "move_crouch-alt", "Down");
-        config.SetValue("controls", "move_dash", "LShift");
+        config.SetValue("controls", "move_dash", "Shift");
         config.SetValue("controls", "move_dash-alt", "");
         config.SetValue("controls", "spell_oracle", "Space");
         config.SetValue("controls", "spell_oracle-alt", "");
@@ -57,16 +57,16 @@ public partial class ConfigFileHandler : Node
         config.SetValue("controls", "spell_slot1-alt", "");
         config.SetValue("controls", "spell_slot2", "E");
         config.SetValue("controls", "spell_slot2-alt", "");
-        config.SetValue("controls", "attack_normal", "mouse_1");
+        config.SetValue("controls", "attack_normal", "MouseLeft");
         config.SetValue("controls", "attack_normal-alt", "");
-        config.SetValue("controls", "attack_charge", "mouse_2");
+        config.SetValue("controls", "attack_charge", "MouseRight");
         config.SetValue("controls", "attack_charge-alt", "");
 
         config.SetValue("accessibility", "lang", "en");
 
         config.Save(SETTINGS_FILE_PATH);
 
-        
+        Globals.invalidSettings = false;
     }
 
 
@@ -113,39 +113,63 @@ public partial class ConfigFileHandler : Node
     }
     private static void ApplySettings()
     {
-        //custom keyevent creation not finished yet do that plz
-
-        //controls
-        foreach (KeyValuePair<string, Variant> setting in settingChanges["control"])
+        try
         {
-            string keyString = LoadSetting("control")[setting.Key].ToString();
-            GD.Print("key: " + keyString);
-            if (keyString.Length > 0)
+            //controls
+            foreach (KeyValuePair<string, Variant> setting in settingChanges["controls"])
             {
-                InputEventKey inputEventKey = new InputEventKey()
+                string keyString = LoadSetting("controls")[setting.Key].ToString();
+                GD.Print(setting.Key+" key: " + keyString);
+                if (keyString.Length > 0)
                 {
-                    AltPressed = false,
-                    ShiftPressed = false,
-                    CtrlPressed = false,
-                    MetaPressed = false,
-                    Pressed = true,
-                };
-                InputMap.ActionGetEvents(setting.Key);
-                if (keyString.Length == 1)
-                {
-                    Key key = (Key)(char)keyString[0];
-                    inputEventKey.Keycode = key;
-                }
-                else
-                {
-                    Key key = (Key)Enum.Parse(typeof(Key), keyString.ToUpper(), true);
-                    inputEventKey.Keycode = key;
-                }
+                    if (keyString.Contains("Mouse"))
+                    {
+                        string MouseString = keyString.Replace("Mouse", "");
+                        InputEventMouseButton inputeventButton = new InputEventMouseButton()
+                        {
+                            ButtonIndex = (MouseButton)Enum.Parse(typeof(MouseButton), MouseString, true),
+                            ShiftPressed = false,
+                            CtrlPressed = false,
+                            AltPressed = false,
+                            MetaPressed = false,
+                            Pressed = true,
+                        };
+                    }
+                    else
+                    {
+                        InputEventKey inputEventKey = new InputEventKey()
+                        {
+                            AltPressed = false,
+                            ShiftPressed = false,
+                            CtrlPressed = false,
+                            MetaPressed = false,
+                            Pressed = true,
+                        };
+                        InputMap.ActionGetEvents(setting.Key);
+                        if (keyString.Length == 1)
+                        {
+                            //if keycode is single length (normal letters)
+                            Key key = (Key)(char)keyString[0];
+                            inputEventKey.Keycode = key;
+                        }
+                        else
+                        {
+                            //if keycode is longer than 1 (space, shift, enter)
+                            Key key = (Key)Enum.Parse(typeof(Key), keyString, true);
+                            inputEventKey.Keycode = key;
+                        }
+                    }
 
                 
 
-            }
+                }
 
+            }
+        }
+        catch (Exception ex)
+        {
+            GD.PrintErr(ex);
+            Globals.invalidSettings = true;
         }
     }
 
@@ -155,8 +179,5 @@ public partial class ConfigFileHandler : Node
         {
             settingChanges[item] = LoadSetting(item);
         }
-        string section = "controls";
-        string setting = "move_dash-alt";
-        GD.Print($"{setting} value in settingChanges: {settingChanges[section][setting].ToString()}");
     }
 }
