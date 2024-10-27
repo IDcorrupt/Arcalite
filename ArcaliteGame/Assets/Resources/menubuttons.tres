@@ -1,8 +1,27 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://ngtukvv8yava"]
 
-[ext_resource type="FontFile" uid="uid://b557uxq0l23ew" path="res://Assets/Resources/fonts/Jacquard12-Regular.ttf" id="1_sjd2d"]
+[sub_resource type="FontFile" id="FontFile_w36t8"]
+cache/0/20/0/ascent = 0.0
+cache/0/20/0/descent = 0.0
+cache/0/20/0/underline_position = 0.0
+cache/0/20/0/underline_thickness = 0.0
+cache/0/20/0/scale = 1.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/61/0/ascent = 0.0
+cache/0/61/0/descent = 0.0
+cache/0/61/0/underline_position = 0.0
+cache/0/61/0/underline_thickness = 0.0
+cache/0/61/0/scale = 1.0
+cache/0/14/0/ascent = 0.0
+cache/0/14/0/descent = 0.0
+cache/0/14/0/underline_position = 0.0
+cache/0/14/0/underline_thickness = 0.0
+cache/0/14/0/scale = 1.0
 
 [resource]
-default_font = ExtResource("1_sjd2d")
+default_font = SubResource("FontFile_w36t8")
 default_font_size = 20
-/fonts/Font = ExtResource("1_sjd2d")

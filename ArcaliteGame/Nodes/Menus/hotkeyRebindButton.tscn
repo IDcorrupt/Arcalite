@@ -18,21 +18,22 @@ script = ExtResource("1_dyan1")
 
 [node name="HBox" type="HBoxContainer" parent="."]
 clip_contents = true
-custom_minimum_size = Vector2(164, 0)
+custom_minimum_size = Vector2(370, 0)
 layout_mode = 1
-offset_right = 332.0
+offset_right = 374.0
 offset_bottom = 31.0
 
 [node name="Text" type="Label" parent="HBox"]
-custom_minimum_size = Vector2(164, 0)
+custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 14
 text = "action"
 horizontal_alignment = 1
 
 [node name="Buttons" type="HBoxContainer" parent="HBox"]
 clip_contents = true
-custom_minimum_size = Vector2(164, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 
@@ -41,6 +42,7 @@ clip_contents = true
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 14
 toggle_mode = true
 text = "none"
 
@@ -48,6 +50,7 @@ text = "none"
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 14
 toggle_mode = true
 text = "none"
 

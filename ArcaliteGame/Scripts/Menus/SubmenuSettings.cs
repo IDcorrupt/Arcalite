@@ -3,7 +3,7 @@ using Godot.Collections;
 using System;
 using static Godot.HttpRequest;
 
-public partial class SubmenuSettings : Node
+public partial class SubmenuSettings : Control
 {
 	static Node Parent;
 
@@ -52,8 +52,7 @@ public partial class SubmenuSettings : Node
         {
             Exit();
         }
-    }
-
+	}
     //updates values for setting options
     public void UpdateSelectors()
 	{

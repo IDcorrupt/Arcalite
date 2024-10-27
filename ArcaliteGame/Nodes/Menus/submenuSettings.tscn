@@ -381,6 +381,26 @@ layout_mode = 2
 size_flags_vertical = 1
 actionName = "spell_oracle"
 
+[node name="spell_slot1" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+layout_mode = 2
+size_flags_vertical = 1
+actionName = "spell_slot1"
+
+[node name="spell_slot2" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+layout_mode = 2
+size_flags_vertical = 1
+actionName = "spell_slot2"
+
+[node name="attack_normal" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+layout_mode = 2
+size_flags_vertical = 1
+actionName = "attack_normal"
+
+[node name="attack_charge" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox" instance=ExtResource("3_jecdu")]
+layout_mode = 2
+size_flags_vertical = 1
+actionName = "attack_charge"
+
 [node name="HSeparator2" type="HSeparator" parent="Panel/Margin/SettingsContainer/SettingTabs/Controls/MarginContainer/ScrollContainer/Vbox"]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_0v2bk")

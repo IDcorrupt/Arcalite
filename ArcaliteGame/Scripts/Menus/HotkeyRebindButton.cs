@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 public partial class HotkeyRebindButton : Control
@@ -9,12 +10,11 @@ public partial class HotkeyRebindButton : Control
     Button button2;
     SubmenuSettings SettingsNode;
     InputEventKey prevKey;
-    InputEventMouseButton prevClick;
     InputEventKey prevKeyAlt;
+    InputEventMouseButton prevClick;
     InputEventMouseButton prevClickAlt;
     [Export]
     string actionName = "";
-
 
     public override void _Ready()
     {
@@ -24,38 +24,91 @@ public partial class HotkeyRebindButton : Control
         button1 = GetNode<Button>("HBox/Buttons/BindButton1");
         button2 = GetNode<Button>("HBox/Buttons/BindButton2");
 
+        //get previous keys for reset
         if (InputMap.ActionGetEvents(actionName).Count > 0)
         {
             InputEvent @event = InputMap.ActionGetEvents(actionName)[0];
             if (@event is InputEventKey eventkey) prevKey = eventkey;
             else if (@event is InputEventMouseButton eventbutton) prevClick = eventbutton;
-            GD.Print(prevKey.PhysicalKeycode.ToString());
-        }else prevKey = null;
-
+        }else
+        {
+            prevKey = null;
+            prevClick = null;
+        }
         if (InputMap.ActionGetEvents(actionName + "-alt").Count > 0)
         {
             InputEvent @eventAlt = InputMap.ActionGetEvents(actionName + "-alt")[0];
             if (@eventAlt is InputEventKey eventkey) prevKeyAlt = eventkey;
             else if (@eventAlt is InputEventMouseButton eventbutton) prevClickAlt = eventbutton;
             GD.Print(prevKeyAlt.PhysicalKeycode.ToString());
-        }else prevKeyAlt = null;
+        }else
+        {
+            prevKeyAlt = null;
+            prevClickAlt = null;
+        }
 
-        //SetProcessUnhandledKeyInput(false);
-        //SetProcessUnhandledInput(false);
+        SetProcessUnhandledKeyInput(false);
         SetActionName();
         SetKeyText();
     }
 
     public override void _Process(double delta)
     {
-        if (IsProcessingUnhandledKeyInput()) GD.Print("keyinput true");
-        if (IsProcessingUnhandledInput()) GD.Print("input true");
+        if (IsProcessingUnhandledKeyInput())
+        {
+            button1.Disabled = true;
+            button2.Disabled = true;
+            label.Uppercase = true;
+            listenMouseInput();
+        }
+        else
+        {
+            label.Uppercase = false;
+            button1.Disabled = false;
+            button2.Disabled= false;
+        }
+        if (IsProcessingUnhandledInput()) label.HorizontalAlignment = HorizontalAlignment.Right;
+        else label.HorizontalAlignment = HorizontalAlignment.Center;
     }
 
+    public void listenMouseInput()
+    {
+        foreach (string button in new string[5] {"Left", "Right", "Middle", "Xbutton1", "Xbutton2"})
+        {
+            bool buttonPressed = Input.IsMouseButtonPressed((MouseButton)Enum.Parse(typeof(MouseButton), button, true));
+            if (buttonPressed)
+            {
+                rebindActionKey(new InputEventMouseButton()
+                {
+                    ButtonIndex = (MouseButton)Enum.Parse(typeof(MouseButton), button, true),
+                    AltPressed = false,
+                    CtrlPressed = false,
+                    MetaPressed = false,
+                    ShiftPressed = false,
+                    Pressed = true
+                });
+                switch (Globals.buttontoggle)
+                {
+                    case 1:
+                        button1.ButtonPressed = false;
+                        Globals.buttontoggle = 0;
+                        break;
+                    case 2:
+                        button2.ButtonPressed = false;
+                        Globals.buttontoggle = 0;
+                        break;
+
+                    default:
+                        break;
+                }
+
+            }
+        }
+    }
 
     public override void _UnhandledKeyInput(InputEvent @event)
     {
-        if(@event is InputEventKey || @event is InputEventMouseButton) rebindActionKey(@event);
+        if(@event is InputEventKey) rebindActionKey(@event);
         switch (Globals.buttontoggle)
         {
             case 1:
@@ -114,8 +167,16 @@ public partial class HotkeyRebindButton : Control
 
     public void SetKeyText()
     {
-        button1.Text = ConfigFileHandler.settingChanges["controls"][actionName].ToString();
-        button2.Text = ConfigFileHandler.settingChanges["controls"][actionName + "-alt"].ToString();
+        if (ConfigFileHandler.settingChanges["controls"][actionName].ToString().Contains("Xbutton"))
+        {
+            button1.Text = ConfigFileHandler.settingChanges["controls"][actionName].ToString().Replace("Xbutton", "Side");
+
+        }else button1.Text = ConfigFileHandler.settingChanges["controls"][actionName].ToString();
+        if(ConfigFileHandler.settingChanges["controls"][actionName + "-alt"].ToString().Contains("Xbutton"))
+        {
+            button2.Text = ConfigFileHandler.settingChanges["controls"][actionName + "-alt"].ToString().Replace("Xbutton", "Side");
+
+        }else button2.Text = ConfigFileHandler.settingChanges["controls"][actionName + "-alt"].ToString();
     }
 
     public void rebindActionKey(InputEvent @event)
@@ -190,7 +251,6 @@ public partial class HotkeyRebindButton : Control
                 else if (item is HotkeyRebindButton hotkeyButtonExact)
                 {
                     hotkeyButtonExact.button2.ToggleMode = false;
-                    hotkeyButtonExact.SetProcessUnhandledKeyInput(false);
                 }
             }
         }
@@ -208,7 +268,6 @@ public partial class HotkeyRebindButton : Control
                 else if (item is HotkeyRebindButton hotkeyButtonExact)
                 {
                     hotkeyButtonExact.button2.ToggleMode = true;
-                    hotkeyButtonExact.SetProcessUnhandledKeyInput(false);
                 }
             }
             SetKeyText();
@@ -233,7 +292,6 @@ public partial class HotkeyRebindButton : Control
                 else if (item is HotkeyRebindButton hotkeyButtonExact)
                 {
                     hotkeyButtonExact.button1.ToggleMode = false;
-                    hotkeyButtonExact.SetProcessUnhandledKeyInput(false);
                 }
             }
         }
@@ -251,7 +309,6 @@ public partial class HotkeyRebindButton : Control
                 else if (item is HotkeyRebindButton hotkeyButtonExact)
                 {
                     hotkeyButtonExact.button1.ToggleMode = true;
-                    hotkeyButtonExact.SetProcessUnhandledKeyInput(false);
                 }
             }
             SetKeyText();
