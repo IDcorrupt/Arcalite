@@ -239,11 +239,25 @@ footer{
   
   /* Style the tab content */
   .tabcontent {
-    display: none;
-    padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
   }
+
+table{
+    width: 100%;
+
+}
+
+th{
+    border: 1px solid black;
+    font-weight: unset;
+}
+
+
+
+tr:first-child{
+    font-weight: 700 !important;
+}
 
 @media (max-width: 768px) {
     .navbar-expand-lg .navbar-nav {
