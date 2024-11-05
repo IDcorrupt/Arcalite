@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $('#pwdagain_error').hide();
+
     $('#registerform').on('submit', function(event) {
         event.preventDefault();
         if ($('#password').val() != $('#passwordagain').val()) {
@@ -19,17 +21,21 @@ $(document).ready(function() {
                 data: payload,
                 global: false,
                 success: (data) => {
-                    alert(data.message)
-                    $('#register_error').html("")
+                    $('#register_error').html("");
+                    alert(data.message);
+                    location.replace(location.href.split("?")[0]);
+                    location.reload();
                 },
                 error: (data) => {
-                    console.log(data)
                     $('#register_error').html(data.responseText)
                 }
             });
         }
     });
 
-    $('#loginform')
+    $('#loginform').on('submit', function(event) {
+        event.preventDefault();
+        //weewoo
+    });
     
 });
