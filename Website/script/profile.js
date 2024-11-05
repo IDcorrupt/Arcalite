@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    $('#registerform').removeAttr('onsubmit').submit(function(event) {
+    $('#registerform').on('submit', function(event) {
         event.preventDefault();
         if ($('#password').val() != $('#passwordagain').val()) {
             $('#pwdagain_error').show();
@@ -29,5 +29,7 @@ $(document).ready(function() {
             });
         }
     });
+
+    $('#loginform')
     
 });

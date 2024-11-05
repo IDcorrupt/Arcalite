@@ -25,12 +25,20 @@
                 <label for="passwordagain">Jelszó újra: </label>
                 <input type="password" id="passwordagain" name="passwordagain" required>
                 <p id="pwdagain_error">Nem egyezik a fentebb megadott jelszóval!</p>
-                <input type="submit" id="register" name="register">
+                <input type="submit" id="register" name="register" value="Regisztrál">
                 <p id="register_error"></p>
             </form>
         </div>
         <div class="login">
             <h2>Bejelentkezés</h2>
+            <form id="loginform">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="password">Jelszó: </label>
+                <input type="password" id="password" name="password" required>
+                <input type="submit" id="login_btn" name="login_btn" value="Bejelentkezés">
+                <p id="login_error"></p>
+            </form>
         </div>
     </main>
 </body>
