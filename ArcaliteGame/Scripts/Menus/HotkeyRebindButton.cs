@@ -40,7 +40,6 @@ public partial class HotkeyRebindButton : Control
             InputEvent @eventAlt = InputMap.ActionGetEvents(actionName + "-alt")[0];
             if (@eventAlt is InputEventKey eventkey) prevKeyAlt = eventkey;
             else if (@eventAlt is InputEventMouseButton eventbutton) prevClickAlt = eventbutton;
-            GD.Print(prevKeyAlt.PhysicalKeycode.ToString());
         }else
         {
             prevKeyAlt = null;
@@ -181,7 +180,6 @@ public partial class HotkeyRebindButton : Control
 
     public void rebindActionKey(InputEvent @event)
     {
-        GD.Print($"Rebind called for {actionName}");
         string none = "[NONE]";
         switch (Globals.buttontoggle)
         {
@@ -190,40 +188,30 @@ public partial class HotkeyRebindButton : Control
                 ConfigFileHandler.settingChanges["controls"][actionName] = "";
                 if (@event is InputEventKey key && key.PhysicalKeycode != Key.Escape)
                 {
-                    //=======================
-                    GD.Print($"Rebinding key: {actionName} from {(prevKey != null ? prevKey.PhysicalKeycode.ToString() : (prevClick != null ? prevClick.ButtonIndex : none))} to: {key.PhysicalKeycode.ToString()}");
-                    //=======================
                     InputMap.ActionAddEvent(actionName, @event);
                     ConfigFileHandler.settingChanges["controls"][actionName] = key.PhysicalKeycode.ToString();
                     SettingsNode.isSaved = false;
                 }
                 else if (@event is InputEventMouseButton mouseButton)
                 {
-                    GD.Print($"Rebinding mouse button: {actionName} from: {(prevKey != null ? prevKey.PhysicalKeycode.ToString() : (prevClick != null ? prevClick.ButtonIndex : none))} to: {mouseButton.ButtonIndex}");
                     InputMap.ActionAddEvent(actionName, mouseButton);
                     ConfigFileHandler.settingChanges["controls"][actionName] = $"Mouse{mouseButton.ButtonIndex}";
                 }
-                else GD.Print($"Rebinding key: {actionName} from {(prevKey != null ? prevKey.PhysicalKeycode.ToString() : (prevClick != null ? prevClick.ButtonIndex : none))} to [NONE]");
                 break;
             case 2:
                 ConfigFileHandler.settingChanges["controls"][actionName + "-alt"] = "";
                 InputMap.ActionEraseEvents(actionName + "-alt");
                 if (@event is InputEventKey keyalt && keyalt.PhysicalKeycode != Key.Escape)
                 {
-                    //=======================
-                    GD.Print($"Rebinding key: {actionName+"-alt"} from {(prevKeyAlt != null ? prevKeyAlt.PhysicalKeycode.ToString() : (prevClickAlt != null ? prevClickAlt.ButtonIndex : none))} to: {keyalt.PhysicalKeycode.ToString()}");
-                    //=======================
                     InputMap.ActionAddEvent(actionName + "-alt", @event);
                     ConfigFileHandler.settingChanges["controls"][actionName + "-alt"] = keyalt.PhysicalKeycode.ToString();
                     SettingsNode.isSaved = false;
                 }else if (@event is InputEventMouseButton mouseButtonAlt)
                 {
-                    GD.Print($"Rebinding mouse button: {actionName+"-alt"} from: {(prevKeyAlt != null ? prevKeyAlt.PhysicalKeycode.ToString() : (prevClickAlt != null ? prevClickAlt.ButtonIndex : none))} to: {mouseButtonAlt.ButtonIndex}");
                     InputMap.ActionAddEvent(actionName+"-alt", mouseButtonAlt);
                     ConfigFileHandler.settingChanges["controls"][actionName+"-alt"] = $"Mouse{mouseButtonAlt.ButtonIndex}";
 
                 }
-                else GD.Print($"Rebinding key: {actionName+"-alt"} from {(prevKeyAlt != null ? prevKeyAlt.PhysicalKeycode.ToString() : (prevClickAlt != null ? prevClickAlt.ButtonIndex : none))}to [NONE]");
                 break;
             default:
                 break;
@@ -317,10 +305,8 @@ public partial class HotkeyRebindButton : Control
 
     public void OnExiting()
     {
-        GD.Print("bind tab exiting");
         if (!SettingsNode.isSaved)
         {
-            GD.Print("bind tab resetting");
             InputMap.ActionEraseEvents(actionName);
             ConfigFileHandler.settingChanges["controls"][actionName] = "";
             InputMap.ActionAddEvent(actionName, prevKey);

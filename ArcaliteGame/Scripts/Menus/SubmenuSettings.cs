@@ -7,8 +7,6 @@ public partial class SubmenuSettings : Control
 {
 	static Node Parent;
 
-	private int[] resXvalues = { 3840, 2560, 1920, 1366, 1280 };
-	private int[] resYvalues = { 2160, 1440, 1080, 768, 720 };
 
 
 

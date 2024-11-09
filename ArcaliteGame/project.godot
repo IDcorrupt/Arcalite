@@ -148,3 +148,7 @@ attack_charge-alt={
 "deadzone": 0.5,
 "events": []
 }
+
+[internationalization]
+
+locale/translations_pot_files=PackedStringArray("res://Nodes/Menus/mainmenu.tscn", "res://Nodes/Menus/submenuNewGame.tscn", "res://Nodes/Menus/submenuSettings.tscn", "res://Nodes/Menus/submenuStart.tscn")

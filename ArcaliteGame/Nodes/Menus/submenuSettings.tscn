@@ -43,11 +43,10 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
-current_tab = 3
+current_tab = 0
 clip_tabs = false
 
 [node name="Game" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
-visible = false
 layout_mode = 2
 tab_alignment = 1
 clip_tabs = false
@@ -246,7 +245,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/master_volume"]
-custom_minimum_size = Vector2(111, 0)
+custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -261,6 +260,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 
 [node name="SpinBox" type="SpinBox" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/master_volume"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -272,7 +272,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/music_volume"]
-custom_minimum_size = Vector2(111, 0)
+custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -287,6 +287,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 
 [node name="SpinBox" type="SpinBox" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/music_volume"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -298,7 +299,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/sfx_volume"]
-custom_minimum_size = Vector2(111, 0)
+custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -313,12 +314,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 
 [node name="SpinBox" type="SpinBox" parent="Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/sfx_volume"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 alignment = 1
 
 [node name="Controls" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
+visible = false
 layout_mode = 2
 tab_alignment = 1
 clip_tabs = false

@@ -1,0 +1,32 @@
+# LANGUAGE translation for Arcalite for the following files:
+# res://Nodes/Menus/mainmenu.tscn
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Arcalite\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
+
+#: Nodes/Menus/mainmenu.tscn
+msgid "Arcalite"
+msgstr ""
+
+#: Nodes/Menus/mainmenu.tscn
+msgid "Start"
+msgstr ""
+
+#: Nodes/Menus/mainmenu.tscn
+msgid "Settings"
+msgstr ""
+
+#: Nodes/Menus/mainmenu.tscn
+msgid "Website"
+msgstr ""
+
+#: Nodes/Menus/mainmenu.tscn
+msgid "Quit"
+msgstr ""

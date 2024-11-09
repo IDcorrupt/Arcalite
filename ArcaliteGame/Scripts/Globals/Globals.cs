@@ -7,6 +7,8 @@ public partial class Globals : Node
     public static bool playerControl = false;
     public static bool hasSavefile = false;
 
+    //active spawnpoint
+    public static Node2D spawnPoint = null;
 
     //settings
     public static int Difficulty = 2;
