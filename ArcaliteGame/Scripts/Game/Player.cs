@@ -19,13 +19,14 @@ public partial class Player : CharacterBody2D
     private int friction = 500;
     
     //dash
-    private float dashCooldown = 1f;
-    private float dashDelta = 0f;
-    private bool dashed = false;
-    private float dashSpeed = 1000f;     // Initial dash speed
-    private float dashDecayRate = 3000f; // Rate at which dash speed decays
-    private float currentDashSpeed = 0f; // Variable to track the current dash speed
-    private bool isDashing = false;      // Track if the player is dashing
+    private float dashCooldown = 1f;        //dash cooldown constant
+    private float dashDelta = 0f;           //dash cooldown remaining
+    private bool dashed = false;            //dash initiated
+    private float dashSpeed = 2000f;        //initial dash speed
+    private float dashDecayRate = 15000f;    //dash speed decay rate
+    private float currentDashSpeed = 0f;    //current dash speed
+    private bool isDashing = false;         //is dash currently active
+    private Vector2 dashVector;             //fixed vector for dash endpoint -> dash follows mouse otherwise :3
 
     //nodes
     private CollisionShape2D HitBox;
@@ -33,8 +34,9 @@ public partial class Player : CharacterBody2D
     
     public override void _Ready()
     {
-        // Get the CollisionShape2D node
+        //Get the CollisionShape2D node
         HitBox = GetNode<CollisionShape2D>("HitBox");
+        //go to spawnpoint
         Position = Globals.spawnPoint.Position;
     }
 
@@ -59,9 +61,27 @@ public partial class Player : CharacterBody2D
     public void movementExp(double delta)
     {
         //movement controls interrupted when dash is in progress
+        if (isDashing)
+        {
+            if (currentDashSpeed > 0)
+            {
+                currentDashSpeed -= dashDecayRate * (float)delta;
+                Velocity = dashVector * Mathf.Max(currentDashSpeed, 0);
+            }else
+            {
+                isDashing = false;
+            }
+            MoveAndSlide();
+            return;
+        }
 
-
-
+        //initiate dash
+        if (dashed)
+        {
+            dashed = false;
+            dashDelta = dashCooldown;
+            Dash();
+        }
 
         //normal movement
         Vector2 input = getInputs();
@@ -90,13 +110,7 @@ public partial class Player : CharacterBody2D
             Velocity = new Vector2(Velocity.X, Velocity.Y-jump_strength);
         }
 
-        if (dashed)
-        {
-            dashed = false;
-            dashDelta = dashCooldown;
-            Dash(delta);
-
-        }
+        
         if (dashDelta > 0)
         {
             dashDelta -= (float)delta;
@@ -106,16 +120,17 @@ public partial class Player : CharacterBody2D
         MoveAndSlide();
     }
 
-    public void Dash(double delta)
+    public void Dash()
     {
-        //self note: DOES NOT WORK - CHECK BROWSER WHEN U GET BACK TO THIS
-        
-        Vector2 dashVector = GetGlobalMousePosition() - GlobalPosition;
-        GD.Print("Player position: " + GlobalPosition);
-        GD.Print("Cursor position: "+ GetGlobalMousePosition());
-        GD.Print("DashVector: "+dashVector);
-        GD.Print("DashVector normalized: " + dashVector.Normalized()*400);
-        Velocity += dashVector.Normalized()*1000;
+        dashVector = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+        currentDashSpeed = dashSpeed;
+        Velocity = dashVector * currentDashSpeed;
+        isDashing = true;
+        dashed = false;
+        //GD.Print("Player position: " + GlobalPosition);
+        //GD.Print("Cursor position: "+ GetGlobalMousePosition());
+        //GD.Print("DashVector: "+dashVector);
+        //GD.Print("DashVector normalized: " + dashVector.Normalized()*400);
     }
     public void playerMovement(double delta)
     {
