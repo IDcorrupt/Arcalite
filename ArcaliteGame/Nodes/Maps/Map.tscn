@@ -94,7 +94,7 @@ distance = -1.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3w6l2"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Map" type="Node2D"]
 script = ExtResource("1_83bny")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -102,31 +102,30 @@ tile_map_data = PackedByteArray("AAAAABMAAQAFAAMAAAAAABIAAQAFAAMAAAAAABEAAQAFAAM
 tile_set = SubResource("TileSet_kr8vf")
 
 [node name="Terrain" type="StaticBody2D" parent="."]
-position = Vector2(386, 444)
 
 [node name="walls2" type="CollisionShape2D" parent="Terrain"]
-position = Vector2(-370, -265)
+position = Vector2(16.1627, 179)
 rotation = 1.5708
 shape = SubResource("WorldBoundaryShape2D_k1n02")
 
 [node name="walls" type="CollisionShape2D" parent="Terrain"]
-position = Vector2(238, -263)
+position = Vector2(624.163, 181)
 rotation = -1.5708
 shape = SubResource("WorldBoundaryShape2D_1448l")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Terrain"]
-position = Vector2(-227.317, -137.472)
+position = Vector2(158.846, 306.528)
 scale = Vector2(0.496774, 0.530427)
 polygon = PackedVector2Array(229, -65, 229, -34, 260, -34, 260, 61, -251, 61, -251, -34, -219, -34, -219, -65)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Terrain"]
-position = Vector2(60.0206, -172)
+position = Vector2(446.183, 272)
 scale = Vector2(0.50406, 0.499427)
 polygon = PackedVector2Array(68, -65, 68, -32, 99, -32, 99, 63, -252, 63, -252, -32, -220, -32, -220, -65)
 
 [node name="temp bottom barrier" type="CollisionShape2D" parent="Terrain"]
-position = Vector2(-77, -85)
+position = Vector2(309.163, 359)
 shape = SubResource("WorldBoundaryShape2D_3w6l2")
 
 [node name="SpawnPoint" type="Node2D" parent="."]
-position = Vector2(167, 257)
+position = Vector2(389, 185)
