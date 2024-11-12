@@ -12,7 +12,7 @@ post - regisztráció
 
 patch - név/jelszó/email változtatás
 
-delete - fiók törlés
+delete - fiók törlés - ha törölt akkor az email és a jelszó NULL
 
 -----MENTÉS/BETÖLTÉS/STATISZTIKA-----
 

@@ -148,7 +148,7 @@ input{
 
 input[type="submit"]{
     height: 60px;
-    width: 100px;
+    /*width: 100px;*/
 }
 
 label{
