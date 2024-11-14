@@ -152,3 +152,10 @@ attack_charge-alt={
 [internationalization]
 
 locale/translations_pot_files=PackedStringArray("res://Nodes/Menus/mainmenu.tscn", "res://Nodes/Menus/submenuNewGame.tscn", "res://Nodes/Menus/submenuSettings.tscn", "res://Nodes/Menus/submenuStart.tscn")
+
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Enemies"
+2d_physics/layer_3="Terrain"
+2d_physics/layer_4="Player_Projectiles"

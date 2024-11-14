@@ -1,54 +1,63 @@
 using Godot;
 using System;
+using System.Net;
 
 public partial class BasicProjectile : CharacterBody2D
 {
 	//values
 	[Export] public Vector2 direction;
-	[Export] public float damageDealt;
+	[Export] public float damagePayload;
 
-	private Object collider;
+	public bool targetHit = false;
+
 
 	//nodes
-	private RayCast2D rayCast;
 	private AnimatedSprite2D animatedSprite;
 	public override void _Ready()
 	{
         animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		rayCast = GetNode<RayCast2D>("RayCast2D");
+		
         animatedSprite.Play("fly");
+
     }
 
 
-    public bool CheckCollision()
+    
+	public void HitTerrain(Vector2 collisionNormal)
 	{
-		if (rayCast.IsColliding())
-		{
-			collider = rayCast.GetCollider();
-			if(collider is StaticBody2D) return true;
-			return false;
-		}
-		return false;
+        //calculate collision vector normal for animation rotation
+        float hitAngle = collisionNormal.Angle() + Mathf.Pi/2;
+        Rotation = hitAngle;
+
+		//play explosion
+		animatedSprite.Position = new Vector2(0, 0);
+        animatedSprite.Play("terrain_hit");
 	}
-	public void Hit()
+	public void HitEnemy()
 	{
-		if (collider is StaticBody2D)
-		{
-			animatedSprite.Play("terrain_hit");
-		}
+
 	}
 
 	public void AnimationFinished()
 	{
-		//QueueFree();
+		QueueFree();
 	}
 	public override void _Process(double delta)
 	{
-		//[SELF NOTE] - GAME CRASHES WITH ALL FUNCTIONS, PLS CONTINUE DEBUG :33
-		Vector2 vel = new Vector2(direction.X*(float)delta*1000, direction.Y*(float)delta*1000);
-		MoveAndCollide(vel);
-			
-		
+		if (!targetHit)
+		{
+			Vector2 vel = direction * 800 * (float)delta;
 
-	}
+            var collision = MoveAndCollide(vel);
+
+			if(collision != null && collision.GetCollider() is StaticBody2D)
+			{
+				targetHit = true;
+				Vector2 collisionNormal = collision.GetNormal();
+
+				HitTerrain(collisionNormal);
+			}
+            
+        }
+    }
 }

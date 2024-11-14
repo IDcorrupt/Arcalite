@@ -240,28 +240,26 @@ animations = [{
 "speed": 20.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_10owm"]
-size = Vector2(53, 9)
+[sub_resource type="CircleShape2D" id="CircleShape2D_deoj5"]
+radius = 1.66667
 
 [node name="Projectile" type="CharacterBody2D"]
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.6, 0.6)
+collision_layer = 8
+collision_mask = 6
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_i8qdc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-25, 0)
 sprite_frames = SubResource("SpriteFrames_bwpgh")
 animation = &"fly"
+offset = Vector2(1.90735e-06, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2.5, 0)
-scale = Vector2(0.999999, 0.999999)
-shape = SubResource("RectangleShape2D_10owm")
-disabled = true
-one_way_collision_margin = 0.0
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(35, 0)
-collide_with_areas = true
+rotation = -1.5708
+shape = SubResource("CircleShape2D_deoj5")
+one_way_collision = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="AnimationFinished"]

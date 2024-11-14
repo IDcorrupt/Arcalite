@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using System.Security.Principal;
 using System.Text;
@@ -7,41 +8,48 @@ using System.Text;
 public partial class Player : CharacterBody2D
 {
     //values
+        //crouch
+        private int defHB_X = 16;       //hitbox for crouch
+        private int defHB_Y = 38;       //hitbo for crouch
+        private int isCrouching = 1;    //crouch bool (at least it should be bool but i didn't change it back)
 
-    //crouch
-    private int defHB_X = 16;       //hitbox for crouch
-    private int defHB_Y = 38;       //hitbo for crouch
-    private int isCrouching = 1;    //crouch bool (at least it should be bool but i didn't change it back)
-    //movement
-    private int max_speed = 300;        //maximum X vector value
-    private double vel = 0;             //X velocity
-    private int jump_strength = 450;    //jump height/strenght
-    private float GRAVITY = 1500f;      //gravity, duh
-    private float prevDir = 0;          //last movement direction for deceleration
+        //movement
+        private int maxSpeed = 300;         //maximum X vector value
+        private double vel = 0;             //X velocity
+        private int jumpStrength = 450;     //jump height/strength
+        private float GRAVITY = 1500f;      //gravity, duh
+        private float prevDir = 0;          //last movement direction for deceleration
+ 
+        //dash
+        private float dashCooldown = 1f;        //dash cooldown constant
+        private float dashDelta = 0f;           //dash cooldown remaining
+        private bool dashed = false;            //dash initiated
+        private float dashSpeed = 2000f;        //initial dash speed
+        private float dashDecayRate = 15000f;   //dash speed decay rate
+        private float currentDashSpeed = 0f;    //current dash speed
+        private bool isDashing = false;         //is dash currently active
+        private Vector2 dashVector;             //fixed vector for dash endpoint -> dash follows mouse otherwise :3
 
-    
-    //dash
-    private float dashCooldown = 1f;        //dash cooldown constant
-    private float dashDelta = 0f;           //dash cooldown remaining
-    private bool dashed = false;            //dash initiated
-    private float dashSpeed = 2000f;        //initial dash speed
-    private float dashDecayRate = 15000f;    //dash speed decay rate
-    private float currentDashSpeed = 0f;    //current dash speed
-    private bool isDashing = false;         //is dash currently active
-    private Vector2 dashVector;             //fixed vector for dash endpoint -> dash follows mouse otherwise :3
+        //attacks
+        private float BACooldown = 0.2f;    //basic attack cooldown constant
+        private float BADelta = 0f;         //basic attack cooldown remaining
+        private float CACooldown = 5f;      //charge attack cooldown constant
+        private float CADelta = 0f;         //charge attack cooldown remaining
+        private bool CAisCharging = false;  //is charge attack currently charging
+        private float CACharge = 0f;        //used to track charge progress
+        private int chargeLevel = 0;
 
-    //attacks
-    private float damage;               //damage value [CALCULATIONS TBD]
-    private float BACooldown = 0.2f;    //basic attack cooldown constant
-    private float BADelta = 0f;         //basic attack cooldown remaining
-    private float CACooldown = 2f;      //charge attack cooldown constant
-    private float CADelta = 0f;         //charge attack cooldown remaining
-    private bool CACharging = false;    //is charge attack currently charging
-
-    //nodes
-    private CollisionShape2D HitBox;
-    private PackedScene basicProjectile;
-    private AnimatedSprite2D Sprite;
+        //stats
+        private float MaxHP = 100;
+        private float MaxMP = 100;
+    //spd & dot if class system get implemented
+        private float ActualHP;
+        private float ActualMP;
+        //nodes
+        private CollisionShape2D HitBox;
+        private PackedScene basicProjectile;
+        private PackedScene chargeProjectile;
+        private AnimatedSprite2D Sprite;
     
     public override void _Ready()
     {
@@ -49,6 +57,7 @@ public partial class Player : CharacterBody2D
         HitBox = GetNode<CollisionShape2D>("HitBox");
         Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         basicProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/basic_projectile.tscn");
+        chargeProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/charge_projectile.tscn");
         //go to spawnpoint
         Position = Globals.spawnPoint.Position;
     }
@@ -102,8 +111,8 @@ public partial class Player : CharacterBody2D
         Vector2 input = getInputs();
         if (input.X != 0)
         {
-            if (vel < max_speed) vel += delta * 2000;
-            else if (vel > max_speed) vel -= delta * 2000;
+            if (vel < maxSpeed) vel += delta * 2000;
+            else if (vel > maxSpeed) vel -= delta * 2000;
             Velocity = new Vector2((float)(input.X * vel), Velocity.Y);
             prevDir = input.X;
         }
@@ -122,7 +131,7 @@ public partial class Player : CharacterBody2D
         }
         if (input.Y != 0)
         {
-            Velocity = new Vector2(Velocity.X, Velocity.Y-jump_strength);
+            Velocity = new Vector2(Velocity.X, Velocity.Y-jumpStrength);
         }
 
         
@@ -186,26 +195,82 @@ public partial class Player : CharacterBody2D
             Vector2 direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
             projectile.Rotation = direction.Angle();
             projectile.direction = direction;
-            projectile.damageDealt = 1;
+            projectile.damagePayload = 1;
         }
 
     }
+
+    public void ChargeAttack(int chargeLevel)
+    {
+        Node2D node = (Node2D)chargeProjectile.Instantiate();
+        GetParent().GetParent().AddChild(node);
+        if (node is ChargeProjectile projectile)
+        {
+            projectile.Position = GlobalPosition;
+            Vector2 direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+            projectile.chargeLevel = chargeLevel;
+            projectile.Rotation = direction.Angle();
+            projectile.direction = direction;
+            projectile.damagePayload = 1;
+            projectile.imports = true;
+        }
+    }
     
+
+
     public override void _PhysicsProcess(double delta)
     {
         if (Globals.playerControl)
         {
-            Movement(delta);
 
-            if ((Input.IsActionPressed("attack_normal") || Input.IsActionPressed("attack_normal-alt")) && BADelta == 0 && !CACharging)
+            if ((Input.IsActionPressed("attack_normal") || Input.IsActionPressed("attack_normal-alt")) && BADelta == 0 && !CAisCharging)
             {
                 BasicAttack();
                 BADelta = BACooldown;
             }
 
+            if(Input.IsActionPressed("attack_charge") || Input.IsActionPressed("attack_charge-alt"))
+            {
+                CAisCharging = true;
+            }
+            if (Input.IsActionJustReleased("attack_charge") || Input.IsActionJustReleased("attack_charge-alt"))
+            {
+                CAisCharging = false;
+            }
+
+            if (CAisCharging)
+            {
+                CACharge += Mathf.Round((float)delta * 50);
+                if (CACharge >= 100)
+                {
+                    chargeLevel = 4;
+                }
+                else if (CACharge >= 80)
+                {
+                    chargeLevel = 3;
+                }
+                else if (CACharge >= 60)
+                {
+                    chargeLevel = 2;
+                }
+                else if (CACharge >= 40)
+                {
+                    chargeLevel = 1;
+                }
+
+            }
+            else
+            { 
+                if(CACharge > 40)
+                {
+                    ChargeAttack(chargeLevel);
+                    CADelta = CACooldown;
+                }
+                CACharge = 0;
+            }
 
 
-
+            Movement(delta);
         }
 
         //cooldown resets
