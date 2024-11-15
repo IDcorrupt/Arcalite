@@ -1,105 +1,169 @@
 using Godot;
 using System;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
+using System.Security.Principal;
 using System.Text;
 
 public partial class Player : CharacterBody2D
 {
     //values
-    private int max_speed = 250;
-    private int isCrouching = 1;
-    private int acceleration = 800;
-    private int friction = 4000;
-    private int jump_strength = 450;
-    private float GRAVITY = 1500f;
-    private int defHB_X = 16;
-    private int defHB_Y = 38;
+        //crouch
+        private int defHB_X = 16;       //hitbox for crouch
+        private int defHB_Y = 38;       //hitbo for crouch
+        private int isCrouching = 1;    //crouch bool (at least it should be bool but i didn't change it back)
 
-    //nodes
-    private CollisionShape2D HitBox;
+        //movement
+        private int maxSpeed = 300;         //maximum X vector value
+        private double vel = 0;             //X velocity
+        private int jumpStrength = 450;     //jump height/strength
+        private float GRAVITY = 1500f;      //gravity, duh
+        private float prevDir = 0;          //last movement direction for deceleration
+ 
+        //dash
+        private float dashCooldown = 1f;        //dash cooldown constant
+        private float dashDelta = 0f;           //dash cooldown remaining
+        private bool dashed = false;            //dash initiated
+        private float dashSpeed = 2000f;        //initial dash speed
+        private float dashDecayRate = 15000f;   //dash speed decay rate
+        private float currentDashSpeed = 0f;    //current dash speed
+        private bool isDashing = false;         //is dash currently active
+        private Vector2 dashVector;             //fixed vector for dash endpoint -> dash follows mouse otherwise :3
 
+        //attacks
+        private float BACooldown = 0.2f;    //basic attack cooldown constant
+        private float BADelta = 0f;         //basic attack cooldown remaining
+        private float CACooldown = 5f;      //charge attack cooldown constant
+        private float CADelta = 0f;         //charge attack cooldown remaining
+        private bool CAisCharging = false;  //is charge attack currently charging
+        private float CACharge = 0f;        //used to track charge progress
+        private int chargeLevel = 0;
+
+        //stats
+        private float MaxHP = 100;
+        private float MaxMP = 100;
+    //spd & dot if class system get implemented
+        private float ActualHP;
+        private float ActualMP;
+        //nodes
+        private CollisionShape2D HitBox;
+        private PackedScene basicProjectile;
+        private PackedScene chargeProjectile;
+        private AnimatedSprite2D Sprite;
     
     public override void _Ready()
     {
-        // Get the CollisionShape2D node
+        //Get nodes
         HitBox = GetNode<CollisionShape2D>("HitBox");
+        Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        basicProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/basic_projectile.tscn");
+        chargeProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/charge_projectile.tscn");
+        //go to spawnpoint
+        Position = Globals.spawnPoint.Position;
     }
 
 
-    public Vector2 inputExp()
+    //movement functions
+    public Vector2 getInputs()
     {
         Vector2 direction = new();
-
-        direction.X = Convert.ToInt32(Input.IsActionPressed("game_right")) - Convert.ToInt32(Input.IsActionPressed("game_left"));
-        if (Input.IsActionPressed("game_jump"))
+        
+        direction.X = Convert.ToInt32(Input.IsActionPressed("move_right")) - Convert.ToInt32(Input.IsActionPressed("move_left"));
+        if (direction.X == 1)Sprite.FlipH = false; 
+        else if (direction.X == -1) Sprite.FlipH = true;
+        if (Input.IsActionPressed("move_jump"))
         {
             if (IsOnFloor())
             {
                 direction.Y = -1;
             }
         }
-        if(Input.IsActionPressed("game_crouch")) isCrouching = 2; else isCrouching = 1;
+        if(Input.IsActionPressed("move_crouch")) isCrouching = 2; else isCrouching = 1;
+        if (Input.IsActionPressed("move_dash") && dashDelta == 0) dashed = true;
         return direction;
     }
-
-
-    public void playerMovement(double delta)
+    public void Movement(double delta)
     {
-        //get input
-        Vector2 input = inputExp();
-
-        if (input.X == 0)
+        //movement controls interrupted when dash is in progress
+        if (isDashing)
         {
-            //no input
-            if (Velocity.X > (friction * delta))
+            if (currentDashSpeed > 0)
             {
-                //add friction to slow player
-                //Velocity -= Velocity.Normalized() * (float)(friction*delta);
-                Velocity = new Vector2 (Velocity.X - (float)(friction * delta), Velocity.Y);
-            }
-            else if (Velocity.X < (friction * delta * -1))
+                currentDashSpeed -= dashDecayRate * (float)delta;
+                Velocity = dashVector * Mathf.Max(currentDashSpeed, 0);
+            }else
             {
-                Velocity = new Vector2(Velocity.X + (float)(friction * delta), Velocity.Y);
+                isDashing = false;
             }
-            //stop so it doesn't start moving the other way
-            else Velocity = new Vector2(0, Velocity.Y);
+            MoveAndSlide();
+            return;
         }
-        else
-        {
-            //if input -> add corresponding velocity
-            Velocity = new Vector2(Velocity.X + input.X * (float)(acceleration * delta), Velocity.Y);
 
-        }
-        //limit max speed
-        if (Velocity.X > max_speed)
+        //initiate dash
+        if (dashed)
         {
-            Velocity = new Vector2(max_speed, Velocity.Y);
+            dashed = false;
+            dashDelta = dashCooldown;
+            Dash();
         }
-        else if (Velocity.X < -max_speed)
-        {
 
-            Velocity = new Vector2(-max_speed, Velocity.Y);
+        //normal movement
+        Vector2 input = getInputs();
+        if (input.X != 0)
+        {
+            if (vel < maxSpeed) vel += delta * 2000;
+            else if (vel > maxSpeed) vel -= delta * 2000;
+            Velocity = new Vector2((float)(input.X * vel), Velocity.Y);
+            prevDir = input.X;
+        }
+        else if (input.X == 0)
+        {
+            if (vel > 0)
+            {
+                vel -= delta * 2500;
+            }
+            else
+            {
+                vel = 0;
+                prevDir = 0;
+            }
+                Velocity = new Vector2((float)(prevDir * vel), Velocity.Y);
         }
         if (input.Y != 0)
         {
-            Velocity = new Vector2 (Velocity.X,Velocity.Y -jump_strength);
+            Velocity = new Vector2(Velocity.X, Velocity.Y-jumpStrength);
         }
-        //execute move
+
+        
+        if (dashDelta > 0)
+        {
+            dashDelta -= (float)delta;
+        }else dashDelta = 0;
         CrouchApply();
         fall(delta);
         MoveAndSlide();
-
     }
-
+    public void Dash()
+    {
+        dashVector = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+        currentDashSpeed = dashSpeed;
+        Velocity = dashVector * currentDashSpeed;
+        isDashing = true;
+        dashed = false;
+        //GD.Print("Player position: " + GlobalPosition);
+        //GD.Print("Cursor position: "+ GetGlobalMousePosition());
+        //GD.Print("DashVector: "+dashVector);
+        //GD.Print("DashVector normalized: " + dashVector.Normalized()*400);
+    }
     public void fall(double delta)
     {
         Velocity = new Vector2(Velocity.X, Velocity.Y + (float)(GRAVITY * delta));
     }
-
     public void CrouchApply()
     {
         if (isCrouching == 2)
         {
-            Velocity = new Vector2 ((float)(Velocity.X/1.3), Velocity.Y);
+            Velocity = new Vector2 ((float)(Velocity.X/1.5), Velocity.Y);
             if (Velocity.Y > 0)
             {
                 Velocity = new Vector2(Velocity.X, (float)(Velocity.Y * 1.2));
@@ -120,16 +184,104 @@ public partial class Player : CharacterBody2D
 
     }
 
+    //attack functions
+    public void BasicAttack()
+    {
+        Node2D node = (Node2D)basicProjectile.Instantiate();
+        GetParent().GetParent().AddChild(node);
+        if (node is BasicProjectile projectile)
+        {
+            projectile.Position = GlobalPosition;
+            Vector2 direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+            projectile.Rotation = direction.Angle();
+            projectile.direction = direction;
+            projectile.damagePayload = 1;
+        }
+
+    }
+
+    public void ChargeAttack(int chargeLevel)
+    {
+        Node2D node = (Node2D)chargeProjectile.Instantiate();
+        GetParent().GetParent().AddChild(node);
+        if (node is ChargeProjectile projectile)
+        {
+            projectile.Position = GlobalPosition;
+            Vector2 direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+            projectile.chargeLevel = chargeLevel;
+            projectile.Rotation = direction.Angle();
+            projectile.direction = direction;
+            projectile.damagePayload = 1;
+            projectile.imports = true;
+        }
+    }
+    
+
 
     public override void _PhysicsProcess(double delta)
     {
         if (Globals.playerControl)
         {
-            playerMovement(delta);
+
+            if ((Input.IsActionPressed("attack_normal") || Input.IsActionPressed("attack_normal-alt")) && BADelta == 0 && !CAisCharging)
+            {
+                BasicAttack();
+                BADelta = BACooldown;
+            }
+
+            if(Input.IsActionPressed("attack_charge") || Input.IsActionPressed("attack_charge-alt"))
+            {
+                CAisCharging = true;
+            }
+            if (Input.IsActionJustReleased("attack_charge") || Input.IsActionJustReleased("attack_charge-alt"))
+            {
+                CAisCharging = false;
+            }
+
+            if (CAisCharging)
+            {
+                CACharge += Mathf.Round((float)delta * 50);
+                if (CACharge >= 100)
+                {
+                    chargeLevel = 4;
+                }
+                else if (CACharge >= 80)
+                {
+                    chargeLevel = 3;
+                }
+                else if (CACharge >= 60)
+                {
+                    chargeLevel = 2;
+                }
+                else if (CACharge >= 40)
+                {
+                    chargeLevel = 1;
+                }
+
+            }
+            else
+            { 
+                if(CACharge > 40)
+                {
+                    ChargeAttack(chargeLevel);
+                    CADelta = CACooldown;
+                }
+                CACharge = 0;
+            }
+
+
+            Movement(delta);
         }
 
-
-
+        //cooldown resets
+        if (BADelta > 0)
+        {
+            BADelta -= (float)delta;
+        }else BADelta = 0;
+        if (CADelta > 0)
+        {
+            CADelta -= (float)delta;
+        }else CADelta = 0;
     }
 
 }

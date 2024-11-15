@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=4 uid="uid://d371iehcx1ly2"]
 
 [ext_resource type="Texture2D" uid="uid://bm61jaa36wan2" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_forest.png" id="1_8rrmi"]
+[ext_resource type="Script" path="res://Scripts/Maps/Map.cs" id="1_83bny"]
 [ext_resource type="Texture2D" uid="uid://xw0yamxevqgy" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_lava.png" id="2_l66xn"]
-[ext_resource type="PackedScene" uid="uid://dbunyy0mgmnu1" path="res://Nodes/Game/player.tscn" id="3_lmxb3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8y2ji"]
 texture = ExtResource("1_8rrmi")
@@ -86,46 +86,73 @@ texture = ExtResource("2_l66xn")
 sources/0 = SubResource("TileSetAtlasSource_8y2ji")
 sources/1 = SubResource("TileSetAtlasSource_60j45")
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3w6l2"]
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k1n02"]
 normal = Vector2(0.0116824, -0.999932)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1448l"]
 distance = -1.0
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3w6l2"]
-
-[node name="Node2D" type="Node2D"]
+[node name="Map" type="Node2D"]
+script = ExtResource("1_83bny")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAAAABMAAQAFAAMAAAAAABIAAQAFAAMAAAAAABEAAQAFAAMAAAAAABAAAQAFAAMAAAAAAA8AAQAFAAMAAAAAAA4AAQAFAAMAAAAAAA0AAQAFAAMAAAAAAAwAAQAFAAMAAAAAAAsAAQAFAAMAAAAAAAoAAQAFAAMAAAAAAAkAAQAFAAMAAAAAAAgAAQAFAAMAAAAAAAcAAQAFAAMAAAAAAAYAAQAFAAMAAAAAAAUAAQAFAAMAAAAAAAQAAQAFAAMAAAAAAAMAAQAFAAMAAAAAAAIAAQAFAAMAAAAAAAEAAQAFAAMAAAAAAAAAAQAFAAIAAAAAABQAAQAFAAMAAAAAABUAAQAFAAMAAAAAABYAAQAFAAMAAAAnAAAAAQABAAMAAAAnAAEAAQABAAMAAAAnAAIAAQABAAMAAAAnAAMAAQABAAMAAAAnAAQAAQABAAMAAAAnAAUAAQABAAMAAAAnAAYAAQABAAMAAAAnAAcAAQABAAMAAAAnAAgAAQABAAMAAAAnAAkAAQABAAMAAAAnAAoAAQABAAMAAAAnAAsAAQABAAMAAAAnAAwAAQABAAMAAAAnAA0AAQABAAMAAAAnAA4AAQABAAMAAAAnAA8AAQABAAMAAAAnABAAAQABAAMAAAAnABEAAQABAAMAAAAnABIAAQABAAMAAAAnABMAAQABAAMAAAAnABQAAQABAAMAAAAnABUAAQABAAMAAAAnABYAAQABAAMAAAAEABEAAAADAAEAAAAEABIAAAADAAIAAAAFABEAAAADAAEAAAAFABIAAAADAAIAAAAGABEAAAAEAAEAAAAGABIAAAAEAAIAAAAHABEAAAADAAEAAAAHABIAAAADAAIAAAAIABEAAAAEAAEAAAAIABIAAAAEAAIAAAAJABEAAAADAAEAAAAJABIAAAADAAIAAAAKABEAAAAEAAEAAAAKABIAAAAEAAIAAAALABEAAAADAAEAAAALABIAAAADAAIAAAAMABEAAAAEAAEAAAAMABIAAAAEAAIAAAANABEAAAADAAEAAAANABIAAAADAAIAAAAOABEAAAAEAAEAAAAOABIAAAADAAIAAAAPABEAAAADAAEAAAAPABIAAAAEAAIAAAAQABEAAAAFAAEAAAAQABIAAAAFAAIAAAARABEAAAAGAAEAAAARABIAAAAGAAIAAAACABIAAAABAAIAAAACABMAAAABAAMAAAACABQAAAABAAQAAAADABEAAAACAAEAAAADABIAAAACAAIAAAADABMAAAACAAMAAAADABQAAAACAAQAAAAEABMAAAADAAMAAAAEABQAAAADAAQAAAAFABMAAAADAAMAAAAFABQAAAACAAQAAAAGABMAAAAEAAMAAAAGABQAAAADAAQAAAAHABMAAAADAAMAAAAHABQAAAAEAAQAAAAIABMAAAAEAAMAAAAIABQAAAAFAAQAAAAJABMAAAADAAMAAAAJABQAAAACAAQAAAAKABMAAAAEAAMAAAAKABQAAAADAAQAAAALABMAAAADAAMAAAALABQAAAAEAAQAAAAMABMAAAAEAAMAAAAMABQAAAACAAQAAAANABMAAAADAAMAAAANABQAAAADAAQAAAAOABMAAAADAAMAAAAOABQAAAAEAAQAAAAPABMAAAAEAAMAAAAPABQAAAAFAAQAAAAQABMAAAAFAAMAAAAQABQAAAAFAAQAAAARABMAAAAGAAMAAAARABQAAAAGAAQAAAAWAA8AAAADAAEAAAAXAA8AAAADAAEAAAAYAA8AAAADAAEAAAAZAA8AAAAEAAEAAAAaAA8AAAADAAEAAAAbAA8AAAAEAAEAAAAcAA8AAAADAAEAAAAdAA8AAAAFAAEAAAAeAA8AAAAGAAEAAAAUABAAAAABAAIAAAAUABEAAAABAAMAAAAUABIAAAABAAQAAAAVAA8AAAACAAEAAAAVABAAAAACAAIAAAAVABEAAAACAAMAAAAVABIAAAACAAQAAAAWABAAAAADAAIAAAAWABEAAAADAAMAAAAWABIAAAADAAQAAAAXABAAAAADAAIAAAAXABEAAAADAAMAAAAXABIAAAACAAQAAAAYABAAAAADAAIAAAAYABEAAAADAAMAAAAYABIAAAAEAAQAAAAZABAAAAAEAAIAAAAZABEAAAAEAAMAAAAZABIAAAACAAQAAAAaABAAAAADAAIAAAAaABEAAAADAAMAAAAaABIAAAADAAQAAAAbABAAAAADAAIAAAAbABEAAAADAAMAAAAbABIAAAAEAAQAAAAcABAAAAAEAAIAAAAcABEAAAAEAAMAAAAcABIAAAAFAAQAAAAdABAAAAAFAAIAAAAdABEAAAAFAAMAAAAdABIAAAAFAAQAAAAeABAAAAAGAAIAAAAeABEAAAAGAAMAAAAeABIAAAAGAAQAAAA=")
 tile_set = SubResource("TileSet_kr8vf")
 
-[node name="Terrain" type="StaticBody2D" parent="."]
-position = Vector2(386, 444)
+[node name="Terrain" type="Node2D" parent="."]
 
-[node name="walls2" type="CollisionShape2D" parent="Terrain"]
-position = Vector2(-370, -265)
+[node name="temp bottom barrier" type="StaticBody2D" parent="Terrain"]
+collision_layer = 4
+collision_mask = 9
+metadata/Type = "floor"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/temp bottom barrier"]
+position = Vector2(309.163, 359)
+shape = SubResource("WorldBoundaryShape2D_3w6l2")
+
+[node name="walls2" type="StaticBody2D" parent="Terrain"]
+position = Vector2(309.163, 359)
+collision_layer = 4
+collision_mask = 9
+metadata/Type = "wall"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/walls2"]
+position = Vector2(-291.163, -179)
 rotation = 1.5708
 shape = SubResource("WorldBoundaryShape2D_k1n02")
 
-[node name="walls" type="CollisionShape2D" parent="Terrain"]
-position = Vector2(238, -263)
+[node name="walls" type="StaticBody2D" parent="Terrain"]
+position = Vector2(309.163, 359)
+collision_layer = 4
+collision_mask = 9
+metadata/Type = "wall"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/walls"]
+position = Vector2(311.837, -178)
 rotation = -1.5708
 shape = SubResource("WorldBoundaryShape2D_1448l")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Terrain"]
-position = Vector2(-227.317, -137.472)
+[node name="Island1" type="StaticBody2D" parent="Terrain"]
+position = Vector2(309.163, 359)
+collision_layer = 4
+collision_mask = 9
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Terrain/Island1"]
+position = Vector2(-150.317, -52.472)
 scale = Vector2(0.496774, 0.530427)
 polygon = PackedVector2Array(229, -65, 229, -34, 260, -34, 260, 61, -251, 61, -251, -34, -219, -34, -219, -65)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Terrain"]
-position = Vector2(60.0206, -172)
+[node name="Island2" type="StaticBody2D" parent="Terrain"]
+position = Vector2(309.163, 359)
+collision_layer = 4
+collision_mask = 9
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Terrain/Island2"]
+position = Vector2(137.021, -87)
 scale = Vector2(0.50406, 0.499427)
 polygon = PackedVector2Array(68, -65, 68, -32, 99, -32, 99, 63, -252, 63, -252, -32, -220, -32, -220, -65)
 
-[node name="temp bottom barrier" type="CollisionShape2D" parent="Terrain"]
-position = Vector2(-77, -85)
-shape = SubResource("WorldBoundaryShape2D_3w6l2")
-
-[node name="Node2D" parent="." instance=ExtResource("3_lmxb3")]
-position = Vector2(171, 244)
+[node name="SpawnPoint" type="Node2D" parent="."]
+position = Vector2(389, 185)

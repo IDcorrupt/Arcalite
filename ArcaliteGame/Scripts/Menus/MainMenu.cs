@@ -25,6 +25,7 @@ public partial class MainMenu : Control
         Settings.Pressed += SettingsPressed;
         Website.Pressed += WebsitePressed;
         Quit.Pressed += QuitPressed;
+        
     }
 
 
