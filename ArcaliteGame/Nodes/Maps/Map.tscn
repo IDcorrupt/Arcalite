@@ -155,4 +155,4 @@ scale = Vector2(0.50406, 0.499427)
 polygon = PackedVector2Array(68, -65, 68, -32, 99, -32, 99, 63, -252, 63, -252, -32, -220, -32, -220, -65)
 
 [node name="SpawnPoint" type="Node2D" parent="."]
-position = Vector2(389, 185)
+position = Vector2(151, 207)

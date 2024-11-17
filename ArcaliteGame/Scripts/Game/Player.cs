@@ -10,11 +10,13 @@ public partial class Player : CharacterBody2D
     //values
         //crouch
         private int defHB_X = 16;       //hitbox for crouch
-        private int defHB_Y = 38;       //hitbo for crouch
-        private int isCrouching = 1;    //crouch bool (at least it should be bool but i didn't change it back)
+        private int defHB_Y = 29;       //hitbo for crouch
+        private bool isCrouching = false;    //crouch bool (at least it should be bool but i didn't change it back)
+        private bool crouchDown = false;    // up & down required for animations
+        private bool crouchUp = false;      
 
-        //movement
-        private int maxSpeed = 300;         //maximum X vector value
+    //movement
+    private int maxSpeed = 300;         //maximum X vector value
         private double vel = 0;             //X velocity
         private int jumpStrength = 450;     //jump height/strength
         private float GRAVITY = 1500f;      //gravity, duh
@@ -42,13 +44,15 @@ public partial class Player : CharacterBody2D
         //stats
         private float MaxHP = 100;
         private float MaxMP = 100;
-    //spd & dot if class system get implemented
+        //spd & dot if class system get implemented
         private float ActualHP;
         private float ActualMP;
+    
         //nodes
         private CollisionShape2D HitBox;
         private PackedScene basicProjectile;
         private PackedScene chargeProjectile;
+        private PackedScene spellOracle;
         private AnimatedSprite2D Sprite;
     
     public override void _Ready()
@@ -58,8 +62,9 @@ public partial class Player : CharacterBody2D
         Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         basicProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/basic_projectile.tscn");
         chargeProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/charge_projectile.tscn");
+        spellOracle = (PackedScene)ResourceLoader.Load("res://Nodes/Game/spell_oracle.tscn");
         //go to spawnpoint
-        Position = Globals.spawnPoint.Position;
+        GlobalPosition = Globals.spawnPoint.Position;
     }
 
 
@@ -78,7 +83,7 @@ public partial class Player : CharacterBody2D
                 direction.Y = -1;
             }
         }
-        if(Input.IsActionPressed("move_crouch")) isCrouching = 2; else isCrouching = 1;
+        if(Input.IsActionPressed("move_crouch")) isCrouching = true; else isCrouching = false;
         if (Input.IsActionPressed("move_dash") && dashDelta == 0) dashed = true;
         return direction;
     }
@@ -150,10 +155,6 @@ public partial class Player : CharacterBody2D
         Velocity = dashVector * currentDashSpeed;
         isDashing = true;
         dashed = false;
-        //GD.Print("Player position: " + GlobalPosition);
-        //GD.Print("Cursor position: "+ GetGlobalMousePosition());
-        //GD.Print("DashVector: "+dashVector);
-        //GD.Print("DashVector normalized: " + dashVector.Normalized()*400);
     }
     public void fall(double delta)
     {
@@ -161,7 +162,7 @@ public partial class Player : CharacterBody2D
     }
     public void CrouchApply()
     {
-        if (isCrouching == 2)
+        if (isCrouching)
         {
             Velocity = new Vector2 ((float)(Velocity.X/1.5), Velocity.Y);
             if (Velocity.Y > 0)
@@ -170,18 +171,72 @@ public partial class Player : CharacterBody2D
             }
             if (HitBox.Shape is RectangleShape2D rectangleShape)
             {
-                rectangleShape.Size = new Vector2(defHB_X, defHB_Y/2);
+                HitBox.Position = new Vector2(HitBox.Position.X, (float)2.143);
+                rectangleShape.Size = new Vector2(defHB_X, defHB_Y-5);
             }
         }
         else
         {
             if (HitBox.Shape is RectangleShape2D rectangleShape)
             {
+                HitBox.Position = new Vector2(HitBox.Position.X, (float)-0.714);
                 rectangleShape.Size = new Vector2(defHB_X, defHB_Y);
 
             }
         }
 
+    }
+
+
+    public void Animate()
+    {
+        //jump & fall
+        if (!IsOnFloor() && Velocity.Y < 0)
+        {
+            Sprite.Play("jump");
+        }
+        else if (!IsOnFloor() && Velocity.Y > 0)
+        {
+            Sprite.Play("fall");
+        }
+        else if(IsOnFloor())
+        {
+            //crouch
+            RectangleShape2D HBShape = (RectangleShape2D)HitBox.Shape;
+            GD.Print("!iscrouching: " + !isCrouching);
+            GD.Print("HB is not standing: " + (HBShape.Size.Y != defHB_Y));
+            GD.Print("crouchup before crouch funcs: " + crouchUp);
+            if (isCrouching && Sprite.Animation != "crouch")
+            {
+                crouchDown = true;
+                Sprite.Play("crouch");
+            }
+            else if (!isCrouching && Sprite.Animation == "crouch" && crouchUp == false)
+            {
+                crouchUp = true;
+                crouchDown = false;
+                Sprite.Play("crouch", -1, true);
+            }
+            if (Sprite.Animation == "crouch" && crouchUp && Sprite.Frame == 0)
+            {
+                crouchUp = false;
+            }
+
+            //walk
+            if (!crouchDown && !crouchUp)
+            {
+                if (Velocity.X != 0 && Sprite.Animation != "walk") Sprite.Play("walk");
+                if (Velocity.X == 0 && Sprite.Animation != "idle")
+                {
+                    Sprite.Play("idle");
+                }
+            }
+            else
+            {
+                //crouch walk anims here
+            }
+        }
+        
     }
 
     //attack functions
@@ -216,7 +271,10 @@ public partial class Player : CharacterBody2D
         }
     }
     
+    public void OracleSpell()
+    {
 
+    }
 
     public override void _PhysicsProcess(double delta)
     {
@@ -271,6 +329,7 @@ public partial class Player : CharacterBody2D
 
 
             Movement(delta);
+            Animate();
         }
 
         //cooldown resets

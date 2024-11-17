@@ -31,6 +31,10 @@ window/stretch/scale_mode="integer"
 
 project/assembly_name="Arcalite"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")
+
 [input]
 
 ui_select={
