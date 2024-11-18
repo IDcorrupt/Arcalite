@@ -1,6 +1,7 @@
-[gd_scene load_steps=30 format=3 uid="uid://ct5ut31hpqlw5"]
+[gd_scene load_steps=31 format=3 uid="uid://ct5ut31hpqlw5"]
 
 [ext_resource type="Texture2D" uid="uid://c7lhjm65dxbws" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 4/184.png" id="1_isjag"]
+[ext_resource type="Script" path="res://Scripts/Game/SpellOracle.cs" id="1_tfgop"]
 [ext_resource type="Texture2D" uid="uid://n7261op5ga55" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 12/586.png" id="2_1coxv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5pnbs"]
@@ -42,10 +43,6 @@ region = Rect2(512, 128, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ljykq"]
 atlas = ExtResource("1_isjag")
 region = Rect2(576, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rcqfv"]
-atlas = ExtResource("1_isjag")
-region = Rect2(640, 128, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r0k6y"]
 atlas = ExtResource("2_1coxv")
@@ -135,11 +132,8 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ljykq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rcqfv")
 }],
-"loop": true,
+"loop": false,
 "name": &"cast",
 "speed": 20.0
 }, {
@@ -204,18 +198,31 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_2eidv"]
 radius = 33.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_8bl2w"]
+
 [node name="Node2D" type="Node2D"]
-scale = Vector2(3, 3)
+scale = Vector2(2, 2)
+script = ExtResource("1_tfgop")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_cfljs")
-animation = &"sustained_end"
-frame = 4
-frame_progress = 1.0
+animation = &"sustained_start"
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 shape = SubResource("CircleShape2D_2eidv")
+disabled = true
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+scale = Vector2(3.3, 3.3)
+shape = SubResource("CircleShape2D_8bl2w")
+target_position = Vector2(0, 0)
+collide_with_areas = true
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnAnimationFinished"]
+[connection signal="animation_looped" from="AnimatedSprite2D" to="." method="OnAnimationLooped"]

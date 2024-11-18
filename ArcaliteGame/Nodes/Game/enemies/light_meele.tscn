@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmcjsoh4jx60g"]
+
+[ext_resource type="Script" path="res://Scripts/Game/Enemies/LightMeele.cs" id="1_yaydj"]
+[ext_resource type="Texture2D" uid="uid://3usmmqxmemtl" path="res://Assets/Sprites/Lajos.png" id="2_xpb5c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uxbem"]
+atlas = ExtResource("2_xpb5c")
+region = Rect2(0, 0, 9, 21)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3p25d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uxbem")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kps44"]
+size = Vector2(9, 21)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_yaydj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3p25d")
+
+[node name="DirectionTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="RoamCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kps44")
+
+[connection signal="timeout" from="DirectionTimer" to="." method="OnDirectionTimerTimeout"]
+[connection signal="timeout" from="RoamCooldown" to="." method="OnRoamCoolDownTimeout"]

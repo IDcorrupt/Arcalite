@@ -11,11 +11,12 @@ public partial class Map : Node2D
         Input.SetCustomMouseCursor(cursor);
         Node2D player = (Node2D)Player.Instantiate();
         AddChild(player);
-        player.Position = Globals.spawnPoint.Position;
+
     }
 
     public override void _Process(double delta)
     {
-        
+
+
     }
 }
