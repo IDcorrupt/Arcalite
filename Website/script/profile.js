@@ -1,6 +1,9 @@
+const verification_num_of_digits = 6;
+var verification_code;
+
 $(document).ready(function() {
 
-    $('#pwdagain_error').hide();
+    //----------REGISZTRÁCIÓ----------
 
     $('#registerform').on('submit', function(event) {
         event.preventDefault();
@@ -36,6 +39,8 @@ $(document).ready(function() {
     
     });
 
+    //----------BEJELENTKEZÉS----------
+
     $('#loginform').on('submit', function(event) {
         event.preventDefault();
 
@@ -59,12 +64,73 @@ $(document).ready(function() {
         });
     });
 
+    //----------ELFELEJTETT JELSZÓ----------
+
     $('#forgotpwd').click(function() {
-        //ide kell egy másik form D=
-        let num_of_digits = 6;
-        let verification_code = "";
-        for (let i = 0; i < num_of_digits; i++) { verification_code += Math.floor(Math.random() * 10); }
-        alert(`Az email-ben megkapott kód: ${verification_code}`)
+        $('#newpwd_authcode_container').hide();
+        $('#newpwd_newpwd_container').hide();
+
+        let email_input = $('#login_email').val();
+
+        if (email_input == "") {
+            alert('Adjon meg egy e-mail címet!');
+            return;   
+        }
+        if ( !email_input.includes('@') || !email_input.includes('.') || 
+              email_input.split('@').length != 2 || !email_input.split('@')[1].includes('.')) 
+        {
+            alert('Adjon meg egy helyes e-mail címet!');
+            return;
+        }
+
+        let payload = {
+            email: $('#login_email').val(),
+            request_type: "EMAIL_EXISTS"
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "api/misc.php",
+            data: payload,
+            global: false,
+            success: (data) => {
+                //data = JSON.parse(data);
+                if (!data.exists) {
+                    $('#login_error').html("Nincs ilyen e-mail cím regisztrálva!");
+                } else {
+                    verification_code = "";
+                    for (let i = 0; i < verification_num_of_digits; i++) { verification_code += Math.floor(Math.random() * 10); }
+                    alert(`Az email-ben megkapott kód: ${verification_code}`);
+                    
+                    $('#newpwd_authcode').val("");
+                    $('#newpwd_authcode_container').show();
+                    $('#newpwd_newpwd_container').hide();
+                }
+            },
+            error: (data) => {
+                $('#login_error').html(data.responseText);
+            }
+        })
     });
-    
+
+    $('#newpwd_verify').click(function() {
+        if ($('#newpwd_authcode').val() == "" || !isFinite($('#newpwd_authcode').val())) {
+            alert("Adja meg az e-mailben kapott kódot!");
+            return;
+        }
+
+        if ( parseInt($('#newpwd_authcode').val()) != verification_code ) {
+            alert("Helytelen kód!");
+            return;
+        }
+
+        $('#newpwd_authcode_container').hide();
+        $('#newpwd_newpwd_container').show();
+        $('#newpwd_newpwd').val("");
+        $('#newpwd_again').val("");
+    });
+
+    $('#newpwd_set').click(function(){
+
+    });
 });
