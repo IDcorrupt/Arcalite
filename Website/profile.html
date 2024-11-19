@@ -17,15 +17,15 @@
             <h2>Regisztráció</h2>
             <form id="registerform">
                 <label for="reg_username">Felhasználónév: </label>
-                <input type="text" id="reg_username" name="username" required>
+                <input type="text" id="reg_username" required>
                 <label for="reg_email">E-mail:</label>
-                <input type="email" id="reg_email" name="email" required>
+                <input type="email" id="reg_email" required>
                 <label for="reg_password">Jelszó: </label>
-                <input type="password" id="reg_password" name="password" required>
+                <input type="password" id="reg_password" required>
                 <label for="reg_passwordagain">Jelszó újra: </label>
-                <input type="password" id="reg_passwordagain" name="passwordagain" required>
-                <p id="pwdagain_error">Nem egyezik a fentebb megadott jelszóval!</p>
-                <input type="submit" id="register_btn" name="register" value="Regisztrál">
+                <input type="password" id="reg_passwordagain" required>
+                <p id="pwdagain_error" hidden>Nem egyezik a fentebb megadott jelszóval!</p>
+                <input type="submit" id="register_btn" value="Regisztrál">
                 <p id="register_error"></p>
             </form>
         </div>
@@ -33,11 +33,23 @@
             <h2>Bejelentkezés</h2>
             <form id="loginform">
                 <label for="login_email">E-mail:</label>
-                <input type="email" id="login_email" name="email" required>
+                <input type="email" id="login_email" required>
                 <label for="login_password">Jelszó: </label>
-                <input type="password" id="login_password" name="password" required>
-                <a href="" id="forgotpwd">Elfelejtett jelszó</a>
-                <input type="submit" id="login_btn" name="login_btn" value="Bejelentkezés">
+                <input type="password" id="login_password" required>
+                <input type="submit" id="login_btn" value="Bejelentkezés">
+                <input type="button" id="forgotpwd" value="Elfelejtett jelszó">
+                <div id="newpwd_authcode_container" hidden>
+                    <label for="newpwd_authcode">Az e-mailben küldött kód:</label>
+                    <input type="text" id="newpwd_authcode">
+                    <input type="button" id="newpwd_verify" value="Kód ellenőrzése">
+                </div>
+                <div id="newpwd_newpwd_container" hidden>
+                    <label for="newpwd_newpwd">Az új jelszó:</label>
+                    <input type="password" id="newpwd_newpwd">
+                    <label for="newpwd_again">Jelszó újra:</label>
+                    <input type="password" id="newpwd_again">
+                    <input type="button" id="newpwd_set" value="Új jelszó beállítása">
+                </div>
                 <p id="login_error"></p>
             </form>
         </div>

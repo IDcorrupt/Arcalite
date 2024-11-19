@@ -41,5 +41,6 @@ $query = "SELECT * FROM `profile` WHERE `email` = '$email' AND `password` = PASS
 $result = $db->query($query);
 $id = $result->fetch_assoc();
 
+header("Content-Type: application/json");
 echo json_encode($id, JSON_PRETTY_PRINT);
 http_response_code(200);
