@@ -54,9 +54,17 @@ $(document).ready(function() {
                 alert(data.id);
             },
             error: (data) => {
-                $('#login_error').html(data.responseText)
+                $('#login_error').html(data.responseText);
             }
         });
+    });
+
+    $('#forgotpwd').click(function() {
+        //ide kell egy másik form D=
+        let num_of_digits = 6;
+        let verification_code = "";
+        for (let i = 0; i < num_of_digits; i++) { verification_code += Math.floor(Math.random() * 10); }
+        alert(`Az email-ben megkapott kód: ${verification_code}`)
     });
     
 });
