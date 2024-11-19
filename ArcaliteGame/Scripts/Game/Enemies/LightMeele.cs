@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.Versioning;
 
 public partial class LightMeele : CharacterBody2D
 {
@@ -17,12 +18,13 @@ public partial class LightMeele : CharacterBody2D
     public bool isDamaged = false;
 
     public Vector2 Direction;
-    private Vector2 prevDir =new Vector2(0,0);
+    private float prevDir = 0;
     public float roamSpeed = 30f;
     public float speed = 0f;
 
     Timer dirTimer;
     Timer RoamCooldown;
+
 
 
     public override void _Ready()
@@ -42,25 +44,21 @@ public partial class LightMeele : CharacterBody2D
             {
                 if (Direction.X != 0)
                 {
-                    GD.Print("accel");
-                    if (speed < roamSpeed) speed += (float)delta * 40;
-                    else if (speed > roamSpeed) speed -= (float)delta * 40;
+                    if (speed < roamSpeed) speed += (float)delta * 70;
                     Velocity = new Vector2((float)(Direction.X * speed), Velocity.Y);
                     Velocity = Direction * speed;
-                    prevDir = Direction;
+                    prevDir = Direction.X;
                 }else if (Direction.X == 0)
                 {
                     if (speed > 0)
                     {
-                        GD.Print("decel");
-                        speed -= (float)delta * 1000;
+                        speed -= (float)delta * 100;
                     }else
                     {
-                        GD.Print("idle");
                         speed = 0;
-                        prevDir = new Vector2(0,prevDir.Y);
+                        prevDir = 0;
                     }
-                    Velocity = prevDir * speed;
+                    Velocity = new Vector2(prevDir, Velocity.Y);
 
 
                 }
@@ -72,17 +70,15 @@ public partial class LightMeele : CharacterBody2D
     public void OnDirectionTimerTimeout()
     {
         dirTimer.WaitTime = (new Random().Next(1,8))/2;
-        GD.Print($"dirtimer timeout, next timer: {dirTimer.WaitTime}");
         if (!isChasing)
         {
-            Direction = new Vector2(0, Direction.Y);
+            Direction = new Vector2(0, Velocity.Y);
             RoamCooldown.Start();
         }
     }
     public void OnRoamCoolDownTimeout()
     {
-        GD.Print("roamcooldown timeout");
-        Direction = new Vector2(dirChoose(), Direction.Y);
+        Direction = new Vector2(dirChoose(), Velocity.Y);
         Velocity = new Vector2(0, Velocity.Y);
         dirTimer.Start();
     }
@@ -95,7 +91,7 @@ public partial class LightMeele : CharacterBody2D
 
 
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         //modifier for oracle functionality
         if (!isSlowed)
@@ -105,9 +101,13 @@ public partial class LightMeele : CharacterBody2D
 
         if (!IsOnFloor())
         {
-            Velocity = new Vector2(0, Velocity.Y + 100 * Globals.GRAVITY * (float)delta);
+            Velocity = new Vector2(0, Velocity.Y + (float)(Globals.GRAVITY * delta));
         }
-        Move(delta);
+        else if (IsOnFloor())
+        {
+            Velocity = new Vector2(Velocity.X, 0);
+            Move(delta);
+        }
         MoveAndSlide();
     }
 }

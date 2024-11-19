@@ -156,7 +156,7 @@ scale = Vector2(0.50406, 0.499427)
 polygon = PackedVector2Array(68, -65, 68, -32, 99, -32, 99, 63, -252, 63, -252, -32, -220, -32, -220, -65)
 
 [node name="SpawnPoint" type="Node2D" parent="."]
-position = Vector2(151, 207)
+position = Vector2(100, 180)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("4_xm60r")]
-position = Vector2(426, 217)
+position = Vector2(392, 177)
