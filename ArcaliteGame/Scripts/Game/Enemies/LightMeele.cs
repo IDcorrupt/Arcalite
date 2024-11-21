@@ -69,7 +69,8 @@ public partial class LightMeele : CharacterBody2D
     }
     public void OnDirectionTimerTimeout()
     {
-        dirTimer.WaitTime = (new Random().Next(1,8))/2;
+        double rand = new Random().Next(1, 8);
+        dirTimer.WaitTime = rand/2;
         if (!isChasing)
         {
             Direction = new Vector2(0, Velocity.Y);
@@ -108,6 +109,9 @@ public partial class LightMeele : CharacterBody2D
             Velocity = new Vector2(Velocity.X, 0);
             Move(delta);
         }
+
+        //apply slow
+        Velocity *= slowFactor;
         MoveAndSlide();
     }
 }

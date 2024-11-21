@@ -254,9 +254,9 @@ public partial class Player : CharacterBody2D
             MaxMP = 100;
             ActualHP = MaxHP;
             ActualMP = MaxMP;
-            oracleLevel = 1;
+            oracleLevel = 4;
             dashCooldown = 2f;
-            SOCooldown = 10f;
+            SOCooldown = 0f;
         }
     }
     private void Animate()
@@ -360,6 +360,7 @@ public partial class Player : CharacterBody2D
             if ((Input.IsActionJustPressed("spell_oracle") || Input.IsActionJustPressed("spell_oracle-alt")) && SODelta == 0)
             {
                 OracleSpell();
+                SODelta = SOCooldown;
             }
 
             Movement(delta);

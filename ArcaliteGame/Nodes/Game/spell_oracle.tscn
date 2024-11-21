@@ -222,7 +222,9 @@ disabled = true
 scale = Vector2(3.3, 3.3)
 shape = SubResource("CircleShape2D_8bl2w")
 target_position = Vector2(0, 0)
+collision_mask = 2
 collide_with_areas = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnAnimationFinished"]
 [connection signal="animation_looped" from="AnimatedSprite2D" to="." method="OnAnimationLooped"]
+[connection signal="tree_exiting" from="ShapeCast2D" to="." method="OnTreeExit"]
