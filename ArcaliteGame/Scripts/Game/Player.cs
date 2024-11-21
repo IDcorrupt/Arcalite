@@ -10,18 +10,20 @@ public partial class Player : CharacterBody2D
     //values
         //crouch
         private int defHB_X = 16;       //hitbox for crouch
-        private int defHB_Y = 38;       //hitbo for crouch
-        private int isCrouching = 1;    //crouch bool (at least it should be bool but i didn't change it back)
+        private int defHB_Y = 29;       //hitbo for crouch
+        private bool isCrouching = false;    //crouch bool (at least it should be bool but i didn't change it back)
+        private bool crouchDown = false;    // up & down required for animations
+        private bool crouchUp = false;      
 
         //movement
         private int maxSpeed = 300;         //maximum X vector value
         private double vel = 0;             //X velocity
         private int jumpStrength = 450;     //jump height/strength
-        private float GRAVITY = 1500f;      //gravity, duh
+        private const float GRAVITY = Globals.GRAVITY;
         private float prevDir = 0;          //last movement direction for deceleration
  
         //dash
-        private float dashCooldown = 1f;        //dash cooldown constant
+        private float dashCooldown;        //dash cooldown constant
         private float dashDelta = 0f;           //dash cooldown remaining
         private bool dashed = false;            //dash initiated
         private float dashSpeed = 2000f;        //initial dash speed
@@ -31,24 +33,30 @@ public partial class Player : CharacterBody2D
         private Vector2 dashVector;             //fixed vector for dash endpoint -> dash follows mouse otherwise :3
 
         //attacks
-        private float BACooldown = 0.2f;    //basic attack cooldown constant
+        private float BACooldown = 0.4f;    //basic attack cooldown constant
         private float BADelta = 0f;         //basic attack cooldown remaining
         private float CACooldown = 5f;      //charge attack cooldown constant
         private float CADelta = 0f;         //charge attack cooldown remaining
         private bool CAisCharging = false;  //is charge attack currently charging
         private float CACharge = 0f;        //used to track charge progress
         private int chargeLevel = 0;
+        private float SOCooldown;           //Oracle cooldown constant
+        private float SODelta = 0f;         //Oracle cooldown remaining
 
         //stats
         private float MaxHP = 100;
         private float MaxMP = 100;
-    //spd & dot if class system get implemented
+        //spd & dot if class system get implemented
         private float ActualHP;
         private float ActualMP;
+
+        private int oracleLevel;
+    
         //nodes
         private CollisionShape2D HitBox;
         private PackedScene basicProjectile;
         private PackedScene chargeProjectile;
+        private PackedScene spellOracle;
         private AnimatedSprite2D Sprite;
     
     public override void _Ready()
@@ -58,8 +66,13 @@ public partial class Player : CharacterBody2D
         Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         basicProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/basic_projectile.tscn");
         chargeProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/charge_projectile.tscn");
+        spellOracle = (PackedScene)ResourceLoader.Load("res://Nodes/Game/spell_oracle.tscn");
+
+        //set stats
+        SetStats();
+
         //go to spawnpoint
-        Position = Globals.spawnPoint.Position;
+        GlobalPosition = Globals.spawnPoint.Position;
     }
 
 
@@ -78,7 +91,7 @@ public partial class Player : CharacterBody2D
                 direction.Y = -1;
             }
         }
-        if(Input.IsActionPressed("move_crouch")) isCrouching = 2; else isCrouching = 1;
+        if(Input.IsActionPressed("move_crouch")) isCrouching = true; else isCrouching = false;
         if (Input.IsActionPressed("move_dash") && dashDelta == 0) dashed = true;
         return direction;
     }
@@ -127,7 +140,7 @@ public partial class Player : CharacterBody2D
                 vel = 0;
                 prevDir = 0;
             }
-                Velocity = new Vector2((float)(prevDir * vel), Velocity.Y);
+            Velocity = new Vector2((float)(prevDir * vel), Velocity.Y);
         }
         if (input.Y != 0)
         {
@@ -150,10 +163,6 @@ public partial class Player : CharacterBody2D
         Velocity = dashVector * currentDashSpeed;
         isDashing = true;
         dashed = false;
-        //GD.Print("Player position: " + GlobalPosition);
-        //GD.Print("Cursor position: "+ GetGlobalMousePosition());
-        //GD.Print("DashVector: "+dashVector);
-        //GD.Print("DashVector normalized: " + dashVector.Normalized()*400);
     }
     public void fall(double delta)
     {
@@ -161,7 +170,7 @@ public partial class Player : CharacterBody2D
     }
     public void CrouchApply()
     {
-        if (isCrouching == 2)
+        if (isCrouching)
         {
             Velocity = new Vector2 ((float)(Velocity.X/1.5), Velocity.Y);
             if (Velocity.Y > 0)
@@ -170,20 +179,22 @@ public partial class Player : CharacterBody2D
             }
             if (HitBox.Shape is RectangleShape2D rectangleShape)
             {
-                rectangleShape.Size = new Vector2(defHB_X, defHB_Y/2);
+                HitBox.Position = new Vector2(HitBox.Position.X, (float)2.143);
+                rectangleShape.Size = new Vector2(defHB_X, defHB_Y-5);
             }
         }
         else
         {
             if (HitBox.Shape is RectangleShape2D rectangleShape)
             {
+                HitBox.Position = new Vector2(HitBox.Position.X, (float)-0.714);
                 rectangleShape.Size = new Vector2(defHB_X, defHB_Y);
 
             }
         }
 
     }
-
+ 
     //attack functions
     public void BasicAttack()
     {
@@ -216,6 +227,86 @@ public partial class Player : CharacterBody2D
         }
     }
     
+    public void OracleSpell()
+    {
+        Node2D node = (Node2D)spellOracle.Instantiate();
+        GetParent().GetParent().AddChild(node);
+        if(node is SpellOracle oracle)
+        {
+            oracle.targetPosition = GlobalPosition;
+            oracle.level = oracleLevel;
+        }
+    }
+
+    //other functions
+    private void SetStats()
+    {
+        if (Globals.hasSavefile)
+        {
+            //if loading from save
+            //dont have save file yet 
+
+        }
+        else
+        {
+            //if new save
+            MaxHP = 100;
+            MaxMP = 100;
+            ActualHP = MaxHP;
+            ActualMP = MaxMP;
+            oracleLevel = 4;
+            dashCooldown = 2f;
+            SOCooldown = 0f;
+        }
+    }
+    private void Animate()
+    {
+        //jump & fall
+        if (!IsOnFloor() && Velocity.Y < 0)
+        {
+            Sprite.Play("jump");
+        }
+        else if (!IsOnFloor() && Velocity.Y > 0)
+        {
+            Sprite.Play("fall");
+        }
+        else if (IsOnFloor())
+        {
+            //crouch
+            RectangleShape2D HBShape = (RectangleShape2D)HitBox.Shape;
+            if (isCrouching && Sprite.Animation != "crouch")
+            {
+                crouchDown = true;
+                Sprite.Play("crouch");
+            }
+            else if (!isCrouching && Sprite.Animation == "crouch" && crouchUp == false)
+            {
+                crouchUp = true;
+                crouchDown = false;
+                Sprite.Play("crouch", -1, true);
+            }
+            if (Sprite.Animation == "crouch" && crouchUp && Sprite.Frame == 0)
+            {
+                crouchUp = false;
+            }
+
+            //walk
+            if (!crouchDown && !crouchUp)
+            {
+                if (Velocity.X != 0 && Sprite.Animation != "walk") Sprite.Play("walk");
+                if (Velocity.X == 0 && Sprite.Animation != "idle")
+                {
+                    Sprite.Play("idle");
+                }
+            }
+            else
+            {
+                //crouch walk anims here
+            }
+        }
+
+    }
+
 
 
     public override void _PhysicsProcess(double delta)
@@ -228,8 +319,7 @@ public partial class Player : CharacterBody2D
                 BasicAttack();
                 BADelta = BACooldown;
             }
-
-            if(Input.IsActionPressed("attack_charge") || Input.IsActionPressed("attack_charge-alt"))
+            if(Input.IsActionJustPressed("attack_charge") || Input.IsActionJustPressed("attack_charge-alt"))
             {
                 CAisCharging = true;
             }
@@ -237,7 +327,6 @@ public partial class Player : CharacterBody2D
             {
                 CAisCharging = false;
             }
-
             if (CAisCharging)
             {
                 CACharge += Mathf.Round((float)delta * 50);
@@ -268,9 +357,14 @@ public partial class Player : CharacterBody2D
                 }
                 CACharge = 0;
             }
-
+            if ((Input.IsActionJustPressed("spell_oracle") || Input.IsActionJustPressed("spell_oracle-alt")) && SODelta == 0)
+            {
+                OracleSpell();
+                SODelta = SOCooldown;
+            }
 
             Movement(delta);
+            Animate();
         }
 
         //cooldown resets
@@ -282,6 +376,10 @@ public partial class Player : CharacterBody2D
         {
             CADelta -= (float)delta;
         }else CADelta = 0;
+        if (SODelta > 0)
+        {
+            SODelta -= (float)delta;
+        }else SODelta = 0;
     }
 
 }

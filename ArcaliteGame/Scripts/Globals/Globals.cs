@@ -6,6 +6,7 @@ public partial class Globals : Node
     //mechanics
     public static bool playerControl = false;
     public static bool hasSavefile = false;
+    public const float GRAVITY = 1500f;      //gravity, duh
 
     //active spawnpoint
     public static Node2D spawnPoint = null;
