@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Runtime.CompilerServices;
 using static Godot.HttpRequest;
 
 public partial class SubmenuSettings : Control
@@ -9,7 +10,7 @@ public partial class SubmenuSettings : Control
 
 
 
-
+	private bool popupOpen = false;
     public bool isSaved = true;
 
 	private Button Back;
@@ -39,17 +40,21 @@ public partial class SubmenuSettings : Control
 		//get parent
 		Parent = GetParent();
 
-		
+
 		
 	}
 
     public override void _Process(double delta)
     {
-        //exit if popup returned yes
-        if (Globals.PopupResult)
-        {
-            Exit();
-        }
+		//exit if popup returned yes
+		if (Input.IsActionJustPressed("ui_cancel") && !Globals.PopupOpen)
+		{
+			BackPressed();
+		}
+		if (Globals.PopupResult)
+		{
+			Exit();
+		}
 	}
     //updates values for setting options
     public void UpdateSelectors()

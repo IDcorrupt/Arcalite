@@ -18,7 +18,7 @@ public partial class HotkeyRebindButton : Control
 
     public override void _Ready()
     {
-        SettingsNode = GetNode("/root/MainNode/MainMenu/Control") as SubmenuSettings;
+        SettingsNode = GetNode("/root/MainNode/MainMenu/settings") as SubmenuSettings;
         label = GetNode<Label>("HBox/Text");
 
         button1 = GetNode<Button>("HBox/Buttons/BindButton1");
@@ -180,7 +180,6 @@ public partial class HotkeyRebindButton : Control
 
     public void rebindActionKey(InputEvent @event)
     {
-        string none = "[NONE]";
         switch (Globals.buttontoggle)
         {
             case 1:
@@ -305,8 +304,18 @@ public partial class HotkeyRebindButton : Control
 
     public void OnExiting()
     {
+        if (SettingsNode == null)
+        {
+            GD.PrintErr("SettingsNode is null");
+            return;
+        }
         if (!SettingsNode.isSaved)
         {
+            /*if (actionName == null)
+            {
+                GD.PrintErr("no actionname");
+                return;
+            }*/
             InputMap.ActionEraseEvents(actionName);
             ConfigFileHandler.settingChanges["controls"][actionName] = "";
             InputMap.ActionAddEvent(actionName, prevKey);

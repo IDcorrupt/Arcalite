@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 
@@ -28,11 +29,15 @@ public partial class LightMeele : CharacterBody2D
 
     Player player;
 
+    Node parent;
+
     public override void _Ready()
     {
+        parent = GetParent();
         dirTimer = GetNode<Timer>("DirectionTimer");
         RoamCooldown = GetNode<Timer>("RoamCooldown");
-        player = (Player)GetNode<Node2D>("root");
+        //doesnt want to find player cuz it exists before player
+        player = parent.GetNode<Player>("Player");
     }
 
 

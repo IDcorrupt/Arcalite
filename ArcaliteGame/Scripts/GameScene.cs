@@ -3,16 +3,17 @@ using System;
 
 public partial class GameScene : Node2D
 {
-    PackedScene debugMapScene = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/Map.tscn");
+    PackedScene debugMap = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/Map.tscn");
     private PackedScene pauseMenu = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/pause_menu.tscn");
 
 
-    Node2D debugMap;
+    Node2D debugMapNode;
 
     public override void _Ready()
     {
-        debugMap = (Node2D)debugMapScene.Instantiate();
-        AddChild(debugMap);
+        Globals.gameActive = true;
+        debugMapNode = (Node2D)debugMap.Instantiate();
+        AddChild(debugMapNode);
     }
 
     public override void _Process(double delta)
@@ -22,8 +23,7 @@ public partial class GameScene : Node2D
             Globals.gameActive = false;
             Control pauseMenuNode = (Control)pauseMenu.Instantiate();
             AddChild(pauseMenuNode);
-
-            debugMap.Paused
+            //GetTree().Paused = true;
             
         }
     }

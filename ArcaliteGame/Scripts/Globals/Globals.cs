@@ -18,6 +18,7 @@ public partial class Globals : Node
     //settings
     public static int Difficulty = 2;
     public static bool PopupResult = false;
+    public static bool PopupOpen = false;
     public static bool invalidSettings = false;
     public static PackedScene popupScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/popup.tscn");
 
