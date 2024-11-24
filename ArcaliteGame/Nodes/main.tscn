@@ -11,6 +11,5 @@ offset_left = 320.0
 offset_top = 180.0
 offset_right = 320.0
 offset_bottom = 180.0
-size_flags_horizontal = 4
 size_flags_vertical = 4
 metadata/_edit_use_anchors_ = true

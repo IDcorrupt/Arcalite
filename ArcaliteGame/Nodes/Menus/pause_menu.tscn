@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://o3ex8wyov1p0"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/PauseMenu.cs" id="1_eikjk"]
+[ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="2_t2g2d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hgokh"]
+bg_color = Color(0, 0, 0, 0.207843)
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eikjk")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -180.0
+offset_right = 320.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hgokh")
+
+[node name="Title" type="RichTextLabel" parent="."]
+offset_left = -101.0
+offset_top = -150.0
+offset_right = 101.0
+offset_bottom = -68.0
+theme = ExtResource("2_t2g2d")
+theme_override_font_sizes/normal_font_size = 61
+text = "Arcalite"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Continue" type="Button" parent="."]
+offset_left = -50.0
+offset_top = -49.0
+offset_right = 50.0
+offset_bottom = -18.0
+theme = ExtResource("2_t2g2d")
+text = "Continue"
+
+[node name="Settings" type="Button" parent="."]
+offset_left = -50.0
+offset_top = -9.0
+offset_right = 50.0
+offset_bottom = 22.0
+theme = ExtResource("2_t2g2d")
+text = "Settings"
+
+[node name="Quit" type="Button" parent="."]
+offset_left = -50.0
+offset_top = 31.0
+offset_right = 50.0
+offset_bottom = 62.0
+theme = ExtResource("2_t2g2d")
+text = "Quit"

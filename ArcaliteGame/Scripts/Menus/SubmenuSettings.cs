@@ -221,11 +221,15 @@ public partial class SubmenuSettings : Control
         }
 
 	}
+
+	//reset settings
 	public void ResetPressed()
 	{
 		ConfigFileHandler.DefaultSettings();
 		UpdateSelectors();
 	}
+
+	//export settings to config
 	public void SavePressed()
 	{
 		ConfigFileHandler.SaveSettings();

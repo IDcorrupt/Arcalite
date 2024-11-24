@@ -4,9 +4,13 @@ using System;
 public partial class Globals : Node
 {
     //mechanics
+    //sets whether user can control the player character
     public static bool playerControl = false;
+    //bool for checking if user has an active savefile
     public static bool hasSavefile = false;
-    public const float GRAVITY = 1500f;      //gravity, duh
+    //needed for pause menu
+    public static bool gameActive = false;
+    public const float GRAVITY = 1500f;
 
     //active spawnpoint
     public static Node2D spawnPoint = null;

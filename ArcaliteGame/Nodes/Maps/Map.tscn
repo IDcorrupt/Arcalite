@@ -96,6 +96,7 @@ normal = Vector2(0.0116824, -0.999932)
 distance = -1.0
 
 [node name="Map" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_83bny")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]

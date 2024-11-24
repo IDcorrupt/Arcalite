@@ -20,17 +20,19 @@ public partial class LightMeele : CharacterBody2D
     public Vector2 Direction;
     private float prevDir = 0;
     public float roamSpeed = 30f;
+    public float chaseSpeed = 60f;
     public float speed = 0f;
 
     Timer dirTimer;
     Timer RoamCooldown;
 
-
+    Player player;
 
     public override void _Ready()
     {
         dirTimer = GetNode<Timer>("DirectionTimer");
         RoamCooldown = GetNode<Timer>("RoamCooldown");
+        player = (Player)GetNode<Node2D>("root");
     }
 
 
@@ -45,7 +47,6 @@ public partial class LightMeele : CharacterBody2D
                 if (Direction.X != 0)
                 {
                     if (speed < roamSpeed) speed += (float)delta * 70;
-                    Velocity = new Vector2((float)(Direction.X * speed), Velocity.Y);
                     Velocity = Direction * speed;
                     prevDir = Direction.X;
                 }else if (Direction.X == 0)
@@ -63,6 +64,11 @@ public partial class LightMeele : CharacterBody2D
 
                 }
                 isRoaming = true;
+            }else if (isChasing && !isDamaged)
+            {
+                //Direction = Position.DirectionTo()
+                if (speed < chaseSpeed) speed += (float)delta * 70;
+                Velocity = Direction * speed;
             }
         }
         else Velocity = new Vector2(0, Velocity.Y);

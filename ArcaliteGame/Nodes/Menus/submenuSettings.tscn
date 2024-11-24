@@ -9,7 +9,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0v2bk"]
 
-[node name="Control" type="Control"]
+[node name="settings" type="Control"]
 custom_minimum_size = Vector2(640, 360)
 layout_mode = 3
 anchors_preset = 15
