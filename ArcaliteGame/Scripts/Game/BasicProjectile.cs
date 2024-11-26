@@ -56,6 +56,9 @@ public partial class BasicProjectile : CharacterBody2D
 				Vector2 collisionNormal = collision.GetNormal();
 
 				HitTerrain(collisionNormal);
+			}else if (collision != null && collision.GetCollider() is CharacterBody2D)
+			{
+				//enemies
 			}
             
         }

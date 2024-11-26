@@ -26,6 +26,7 @@ collision_layer = 2
 collision_mask = 4
 floor_max_angle = 0.0
 script = ExtResource("1_yaydj")
+metadata/Type = "Enemy"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3p25d")

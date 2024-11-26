@@ -13,11 +13,13 @@ public partial class SubmenuSettings : Control
 	private bool popupOpen = false;
     public bool isSaved = true;
 
+	public bool rebinding = false;      //stops escape from exiting settings when actively rebinding keys
+	public int rebindtimer = 5;			//i can't get the two classes to sync well, so the bool isn't working -> need a buffer
+	
 	private Button Back;
 	private Button Reset;
 	private Button Save;
 
-	private HotkeyRebindButton testKeybind;
 	
 
 	public override void _Ready()
@@ -46,11 +48,15 @@ public partial class SubmenuSettings : Control
 
     public override void _Process(double delta)
     {
-		//exit if popup returned yes
-		if (Input.IsActionJustPressed("ui_cancel") && !Globals.PopupOpen)
+		//esc trigger
+		if (Input.IsActionJustPressed("ui_cancel") && !Globals.PopupOpen && !rebinding && rebindtimer == 0)
 		{
 			BackPressed();
+		}else if(!rebinding && rebindtimer > 0)
+		{
+			rebindtimer--;
 		}
+		//exit if popup returned yes
 		if (Globals.PopupResult)
 		{
 			Exit();
@@ -245,17 +251,22 @@ public partial class SubmenuSettings : Control
 	public void Exit()
 	{
         ConfigFileHandler.ResetSTChanges();
-        if (Parent is MainMenu parentscript)
-        {
-            parentscript.submenuOpen = false;
+		if (Parent is MainMenu parentscript)
+		{
+			parentscript.submenuOpen = false;
 			QueueFree();
-        }
-        else
-        {
-            //ERROR HANDLING TBD HERE
-            GD.Print("node path changed?");
-            GetTree().Quit();
-        }
+		}
+		else if (Parent is PauseMenu pausescript)
+		{
+			QueueFree();
+		}
+		else
+		{
+			//ERROR HANDLING TBD HERE
+			GD.PrintErr("node path changed?");
+			GetTree().Quit();
+		}
+		
         Globals.PopupResult = false;
     }
 }

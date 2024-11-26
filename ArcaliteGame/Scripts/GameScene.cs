@@ -3,6 +3,7 @@ using System;
 
 public partial class GameScene : Node2D
 {
+    Resource cursor = ResourceLoader.Load("res://Assets/Placeholder assets/Cursors/PNG/White/crosshair124.png");
     PackedScene debugMap = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/Map.tscn");
     private PackedScene pauseMenu = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/pause_menu.tscn");
 
@@ -11,6 +12,7 @@ public partial class GameScene : Node2D
 
     public override void _Ready()
     {
+        Input.SetCustomMouseCursor(cursor);
         Globals.gameActive = true;
         debugMapNode = (Node2D)debugMap.Instantiate();
         AddChild(debugMapNode);
@@ -23,8 +25,8 @@ public partial class GameScene : Node2D
             Globals.gameActive = false;
             Control pauseMenuNode = (Control)pauseMenu.Instantiate();
             AddChild(pauseMenuNode);
-            //GetTree().Paused = true;
+            GetTree().Paused = true;
             
-        }
+        }else GetTree().Paused = false;
     }
 }

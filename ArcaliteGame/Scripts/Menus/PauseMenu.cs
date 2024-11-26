@@ -7,6 +7,7 @@ public partial class PauseMenu : Control
     private Button Settings;
     private Button Exit;
     private Button Quit;
+    private Node parent;
 
     private bool settingsOpen;
 
@@ -18,7 +19,8 @@ public partial class PauseMenu : Control
         Settings = GetNode<Button>("Settings");
         Exit = GetNode<Button>("Exit");
         Quit = GetNode<Button>("Quit");
-
+        parent = GetParent();
+        ProcessMode = ProcessModeEnum.Always;
         Continue.Pressed += ContinuePressed;
         Settings.Pressed += SettingsPressed;
         Exit.Pressed += ExitPressed;
@@ -26,17 +28,27 @@ public partial class PauseMenu : Control
 
     }
 
+    public override void _Process(double delta)
+    {
+        if (!settingsOpen && Input.IsActionJustPressed("ui_cancel"))
+        {
+            ContinuePressed();
+        }
+    }
 
     private void ContinuePressed()
     {
         Globals.gameActive = true;
         QueueFree();
+        parent.GetTree().Paused = false;
     }
 
     private void SettingsPressed()
     {
         Node SettingsNode = submenuSettings.Instantiate();
         SettingsNode.TreeExited += settingsClosed;
+        AddChild(SettingsNode);
+        settingsOpen = true;
         Continue.Visible = false;
         Settings.Visible = false;
         Exit.Visible = false;
@@ -45,6 +57,7 @@ public partial class PauseMenu : Control
     private void ExitPressed()
     {
         Globals.playerControl = false;
+        GetTree().Paused = false;
         GetTree().ChangeSceneToFile("res://Nodes/main.tscn");
     }
     private void QuitPressed()
@@ -54,6 +67,7 @@ public partial class PauseMenu : Control
 
     private void settingsClosed()
     {
+        settingsOpen = false;
         Continue.Visible = true;
         Settings.Visible = true;
         Exit.Visible = true;
