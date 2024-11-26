@@ -55,7 +55,6 @@ $(document).ready(function() {
             data: payload,
             global: false,
             success: (data) => {
-                //data = JSON.parse(data);
                 alert(data.id);
             },
             error: (data) => {
@@ -94,7 +93,6 @@ $(document).ready(function() {
             data: payload,
             global: false,
             success: (data) => {
-                //data = JSON.parse(data);
                 if (!data.exists) {
                     $('#login_error').html("Nincs ilyen e-mail cím regisztrálva!");
                 } else {
