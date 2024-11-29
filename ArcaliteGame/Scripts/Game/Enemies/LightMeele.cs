@@ -10,6 +10,8 @@ public partial class LightMeele : CharacterBody2D
     public float actualHP;
     public float damage;
 
+    [Export] int namenum;
+
     [Export] public bool isSlowed = false;
     [Export] public float slowFactor = 1;
     public bool isChasing;
@@ -29,15 +31,14 @@ public partial class LightMeele : CharacterBody2D
 
     Player player;
 
-    Node parent;
+    EnemyControl parent;
 
     public override void _Ready()
     {
-        parent = GetParent();
+        
+        parent = (EnemyControl)GetParent();
         dirTimer = GetNode<Timer>("DirectionTimer");
         RoamCooldown = GetNode<Timer>("RoamCooldown");
-        //doesnt want to find player cuz it exists before player
-        player = parent.GetNode<Player>("Player");
     }
 
 

@@ -35,8 +35,9 @@ public partial class BasicProjectile : CharacterBody2D
 	}
 	public void HitEnemy()
 	{
-
-	}
+        animatedSprite.Position = new Vector2(0, 0);
+        animatedSprite.Play("enemy_hit");
+    }
 
 	public void AnimationFinished()
 	{
@@ -58,7 +59,16 @@ public partial class BasicProjectile : CharacterBody2D
 				HitTerrain(collisionNormal);
 			}else if (collision != null && collision.GetCollider() is CharacterBody2D)
 			{
-				//enemies
+				Node collider = collision.GetCollider() as Node;
+				if (collider.HasMeta("Type"))
+				{
+					if ((string)collider.GetMeta("Type") == "Enemy")
+					{
+						targetHit = true;
+						HitEnemy();
+					}
+				}
+
 			}
             
         }

@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4mg7kpomu4je"]
+
+[ext_resource type="Script" path="res://Scripts/Game/Ui.cs" id="1_jh1wj"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jh1wj")
+
+[node name="HPNumDisplay" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+text = "HP: asd"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="MPNumDisplay" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_top = 22.795
+offset_right = 40.0
+offset_bottom = 62.795
+text = "MP: asd"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="debugbutton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 527.0
+offset_top = 3.0
+offset_right = 636.0
+offset_bottom = 34.0
+toggle_mode = true
+text = "debugbutton"
+
+[connection signal="toggled" from="debugbutton" to="." method="debugToggled"]

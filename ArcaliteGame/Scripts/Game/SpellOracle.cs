@@ -98,7 +98,7 @@ public partial class SpellOracle : Node2D
         {
             if (!previouslyDetectedObjects.Contains(obj))
             {
-                if (obj is LightMeele Lmeele)
+                if (obj is LightMeele Lmeele)   //ADD HANDLING FOR OTHER TYPES OF ENEMIES WHEN THEY EXIST
                 {
                     Lmeele.isSlowed = true;
                     Lmeele.slowFactor = slowFactor;
@@ -111,7 +111,7 @@ public partial class SpellOracle : Node2D
     {
         foreach (Node obj in currentObjects)
         {
-            if (obj is LightMeele Lmeele)
+            if (obj is LightMeele Lmeele)   //ADD HANDLING FOR OTHER TYPES OF ENEMIES WHEN THEY EXIST
             {
                 Lmeele.isSlowed = false;
             }   

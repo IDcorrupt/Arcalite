@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=4 uid="uid://d371iehcx1ly2"]
+[gd_scene load_steps=12 format=4 uid="uid://d371iehcx1ly2"]
 
 [ext_resource type="Texture2D" uid="uid://bm61jaa36wan2" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_forest.png" id="1_8rrmi"]
 [ext_resource type="Script" path="res://Scripts/Maps/Map.cs" id="1_83bny"]
 [ext_resource type="Texture2D" uid="uid://xw0yamxevqgy" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_lava.png" id="2_l66xn"]
-[ext_resource type="PackedScene" uid="uid://dmcjsoh4jx60g" path="res://Nodes/Game/enemies/light_meele.tscn" id="4_xm60r"]
+[ext_resource type="PackedScene" uid="uid://dodk5iiiisuu4" path="res://Nodes/Game/enemies/enemy_control.tscn" id="4_h54jy"]
+[ext_resource type="PackedScene" uid="uid://c7bw1cggtiyst" path="res://Nodes/Game/enemies/enemy_spawn_point.tscn" id="5_ennxe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8y2ji"]
 texture = ExtResource("1_8rrmi")
@@ -157,7 +158,14 @@ scale = Vector2(0.50406, 0.499427)
 polygon = PackedVector2Array(68, -65, 68, -32, 99, -32, 99, 63, -252, 63, -252, -32, -220, -32, -220, -65)
 
 [node name="SpawnPoint" type="Node2D" parent="."]
-position = Vector2(100, 180)
+position = Vector2(201, 242)
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("4_xm60r")]
-position = Vector2(392, 177)
+[node name="EnemyControl" parent="." instance=ExtResource("4_h54jy")]
+
+[node name="EnemySpawnPoint1" parent="EnemyControl" instance=ExtResource("5_ennxe")]
+position = Vector2(410, 194)
+LightMelee = true
+
+[node name="EnemySpawnPoint2" parent="EnemyControl" instance=ExtResource("5_ennxe")]
+position = Vector2(566, 320)
+LightMelee = true

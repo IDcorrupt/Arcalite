@@ -12,8 +12,13 @@ public partial class Globals : Node
     public static bool gameActive = false;
     public const float GRAVITY = 1500f;
 
-    //active spawnpoint
+    //active stuff
     public static Node2D spawnPoint = null;
+    public static Node2D activeMap = null;
+
+    //player cuz i need it everywhere
+    public static Player Player = null;
+
 
     //settings
     public static int Difficulty = 2;
@@ -24,4 +29,8 @@ public partial class Globals : Node
 
     //for controls - decides which button is being rebound
     public static int buttontoggle = 0;
+
+
+
+
 }

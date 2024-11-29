@@ -33,7 +33,7 @@ public partial class Player : CharacterBody2D
         private Vector2 dashVector;             //fixed vector for dash endpoint -> dash follows mouse otherwise :3
 
         //attacks
-        private float BACooldown = 0.4f;    //basic attack cooldown constant
+        private float BACooldown = 0.1f;    //basic attack cooldown constant
         private float BADelta = 0f;         //basic attack cooldown remaining
         private float CACooldown = 5f;      //charge attack cooldown constant
         private float CADelta = 0f;         //charge attack cooldown remaining
@@ -47,8 +47,8 @@ public partial class Player : CharacterBody2D
         private float MaxHP = 100;
         private float MaxMP = 100;
         //spd & dot if class system get implemented
-        private float ActualHP;
-        private float ActualMP;
+        public float ActualHP;
+        public float ActualMP;
 
         private int oracleLevel;
     
@@ -61,6 +61,7 @@ public partial class Player : CharacterBody2D
     
     public override void _Ready()
     {
+        Globals.Player = this;
         //Get nodes
         HitBox = GetNode<CollisionShape2D>("HitBox");
         Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
