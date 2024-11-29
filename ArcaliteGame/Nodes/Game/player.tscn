@@ -204,7 +204,6 @@ animations = [{
 }]
 
 [node name="Player" type="Node2D"]
-scale = Vector2(1.4, 1.4)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 disable_mode = 2
