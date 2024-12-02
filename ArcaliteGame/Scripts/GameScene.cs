@@ -4,7 +4,7 @@ using System;
 public partial class GameScene : Node2D
 {
     Resource cursor = ResourceLoader.Load("res://Assets/Placeholder assets/Cursors/PNG/White/crosshair124.png");
-    PackedScene debugMap = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/Map.tscn");
+    PackedScene debugMap = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/map_debug.tscn");
     PackedScene pauseMenu = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/pause_menu.tscn");
     PackedScene UIscene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/ui.tscn");
 
@@ -18,8 +18,8 @@ public partial class GameScene : Node2D
         debugMapNode = (Node2D)debugMap.Instantiate();
         UInode = (Control)UIscene.Instantiate();
         Globals.activeMap = debugMapNode;
-        AddChild(debugMapNode);
         AddChild(UInode);
+        AddChild(debugMapNode);
     }
 
     public override void _Process(double delta)
