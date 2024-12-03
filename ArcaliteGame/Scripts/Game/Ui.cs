@@ -15,12 +15,15 @@ public partial class Ui : Control
         HPnum = GetNode<RichTextLabel>("HPNumDisplay");
         MPnum = GetNode<RichTextLabel>("MPNumDisplay");
         debugButton = GetNode<Button>("debugbutton");
-        enemyController = GetNode<EnemyControl>("../Map/EnemyControl");
         
     }
 
     public void debugToggled(bool toggled)
     {
+        if (enemyController == null)
+        {
+            enemyController = GetNode<EnemyControl>("../Map/EnemyControl");
+        }
         enemyController.playerInRange = toggled;
     }
 
