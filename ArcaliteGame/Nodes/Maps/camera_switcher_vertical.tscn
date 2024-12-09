@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://cv12pw6kwq6dv"]
+
+[ext_resource type="Script" path="res://Scripts/Maps/CameraSwitcherVertical.cs" id="1_wwamh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kmrxi"]
+size = Vector2(600, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m7irw"]
+size = Vector2(600, 10)
+
+[node name="CameraSwitcherVertical" type="Node2D"]
+script = ExtResource("1_wwamh")
+
+[node name="FullArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FullArea"]
+shape = SubResource("RectangleShape2D_kmrxi")
+
+[node name="BottomTrigger" type="Area2D" parent="."]
+position = Vector2(0, 5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomTrigger"]
+shape = SubResource("RectangleShape2D_m7irw")
+
+[node name="TopTrigger" type="Area2D" parent="."]
+position = Vector2(0, -5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopTrigger"]
+shape = SubResource("RectangleShape2D_m7irw")
+
+[connection signal="body_exited" from="FullArea" to="." method="FullAreaExited"]
+[connection signal="body_entered" from="BottomTrigger" to="." method="BottomTriggerEntered"]
+[connection signal="body_exited" from="BottomTrigger" to="." method="BottomTriggerExited"]
+[connection signal="body_entered" from="TopTrigger" to="." method="TopTriggerEntered"]
+[connection signal="body_exited" from="TopTrigger" to="." method="TopTriggerExited"]

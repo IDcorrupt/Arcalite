@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://dlqooe30j1ckn"]
+
+[ext_resource type="Script" path="res://Scripts/Maps/CameraSwitcherHorizontal.cs" id="1_7fckl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ycove"]
+size = Vector2(10, 320)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4qhyb"]
+size = Vector2(20, 320)
+
+[node name="CameraSwitcherHorizontal" type="Node2D"]
+script = ExtResource("1_7fckl")
+
+[node name="RightTrigger" type="Area2D" parent="."]
+position = Vector2(5, 0)
+collision_layer = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightTrigger"]
+shape = SubResource("RectangleShape2D_ycove")
+
+[node name="LeftTrigger" type="Area2D" parent="."]
+position = Vector2(-5, 0)
+collision_layer = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftTrigger"]
+shape = SubResource("RectangleShape2D_ycove")
+
+[node name="FullArea" type="Area2D" parent="."]
+collision_layer = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FullArea"]
+shape = SubResource("RectangleShape2D_4qhyb")
+
+[connection signal="body_entered" from="RightTrigger" to="." method="RightTriggerEntered"]
+[connection signal="body_exited" from="RightTrigger" to="." method="RightTriggerExited"]
+[connection signal="body_entered" from="LeftTrigger" to="." method="LeftTriggerEntered"]
+[connection signal="body_exited" from="LeftTrigger" to="." method="LeftTriggerExited"]
+[connection signal="body_exited" from="FullArea" to="." method="FullAreaExited"]

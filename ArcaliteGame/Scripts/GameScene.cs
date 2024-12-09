@@ -8,17 +8,19 @@ public partial class GameScene : Node2D
     PackedScene pauseMenu = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/pause_menu.tscn");
     PackedScene UIscene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/ui.tscn");
 
+    CanvasLayer UILayer;
     Node2D debugMapNode;
     Control UInode;
 
     public override void _Ready()
     {
+        UILayer = GetNode<CanvasLayer>("UILayer");
         Input.SetCustomMouseCursor(cursor);
         Globals.gameActive = true;
         debugMapNode = (Node2D)debugMap.Instantiate();
         UInode = (Control)UIscene.Instantiate();
         Globals.activeMap = debugMapNode;
-        AddChild(UInode);
+        UILayer.AddChild(UInode);
         AddChild(debugMapNode);
     }
 
