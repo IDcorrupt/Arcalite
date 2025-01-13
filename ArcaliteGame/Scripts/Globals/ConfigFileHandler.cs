@@ -2,6 +2,7 @@ using Godot;
 using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public partial class ConfigFileHandler : Node
 {
@@ -9,6 +10,9 @@ public partial class ConfigFileHandler : Node
     const string SETTINGS_FILE_PATH = "res://settings.ini";
     public static Dictionary<string, Dictionary<string, Variant>> settingChanges = new Dictionary<string, Dictionary<string, Variant>>();
 
+    static int[] resXvalues = { 3840, 2560, 1920, 1280, 640 };
+    static int[] resYvalues = { 2160, 1440, 1080, 720, 360 };
+    static Window window;
 
     public override void _Ready()
     {
@@ -21,7 +25,9 @@ public partial class ConfigFileHandler : Node
             config.Load(SETTINGS_FILE_PATH);
             
         }
+        ResetSTChanges();
         ApplySettings();
+        window = GetWindow();
     }
 
     public static void DefaultSettings()
@@ -29,8 +35,8 @@ public partial class ConfigFileHandler : Node
         config.SetValue("game", "difficulty", 2); //easy = 1 | normal = 2 | hard = 3
 
         config.SetValue("video", "windowmode", 1); //windowed = 1 | borderless = 2 | exclusive = 3
-        config.SetValue("video", "resolutionX", 4); //4k = 1 | 2k = 2 | 1080p = 3 | 720p = 4 | 360p(source res) = 5
-        config.SetValue("video", "resolutionY", 4);
+        config.SetValue("video", "resolutionX", 5); //4k = 1 | 2k = 2 | 1080p = 3 | 720p = 4 | 360p(source res) = 5
+        config.SetValue("video", "resolutionY", 5);
         config.SetValue("video", "vsync", true);
 
 
@@ -38,7 +44,7 @@ public partial class ConfigFileHandler : Node
         config.SetValue("audio", "music_volume", 100);
         config.SetValue("audio", "sfx_volume", 100);
 
-        //1 is for primary keys, 1 is for secondaries, 3 is for controller (idk how to do that one yet)
+        //normal is primary keybind, -alt is secondary, and idk how to do controller yet
         config.SetValue("controls", "move_left", "A");
         config.SetValue("controls", "move_left-alt", "Left");
         config.SetValue("controls", "move_right", "D");
@@ -47,7 +53,7 @@ public partial class ConfigFileHandler : Node
         config.SetValue("controls", "move_jump-alt", "Up");
         config.SetValue("controls", "move_crouch", "S");
         config.SetValue("controls", "move_crouch-alt", "Down");
-        config.SetValue("controls", "move_dash", "LShift");
+        config.SetValue("controls", "move_dash", "Shift");
         config.SetValue("controls", "move_dash-alt", "");
         config.SetValue("controls", "spell_oracle", "Space");
         config.SetValue("controls", "spell_oracle-alt", "");
@@ -55,31 +61,33 @@ public partial class ConfigFileHandler : Node
         config.SetValue("controls", "spell_slot1-alt", "");
         config.SetValue("controls", "spell_slot2", "E");
         config.SetValue("controls", "spell_slot2-alt", "");
-        config.SetValue("controls", "attack_normal", "mouse_1");
+        config.SetValue("controls", "attack_normal", "MouseLeft");
         config.SetValue("controls", "attack_normal-alt", "");
-        config.SetValue("controls", "attack_charge", "mouse_2");
+        config.SetValue("controls", "attack_charge", "MouseRight");
         config.SetValue("controls", "attack_charge-alt", "");
 
         config.SetValue("accessibility", "lang", "en");
 
         config.Save(SETTINGS_FILE_PATH);
 
-        
+        Globals.invalidSettings = false;
     }
 
 
-    public static void SaveSetting(string section)
+    public static void SaveSettings()
     {
-        foreach (KeyValuePair<string, Variant> item in settingChanges[section])
-        {
-            string key = item.Key;
-            Variant value = item.Value;
-            //GD.Print($"saving setting --> section: {section}, key: {key}, value: {value}");
-            config.SetValue(section, key, value);
-            
+        foreach (var section in new string[5] { "game", "video", "audio", "controls", "accessibility" })
+        { 
+            foreach (KeyValuePair<string, Variant> item in settingChanges[section])
+            {
+                string key = item.Key;
+                Variant value = item.Value;
+                config.SetValue(section, key, value);
+            }
         }
         config.Save(SETTINGS_FILE_PATH);
         ApplySettings();
+        ResetSTChanges();
     }
     public static Dictionary<string,Variant> LoadSetting(string section)
     {
@@ -90,7 +98,6 @@ public partial class ConfigFileHandler : Node
         }
         return settings;
     }
-
     public static bool checkSettings()
     {
         bool check = true;
@@ -108,25 +115,112 @@ public partial class ConfigFileHandler : Node
 
         return check;
     }
-
-
     private static void ApplySettings()
     {
-        
-        ResetSTChanges();
+        try
+        {
+            //game
+            Globals.Difficulty = (int)settingChanges["game"]["difficulty"];
+
+            //video
+            int winmode = (int)settingChanges["video"]["windowmode"];
+            switch (winmode)
+            {
+                case 1:
+
+                    DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+                    DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.Borderless, false);
+                    break;
+                case 2:
+                    DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
+                    DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.Borderless, true);
+
+                    break;
+                case 3:
+                    DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
+                    DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.Borderless, false);
+                    break;
+
+            }
+            int resSize = (int)settingChanges["video"]["resolutionX"];
+            
+            DisplayServer.WindowSetSize(new Vector2I(resXvalues[resSize - 1], resYvalues[resSize - 1]));
+            if ((bool)settingChanges["video"]["vsync"])
+                DisplayServer.WindowSetVsyncMode(DisplayServer.VSyncMode.Enabled);
+            else
+                DisplayServer.WindowSetVsyncMode(DisplayServer.VSyncMode.Disabled);
+            //reposition screen: -- doesn't work
+            //var centerScreen = DisplayServer.ScreenGetPosition() + DisplayServer.ScreenGetSize()/2;
+            //var windowSize = window.GetSizeWithDecorations();
+            //window.Position = centerScreen-windowSize/2;
+            
+            //audio
+            //i'Ll do this when we have audio :3
+
+            //controls
+            foreach (KeyValuePair<string, Variant> setting in settingChanges["controls"])
+            {
+                string keyString = LoadSetting("controls")[setting.Key].ToString();
+                if (keyString.Length > 0)
+                {
+                    if (keyString.Contains("Mouse"))
+                    {
+                        string MouseString = keyString.Replace("Mouse", "");
+                        InputEventMouseButton inputeventButton = new InputEventMouseButton()
+                        {
+                            ButtonIndex = (MouseButton)Enum.Parse(typeof(MouseButton), MouseString, true),
+                            ShiftPressed = false,
+                            CtrlPressed = false,
+                            AltPressed = false,
+                            MetaPressed = false,
+                            Pressed = true,
+                        };
+                    }
+                    else
+                    {
+                        InputEventKey inputEventKey = new InputEventKey()
+                        {
+                            AltPressed = false,
+                            ShiftPressed = false,
+                            CtrlPressed = false,
+                            MetaPressed = false,
+                            Pressed = true,
+                        };
+                        InputMap.ActionGetEvents(setting.Key);
+                        if (keyString.Length == 1)
+                        {
+                            //if keycode is single length (normal letters)
+                            Key key = (Key)(char)keyString[0];
+                            inputEventKey.Keycode = key;
+                        }
+                        else
+                        {
+                            //if keycode is longer than 1 (space, shift, enter)
+                            Key key = (Key)Enum.Parse(typeof(Key), keyString, true);
+                            inputEventKey.Keycode = key;
+                        }
+                    }
+
+                
+
+                }
+
+            }
+
+            //accessibility
+            //say what now?
+        }
+        catch (Exception ex)
+        {
+            GD.PrintErr(ex);
+            Globals.invalidSettings = true;
+        }
     }
 
     public static void ResetSTChanges()
     {
         foreach (var item in new string[5] { "game", "video", "audio", "controls", "accessibility" })
         {
-            //why does a print break everything???
-
-            /*foreach (KeyValuePair<string, Variant> setting in settingChanges[item])
-            {
-                GD.Print($"Setting: {item} | {setting.Key} | {setting.Value}\n" +
-                    $" reverted to: {item} | {setting.Key} | {LoadSetting(item)[setting.Key]}");
-            }*/
             settingChanges[item] = LoadSetting(item);
         }
     }

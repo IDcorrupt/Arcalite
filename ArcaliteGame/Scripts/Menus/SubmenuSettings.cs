@@ -3,13 +3,10 @@ using Godot.Collections;
 using System;
 using static Godot.HttpRequest;
 
-public partial class SubmenuSettings : Node
+public partial class SubmenuSettings : Control
 {
 	static Node Parent;
 
-	private int[] resXvalues = { 3840, 2560, 1920, 1366, 1280 };
-	private int[] resYvalues = { 2160, 1440, 1080, 768, 720 };
-	private PackedScene popupScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/popup.tscn");
 
 
 
@@ -53,8 +50,7 @@ public partial class SubmenuSettings : Node
         {
             Exit();
         }
-    }
-
+	}
     //updates values for setting options
     public void UpdateSelectors()
 	{
@@ -203,6 +199,8 @@ public partial class SubmenuSettings : Node
         GetNode<SpinBox>("Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/sfx_volume/SpinBox").Value = value;
     }
 
+
+
     //button controls   
     public void BackPressed()
 	{
@@ -211,10 +209,10 @@ public partial class SubmenuSettings : Node
 		if (!isSaved) {
 
 			//if changes are not saved
-			Control popup = (Control)popupScene.Instantiate();
+			Control popup = (Control)Globals.popupScene.Instantiate();
 			((Popup)popup).SetMessageType("nosave");
 			AddChild(popup);
-			//popup will initiate exit() func if promted
+			//popupresult will initiate exit() in _process func if promted
         }
 		else
 		{
@@ -230,10 +228,7 @@ public partial class SubmenuSettings : Node
 	}
 	public void SavePressed()
 	{
-        foreach (var item in new string[5] { "game", "video", "audio", "controls", "accessibility" })
-		{
-			ConfigFileHandler.SaveSetting(item);
-		}
+		ConfigFileHandler.SaveSettings();
 		isSaved = true;
 	}
 	
