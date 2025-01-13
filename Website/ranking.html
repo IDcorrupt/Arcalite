@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hn">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,9 +15,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <header class="flex-container">
-        <h1>Arcalite</h1>
-    </header>
     <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -33,11 +30,14 @@
             </ul>
         </div>
     </nav>
+    <header class="flex-container">
+        <h1>Arcalite</h1>
+    </header>
+    
     <main class="p-5">
         <div class="tab">
             <button class="tablinks" id="defaultOpen" onclick="openRank(event, 'Profile')">Profile</button>
             <button class="tablinks" onclick="openRank(event, 'GameThrough')">GameThrough</button>
-            <button class="tablinks" onclick="openRank(event, 'Tokyo')">Tokyo</button>
         </div>
         
         <!-- Tab content -->
@@ -47,24 +47,109 @@
                     <th onclick="sortTable(0)">Name</th>
                     <th onclick="sortTable(1)">Time Played</th>
                     <th onclick="sortTable(2)">Achievements</th>
+                    <th onclick="sortTable(3)">Playthroughs</th>
+                </tr>
+                <tr>
+                    <th>Név</th>
+                    <th>Játékidő</th>
+                    <th>Mérföldkő száma</th>
+                    <th>Végigjátszások száma</th>
+                </tr>
+                <tr>
+                    <th>Név</th>
+                    <th>Játékidő</th>
+                    <th>Mérföldkő száma</th>
+                    <th>Végigjátszások száma</th>
+                </tr>
+                <tr>
+                    <th>Név</th>
+                    <th>Játékidő</th>
+                    <th>Mérföldkő száma</th>
+                    <th>Végigjátszások száma</th>
+                </tr>
+                <tr>
+                    <th>Név</th>
+                    <th>Játékidő</th>
+                    <th>Mérföldkő száma</th>
+                    <th>Végigjátszások száma</th>
+                </tr>
+                <tr>
+                    <th>Név</th>
+                    <th>Játékidő</th>
+                    <th>Mérföldkő száma</th>
+                    <th>Végigjátszások száma</th>
                 </tr>
             </table>
         </div>
         
         <div id="GameThrough" class="tabcontent">
-            <h3>GameThrough</h3>
-            <p>GameThrough is the capital of France.</p>
+            <table>
+                <tr>
+                    <th onclick="sortTable(0)">Name</th>
+                    <th onclick="sortTable(1)">PlayerName</th>
+                    <th onclick="sortTable(2)">Player Character</th>
+                    <th onclick="sortTable(3)">Time</th>
+                    <th onclick="sortTable(4)">Room</th>
+                    <th onclick="sortTable(5)">Enemy fought</th>
+                    <th onclick="sortTable(6)">Item found</th>
+                </tr>
+                <tr>
+                    <th>Karakter neve</th>
+                    <th>Játékos neve</th>
+                    <th>Karaktermodell</th>
+                    <th>Idő</th>
+                    <th>Hol tart</th>
+                    <th>Ellenségek legyőzve</th>
+                    <th>Tárgyak</th>
+                </tr>
+                <tr>
+                    <th>Karakter neve</th>
+                    <th>Játékos neve</th>
+                    <th>Karaktermodell</th>
+                    <th>Idő</th>
+                    <th>Hol tart</th>
+                    <th>Ellenségek legyőzve</th>
+                    <th>Tárgyak</th>
+                </tr>
+                <tr>
+                    <th>Karakter neve</th>
+                    <th>Játékos neve</th>
+                    <th>Karaktermodell</th>
+                    <th>Idő</th>
+                    <th>Hol tart</th>
+                    <th>Ellenségek legyőzve</th>
+                    <th>Tárgyak</th>
+                </tr>
+                <tr>
+                    <th>Karakter neve</th>
+                    <th>Játékos neve</th>
+                    <th>Karaktermodell</th>
+                    <th>Idő</th>
+                    <th>Hol tart</th>
+                    <th>Ellenségek legyőzve</th>
+                    <th>Tárgyak</th>
+                </tr>
+                <tr>
+                    <th>Karakter neve</th>
+                    <th>Játékos neve</th>
+                    <th>Karaktermodell</th>
+                    <th>Idő</th>
+                    <th>Hol tart</th>
+                    <th>Ellenségek legyőzve</th>
+                    <th>Tárgyak</th>
+                </tr>
+                <tr>
+                    <th>Karakter neve</th>
+                    <th>Játékos neve</th>
+                    <th>Karaktermodell</th>
+                    <th>Idő</th>
+                    <th>Hol tart</th>
+                    <th>Ellenségek legyőzve</th>
+                    <th>Tárgyak</th>
+                </tr>
+            </table>
         </div>
         
-        <div id="Tokyo" class="tabcontent">
-            <h3>Tokyo</h3>
-            <p>Tokyo is the capital of Japan.</p>
-        </div>
-
-
-
-
-
           <script>
               document.getElementById("defaultOpen").click();
             function openRank(evt, base) {
