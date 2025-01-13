@@ -38,7 +38,7 @@ header{
     height: 45vh;
     width: 100vw;
     min-height: 150px;
-    background-image: url('./img/banner.png');
+    /*background-image: url('./img/banner.png');*/
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
