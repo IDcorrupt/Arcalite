@@ -27,7 +27,10 @@ public partial class Popup : Control
 
 	public void OnConfirmPressed()
 	{
-		Globals.PopupResult = true;
+		if(popuptype!= "invalidSettings")
+		{
+			Globals.PopupResult = true;
+		}
         QueueFree();
     }
 
@@ -53,6 +56,12 @@ public partial class Popup : Control
 				cancel.Text = "No";
                 break;
 
+			case "invalidSettings":
+				title.Text = "[center]Invalid settings[/center]";
+				content.Text = "[center]A setting the config.ini file cannot be applied to your game, thus your settings will be reset to default.[/center]";
+				cancel.QueueFree();
+				confirm.Text="Understood";
+                break;
             default:
 				break;
 		}

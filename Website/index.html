@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="hn">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link id="base" rel="stylesheet" href="style.css">
+    <link id="theme" rel="stylesheet" href="themes/sun.css">
      <!-- Bootstrap CSS -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
@@ -15,96 +16,91 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <header class="flex-container">
-        <h1>Arcalite</h1>
-    </header>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="./index.html">Kezdőlap</a></li>
-                <li class="nav-item"><a class="nav-link" href="#controlid">Irányítás</a></li>
-                <li class="nav-item"><a class="nav-link" href="#characterid">Karakterek</a></li>
-                <li class="nav-item"><a class="nav-link" href="./wiki.html">Lexikon</a></li>
+                <li class="nav-item active"><a class="nav-link" href="./index.html">Kezdőlap</a></li>
+                <li class="nav-item active"><a class="nav-link" href="#controlid">Irányítás</a></li>
+                <li class="nav-item active"><a class="nav-link border-right" href="#characterid">Karakterek</a></li>
+                <li class="nav-item"><a class="nav-link border-left" href="./wiki.php">Lexikon</a></li>
                 <li class="nav-item"><a class="nav-link" href="./ranking.html">Ranglista</a></li>
+                <li class="nav-item"><div class="dropdown">
+                    <button>Styles</button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="switchStylesheet('sun')">Light</a>
+                        <a href="#" onclick="switchStylesheet('moon')">Dark</a>
+                        <a onclick="switchStylesheet()">Pixelated</a>
+                    </div>
+                </div></li>
                 <li class="nav-item ml-auto"><a class="nav-link" href="./profile.html">Bejelentkezés</a></li>
             </ul>
         </div>
     </nav>
+    <header class="flex-container">
+        <h1>Arcalite</h1>
+    </header>
+    
       
 </div>
     <main>
-            
-        <div class="flex-container p-5">
-            <video width="100vw" height="auto" controls loop poster="./img/index.png">
-                <source src="path/to/your/video.mp4" type="video/mp4">
-                <source src="path/to/your/video.ogg" type="video/ogg">
-            </video>
+
+        <script>
+            function switchStylesheet(sheetId) {
+                const stylesheet = document.getElementById("theme");
+                if (sheetId === 'sun') {
+                    stylesheet.href = './themes/sun.css';
+                } else if (sheetId === 'moon') {
+                    stylesheet.href = './themes/moon.css';
+                } else {
+                    console.error('Invalid stylesheet ID');
+                }
+            }
+        </script>
+        <div class="flex-container video">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/ePcOvfnIZHk?si=mZFdWE-8NQiAPlKG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <h2 id="controlid">Irányítás</h2>
-        <div class="flex-container pt-2 p-4" id="controls">
+        <div class="flex-container" id="controls">
             <div class="control">
-                <p>Képesség</p>
-                <img src="./img/index.png">
-                <img id="gif">
-                <d>Leírás</d>
+                    <img src="./img/index.png" id="gif">
+                        <p>Képesség</p>
+                        <img src="./img/button.png">
+                <d>ffffffffffffff fffffffffffff fffffffffff ffffffffffffffff ffffffff fffffff ffffffffff fffffff</d>
             </div>
             <div class="control">
-                <p>Képesség</p>
-                <img src="./img/index.png">
-                <img id="gif">
-                <d>Leírás</d>
+                <img src="./img/index.png" id="gif">
+                    <p>Képesség</p>
+                    <img src="./img/button.png">
+            <d>Leírás</d>
             </div>
             <div class="control">
+                <img src="./img/index.png" id="gif">
                 <p>Képesség</p>
-                <img src="./img/index.png">
-                <img id="gif">
-                <d>Leírás</d>
+                <img src="./img/button.png">
+            <d>Leírás</d>
             </div>
-            <div class="control">
-                <p>Képesség</p>
-                <img src="./img/index.png">
-                <img id="gif">
-                <d>Leírás</d>
-            </div>
-            <div class="control">
-                <p>Képesség</p>
-                <img src="./img/index.png">
-                <img id="gif">
-                <d>Leírás</d>
-            </div>
-            <div class="control">
-                <p>Képesség</p>
-                <img src="./img/index.png">
-                <img id="gif">
-                <d>Leírás</d>
-            </div>
-            <div class="control">
-                <p>Képesség</p>
-                <img src="./img/index.png">
-                <img id="gif">
-                <d>Leírás</d>
-            </div>
+    
         </div>
         <h2 id="characterid">Karakterek</h2>
-        <div class="flex-container p-4" id="characters">
+        <div class="flex-container" id="characters">
             
             <div class="character flex-container">
                 <h3>Karakternév</h3>
-                <img src="./img/index.png">
-                <p>Leírás</p>
+                <img src="./img/character.png">
+
             </div>
             <div class="character flex-container">
                 <h3>Karakternév</h3>
-                <img src="./img/index.png">
-                <p>Leírás</p>
+                <img src="./img/character.png">
+
             </div>
             <div class="character flex-container">
                 <h3>Karakternév</h3>
-                <img src="./img/index.png">
-                <p>Leírás</p>
+                <img src="./img/character.png">
+
             </div>
         </div>
     </main>

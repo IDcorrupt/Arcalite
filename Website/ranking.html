@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hn">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,34 +7,173 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
      <!-- Bootstrap CSS -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- jQuery and Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <header class="flex-container">
-        <h1>Arcalite</h1>
-    </header>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="#">Kezdőlap</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Irányítás</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Karakterek</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Lexikon</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Ranglista</a></li>
-                <li class="nav-item ml-auto"><a class="nav-link" href="#">Bejelentkezés</a></li>
+                <li class="nav-item"><a class="nav-link" href="./index.html">Kezdőlap</a></li>
+                <li class="nav-item"><a class="nav-link disabled" href="#controlid">Irányítás</a></li>
+                <li class="nav-item"><a class="nav-link border-right disabled" href="#characterid">Karakterek</a></li>
+                <li class="nav-item"><a class="nav-link border-left" href="./wiki.html">Lexikon</a></li>
+                <li class="nav-item active"><a class="nav-link" href="./ranking.html">Ranglista</a></li>
+                <li class="nav-item ml-auto"><a class="nav-link" href="./profile.html">Bejelentkezés</a></li>
             </ul>
         </div>
     </nav>
-    <main>
+    <header class="flex-container">
+        <h1>Arcalite</h1>
+    </header>
+    
+    <main class="p-5">
+        <div class="tab">
+            <button class="tablinks" id="defaultOpen" onclick="openRank(event, 'Profile')">Profile</button>
+            <button class="tablinks" onclick="openRank(event, 'GameThrough')">GameThrough</button>
+        </div>
         
+        <!-- Tab content -->
+        <div id="Profile" class="tabcontent">
+            <table>
+                <tr>
+                    <th onclick="sortTable(0)">Name</th>
+                    <th onclick="sortTable(1)">Time Played</th>
+                    <th onclick="sortTable(2)">Achievements</th>
+                    <th onclick="sortTable(3)">Playthroughs</th>
+                </tr>
+                <tr>
+                    <th>Név</th>
+                    <th>Játékidő</th>
+                    <th>Mérföldkő száma</th>
+                    <th>Végigjátszások száma</th>
+                </tr>
+                <tr>
+                    <th>Név</th>
+                    <th>Játékidő</th>
+                    <th>Mérföldkő száma</th>
+                    <th>Végigjátszások száma</th>
+                </tr>
+                <tr>
+                    <th>Név</th>
+                    <th>Játékidő</th>
+                    <th>Mérföldkő száma</th>
+                    <th>Végigjátszások száma</th>
+                </tr>
+                <tr>
+                    <th>Név</th>
+                    <th>Játékidő</th>
+                    <th>Mérföldkő száma</th>
+                    <th>Végigjátszások száma</th>
+                </tr>
+                <tr>
+                    <th>Név</th>
+                    <th>Játékidő</th>
+                    <th>Mérföldkő száma</th>
+                    <th>Végigjátszások száma</th>
+                </tr>
+            </table>
+        </div>
+        
+        <div id="GameThrough" class="tabcontent">
+            <table>
+                <tr>
+                    <th onclick="sortTable(0)">Name</th>
+                    <th onclick="sortTable(1)">PlayerName</th>
+                    <th onclick="sortTable(2)">Player Character</th>
+                    <th onclick="sortTable(3)">Time</th>
+                    <th onclick="sortTable(4)">Room</th>
+                    <th onclick="sortTable(5)">Enemy fought</th>
+                    <th onclick="sortTable(6)">Item found</th>
+                </tr>
+                <tr>
+                    <th>Karakter neve</th>
+                    <th>Játékos neve</th>
+                    <th>Karaktermodell</th>
+                    <th>Idő</th>
+                    <th>Hol tart</th>
+                    <th>Ellenségek legyőzve</th>
+                    <th>Tárgyak</th>
+                </tr>
+                <tr>
+                    <th>Karakter neve</th>
+                    <th>Játékos neve</th>
+                    <th>Karaktermodell</th>
+                    <th>Idő</th>
+                    <th>Hol tart</th>
+                    <th>Ellenségek legyőzve</th>
+                    <th>Tárgyak</th>
+                </tr>
+                <tr>
+                    <th>Karakter neve</th>
+                    <th>Játékos neve</th>
+                    <th>Karaktermodell</th>
+                    <th>Idő</th>
+                    <th>Hol tart</th>
+                    <th>Ellenségek legyőzve</th>
+                    <th>Tárgyak</th>
+                </tr>
+                <tr>
+                    <th>Karakter neve</th>
+                    <th>Játékos neve</th>
+                    <th>Karaktermodell</th>
+                    <th>Idő</th>
+                    <th>Hol tart</th>
+                    <th>Ellenségek legyőzve</th>
+                    <th>Tárgyak</th>
+                </tr>
+                <tr>
+                    <th>Karakter neve</th>
+                    <th>Játékos neve</th>
+                    <th>Karaktermodell</th>
+                    <th>Idő</th>
+                    <th>Hol tart</th>
+                    <th>Ellenségek legyőzve</th>
+                    <th>Tárgyak</th>
+                </tr>
+                <tr>
+                    <th>Karakter neve</th>
+                    <th>Játékos neve</th>
+                    <th>Karaktermodell</th>
+                    <th>Idő</th>
+                    <th>Hol tart</th>
+                    <th>Ellenségek legyőzve</th>
+                    <th>Tárgyak</th>
+                </tr>
+            </table>
+        </div>
+        
+          <script>
+              document.getElementById("defaultOpen").click();
+            function openRank(evt, base) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(base).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+          </script>
+  
     </main>
 </body>
 </html>

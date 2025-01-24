@@ -55,7 +55,6 @@ $(document).ready(function() {
             data: payload,
             global: false,
             success: (data) => {
-                data = JSON.parse(data);
                 alert(data.id);
             },
             error: (data) => {
@@ -94,7 +93,6 @@ $(document).ready(function() {
             data: payload,
             global: false,
             success: (data) => {
-                //data = JSON.parse(data);
                 if (!data.exists) {
                     $('#login_error').html("Nincs ilyen e-mail cím regisztrálva!");
                 } else {
@@ -131,6 +129,36 @@ $(document).ready(function() {
     });
 
     $('#newpwd_set').click(function(){
+        if ($('#newpwd_newpwd').val() == "") {
+            alert("Adjon meg egy új jelszót!");
+            return;
+        }
 
+        if ($('#newpwd_newpwd').val() != $('#newpwd_again').val()) {
+            alert("A megerősítő jelszó nem egyezik az előtte megadottal!");
+            return;
+        }
+
+        let payload = {
+            email: $('#login_email').val(),
+            password: $('#newpwd_newpwd').val(),
+            request_type: "UPDATE_PWD"
+        }
+
+        $.ajax({
+            type: "POST",
+            url: 'api/misc.php',
+            data: payload,
+            global: false,
+            success: (data) => {
+                alert(data.message);
+            },
+            error: (data) => {
+                alert(data.message);
+            }
+        });
+
+
+        $('#newpwd_newpwd_container').hide();
     });
 });

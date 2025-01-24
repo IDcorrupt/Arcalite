@@ -1,1 +1,29 @@
-asd
+% css
+    x egységes reszponzivitás !
+    - add actual colors theme and aesthetic
+    % index.html
+        - kontrol scaling, méretek !
+        x video ffs
+        ? header: flex container
+        ? video: flex container p-5
+        ? controls: flex container pt-2 p-4 ID
+            ? control: control
+        ? characters: flex container p-4 ID
+            ? character: flex container character
+        ? footer: flex container
+    % profile.html
+        - handling messages properly !
+        - add the artwork
+        ? main login ID
+        ? div login
+    % ranking.html
+        - style the shit out of the table
+        - javascript into seperate file ty
+        ? main: p-5
+        ? tab
+        ? tabcontent Profile() ID
+        ? tabcontent GameThrough() ID
+    % wiki
+        - make the seperate divs for different types 
+        - make the lil divs, and responsive
+        - grey out the ones not obtained
