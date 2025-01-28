@@ -1,6 +1,6 @@
 ﻿CREATE DATABASE arcalite CHARACTER SET utf8;
 USE arcalite;
-
+/*
 CREATE TABLE profile (
   id INT(11) PRIMARY KEY AUTO_INCREMENT,
   username VARCHAR(20),
@@ -89,3 +89,4 @@ CREATE TABLE descriptions (
   CONSTRAINT fk_descr_item FOREIGN KEY (id) REFERENCES item(id),
   CONSTRAINT fk_descr_enemy FOREIGN KEY (id) REFERENCES enemy(id)
 );
+*/
