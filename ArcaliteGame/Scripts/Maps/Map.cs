@@ -4,7 +4,6 @@ using System;
 public partial class Map : Node2D
 {
     PackedScene Player = (PackedScene)ResourceLoader.Load("res://Nodes/Game/player.tscn");
-	PackedScene pauseMenu = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/pause_menu.tscn");
     GameScene parent;
 
     public Camera2D camera;
@@ -12,7 +11,7 @@ public partial class Map : Node2D
     {
         parent = GetParent() as GameScene;
         Globals.spawnPoint = GetNode<Node2D>("SpawnPoint");
-        camera = GetNode<Camera2D>("Camera2D");
+        //camera = GetNode<Camera2D>("Camera2D");
         Node2D player = (Node2D)Player.Instantiate();
         AddChild(player);
 
@@ -20,7 +19,7 @@ public partial class Map : Node2D
 
     public void CameraController(string direction)
     {
-        GD.Print("moving: " + direction);
+        /*GD.Print("moving: " + direction);
         switch (direction)
         {
             case "top":
@@ -37,18 +36,13 @@ public partial class Map : Node2D
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
 
     public override void _Process(double delta)
     {
-        if (Globals.gameActive && Input.IsActionJustPressed("ui_cancel"))
-        {
-            Globals.gameActive = false;
-            Control pauseMenuNode = (Control)pauseMenu.Instantiate();
-            AddChild(pauseMenuNode);
-        }
+
     }
 
     

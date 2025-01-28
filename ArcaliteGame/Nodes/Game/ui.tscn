@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d4mg7kpomu4je"]
 
-[ext_resource type="Script" path="res://Scripts/Game/Ui.cs" id="1_jh1wj"]
+[ext_resource type="Script" path="res://Scripts/Mechanics/Ui.cs" id="1_f025f"]
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -9,7 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_jh1wj")
+script = ExtResource("1_f025f")
 
 [node name="HPNumDisplay" type="RichTextLabel" parent="."]
 layout_mode = 0

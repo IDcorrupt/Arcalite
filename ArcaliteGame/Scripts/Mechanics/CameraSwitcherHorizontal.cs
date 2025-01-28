@@ -12,18 +12,26 @@ public partial class CameraSwitcherHorizontal : Node2D
     bool rightExit = false;
     Map Parent;
 
+    Sprite2D leftShow;
+    Sprite2D rightShow;
     public override void _Ready()
     {
         Parent = GetParent() as Map;
         leftTrigger = GetNode<Area2D>("LeftTrigger");
         rightTrigger = GetNode<Area2D>("RightTrigger");
         fullArea = GetNode<Area2D>("FullArea");
+
+        leftShow = GetNode<Sprite2D>("LeftTrigger/display");
+        rightShow = GetNode<Sprite2D>("RightTrigger/display");
+        leftShow.Visible = false;
+        rightShow.Visible = false;
     }
 
 
 
     public void LeftTriggerEntered(Node2D node)
     {
+        leftShow.Visible = true;
         if (node is Player && moveDir == string.Empty)
         {
             moveDir = "right";
@@ -36,6 +44,7 @@ public partial class CameraSwitcherHorizontal : Node2D
     }
     public void RightTriggerEntered(Node2D node)
     {
+        rightShow.Visible = true;
         if (node is Player && moveDir == string.Empty)
         {
             moveDir = "left";
@@ -48,6 +57,7 @@ public partial class CameraSwitcherHorizontal : Node2D
     }
     public void LeftTriggerExited(Node2D node)
     {
+        leftShow.Visible = false;
         leftExit = true;
         if (rightExit)
         {
@@ -60,6 +70,7 @@ public partial class CameraSwitcherHorizontal : Node2D
     }
     public void RightTriggerExited(Node2D node)
     {
+        rightShow.Visible = false;
         rightExit = true;
         if (leftExit)
         {

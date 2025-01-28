@@ -1,29 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://dlqooe30j1ckn"]
+[gd_scene load_steps=5 format=3 uid="uid://dlqooe30j1ckn"]
 
-[ext_resource type="Script" path="res://Scripts/Maps/CameraSwitcherHorizontal.cs" id="1_7fckl"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ycove"]
-size = Vector2(10, 320)
+[ext_resource type="Script" path="res://Scripts/Mechanics/CameraSwitcherHorizontal.cs" id="1_ro65i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4qhyb"]
-size = Vector2(20, 320)
+size = Vector2(30, 320)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ycove"]
+size = Vector2(15, 320)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w4ekq"]
+size = Vector2(15, 320)
 
 [node name="CameraSwitcherHorizontal" type="Node2D"]
-script = ExtResource("1_7fckl")
-
-[node name="RightTrigger" type="Area2D" parent="."]
-position = Vector2(5, 0)
-collision_layer = 64
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightTrigger"]
-shape = SubResource("RectangleShape2D_ycove")
-
-[node name="LeftTrigger" type="Area2D" parent="."]
-position = Vector2(-5, 0)
-collision_layer = 64
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftTrigger"]
-shape = SubResource("RectangleShape2D_ycove")
+script = ExtResource("1_ro65i")
 
 [node name="FullArea" type="Area2D" parent="."]
 collision_layer = 64
@@ -31,8 +20,32 @@ collision_layer = 64
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FullArea"]
 shape = SubResource("RectangleShape2D_4qhyb")
 
+[node name="RightTrigger" type="Area2D" parent="."]
+position = Vector2(7.5, 0)
+collision_layer = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightTrigger"]
+visible = false
+shape = SubResource("RectangleShape2D_ycove")
+
+[node name="display" type="Sprite2D" parent="RightTrigger"]
+modulate = Color(1, 1, 1, 0.435294)
+texture = SubResource("PlaceholderTexture2D_w4ekq")
+
+[node name="LeftTrigger" type="Area2D" parent="."]
+position = Vector2(-7.5, 0)
+collision_layer = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftTrigger"]
+visible = false
+shape = SubResource("RectangleShape2D_ycove")
+
+[node name="display" type="Sprite2D" parent="LeftTrigger"]
+modulate = Color(1, 1, 1, 0.435294)
+texture = SubResource("PlaceholderTexture2D_w4ekq")
+
+[connection signal="body_exited" from="FullArea" to="." method="FullAreaExited"]
 [connection signal="body_entered" from="RightTrigger" to="." method="RightTriggerEntered"]
 [connection signal="body_exited" from="RightTrigger" to="." method="RightTriggerExited"]
 [connection signal="body_entered" from="LeftTrigger" to="." method="LeftTriggerEntered"]
 [connection signal="body_exited" from="LeftTrigger" to="." method="LeftTriggerExited"]
-[connection signal="body_exited" from="FullArea" to="." method="FullAreaExited"]

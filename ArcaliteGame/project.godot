@@ -162,8 +162,9 @@ locale/translations_pot_files=PackedStringArray("res://Nodes/Menus/mainmenu.tscn
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Enemies"
 2d_physics/layer_3="Terrain"
-2d_physics/layer_4="Player_Projectiles"
-2d_physics/layer_7="Camera_Controller"
+2d_physics/layer_4="PlayerProjectiles"
+2d_physics/layer_7="CameraTriggers"
+2d_physics/layer_8="CameraHitbox"
 
 [rendering]
 

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public partial class EnemyControl : Node2D
 {
+    [Export]
+    public string room;
     public int enemyAmount = 0;
     public bool playerInRange = false;
     private bool enemiesActive = false;

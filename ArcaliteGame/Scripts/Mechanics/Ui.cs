@@ -8,7 +8,6 @@ public partial class Ui : Control
 
     //for debug
     Button debugButton;
-    EnemyControl enemyController;
 
     public override void _Ready()
     {
@@ -20,11 +19,7 @@ public partial class Ui : Control
 
     public void debugToggled(bool toggled)
     {
-        if (enemyController == null)
-        {
-            enemyController = GetNode<EnemyControl>("../Map/EnemyControl");
-        }
-        enemyController.playerInRange = toggled;
+        
     }
 
     public override void _Process(double delta)

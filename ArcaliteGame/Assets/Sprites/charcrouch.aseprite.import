@@ -3,11 +3,12 @@
 importer="aseprite_wizard.plugin"
 type="SpriteFrames"
 uid="uid://bwwb2lrrjq2uq"
-valid=false
+path="res://.godot/imported/charcrouch.aseprite-3ec6677fc5ecc03d31e791e588026243.res"
 
 [deps]
 
 source_file="res://Assets/Sprites/charcrouch.aseprite"
+dest_files=["res://.godot/imported/charcrouch.aseprite-3ec6677fc5ecc03d31e791e588026243.res"]
 
 [params]
 

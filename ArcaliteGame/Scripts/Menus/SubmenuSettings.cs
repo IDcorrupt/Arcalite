@@ -85,7 +85,6 @@ public partial class SubmenuSettings : Control
 		ConfigFileHandler.settingChanges["game"]["difficulty"] = index+1;
 		isSaved = false;
 	}
-
 	//video
 	public void WindowSelect(int index)
 	{
@@ -136,7 +135,6 @@ public partial class SubmenuSettings : Control
 			isSaved = false;
 		}
     }
-
 	//audio
 	public void MasterVolumeSlideEnded(bool valueChanged)
 	{
@@ -195,7 +193,6 @@ public partial class SubmenuSettings : Control
 			isSaved = false;
 		}
     }
-
     //sync spinbox with slider
     public void MasterVolumeSliding(float value)
 	{
@@ -209,9 +206,6 @@ public partial class SubmenuSettings : Control
     {
         GetNode<SpinBox>("Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/sfx_volume/SpinBox").Value = value;
     }
-
-
-
     //button controls   
     public void BackPressed()
 	{
@@ -232,14 +226,12 @@ public partial class SubmenuSettings : Control
         }
 
 	}
-
 	//reset settings
 	public void ResetPressed()
 	{
 		ConfigFileHandler.DefaultSettings();
 		UpdateSelectors();
 	}
-
 	//export settings to config
 	public void SavePressed()
 	{
