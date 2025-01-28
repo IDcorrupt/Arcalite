@@ -35,21 +35,14 @@ CREATE TABLE player (
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(64),
   hp INT,
+  profileid INT,
   avatarid INT,
   levelid INT,
   playtime TIME DEFAULT 0,
   CONSTRAINT fk_player_avatar FOREIGN KEY (avatarid) REFERENCES avatar(id),
-  CONSTRAINT fk_player_level FOREIGN KEY (levelid) REFERENCES level(id)
+  CONSTRAINT fk_player_level FOREIGN KEY (levelid) REFERENCES level(id),
+  CONSTRAINT fk_player_profile FOREIGN KEY (profileid) REFERENCES profile(id)
 );
-
-CREATE TABLE proplay (
-  profileid INT,
-  playerid INT,
-  CONSTRAINT pk_proplay PRIMARY KEY (profileid, playerid),
-  CONSTRAINT fk_proplay_profile FOREIGN KEY (profileid) REFERENCES profile(id),
-  CONSTRAINT fk_proplay_player FOREIGN KEY (playerid) REFERENCES player(id)
-);
-
 CREATE TABLE enemy (
   id INT PRIMARY KEY AUTO_INCREMENT,
   hp INT,
@@ -126,7 +119,7 @@ CREATE TABLE leveldesc (
   levelid INT,
   languageid INT,
   description TEXT,
-  CONSTRAINT pk_leveldesc PRIMARY KEY (enemyid, languageid),
+  CONSTRAINT pk_leveldesc PRIMARY KEY (levelid, languageid),
   CONSTRAINT fk_leveldesc_level FOREIGN KEY (levelid) REFERENCES level(id),
   CONSTRAINT fk_leveldesc_languages FOREIGN KEY (languageid) REFERENCES lang(id)
 );
