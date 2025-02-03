@@ -8,26 +8,42 @@ public partial class EnemyControl : Node2D
     public string room;
     public int enemyAmount = 0;
     public bool playerInRange = false;
+    public bool playerInRoom = false;
     private bool enemiesActive = false;
     private bool despawningInProgress = false;
 
     private List<Node2D> enemySpawnPoints = new List<Node2D>();
     private Timer SpawnTimer;
+
     public override void _Ready()
     {
         SpawnTimer = GetNode<Timer>("Timer");
         for (int i = 0; i < GetChildCount(); i++)
         {
-            if (GetChildren()[i].HasMeta("Type"))
+            if (GetChildren()[i] is EnemySpawner)
             {
-                if ((string)GetChildren()[i].GetMeta("Type") == "EnemySpawner")
-                {
-                    enemyAmount++;
-                    enemySpawnPoints.Add((EnemySpawner)GetChildren()[i]);
-                }
+                enemyAmount++;
+                enemySpawnPoints.Add((EnemySpawner) GetChildren()[i]);
             }
         }
+
     }
+
+    public void AreaEntered(Area2D area)
+    {
+        if(area.GetCollisionLayerValue(9))
+            playerInRange = true;
+        else if (area.GetCollisionLayerValue(6))
+            playerInRoom = true;
+    }
+    public void AreaExited(Area2D area)
+    {
+        if (area.GetCollisionLayerValue(9))
+            playerInRange = false;
+        else if (area.GetCollisionLayerValue(6))
+            playerInRoom = false;
+    }
+
 
     public void OnTimerTimeout()
     {
@@ -58,11 +74,36 @@ public partial class EnemyControl : Node2D
             }
             enemiesActive = true;
         }
-        if (!playerInRange && !despawningInProgress && enemiesActive)
+        else if (!playerInRange && !despawningInProgress && enemiesActive)
         {
             despawningInProgress = true;
             SpawnTimer.WaitTime = 2;
             SpawnTimer.Start();
+        }
+        else if (playerInRange && despawningInProgress)
+        {
+            //cancel despawn if player moves back in range
+            SpawnTimer.Stop();
+        }
+
+        if (playerInRoom)
+        {
+            foreach(Node node in GetChildren())
+            {
+
+                if (node is LightMeele lightMelee)
+                    lightMelee.isChasing = true;
+                //[TBD] add all other enemy types when they start existing
+            }
+        }
+        else
+        {
+            foreach (Node node in GetChildren())
+            {
+                if (node is LightMeele lightMelee)
+                    lightMelee.isChasing = false;
+                //[TBD] add all other enemy types when they start existing
+            }
         }
     }
 }

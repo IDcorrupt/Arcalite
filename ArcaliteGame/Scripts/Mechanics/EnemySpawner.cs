@@ -46,7 +46,6 @@ public partial class EnemySpawner : Node2D
         }
 
         //other type handling with else if-s
-
         AddSibling(ActiveEnemy);
         
     }

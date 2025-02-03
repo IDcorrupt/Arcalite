@@ -1,8 +1,14 @@
 using Godot;
 using System;
+using System.Net.Mail;
 
 public partial class CameraController : Node2D
 {
+    //debug
+    private bool freecamToggle = false;
+    //debug
+
+
     private Camera2D camera;
     private Area2D topTrigger;
     private Area2D botTrigger;
@@ -27,6 +33,8 @@ public partial class CameraController : Node2D
     }
 
 
+
+    //camera movement
     public void MoveCamera(string direction)
     {
         if (!cooling)
@@ -117,6 +125,25 @@ public partial class CameraController : Node2D
     }
     public override void _Process(double delta)
     {
+        //debug freecam
+        if (Input.IsActionJustPressed("freecam_toggle"))
+        {
+            freecamToggle = !freecamToggle;
+            GD.Print("Freecam toggled: " + freecamToggle);
+        }
+        if (freecamToggle)
+        {
+            if (Input.IsActionPressed("freecam_up"))
+                camera.Offset = new Vector2(camera.Offset.X, camera.Offset.Y - 10);
+            if (Input.IsActionPressed("freecam_down"))
+                camera.Offset = new Vector2(camera.Offset.X, camera.Offset.Y + 10);
+            if (Input.IsActionPressed("freecam_left"))
+                camera.Offset = new Vector2(camera.Offset.X - 10, camera.Offset.Y);
+            if (Input.IsActionPressed("freecam_right"))
+                camera.Offset = new Vector2(camera.Offset.X + 10, camera.Offset.Y);
+        }
+        if (Input.IsActionJustPressed("freecam_reset"))
+            camera.Offset = new Vector2(0, 0);
 
     }
 }

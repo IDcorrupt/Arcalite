@@ -29,14 +29,3 @@ text = "MP: asd"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
-
-[node name="debugbutton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 527.0
-offset_top = 3.0
-offset_right = 636.0
-offset_bottom = 34.0
-toggle_mode = true
-text = "debugbutton"
-
-[connection signal="toggled" from="debugbutton" to="." method="debugToggled"]
