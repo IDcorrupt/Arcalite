@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://sp0xoa4003y1"]
+
+[ext_resource type="Texture2D" uid="uid://b1kcycve1n2tl" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/shark.png" id="1_ie5ln"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rjpsb"]
+atlas = ExtResource("1_ie5ln")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpi6b"]
+atlas = ExtResource("1_ie5ln")
+region = Rect2(64, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1k63s"]
+atlas = ExtResource("1_ie5ln")
+region = Rect2(128, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wdso5"]
+atlas = ExtResource("1_ie5ln")
+region = Rect2(192, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h8iru"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rjpsb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpi6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1k63s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wdso5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vekda"]
+size = Vector2(44, 24)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q227e"]
+radius = 150.0
+
+[node name="LightRanged" type="CharacterBody2D"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-3, -3)
+sprite_frames = SubResource("SpriteFrames_h8iru")
+frame_progress = 0.177182
+flip_h = true
+
+[node name="DirectionTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="RoamCooldown" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="AtkCooldown" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vekda")
+
+[node name="indicator" type="Sprite2D" parent="."]
+
+[node name="AttackRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+visible = false
+shape = SubResource("CircleShape2D_q227e")
+debug_color = Color(1, 0, 0, 0.419608)

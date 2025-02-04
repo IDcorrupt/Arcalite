@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dmcjsoh4jx60g"]
+[gd_scene load_steps=7 format=3 uid="uid://dmcjsoh4jx60g"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Enemies/LightMeele.cs" id="1_yaydj"]
 [ext_resource type="Texture2D" uid="uid://3usmmqxmemtl" path="res://Assets/Sprites/Lajos.png" id="2_xpb5c"]
@@ -23,9 +23,6 @@ size = Vector2(9, 21)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2gd46"]
 size = Vector2(5, 5)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_74scv"]
-size = Vector2(6, 7)
 
 [node name="LightMelee" type="CharacterBody2D"]
 scale = Vector2(1.2, 1.2)
@@ -61,11 +58,6 @@ collision_layer = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AttackRange"]
 polygon = PackedVector2Array(0, 0, 0, -11, 6, -11, 13, -5, 13, 5, 6, 11, 0, 11)
-
-[node name="Sprite2D" type="Sprite2D" parent="AttackRange"]
-modulate = Color(0, 1, 1, 0.458824)
-position = Vector2(8.33333, 0)
-texture = SubResource("PlaceholderTexture2D_74scv")
 
 [connection signal="timeout" from="DirectionTimer" to="." method="OnDirectionTimerTimeout"]
 [connection signal="timeout" from="RoamCooldown" to="." method="OnRoamCoolDownTimeout"]
