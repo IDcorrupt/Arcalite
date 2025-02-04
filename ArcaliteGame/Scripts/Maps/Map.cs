@@ -3,6 +3,7 @@ using System;
 
 public partial class Map : Node2D
 {
+
     PackedScene Player = (PackedScene)ResourceLoader.Load("res://Nodes/Game/player.tscn");
     GameScene parent;
 
@@ -22,5 +23,4 @@ public partial class Map : Node2D
        
     }
 
-    
 }
