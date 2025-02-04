@@ -55,7 +55,8 @@ $(document).ready(function() {
             data: payload,
             global: false,
             success: (data) => {
-                alert(data.id);
+                open("/", "_self");
+                document.cookie = `userid=${data.id}; max-age=${30*60} ; path=/; secure; SameSite=Strict`;
             },
             error: (data) => {
                 $('#login_error').html(data.responseText);
@@ -83,27 +84,27 @@ $(document).ready(function() {
         }
 
         let payload = {
-            email: $('#login_email').val(),
-            request_type: "EMAIL_EXISTS"
+            email: $('#login_email').val()
         }
 
         $.ajax({
             type: "GET",
-            url: "api/misc.php",
+            url: "api/email_exists.php",
             data: payload,
             global: false,
             success: (data) => {
                 if (!data.exists) {
                     $('#login_error').html("Nincs ilyen e-mail cím regisztrálva!");
-                } else {
-                    verification_code = "";
-                    for (let i = 0; i < verification_num_of_digits; i++) { verification_code += Math.floor(Math.random() * 10); }
-                    alert(`Az email-ben megkapott kód: ${verification_code}`);
-                    
-                    $('#newpwd_authcode').val("");
-                    $('#newpwd_authcode_container').show();
-                    $('#newpwd_newpwd_container').hide();
+                    return;
                 }
+
+                verification_code = "";
+                for (let i = 0; i < verification_num_of_digits; i++) { verification_code += Math.floor(Math.random() * 10); }
+                alert(`Az email-ben megkapott kód: ${verification_code}`);
+                
+                $('#newpwd_authcode').val("");
+                $('#newpwd_authcode_container').show();
+                $('#newpwd_newpwd_container').hide();
             },
             error: (data) => {
                 $('#login_error').html(data.responseText);
@@ -141,13 +142,12 @@ $(document).ready(function() {
 
         let payload = {
             email: $('#login_email').val(),
-            password: $('#newpwd_newpwd').val(),
-            request_type: "UPDATE_PWD"
+            password: $('#newpwd_newpwd').val()
         }
 
         $.ajax({
             type: "POST",
-            url: 'api/misc.php',
+            url: 'api/new_password.php',
             data: payload,
             global: false,
             success: (data) => {
