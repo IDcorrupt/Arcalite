@@ -57,6 +57,7 @@ $(document).ready(function() {
             success: (data) => {
                 open("/", "_self");
                 document.cookie = `userid=${data.id}; max-age=${30*60} ; path=/; secure; SameSite=Strict`;
+                document.cookie = `username=${data.username}; max-age=${30*60} ; path=/; secure; SameSite=Strict`;
             },
             error: (data) => {
                 $('#login_error').html(data.responseText);

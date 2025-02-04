@@ -38,6 +38,7 @@ else if ($num_of_profiles > 1) {
 
 $query = "SELECT * FROM `profile` WHERE `email` = '$email' AND `password` = PASSWORD('$password');";
 $result = $db->query($query);
+
 $id = $result->fetch_assoc();
 
 header("Content-Type: application/json");
