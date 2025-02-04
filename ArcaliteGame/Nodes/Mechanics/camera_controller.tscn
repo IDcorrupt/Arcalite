@@ -1,0 +1,156 @@
+[gd_scene load_steps=11 format=3 uid="uid://dbay08psod1qd"]
+
+[ext_resource type="Script" path="res://Scripts/Mechanics/CameraController.cs" id="1_bkkum"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fjovn"]
+size = Vector2(1360, 20)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nkfhg"]
+size = Vector2(20, 760)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qlh17"]
+size = Vector2(10, 360)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_msxgn"]
+size = Vector2(640, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a060w"]
+size = Vector2(1920, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6s2h8"]
+size = Vector2(640, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_66mbn"]
+size = Vector2(15, 1080)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7x231"]
+size = Vector2(15, 360)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_djvr2"]
+radius = 2.0
+
+[node name="CameraController" type="Node2D"]
+script = ExtResource("1_bkkum")
+
+[node name="Camera" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
+[node name="EnemyTrigger" type="Area2D" parent="Camera"]
+visible = false
+position = Vector2(-320, -180)
+collision_layer = 256
+collision_mask = 512
+
+[node name="Collision" type="CollisionPolygon2D" parent="Camera/EnemyTrigger"]
+polygon = PackedVector2Array(330, 170, 1000, 170, 1000, 190, 330, 190, 330, 560, 310, 560, 310, 190, -360, 190, -360, 170, 310, 170, 310, -200, 330, -200)
+
+[node name="display" type="Node2D" parent="Camera/EnemyTrigger"]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Camera/EnemyTrigger/display"]
+modulate = Color(0.926886, 0, 0.203749, 0.505882)
+position = Vector2(320, 180)
+texture = SubResource("PlaceholderTexture2D_fjovn")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Camera/EnemyTrigger/display"]
+modulate = Color(0.926886, 0, 0.203749, 0.505882)
+position = Vector2(320, 180)
+texture = SubResource("PlaceholderTexture2D_nkfhg")
+
+[node name="CamTriggers" type="Node2D" parent="Camera"]
+position = Vector2(-320, -180)
+
+[node name="LeftTrigger" type="Area2D" parent="Camera/CamTriggers"]
+position = Vector2(0, 180)
+collision_layer = 64
+
+[node name="Collision" type="CollisionShape2D" parent="Camera/CamTriggers/LeftTrigger"]
+shape = SubResource("RectangleShape2D_qlh17")
+
+[node name="RightTrigger" type="Area2D" parent="Camera/CamTriggers"]
+position = Vector2(640, 180)
+collision_layer = 64
+
+[node name="Collision" type="CollisionShape2D" parent="Camera/CamTriggers/RightTrigger"]
+shape = SubResource("RectangleShape2D_qlh17")
+
+[node name="TopTrigger" type="Area2D" parent="Camera/CamTriggers"]
+position = Vector2(320, 0)
+collision_layer = 64
+
+[node name="Collision" type="CollisionShape2D" parent="Camera/CamTriggers/TopTrigger"]
+shape = SubResource("RectangleShape2D_msxgn")
+
+[node name="BotTrigger" type="Area2D" parent="Camera/CamTriggers"]
+position = Vector2(320, 360)
+collision_layer = 64
+
+[node name="Collision" type="CollisionShape2D" parent="Camera/CamTriggers/BotTrigger"]
+shape = SubResource("RectangleShape2D_msxgn")
+
+[node name="edgeCollisions" type="StaticBody2D" parent="Camera"]
+visible = false
+collision_layer = 128
+collision_mask = 10
+
+[node name="top" type="CollisionShape2D" parent="Camera/edgeCollisions"]
+position = Vector2(0, -180)
+shape = SubResource("RectangleShape2D_a060w")
+debug_color = Color(0.973523, 0, 0.433382, 0.42)
+
+[node name="topFar" type="CollisionShape2D" parent="Camera/edgeCollisions"]
+position = Vector2(0, -540)
+shape = SubResource("RectangleShape2D_6s2h8")
+debug_color = Color(0.973523, 0, 0.433382, 0.42)
+
+[node name="right" type="CollisionShape2D" parent="Camera/edgeCollisions"]
+position = Vector2(320, 0)
+shape = SubResource("RectangleShape2D_66mbn")
+debug_color = Color(0.973523, 0, 0.433382, 0.42)
+
+[node name="rightFar" type="CollisionShape2D" parent="Camera/edgeCollisions"]
+position = Vector2(960, 0)
+shape = SubResource("RectangleShape2D_7x231")
+debug_color = Color(0.973523, 0, 0.433382, 0.42)
+
+[node name="left" type="CollisionShape2D" parent="Camera/edgeCollisions"]
+position = Vector2(-320, 0)
+shape = SubResource("RectangleShape2D_66mbn")
+debug_color = Color(0.973523, 0, 0.433382, 0.42)
+
+[node name="leftFar" type="CollisionShape2D" parent="Camera/edgeCollisions"]
+position = Vector2(-960, 0)
+shape = SubResource("RectangleShape2D_7x231")
+debug_color = Color(0.973523, 0, 0.433382, 0.42)
+
+[node name="bot" type="CollisionShape2D" parent="Camera/edgeCollisions"]
+position = Vector2(0, 180)
+shape = SubResource("RectangleShape2D_a060w")
+debug_color = Color(0.973523, 0, 0.433382, 0.42)
+
+[node name="botFar" type="CollisionShape2D" parent="Camera/edgeCollisions"]
+position = Vector2(0, 540)
+shape = SubResource("RectangleShape2D_6s2h8")
+debug_color = Color(0.973523, 0, 0.433382, 0.42)
+
+[node name="Hitbox" type="Area2D" parent="Camera"]
+collision_layer = 32
+collision_mask = 512
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/Hitbox"]
+shape = SubResource("CircleShape2D_djvr2")
+
+[node name="CooldownTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="Camera/CamTriggers/LeftTrigger" to="." method="LeftTriggerEntered"]
+[connection signal="body_exited" from="Camera/CamTriggers/LeftTrigger" to="." method="LeftTriggerExited"]
+[connection signal="body_entered" from="Camera/CamTriggers/RightTrigger" to="." method="RightTriggerEntered"]
+[connection signal="body_exited" from="Camera/CamTriggers/RightTrigger" to="." method="RightTriggerExited"]
+[connection signal="body_entered" from="Camera/CamTriggers/TopTrigger" to="." method="TopTriggerEntered"]
+[connection signal="body_exited" from="Camera/CamTriggers/TopTrigger" to="." method="TopTriggerExited"]
+[connection signal="body_entered" from="Camera/CamTriggers/BotTrigger" to="." method="BotTriggerEntered"]
+[connection signal="body_exited" from="Camera/CamTriggers/BotTrigger" to="." method="BotTriggerExited"]
+[connection signal="timeout" from="CooldownTimer" to="." method="CooldownTimerTimeout"]

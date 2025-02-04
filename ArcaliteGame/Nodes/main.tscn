@@ -1,16 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqum6syxua463"]
+[gd_scene load_steps=2 format=3 uid="uid://cqum6syxua463"]
 
 [ext_resource type="Script" path="res://Scripts/MainNode.cs" id="1_723er"]
-[ext_resource type="PackedScene" uid="uid://cos7up0ym3ra5" path="res://Nodes/Menus/mainmenu.tscn" id="3_lrwwp"]
 
 [node name="MainNode" type="Node2D"]
 script = ExtResource("1_723er")
-
-[node name="MainMenu" parent="." instance=ExtResource("3_lrwwp")]
-offset_left = 320.0
-offset_top = 180.0
-offset_right = 320.0
-offset_bottom = 180.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-metadata/_edit_use_anchors_ = true

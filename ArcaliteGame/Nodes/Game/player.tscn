@@ -203,19 +203,17 @@ animations = [{
 "speed": 16.0
 }]
 
-[node name="Player" type="Node2D"]
-scale = Vector2(1.4, 1.4)
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D"]
 disable_mode = 2
-collision_mask = 4
+collision_mask = 6
+floor_max_angle = 0.872665
 script = ExtResource("1_e7w0v")
 
-[node name="HitBox" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="HitBox" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.714285)
 shape = SubResource("RectangleShape2D_h8j3f")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 position = Vector2(0, -2)
 scale = Vector2(0.638, 0.638)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmcjsoh4jx60g"]
+[gd_scene load_steps=7 format=3 uid="uid://dmcjsoh4jx60g"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Enemies/LightMeele.cs" id="1_yaydj"]
 [ext_resource type="Texture2D" uid="uid://3usmmqxmemtl" path="res://Assets/Sprites/Lajos.png" id="2_xpb5c"]
@@ -21,13 +21,18 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kps44"]
 size = Vector2(9, 21)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2gd46"]
+size = Vector2(5, 5)
+
+[node name="LightMelee" type="CharacterBody2D"]
+scale = Vector2(1.2, 1.2)
 collision_layer = 2
-collision_mask = 4
+collision_mask = 132
 floor_max_angle = 0.0
 script = ExtResource("1_yaydj")
+metadata/Type = "Enemy"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3p25d")
 
 [node name="DirectionTimer" type="Timer" parent="."]
@@ -38,8 +43,24 @@ autostart = true
 wait_time = 3.0
 one_shot = true
 
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kps44")
 
+[node name="indicator" type="Sprite2D" parent="."]
+position = Vector2(6, -16)
+texture = SubResource("PlaceholderTexture2D_2gd46")
+
+[node name="AttackRange" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AttackRange"]
+polygon = PackedVector2Array(0, 0, 0, -11, 6, -11, 13, -5, 13, 5, 6, 11, 0, 11)
+
 [connection signal="timeout" from="DirectionTimer" to="." method="OnDirectionTimerTimeout"]
 [connection signal="timeout" from="RoamCooldown" to="." method="OnRoamCoolDownTimeout"]
+[connection signal="timeout" from="AttackCooldown" to="." method="AtkCooldownTimeout"]
+[connection signal="body_entered" from="AttackRange" to="." method="AttackRangeBodyEntered"]
+[connection signal="body_exited" from="AttackRange" to="." method="AttackRangeBodyExited"]

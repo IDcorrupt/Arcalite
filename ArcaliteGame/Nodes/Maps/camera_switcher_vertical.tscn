@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://cv12pw6kwq6dv"]
+
+[ext_resource type="Script" path="res://Scripts/Mechanics/CameraSwitcherVertical.cs" id="1_ro0xg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kmrxi"]
+size = Vector2(600, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m7irw"]
+size = Vector2(600, 15)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_psaxc"]
+size = Vector2(600, 15)
+
+[node name="CameraSwitcherVertical" type="Node2D"]
+script = ExtResource("1_ro0xg")
+
+[node name="FullArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FullArea"]
+shape = SubResource("RectangleShape2D_kmrxi")
+
+[node name="BottomTrigger" type="Area2D" parent="."]
+position = Vector2(0, 7.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomTrigger"]
+visible = false
+shape = SubResource("RectangleShape2D_m7irw")
+
+[node name="display" type="Sprite2D" parent="BottomTrigger"]
+modulate = Color(1, 1, 1, 0.435294)
+texture = SubResource("PlaceholderTexture2D_psaxc")
+
+[node name="TopTrigger" type="Area2D" parent="."]
+position = Vector2(0, -7.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopTrigger"]
+visible = false
+shape = SubResource("RectangleShape2D_m7irw")
+
+[node name="display" type="Sprite2D" parent="TopTrigger"]
+modulate = Color(1, 1, 1, 0.435294)
+texture = SubResource("PlaceholderTexture2D_psaxc")
+
+[connection signal="body_exited" from="FullArea" to="." method="FullAreaExited"]
+[connection signal="body_entered" from="BottomTrigger" to="." method="BottomTriggerEntered"]
+[connection signal="body_exited" from="BottomTrigger" to="." method="BottomTriggerExited"]
+[connection signal="body_entered" from="TopTrigger" to="." method="TopTriggerEntered"]
+[connection signal="body_exited" from="TopTrigger" to="." method="TopTriggerExited"]

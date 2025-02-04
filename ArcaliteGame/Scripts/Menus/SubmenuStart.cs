@@ -42,7 +42,7 @@ public partial class SubmenuStart : Control
     public void NewGamePressed()
     {
         Globals.playerControl = true;
-        GetTree().ChangeSceneToFile("res://Nodes/Maps/Map.tscn");
+        GetTree().ChangeSceneToFile("res://Nodes/Maps/gameScene.tscn");
     }
     public void BackPressed()
     {

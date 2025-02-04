@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Menus/SubmenuStart.cs" id="1_gv5dj"]
 [ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="2_1lcve"]
 
-[node name="Control" type="Control"]
+[node name="start" type="Control"]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5

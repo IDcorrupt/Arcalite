@@ -22,6 +22,7 @@ public partial class Popup : Control
 	public void OnCancelPressed()
 	{
 		Globals.PopupResult = false;
+		Globals.PopupOpen = false;
 		QueueFree();
 	}
 
@@ -31,6 +32,7 @@ public partial class Popup : Control
 		{
 			Globals.PopupResult = true;
 		}
+        Globals.PopupOpen = false;
         QueueFree();
     }
 
@@ -38,6 +40,7 @@ public partial class Popup : Control
 
     public override void _Ready()
 	{
+		Globals.PopupOpen= true;
 		title = GetNode<RichTextLabel>("BackGround/Margin/Panel/VBox/Title");
         content = GetNode<RichTextLabel>("BackGround/Margin/Panel/VBox/Content");
         confirm = GetNode<Button>("BackGround/Margin/Panel/VBox/HBox/Confirm");
@@ -59,8 +62,8 @@ public partial class Popup : Control
 			case "invalidSettings":
 				title.Text = "[center]Invalid settings[/center]";
 				content.Text = "[center]A setting the config.ini file cannot be applied to your game, thus your settings will be reset to default.[/center]";
-				cancel.QueueFree();
 				confirm.Text="Understood";
+				cancel.QueueFree();
                 break;
             default:
 				break;

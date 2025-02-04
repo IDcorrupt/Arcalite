@@ -18,7 +18,7 @@ public partial class HotkeyRebindButton : Control
 
     public override void _Ready()
     {
-        SettingsNode = GetNode("/root/MainNode/MainMenu/Control") as SubmenuSettings;
+        SettingsNode = GetNode("../../../../../../../../../../settings") as SubmenuSettings;
         label = GetNode<Label>("HBox/Text");
 
         button1 = GetNode<Button>("HBox/Buttons/BindButton1");
@@ -57,17 +57,13 @@ public partial class HotkeyRebindButton : Control
         {
             button1.Disabled = true;
             button2.Disabled = true;
-            label.Uppercase = true;
             listenMouseInput();
         }
         else
         {
-            label.Uppercase = false;
             button1.Disabled = false;
             button2.Disabled= false;
         }
-        if (IsProcessingUnhandledInput()) label.HorizontalAlignment = HorizontalAlignment.Right;
-        else label.HorizontalAlignment = HorizontalAlignment.Center;
     }
 
     public void listenMouseInput()
@@ -163,7 +159,6 @@ public partial class HotkeyRebindButton : Control
                 break;
         }
     }
-
     public void SetKeyText()
     {
         if (ConfigFileHandler.settingChanges["controls"][actionName].ToString().Contains("Xbutton"))
@@ -177,10 +172,10 @@ public partial class HotkeyRebindButton : Control
 
         }else button2.Text = ConfigFileHandler.settingChanges["controls"][actionName + "-alt"].ToString();
     }
-
     public void rebindActionKey(InputEvent @event)
     {
-        string none = "[NONE]";
+        SettingsNode.rebinding = false;
+        SettingsNode.rebindtimer = 2;
         switch (Globals.buttontoggle)
         {
             case 1:
@@ -224,6 +219,7 @@ public partial class HotkeyRebindButton : Control
     {
         if (toggled)
         {
+            SettingsNode.rebinding = toggled;
             Globals.buttontoggle = 1;
             button1.Text = "listening...";
             SetProcessUnhandledKeyInput(toggled);
@@ -265,6 +261,7 @@ public partial class HotkeyRebindButton : Control
     {
         if (toggled)
         {
+            SettingsNode.rebinding = toggled;
             Globals.buttontoggle = 2;
             button2.Text = "listening...";
             SetProcessUnhandledKeyInput(toggled);
@@ -305,16 +302,27 @@ public partial class HotkeyRebindButton : Control
 
     public void OnExiting()
     {
+        if (SettingsNode == null)
+        {
+            GD.PrintErr("SettingsNode is null");
+            return;
+        }
         if (!SettingsNode.isSaved)
         {
             InputMap.ActionEraseEvents(actionName);
             ConfigFileHandler.settingChanges["controls"][actionName] = "";
-            InputMap.ActionAddEvent(actionName, prevKey);
-            if (prevKey != null) ConfigFileHandler.settingChanges["controls"][actionName] = prevKey.PhysicalKeycode.ToString();
+            if (prevKey != null)
+            {
+                InputMap.ActionAddEvent(actionName, prevKey);
+                ConfigFileHandler.settingChanges["controls"][actionName] = prevKey.PhysicalKeycode.ToString();
+            }
             InputMap.ActionEraseEvents(actionName + "-alt");
             ConfigFileHandler.settingChanges["controls"][actionName + "-alt"] = "";
-            InputMap.ActionAddEvent(actionName + "-alt", prevKeyAlt);
-            if (prevKey != null) ConfigFileHandler.settingChanges["controls"][actionName + "-alt"] = prevKeyAlt.PhysicalKeycode.ToString();
+            if (prevKeyAlt != null)
+            {
+                InputMap.ActionAddEvent(actionName + "-alt", prevKeyAlt);
+                ConfigFileHandler.settingChanges["controls"][actionName + "-alt"] = prevKeyAlt.PhysicalKeycode.ToString();
+            }
 
         }
     }

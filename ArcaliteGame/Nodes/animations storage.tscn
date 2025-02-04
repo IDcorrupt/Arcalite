@@ -964,5 +964,5 @@ frame_progress = 0.0489027
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
 position = Vector2(99, 2)
 sprite_frames = SubResource("SpriteFrames_723bc")
-animation = &"8_tall_explode"
-frame_progress = 0.0720514
+animation = &"6_double_explode"
+frame_progress = 0.419818

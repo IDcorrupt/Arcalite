@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Runtime.CompilerServices;
 using static Godot.HttpRequest;
 
 public partial class SubmenuSettings : Control
@@ -9,14 +10,16 @@ public partial class SubmenuSettings : Control
 
 
 
-
+	private bool popupOpen = false;
     public bool isSaved = true;
 
+	public bool rebinding = false;      //stops escape from exiting settings when actively rebinding keys
+	public int rebindtimer = 5;			//i can't get the two classes to sync well, so the bool isn't working -> need a buffer
+	
 	private Button Back;
 	private Button Reset;
 	private Button Save;
 
-	private HotkeyRebindButton testKeybind;
 	
 
 	public override void _Ready()
@@ -39,17 +42,25 @@ public partial class SubmenuSettings : Control
 		//get parent
 		Parent = GetParent();
 
-		
+
 		
 	}
 
     public override void _Process(double delta)
     {
-        //exit if popup returned yes
-        if (Globals.PopupResult)
-        {
-            Exit();
-        }
+		//esc trigger
+		if (Input.IsActionJustPressed("ui_cancel") && !Globals.PopupOpen && !rebinding && rebindtimer == 0)
+		{
+			BackPressed();
+		}else if(!rebinding && rebindtimer > 0)
+		{
+			rebindtimer--;
+		}
+		//exit if popup returned yes
+		if (Globals.PopupResult)
+		{
+			Exit();
+		}
 	}
     //updates values for setting options
     public void UpdateSelectors()
@@ -74,7 +85,6 @@ public partial class SubmenuSettings : Control
 		ConfigFileHandler.settingChanges["game"]["difficulty"] = index+1;
 		isSaved = false;
 	}
-
 	//video
 	public void WindowSelect(int index)
 	{
@@ -125,7 +135,6 @@ public partial class SubmenuSettings : Control
 			isSaved = false;
 		}
     }
-
 	//audio
 	public void MasterVolumeSlideEnded(bool valueChanged)
 	{
@@ -184,7 +193,6 @@ public partial class SubmenuSettings : Control
 			isSaved = false;
 		}
     }
-
     //sync spinbox with slider
     public void MasterVolumeSliding(float value)
 	{
@@ -198,9 +206,6 @@ public partial class SubmenuSettings : Control
     {
         GetNode<SpinBox>("Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/sfx_volume/SpinBox").Value = value;
     }
-
-
-
     //button controls   
     public void BackPressed()
 	{
@@ -221,11 +226,13 @@ public partial class SubmenuSettings : Control
         }
 
 	}
+	//reset settings
 	public void ResetPressed()
 	{
 		ConfigFileHandler.DefaultSettings();
 		UpdateSelectors();
 	}
+	//export settings to config
 	public void SavePressed()
 	{
 		ConfigFileHandler.SaveSettings();
@@ -236,17 +243,22 @@ public partial class SubmenuSettings : Control
 	public void Exit()
 	{
         ConfigFileHandler.ResetSTChanges();
-        if (Parent is MainMenu parentscript)
-        {
-            parentscript.submenuOpen = false;
+		if (Parent is MainMenu parentscript)
+		{
+			parentscript.submenuOpen = false;
 			QueueFree();
-        }
-        else
-        {
-            //ERROR HANDLING TBD HERE
-            GD.Print("node path changed?");
-            GetTree().Quit();
-        }
+		}
+		else if (Parent is PauseMenu pausescript)
+		{
+			QueueFree();
+		}
+		else
+		{
+			//ERROR HANDLING TBD HERE
+			GD.PrintErr("node path changed?");
+			GetTree().Quit();
+		}
+		
         Globals.PopupResult = false;
     }
 }
