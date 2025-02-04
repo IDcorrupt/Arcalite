@@ -6,9 +6,8 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
     ReturnError(405, "Hiba az API-hívásban.");
 }
 
-if (!( isset($_GET["email"], $_GET["password"]) && count($_GET) == 2) ) {
-    ReturnError(400, "Hiba az API-hívásban.");
-}
+checkProperFields("GET", "email", "password");
+
 
 require_once "connection.php";
 
@@ -39,6 +38,7 @@ else if ($num_of_profiles > 1) {
 
 $query = "SELECT * FROM `profile` WHERE `email` = '$email' AND `password` = PASSWORD('$password');";
 $result = $db->query($query);
+
 $id = $result->fetch_assoc();
 
 header("Content-Type: application/json");

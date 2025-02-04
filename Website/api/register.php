@@ -6,10 +6,8 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     ReturnError(405, "Hiba az API-hívásban.");
 }
 
-if (!(count($_POST) == 3 && isset($_POST['username'],$_POST['email'],$_POST['password']))) {
-    print_r($_POST);
-    ReturnError(400, "Hiba az API-hívásban.");
-}
+checkProperFields("POST", "username", "email", "password");
+
 
 require_once "connection.php";
 
@@ -42,6 +40,7 @@ $result = $db->query($query);
 if (!$result) {
     ReturnError(500, "Hiba az adatok feltöltése közben.");
 }
+
 
 $response = array(
     "code" => 201,

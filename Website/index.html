@@ -8,12 +8,15 @@
     <link id="base" rel="stylesheet" href="style.css">
     <link id="theme" rel="stylesheet" href="themes/sun.css">
      <!-- Bootstrap CSS -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- jQuery and Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="script/jquery-3.7.1.min.js"></script>
+    <script src="script/common.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top">
@@ -27,15 +30,29 @@
                 <li class="nav-item active"><a class="nav-link border-right" href="#characterid">Karakterek</a></li>
                 <li class="nav-item"><a class="nav-link border-left" href="./wiki.php">Lexikon</a></li>
                 <li class="nav-item"><a class="nav-link" href="./ranking.html">Ranglista</a></li>
-                <li class="nav-item"><div class="dropdown">
-                    <button>Styles</button>
-                    <div class="dropdown-content">
-                        <a href="#" onclick="switchStylesheet('sun')">Light</a>
-                        <a href="#" onclick="switchStylesheet('moon')">Dark</a>
-                        <a onclick="switchStylesheet()">Pixelated</a>
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <button>Styles</button>
+                        <div class="dropdown-content">
+                            <a href="#" onclick="switchStylesheet('sun')">Light</a>
+                            <a href="#" onclick="switchStylesheet('moon')">Dark</a>
+                            <a onclick="switchStylesheet()">Pixelated</a>
+                        </div>
                     </div>
-                </div></li>
-                <li class="nav-item ml-auto"><a class="nav-link" href="./profile.html">Bejelentkezés</a></li>
+                </li>
+                <li class="nav-item ml-auto" id="loginelem"><a class="nav-link" href="./login.html">Bejelentkezés</a></li>
+                <li class="nav-item ml-auto" id="profileelem"><a class="nav-link" href="./profile.html" id="profilelink"></a></li>
+                <script>
+                    if (document.cookie.includes("username=")) {
+                        $('#loginelem').hide();
+                        $('#profileelem').show();
+                        $('#profilelink').text(getCookie("username"));
+                    } else {
+                        $('#loginelem').show();
+                        $('#profileelem').hide();
+                        $('#profilelink').text("");
+                    }
+                </script>
             </ul>
         </div>
     </nav>
