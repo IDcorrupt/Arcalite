@@ -1,6 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbay08psod1qd"]
+[gd_scene load_steps=11 format=3 uid="uid://dbay08psod1qd"]
 
 [ext_resource type="Script" path="res://Scripts/Mechanics/CameraController.cs" id="1_bkkum"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fjovn"]
+size = Vector2(1360, 20)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nkfhg"]
+size = Vector2(20, 760)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qlh17"]
 size = Vector2(10, 360)
@@ -20,6 +26,9 @@ size = Vector2(15, 1080)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7x231"]
 size = Vector2(15, 360)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_djvr2"]
+radius = 2.0
+
 [node name="CameraController" type="Node2D"]
 script = ExtResource("1_bkkum")
 
@@ -27,12 +36,26 @@ script = ExtResource("1_bkkum")
 position_smoothing_enabled = true
 
 [node name="EnemyTrigger" type="Area2D" parent="Camera"]
+visible = false
 position = Vector2(-320, -180)
+collision_layer = 256
+collision_mask = 512
 
 [node name="Collision" type="CollisionPolygon2D" parent="Camera/EnemyTrigger"]
-visible = false
-position = Vector2(1, 0)
 polygon = PackedVector2Array(330, 170, 1000, 170, 1000, 190, 330, 190, 330, 560, 310, 560, 310, 190, -360, 190, -360, 170, 310, 170, 310, -200, 330, -200)
+
+[node name="display" type="Node2D" parent="Camera/EnemyTrigger"]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Camera/EnemyTrigger/display"]
+modulate = Color(0.926886, 0, 0.203749, 0.505882)
+position = Vector2(320, 180)
+texture = SubResource("PlaceholderTexture2D_fjovn")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Camera/EnemyTrigger/display"]
+modulate = Color(0.926886, 0, 0.203749, 0.505882)
+position = Vector2(320, 180)
+texture = SubResource("PlaceholderTexture2D_nkfhg")
 
 [node name="CamTriggers" type="Node2D" parent="Camera"]
 position = Vector2(-320, -180)
@@ -40,7 +63,6 @@ position = Vector2(-320, -180)
 [node name="LeftTrigger" type="Area2D" parent="Camera/CamTriggers"]
 position = Vector2(0, 180)
 collision_layer = 64
-collision_mask = 9
 
 [node name="Collision" type="CollisionShape2D" parent="Camera/CamTriggers/LeftTrigger"]
 shape = SubResource("RectangleShape2D_qlh17")
@@ -48,7 +70,6 @@ shape = SubResource("RectangleShape2D_qlh17")
 [node name="RightTrigger" type="Area2D" parent="Camera/CamTriggers"]
 position = Vector2(640, 180)
 collision_layer = 64
-collision_mask = 9
 
 [node name="Collision" type="CollisionShape2D" parent="Camera/CamTriggers/RightTrigger"]
 shape = SubResource("RectangleShape2D_qlh17")
@@ -56,7 +77,6 @@ shape = SubResource("RectangleShape2D_qlh17")
 [node name="TopTrigger" type="Area2D" parent="Camera/CamTriggers"]
 position = Vector2(320, 0)
 collision_layer = 64
-collision_mask = 9
 
 [node name="Collision" type="CollisionShape2D" parent="Camera/CamTriggers/TopTrigger"]
 shape = SubResource("RectangleShape2D_msxgn")
@@ -64,7 +84,6 @@ shape = SubResource("RectangleShape2D_msxgn")
 [node name="BotTrigger" type="Area2D" parent="Camera/CamTriggers"]
 position = Vector2(320, 360)
 collision_layer = 64
-collision_mask = 9
 
 [node name="Collision" type="CollisionShape2D" parent="Camera/CamTriggers/BotTrigger"]
 shape = SubResource("RectangleShape2D_msxgn")
@@ -113,6 +132,13 @@ debug_color = Color(0.973523, 0, 0.433382, 0.42)
 position = Vector2(0, 540)
 shape = SubResource("RectangleShape2D_6s2h8")
 debug_color = Color(0.973523, 0, 0.433382, 0.42)
+
+[node name="Hitbox" type="Area2D" parent="Camera"]
+collision_layer = 32
+collision_mask = 512
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/Hitbox"]
+shape = SubResource("CircleShape2D_djvr2")
 
 [node name="CooldownTimer" type="Timer" parent="."]
 wait_time = 0.2

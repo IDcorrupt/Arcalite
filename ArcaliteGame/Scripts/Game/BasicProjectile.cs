@@ -51,7 +51,7 @@ public partial class BasicProjectile : CharacterBody2D
 
             var collision = MoveAndCollide(vel);
 
-			if(collision != null && collision.GetCollider() is StaticBody2D)
+			if(collision != null &&  (collision.GetCollider() is StaticBody2D || collision.GetCollider() is TileMapLayer))
 			{
 				targetHit = true;
 				Vector2 collisionNormal = collision.GetNormal();

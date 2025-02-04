@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://dodk5iiiisuu4"]
+[gd_scene load_steps=3 format=3 uid="uid://dodk5iiiisuu4"]
 
 [ext_resource type="Script" path="res://Scripts/Mechanics/EnemyControl.cs" id="1_7hdli"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_32dye"]
+radius = 5.0
 
 [node name="EnemyControl" type="Node2D"]
 script = ExtResource("1_7hdli")
@@ -8,4 +11,13 @@ script = ExtResource("1_7hdli")
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="TriggerArea" type="Area2D" parent="."]
+collision_layer = 512
+collision_mask = 288
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
+shape = SubResource("CircleShape2D_32dye")
+
 [connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]
+[connection signal="area_entered" from="TriggerArea" to="." method="AreaEntered"]
+[connection signal="area_exited" from="TriggerArea" to="." method="AreaExited"]

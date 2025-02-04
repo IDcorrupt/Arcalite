@@ -231,7 +231,7 @@ public partial class Player : CharacterBody2D
     public void OracleSpell()
     {
         Node2D node = (Node2D)spellOracle.Instantiate();
-        GetParent().GetParent().AddChild(node);
+        GetParent().AddChild(node);
         if(node is SpellOracle oracle)
         {
             oracle.targetPosition = GlobalPosition;

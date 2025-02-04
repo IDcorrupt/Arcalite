@@ -200,7 +200,7 @@ radius = 33.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8bl2w"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Oracle" type="Node2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_tfgop")
 
