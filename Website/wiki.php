@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu"  data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link id="base" rel="stylesheet" href="style.css">
      <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- jQuery and Bootstrap JS -->
+    <script src="https://kit.fontawesome.com/45a1f7d16e.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
+
+    
 <?php
     $servername = "localhost";
     $username = "root";
@@ -30,26 +34,51 @@
     echo "Connected successfully";
 ?>
 
-<body>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top">
+<body data-bs-theme="dark">
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="./index.html">Kezdőlap</a></li>
-                <li class="nav-item"><a class="nav-link disabled" href="#controlid">Irányítás</a></li>
-                <li class="nav-item"><a class="nav-link border-right disabled" href="#characterid">Karakterek</a></li>
-                <li class="nav-item active"><a class="nav-link border-left" href="./wiki.php">Lexikon</a></li>
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="navbar-brand" href="#">
+                    </a></li>
+                <li class="nav-item active"><a class="nav-link" href="./index.html">Kezdőlap</a></li>
+                <li class="nav-item"><a class="nav-link" href="./wiki.php">Lexikon</a></li>
                 <li class="nav-item"><a class="nav-link" href="./ranking.html">Ranglista</a></li>
-                <li class="nav-item ml-auto"><a class="nav-link" href="./profile.html">Bejelentkezés</a></li>
+                <li class="nav-item"><div class="dropdown">
+                    <button>Profil</button>
+                    <div class="dropdown-content">
+                        <a class="nav-link" href="./profile.html">Bejelentkezés</a>
+                    </div>
+                </div></li>
+                
+                <li class="nav-item"><a class="nav-link" href="./profile.html">Letöltés</a></li>
+                <li class="nav-item"><div class="form-check form-switch mx-4">
+                    <input
+                      class="form-check-input p-2"
+                      type="checkbox"
+                      role="switch"
+                      id="flexSwitchCheckChecked"
+                      checked
+                      onclick="myFunction()"
+                    />
+                </li>
+                
             </ul>
         </div>
     </nav>
+
+    <script>
+        function myFunction() {
+        var element = document.body;
+        element.dataset.bsTheme =
+          element.dataset.bsTheme == "light" ? "dark" : "light";
+      }
+    </script>
     <header class="flex-container">
         <h1>Arcalite</h1>
     </header>
-    
     <main>
         <h2>Tárgyak</h2>
         <div>
