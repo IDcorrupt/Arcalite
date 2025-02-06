@@ -20,9 +20,11 @@ public partial class GameScene : Node2D
 		UILayer = GetNode<CanvasLayer>("UILayer");
 		UInode = (Control)UIscene.Instantiate();
 		UILayer.AddChild(UInode);
+		
 		//add map
-		//mapNode = (Node2D)debugMap.Instantiate();
-		mapNode = (Node2D)Map1.Instantiate();
+		mapNode = (Node2D)debugMap.Instantiate();
+		//mapNode = (Node2D)Map1.Instantiate();
+		
 		Globals.activeMap = mapNode;
 		AddChild(mapNode);
 		//start game

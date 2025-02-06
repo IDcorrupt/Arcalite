@@ -13,7 +13,7 @@ public partial class EnemySpawner : Node2D
 
     private PackedScene lightMeleeScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/light_meele.tscn");
     private PackedScene HeavyMeleeScene;
-    private PackedScene CasterScene;
+    private PackedScene CasterScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/light_ranged.tscn");
     private PackedScene EliteMeleeScene;
     private PackedScene EliteCasterScene;
 
@@ -43,6 +43,11 @@ public partial class EnemySpawner : Node2D
             ActiveLightMelee.Name = "LightMelee" + this.Name.ToString()[Name.ToString().Length-1];
             ActiveLightMelee.GlobalPosition = Position;
             ActiveEnemy = ActiveLightMelee;
+        }else if(ActiveEnemy is LightRanged ActiveLightRanged)
+        {
+            ActiveLightRanged.Name = "LightRanged" + this.Name.ToString()[Name.ToString().Length - 1];
+            ActiveLightRanged.GlobalPosition = Position;
+            ActiveEnemy = ActiveLightRanged;
         }
 
         //other type handling with else if-s

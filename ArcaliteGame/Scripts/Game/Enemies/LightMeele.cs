@@ -14,6 +14,19 @@ public partial class LightMeele : Enemy
         maxHP = 50;
         currentHP = maxHP;
         damage = 5;
-        atkCooldown.WaitTime = 1;
+        atkCooldown.WaitTime = 0.5f;
+    }
+
+    protected override void Attack()
+    {
+        GD.Print("spec atk called");
+        base.Attack();
+        player.Hit(damage, this);
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        base._PhysicsProcess(delta);
+
     }
 }

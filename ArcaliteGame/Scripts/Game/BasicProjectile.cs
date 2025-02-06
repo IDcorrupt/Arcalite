@@ -57,18 +57,10 @@ public partial class BasicProjectile : CharacterBody2D
 				Vector2 collisionNormal = collision.GetNormal();
 
 				HitTerrain(collisionNormal);
-			}else if (collision != null && collision.GetCollider() is CharacterBody2D)
+			}else if (collision != null && collision.GetCollider() is Enemy)
 			{
-				Node collider = collision.GetCollider() as Node;
-				if (collider.HasMeta("Type"))
-				{
-					if ((string)collider.GetMeta("Type") == "Enemy")
-					{
-						targetHit = true;
-						HitEnemy();
-					}
-				}
-
+				targetHit = true;
+				HitEnemy();
 			}
             
         }

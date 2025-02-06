@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://ltckn21h2yjp"]
+[gd_scene load_steps=13 format=4 uid="uid://ltckn21h2yjp"]
 
 [ext_resource type="Script" path="res://Scripts/Maps/Map.cs" id="1_5ga0h"]
 [ext_resource type="Texture2D" uid="uid://bm61jaa36wan2" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_forest.png" id="1_41e25"]
@@ -218,9 +218,6 @@ sources/0 = SubResource("TileSetAtlasSource_u1bkx")
 sources/1 = SubResource("TileSetAtlasSource_0p1y3")
 sources/2 = SubResource("TileSetAtlasSource_ohfca")
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_m27op"]
-distance = 10.0
-
 [node name="Map" type="Node2D"]
 script = ExtResource("1_5ga0h")
 
@@ -230,46 +227,6 @@ tile_set = SubResource("TileSet_pkk36")
 
 [node name="CameraController" parent="." instance=ExtResource("7_2n7uy")]
 position = Vector2(320, 180)
-
-[node name="TerrainHitBoxes" type="Node2D" parent="."]
-process_mode = 4
-visible = false
-
-[node name="Floor" type="StaticBody2D" parent="TerrainHitBoxes"]
-collision_layer = 4
-collision_mask = 9
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainHitBoxes/Floor"]
-position = Vector2(308, 316)
-shape = SubResource("WorldBoundaryShape2D_m27op")
-
-[node name="Islands" type="StaticBody2D" parent="TerrainHitBoxes"]
-collision_layer = 4
-collision_mask = 11
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TerrainHitBoxes/Islands"]
-position = Vector2(5, 10)
-polygon = PackedVector2Array(683, 230, 795, 230, 750, 276, 725, 276)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="TerrainHitBoxes/Islands"]
-position = Vector2(117, -38)
-polygon = PackedVector2Array(683, 230, 795, 230, 750, 276, 725, 276)
-
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="TerrainHitBoxes/Islands"]
-position = Vector2(261, -38)
-polygon = PackedVector2Array(683, 230, 795, 230, 750, 276, 725, 276)
-
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="TerrainHitBoxes/Islands"]
-position = Vector2(405, -102)
-polygon = PackedVector2Array(683, 230, 795, 230, 750, 276, 725, 276)
-
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="TerrainHitBoxes/Islands"]
-position = Vector2(229, -182)
-polygon = PackedVector2Array(683, 230, 795, 230, 750, 276, 725, 276)
-
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="TerrainHitBoxes/Islands"]
-position = Vector2(406, -262)
-polygon = PackedVector2Array(683, 230, 795, 230, 750, 276, 725, 276)
 
 [node name="SpawnPoint" type="Node2D" parent="."]
 position = Vector2(305, 161)
@@ -283,6 +240,10 @@ room = "Ice"
 [node name="EnemySpawnPoint1" parent="Controllers/EnemyControl1" instance=ExtResource("5_prshm")]
 position = Vector2(-134, 7)
 LightMelee = true
+
+[node name="EnemySpawnPoint2" parent="Controllers/EnemyControl1" instance=ExtResource("5_prshm")]
+position = Vector2(121, 43)
+Caster = true
 
 [node name="EnemyControl2" parent="Controllers" groups=["Controllers"] instance=ExtResource("4_krw5v")]
 process_mode = 4
@@ -299,8 +260,4 @@ LightMelee = true
 
 [node name="EnemySpawnPoint3" parent="Controllers/EnemyControl2" instance=ExtResource("5_prshm")]
 position = Vector2(-107, -25)
-LightMelee = true
-
-[node name="EnemySpawnPoint4" parent="Controllers/EnemyControl2" instance=ExtResource("5_prshm")]
-position = Vector2(-1159, 43)
 LightMelee = true

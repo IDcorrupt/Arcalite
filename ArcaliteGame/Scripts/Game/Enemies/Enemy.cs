@@ -17,6 +17,7 @@ public partial class Enemy : CharacterBody2D
     protected bool isDead = false;
     protected bool playerInAtkRange = false;
     protected bool isAttacking = false;
+    protected bool hasAttacked = false;
     protected bool isDamaged = false;
 
     public bool isChasing;
@@ -58,12 +59,49 @@ public partial class Enemy : CharacterBody2D
 
     //movement
 
-    public void Move(double delta)
+    public void Update(double delta)
     {
         if (!isDead)
         {
+            if (isAttacking || atkCooldown.TimeLeft > 0)
+            {
+                //for debug indicator and movement stop
+                if (isAttacking)
+                    indicator.Modulate = Color.Color8(255, 0, 255, 255);
+                else
+                    indicator.Modulate = Color.Color8(255, 255, 0, 255);
+                Velocity = new Vector2(0, Velocity.Y);
+            }
+            else if(!isAttacking || !isDamaged)
+            {
+                Move(delta);
+                if (playerInAtkRange)
+                {
+                    GD.Print("sdijfhdosgjoi");
+                    Attack();
+                }
+            }
+            if (Direction.X < 0)
+                Flip(true);
+            else Flip(false);
+        }
+    }
+
+
+    public void Move(double delta)
+    {
+        if (!IsOnFloor())
+        {
+            //if falling
+            Velocity = new Vector2(0, Velocity.Y + (float)(Globals.GRAVITY * delta));
+            return;
+        }
+        else
+        {
+            //moving
             if (!isChasing)
             {
+                //idle
                 if (dirTimer.Paused)
                     dirTimer.Paused = false;
                 if (RoamCooldown.Paused)
@@ -78,9 +116,7 @@ public partial class Enemy : CharacterBody2D
                 else if (Direction.X == 0)
                 {
                     if (speed > 0)
-                    {
                         speed -= (float)delta * 100;
-                    }
                     else
                     {
                         speed = 0;
@@ -92,32 +128,24 @@ public partial class Enemy : CharacterBody2D
                 }
                 isRoaming = true;
             }
-            else if (isChasing && !isDamaged)
+            else if (isChasing)
             {
+                //chasing
+                //pause idle timers
                 dirTimer.Paused = true;
                 RoamCooldown.Paused = true;
-                if (isAttacking)
-                {
-                    indicator.Modulate = Color.Color8(255, 0, 255, 255);
-                    Velocity = new Vector2(0, Velocity.Y);
-                    //attack
-                    //[TBD] WILL BE BASED ON ANIM END, CURRENTLY JUST THE COOLDOWN TIMER EXTENDED
-                }
-                else
-                {
-                    indicator.Modulate = Color.Color8(0, 0, 255, 255);
-                    Direction = GlobalPosition.DirectionTo(player.GlobalPosition);
-                    if (Direction.X < 0)
-                        Flip(true);
-                    else Flip(false);
-                    if (speed < chaseSpeed) speed += (float)delta * 200;
-                    Velocity = Direction * speed;
-                    //nullify vertical velocity for chase vel
-                    Velocity = new Vector2(Velocity.X, 0);
-                }
+
+                //debug indicator and direction calculation
+                indicator.Modulate = Color.Color8(0, 0, 255, 255);
+                Direction = GlobalPosition.DirectionTo(player.GlobalPosition);
+
+                if (speed < chaseSpeed) speed += (float)delta * 200;
+                Velocity = Direction * speed;
+                //nullify vertical velocity for chase vel
+                Velocity = new Vector2(Velocity.X, 0);
             }
         }
-        else Velocity = new Vector2(0, Velocity.Y);
+
     }
 
     //idle logic
@@ -134,9 +162,6 @@ public partial class Enemy : CharacterBody2D
     public void OnRoamCoolDownTimeout()
     {
         Direction = new Vector2(dirChoose(), Velocity.Y);
-        if (Direction.X < 0)
-            Flip(true);
-        else Flip(false);
         Velocity = new Vector2(0, Velocity.Y);
         dirTimer.Start();
     }
@@ -153,7 +178,9 @@ public partial class Enemy : CharacterBody2D
     {
         if (playerInAtkRange)
         {
-            atkCooldown.Start();
+            sprite.Frame = 0;
+            sprite.Play("attack");
+            hasAttacked = false;
         }
         else
         {
@@ -166,11 +193,6 @@ public partial class Enemy : CharacterBody2D
         if (body is Player)
         {
             playerInAtkRange = true;
-            if (!isDamaged && !isAttacking)
-            {
-                atkCooldown.Start();
-                isAttacking = true;
-            }
         }
     }
     public void AttackRangeBodyExited(Node2D body)
@@ -179,6 +201,13 @@ public partial class Enemy : CharacterBody2D
         {
             playerInAtkRange = false;
         }
+    }
+    protected virtual void Attack() 
+    {
+        isAttacking = true;
+        GD.Print("attack");
+        //shell func, attack is different for each type
+
     }
 
     //appearance
@@ -199,8 +228,26 @@ public partial class Enemy : CharacterBody2D
         }
     }
 
-
+    private void Animate()
+    {
+        if (isAttacking)
+        {
+            sprite.Play("attack");
+        }
+        else if(IsOnFloor() || Velocity.X > 0)
+        {
+            sprite.Play("walk");
+        }
+    }
     
+    public void OnSpriteAnimationFinished()
+    {
+        if(sprite.Animation == "attack")
+        {
+            isAttacking = false;
+            atkCooldown.Start();
+        }
+    }
     public override void _PhysicsProcess(double delta)
     {
         //modifier for oracle functionality
@@ -209,22 +256,12 @@ public partial class Enemy : CharacterBody2D
             slowFactor = 1;
         }
 
-        if (!IsOnFloor())
-        {
-            Velocity = new Vector2(0, Velocity.Y + (float)(Globals.GRAVITY * delta));
-        }
-        else if (IsOnFloor())
-        {
-            Velocity = new Vector2(Velocity.X, 0);
-            Move(delta);
-        }
-
-        //debug
-        //debug
-
+        Update(delta);
 
         //apply slow
         Velocity *= slowFactor;
+
+        Animate();
         MoveAndSlide();
     }
 

@@ -91,18 +91,16 @@ public partial class EnemyControl : Node2D
             foreach(Node node in GetChildren())
             {
 
-                if (node is LightMeele lightMelee)
-                    lightMelee.isChasing = true;
-                //[TBD] add all other enemy types when they start existing
+                if (node is Enemy enemy)
+                    enemy.isChasing = true;
             }
         }
         else
         {
             foreach (Node node in GetChildren())
             {
-                if (node is LightMeele lightMelee)
-                    lightMelee.isChasing = false;
-                //[TBD] add all other enemy types when they start existing
+                if (node is Enemy enemy)
+                    enemy.isChasing = false;
             }
         }
     }

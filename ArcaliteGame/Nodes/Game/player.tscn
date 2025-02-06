@@ -236,3 +236,6 @@ metadata/_aseprite_wizard_config_ = {
 "source": "res://Assets/Sprites/newchar.aseprite"
 }
 metadata/_aseprite_wizard_source_file_hash_ = "9d6240360366c3ebf3e1ab834a8f3984"
+
+[node name="HurtTimer" type="Timer" parent="."]
+one_shot = true

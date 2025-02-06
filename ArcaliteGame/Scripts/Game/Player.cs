@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using System.Security.Principal;
@@ -8,63 +9,66 @@ using System.Text;
 public partial class Player : CharacterBody2D
 {
     //values
-        //crouch
-        private int defHB_X = 16;       //hitbox for crouch
-        private int defHB_Y = 29;       //hitbo for crouch
-        private bool isCrouching = false;    //crouch bool (at least it should be bool but i didn't change it back)
-        private bool crouchDown = false;    // up & down required for animations
-        private bool crouchUp = false;      
+    //crouch
+    private int defHB_X = 16;       //hitbox for crouch
+    private int defHB_Y = 29;       //hitbo for crouch
+    private bool isCrouching = false;    //crouch bool (at least it should be bool but i didn't change it back)
+    private bool crouchDown = false;    // up & down required for animations
+    private bool crouchUp = false;
 
-        //movement
-        private int maxSpeed = 300;         //maximum X vector value
-        private double vel = 0;             //X velocity
-        private int jumpStrength = 450;     //jump height/strength
-        private const float GRAVITY = Globals.GRAVITY;
-        private float prevDir = 0;          //last movement direction for deceleration
- 
-        //dash
-        private float dashCooldown;        //dash cooldown constant
-        private float dashDelta = 0f;           //dash cooldown remaining
-        private bool dashed = false;            //dash initiated
-        private float dashSpeed = 2000f;        //initial dash speed
-        private float dashDecayRate = 15000f;   //dash speed decay rate
-        private float currentDashSpeed = 0f;    //current dash speed
-        private bool isDashing = false;         //is dash currently active
-        private Vector2 dashVector;             //fixed vector for dash endpoint -> dash follows mouse otherwise :3
+    //movement
+    private int maxSpeed = 300;         //maximum X vector value
+    private double vel = 0;             //X velocity
+    private int jumpStrength = 450;     //jump height/strength
+    private const float GRAVITY = Globals.GRAVITY;
+    private float prevDir = 0;          //last movement direction for deceleration
+    private bool isHurt = false;
 
-        //attacks
-        private float BACooldown = 0.1f;    //basic attack cooldown constant
-        private float BADelta = 0f;         //basic attack cooldown remaining
-        private float CACooldown = 5f;      //charge attack cooldown constant
-        private float CADelta = 0f;         //charge attack cooldown remaining
-        private bool CAisCharging = false;  //is charge attack currently charging
-        private float CACharge = 0f;        //used to track charge progress
-        private int chargeLevel = 0;
-        private float SOCooldown;           //Oracle cooldown constant
-        private float SODelta = 0f;         //Oracle cooldown remaining
+    //dash
+    private float dashCooldown;        //dash cooldown constant
+    private float dashDelta = 0f;           //dash cooldown remaining
+    private bool dashed = false;            //dash initiated
+    private float dashSpeed = 2000f;        //initial dash speed
+    private float dashDecayRate = 15000f;   //dash speed decay rate
+    private float currentDashSpeed = 0f;    //current dash speed
+    private bool isDashing = false;         //is dash currently active
+    private Vector2 dashVector;             //fixed vector for dash endpoint -> dash follows mouse otherwise :3
 
-        //stats
-        private float MaxHP = 100;
-        private float MaxMP = 100;
-        //spd & dot if class system get implemented
-        public float ActualHP;
-        public float ActualMP;
+    //attacks
+    private float BACooldown = 0.1f;    //basic attack cooldown constant
+    private float BADelta = 0f;         //basic attack cooldown remaining
+    private float CACooldown = 5f;      //charge attack cooldown constant
+    private float CADelta = 0f;         //charge attack cooldown remaining
+    private bool CAisCharging = false;  //is charge attack currently charging
+    private float CACharge = 0f;        //used to track charge progress
+    private int chargeLevel = 0;
+    private float SOCooldown;           //Oracle cooldown constant
+    private float SODelta = 0f;         //Oracle cooldown remaining
 
-        private int oracleLevel;
-    
-        //nodes
-        private CollisionShape2D HitBox;
-        private PackedScene basicProjectile;
-        private PackedScene chargeProjectile;
-        private PackedScene spellOracle;
-        private AnimatedSprite2D Sprite;
-    
+    //stats
+    private float MaxHP = 100;
+    private float MaxMP = 100;
+    //spd & dot if class system get implemented
+    public float ActualHP;
+    public float ActualMP;
+
+    private int oracleLevel;
+
+    //nodes
+    private CollisionShape2D HitBox;
+    private PackedScene basicProjectile;
+    private PackedScene chargeProjectile;
+    private PackedScene spellOracle;
+    private AnimatedSprite2D Sprite;
+    private Timer hurtTimer;
+
     public override void _Ready()
     {
         Globals.Player = this;
         //Get nodes
         HitBox = GetNode<CollisionShape2D>("HitBox");
         Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        hurtTimer = GetNode<Timer>("HurtTimer");
         basicProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/basic_projectile.tscn");
         chargeProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/charge_projectile.tscn");
         spellOracle = (PackedScene)ResourceLoader.Load("res://Nodes/Game/spell_oracle.tscn");
@@ -81,9 +85,9 @@ public partial class Player : CharacterBody2D
     public Vector2 getInputs()
     {
         Vector2 direction = new();
-        
+
         direction.X = Convert.ToInt32(Input.IsActionPressed("move_right")) - Convert.ToInt32(Input.IsActionPressed("move_left"));
-        if (direction.X == 1)Sprite.FlipH = false; 
+        if (direction.X == 1) Sprite.FlipH = false;
         else if (direction.X == -1) Sprite.FlipH = true;
         if (Input.IsActionPressed("move_jump"))
         {
@@ -92,7 +96,7 @@ public partial class Player : CharacterBody2D
                 direction.Y = -1;
             }
         }
-        if(Input.IsActionPressed("move_crouch")) isCrouching = true; else isCrouching = false;
+        if (Input.IsActionPressed("move_crouch")) isCrouching = true; else isCrouching = false;
         if (Input.IsActionPressed("move_dash") && dashDelta == 0) dashed = true;
         return direction;
     }
@@ -105,7 +109,8 @@ public partial class Player : CharacterBody2D
             {
                 currentDashSpeed -= dashDecayRate * (float)delta;
                 Velocity = dashVector * Mathf.Max(currentDashSpeed, 0);
-            }else
+            }
+            else
             {
                 isDashing = false;
             }
@@ -145,17 +150,17 @@ public partial class Player : CharacterBody2D
         }
         if (input.Y != 0)
         {
-            Velocity = new Vector2(Velocity.X, Velocity.Y-jumpStrength);
+            Velocity = new Vector2(Velocity.X, Velocity.Y - jumpStrength);
         }
 
-        
+
         if (dashDelta > 0)
         {
             dashDelta -= (float)delta;
-        }else dashDelta = 0;
+        }
+        else dashDelta = 0;
         CrouchApply();
         fall(delta);
-        MoveAndSlide();
     }
     public void Dash()
     {
@@ -173,7 +178,7 @@ public partial class Player : CharacterBody2D
     {
         if (isCrouching)
         {
-            Velocity = new Vector2 ((float)(Velocity.X/1.5), Velocity.Y);
+            Velocity = new Vector2((float)(Velocity.X / 1.5), Velocity.Y);
             if (Velocity.Y > 0)
             {
                 Velocity = new Vector2(Velocity.X, (float)(Velocity.Y * 1.2));
@@ -181,7 +186,7 @@ public partial class Player : CharacterBody2D
             if (HitBox.Shape is RectangleShape2D rectangleShape)
             {
                 HitBox.Position = new Vector2(HitBox.Position.X, (float)2.143);
-                rectangleShape.Size = new Vector2(defHB_X, defHB_Y-5);
+                rectangleShape.Size = new Vector2(defHB_X, defHB_Y - 5);
             }
         }
         else
@@ -195,7 +200,7 @@ public partial class Player : CharacterBody2D
         }
 
     }
- 
+
     //attack functions
     public void BasicAttack()
     {
@@ -211,7 +216,6 @@ public partial class Player : CharacterBody2D
         }
 
     }
-
     public void ChargeAttack(int chargeLevel)
     {
         Node2D node = (Node2D)chargeProjectile.Instantiate();
@@ -227,16 +231,38 @@ public partial class Player : CharacterBody2D
             projectile.imports = true;
         }
     }
-    
     public void OracleSpell()
     {
         Node2D node = (Node2D)spellOracle.Instantiate();
         GetParent().AddChild(node);
-        if(node is SpellOracle oracle)
+        if (node is SpellOracle oracle)
         {
             oracle.targetPosition = GlobalPosition;
             oracle.level = oracleLevel;
         }
+    }
+
+    //damage functions
+    public void Hit(float damage, Node attacker)
+    {
+        if (!isHurt)
+        {
+            ActualHP -= damage;
+            isHurt = true;
+            hurtTimer.Start();
+            if (attacker != null)
+            {
+                if (attacker is Enemy enemy)
+                {
+                    Velocity = (enemy.GlobalPosition - GlobalPosition).Normalized() * 100;
+                }
+            }
+
+        }
+    }
+    public void OnHurtTimerTimeout()
+    {
+        isHurt = false;
     }
 
     //other functions
@@ -307,80 +333,97 @@ public partial class Player : CharacterBody2D
         }
 
     }
+    private void Update(double delta)
+    {
+        //attacks
+        if ((Input.IsActionPressed("attack_normal") || Input.IsActionPressed("attack_normal-alt")) && BADelta == 0 && !CAisCharging)
+        {
+            BasicAttack();
+            BADelta = BACooldown;
+        }
+        if (Input.IsActionJustPressed("attack_charge") || Input.IsActionJustPressed("attack_charge-alt"))
+        {
+            CAisCharging = true;
+        }
+        if (Input.IsActionJustReleased("attack_charge") || Input.IsActionJustReleased("attack_charge-alt"))
+        {
+            CAisCharging = false;
+        }
+        if (CAisCharging)
+        {
+            CACharge += Mathf.Round((float)delta * 50);
+            if (CACharge >= 100)
+            {
+                chargeLevel = 4;
+            }
+            else if (CACharge >= 80)
+            {
+                chargeLevel = 3;
+            }
+            else if (CACharge >= 60)
+            {
+                chargeLevel = 2;
+            }
+            else if (CACharge >= 40)
+            {
+                chargeLevel = 1;
+            }
 
+        }
+        else
+        {
+            if (CACharge > 40)
+            {
+                ChargeAttack(chargeLevel);
+                CADelta = CACooldown;
+            }
+            CACharge = 0;
+        }
+        if ((Input.IsActionJustPressed("spell_oracle") || Input.IsActionJustPressed("spell_oracle-alt")) && SODelta == 0)
+        {
+            OracleSpell();
+            SODelta = SOCooldown;
+        }
+
+        //func calls
+        if (hurtTimer.TimeLeft > 0.5)
+        {
+
+        }
+        else
+        {
+            Movement(delta);
+        }
+        Animate();
+        MoveAndSlide();
+    }
 
 
     public override void _PhysicsProcess(double delta)
     {
         if (Globals.playerControl)
         {
+            Update(delta);
 
-            if ((Input.IsActionPressed("attack_normal") || Input.IsActionPressed("attack_normal-alt")) && BADelta == 0 && !CAisCharging)
-            {
-                BasicAttack();
-                BADelta = BACooldown;
-            }
-            if(Input.IsActionJustPressed("attack_charge") || Input.IsActionJustPressed("attack_charge-alt"))
-            {
-                CAisCharging = true;
-            }
-            if (Input.IsActionJustReleased("attack_charge") || Input.IsActionJustReleased("attack_charge-alt"))
-            {
-                CAisCharging = false;
-            }
-            if (CAisCharging)
-            {
-                CACharge += Mathf.Round((float)delta * 50);
-                if (CACharge >= 100)
-                {
-                    chargeLevel = 4;
-                }
-                else if (CACharge >= 80)
-                {
-                    chargeLevel = 3;
-                }
-                else if (CACharge >= 60)
-                {
-                    chargeLevel = 2;
-                }
-                else if (CACharge >= 40)
-                {
-                    chargeLevel = 1;
-                }
 
-            }
-            else
-            { 
-                if(CACharge > 40)
-                {
-                    ChargeAttack(chargeLevel);
-                    CADelta = CACooldown;
-                }
-                CACharge = 0;
-            }
-            if ((Input.IsActionJustPressed("spell_oracle") || Input.IsActionJustPressed("spell_oracle-alt")) && SODelta == 0)
-            {
-                OracleSpell();
-                SODelta = SOCooldown;
-            }
 
-            Movement(delta);
-            Animate();
+            //cooldown resets
+            if (BADelta > 0)
+            {
+                BADelta -= (float)delta;
+            }
+            else BADelta = 0;
+            if (CADelta > 0)
+            {
+                CADelta -= (float)delta;
+            }
+            else CADelta = 0;
+            if (SODelta > 0)
+            {
+                SODelta -= (float)delta;
+            }
+            else SODelta = 0;
         }
 
-        //cooldown resets
-        if (BADelta > 0)
-        {
-            BADelta -= (float)delta;
-        }else BADelta = 0;
-        if (CADelta > 0)
-        {
-            CADelta -= (float)delta;
-        }else CADelta = 0;
-        if (SODelta > 0)
-        {
-            SODelta -= (float)delta;
-        }else SODelta = 0;
     }
-
 }
