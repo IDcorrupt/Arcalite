@@ -6,16 +6,15 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
 
 require_once "config.php";
 
-checkProperFields("GET", "userid", "langid", "request_type");
-
-require_once "connection.php";
+checkProperFields("GET", "userid", "request_type");
 
 $userid = $_GET['userid'];
-$langid = $_GET['langid'];
 
 switch($_GET['request_type']) {
     case "ENEMY":
-        //ismert enemy-k lekérése
+        checkProperFields("GET", "userid", "langid", "request_type");
+        $langid = $_GET['langid'];
+
         $sql = "SELECT
                     enemy.hp AS `hp`,
                     enemy.image AS `image`,
@@ -30,7 +29,11 @@ switch($_GET['request_type']) {
                     AND
                     enemplay.playerid IN (SELECT id FROM player WHERE profileid = $userid)";
         break;
+
     case "ITEM":
+        checkProperFields("GET", "userid", "langid", "request_type");
+        $langid = $_GET['langid'];
+
         $sql = "SELECT
                     item.image AS `image`,
                     itemdesc.name AS `name`,
@@ -43,11 +46,15 @@ switch($_GET['request_type']) {
                     itemdesc.languageid = $langid
                     AND
                     itemplay.playerid IN (SELECT id FROM player WHERE profileid = $userid) ;";
-        //ismert tárgyak lekérése
         break;
+
     case "STATISTICS":
-        //[ismert/összes] tárgyak és ellenfelek száma
+        $sql = "SELECT 
+                (SELECT COUNT(*) FROM enemplay WHERE playerid = $userid) AS `enemy`,
+                (SELECT COUNT(*) FROM itemplay WHERE playerid = $userid) AS `item`;";
         break;
     default:
         ReturnError(400, "Hiba az API-hívásban.");
 }
+
+ReturnQuery($sql);

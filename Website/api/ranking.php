@@ -7,10 +7,13 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
     ReturnError(405, "Hiba az API-hívásban.");
 }
 
-checkProperFields("GET", "type");
+checkProperFields("GET", "type", "langid");
+
+$langid = $_GET['langid'];
 
 switch ($_GET["type"]) {
     case "profile":
+        //ide a limit considerable
         $sql = "SELECT
                     profile.username AS `Felhasználónév`,
                     profile.played AS `Játékidő`,
@@ -23,7 +26,6 @@ switch ($_GET["type"]) {
                 GROUP BY profile.id;";
         break;
     case "game":
-        //[lang]-nál valahogy az oldal vagy az ember nyelvét meg kell adni :3
         $sql = "SELECT
                     player.name AS `Karakter`,
                     profile.username AS `Profil`,
@@ -40,16 +42,10 @@ switch ($_GET["type"]) {
                     INNER JOIN lang ON avatardesc.languageid = lang.id
                     INNER JOIN enemplay ON enemplay.playerid = player.id
                     INNER JOIN itemplay ON itemplay.playerid = player.id
-                WHERE lang = [lang];";
+                WHERE lang = $langid;";
         break;
     default:
         break;
 }
 
-require_once "connection.php";
-
-$result = $db->query($sql);
-
-header("Content-Type: application/json");
-echo json_encode($result, JSON_PRETTY_PRINT);
-http_response_code(200);
+ReturnQuery($sql);
