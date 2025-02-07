@@ -205,7 +205,7 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D"]
 disable_mode = 2
-collision_mask = 6
+collision_mask = 4
 floor_max_angle = 0.872665
 script = ExtResource("1_e7w0v")
 
@@ -239,3 +239,5 @@ metadata/_aseprite_wizard_source_file_hash_ = "9d6240360366c3ebf3e1ab834a8f3984"
 
 [node name="HurtTimer" type="Timer" parent="."]
 one_shot = true
+
+[connection signal="timeout" from="HurtTimer" to="." method="OnHurtTimerTimeout"]

@@ -17,9 +17,8 @@ public partial class Enemy : CharacterBody2D
     protected bool isDead = false;
     protected bool playerInAtkRange = false;
     protected bool isAttacking = false;
-    protected bool hasAttacked = false;
-    protected bool isDamaged = false;
-
+    protected bool isHurt = false;
+    
     public bool isChasing;
     public bool isRoaming = true;
     public Vector2 Direction;
@@ -28,14 +27,16 @@ public partial class Enemy : CharacterBody2D
     public float speed = 0f;
     
     protected float prevDir = 0;
+    protected Vector2 hitVector;
 
     //components
     protected Timer dirTimer;
     protected Timer RoamCooldown;
     protected Timer atkCooldown;
+    protected Timer hurtTimer;
     private Sprite2D indicator;
     private Area2D attackRange;
-    private AnimatedSprite2D sprite;
+    protected AnimatedSprite2D sprite;
 
     protected Player player;
     protected EnemyControl parent;
@@ -49,6 +50,7 @@ public partial class Enemy : CharacterBody2D
         dirTimer = GetNode<Timer>("DirectionTimer");
         RoamCooldown = GetNode<Timer>("RoamCooldown");
         atkCooldown = GetNode<Timer>("AttackCooldown");
+        hurtTimer = GetNode<Timer>("HurtTimer");
         
         attackRange = GetNode<Area2D>("AttackRange");
         
@@ -57,37 +59,10 @@ public partial class Enemy : CharacterBody2D
     }
 
 
+
+
+
     //movement
-
-    public void Update(double delta)
-    {
-        if (!isDead)
-        {
-            if (isAttacking || atkCooldown.TimeLeft > 0)
-            {
-                //for debug indicator and movement stop
-                if (isAttacking)
-                    indicator.Modulate = Color.Color8(255, 0, 255, 255);
-                else
-                    indicator.Modulate = Color.Color8(255, 255, 0, 255);
-                Velocity = new Vector2(0, Velocity.Y);
-            }
-            else if(!isAttacking || !isDamaged)
-            {
-                Move(delta);
-                if (playerInAtkRange)
-                {
-                    GD.Print("sdijfhdosgjoi");
-                    Attack();
-                }
-            }
-            if (Direction.X < 0)
-                Flip(true);
-            else Flip(false);
-        }
-    }
-
-
     public void Move(double delta)
     {
         if (!IsOnFloor())
@@ -180,7 +155,6 @@ public partial class Enemy : CharacterBody2D
         {
             sprite.Frame = 0;
             sprite.Play("attack");
-            hasAttacked = false;
         }
         else
         {
@@ -204,11 +178,32 @@ public partial class Enemy : CharacterBody2D
     }
     protected virtual void Attack() 
     {
-        isAttacking = true;
-        GD.Print("attack");
         //shell func, attack is different for each type
+        isAttacking = true;
 
     }
+
+    public virtual void Hit(float damage, Vector2 hitVector)
+    {
+        if (!isDead && !isHurt)
+        {
+            isHurt = true;
+            currentHP -= damage;
+            if(hitVector != Vector2.Zero)
+            {
+                //knockback
+                Velocity = hitVector;
+                hurtTimer.WaitTime = 1;
+            }
+            else
+            {
+                hurtTimer.WaitTime = 0.5f;
+            }
+            hurtTimer.Start();
+        }
+        GD.Print(this.Name + " hp left: " + currentHP);
+    }
+    private void OnHurtTimerTimeout() { isHurt = false; }
 
     //appearance
     private void Flip(bool dir)
@@ -227,25 +222,62 @@ public partial class Enemy : CharacterBody2D
             attackRange.RotationDegrees = 0;
         }
     }
-
-    private void Animate()
+    protected virtual void Animate()
     {
         if (isAttacking)
         {
             sprite.Play("attack");
         }
-        else if(IsOnFloor() || Velocity.X > 0)
+        else if((IsOnFloor() || Velocity.X > 0) && !isDead)
         {
             sprite.Play("walk");
         }
     }
-    
     public void OnSpriteAnimationFinished()
     {
-        if(sprite.Animation == "attack")
+        if (sprite.Animation == "attack")
         {
             isAttacking = false;
             atkCooldown.Start();
+        }
+        else if (sprite.Animation == "die")
+            QueueFree();
+    }
+
+
+    public virtual void Update(double delta)
+    {
+        if (!isDead)
+        {
+            if (currentHP <=0)
+                isDead = true;
+            if (isHurt)
+                Velocity = new Vector2(Velocity.X > 0 ? Velocity.X - (float)delta * 700 : Velocity.X + (float)delta * 700, Velocity.Y);
+            if (isAttacking || atkCooldown.TimeLeft > 0)
+            {
+                //for debug indicator and movement stop
+                if (isAttacking)
+                    indicator.Modulate = Color.Color8(255, 0, 255, 255);
+                else
+                    indicator.Modulate = Color.Color8(255, 255, 0, 255);
+                //stop moving after attacking
+                Velocity = new Vector2(0, Velocity.Y);
+            }
+            else if (!isAttacking && !isHurt)
+            {
+                //if not attacking & being attacked -> move, attack if in attack range
+                Move(delta);
+                if (playerInAtkRange)
+                    Attack();
+            }
+            if (Direction.X < 0)
+                Flip(true);
+            else Flip(false);
+        }
+        else
+        {
+            Velocity = Vector2.Zero;
+            sprite.Play("die");
         }
     }
     public override void _PhysicsProcess(double delta)
@@ -257,7 +289,6 @@ public partial class Enemy : CharacterBody2D
         }
 
         Update(delta);
-
         //apply slow
         Velocity *= slowFactor;
 

@@ -1,22 +1,29 @@
 using Godot;
 using System;
-using System.Reflection.Emit;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
-using System.Runtime.Versioning;
 
-public partial class LightMeele : Enemy
+public partial class HeavyMelee : Enemy
 {
-
     public override void _Ready()
     {
         base._Ready();
-        maxHP = 50;
+        maxHP = 75;
         currentHP = maxHP;
-        damage = 5;
+        damage = 15;
         atkCooldown.WaitTime = 1;
     }
-
+    protected override void Animate()
+    {
+        base.Animate();
+        if (isAttacking)
+        {
+            sprite.Scale = new Vector2(1, 1);
+        }
+        else if ((IsOnFloor() || Velocity.X > 0) && !isDead)
+        {
+            sprite.Scale = new Vector2(3, 3);
+            sprite.Play("walk");
+        }
+    }
     protected override void Attack()
     {
         base.Attack();
@@ -25,7 +32,7 @@ public partial class LightMeele : Enemy
             dir = 1;
         else if ((player.GlobalPosition - GlobalPosition).Normalized().X < 0)
             dir = -1;
-        hitVector = new Vector2(300 * dir, -200);
+        hitVector = new Vector2(200 * dir, -600);
         player.Hit(damage, hitVector);
     }
 }

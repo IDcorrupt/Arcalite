@@ -49,8 +49,10 @@ public partial class Player : CharacterBody2D
     private float MaxHP = 100;
     private float MaxMP = 100;
     //spd & dot if class system get implemented
-    public float ActualHP;
-    public float ActualMP;
+    private float currentHP;
+    private float currentMP;
+
+    private float damage;
 
     private int oracleLevel;
 
@@ -212,7 +214,7 @@ public partial class Player : CharacterBody2D
             Vector2 direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
             projectile.Rotation = direction.Angle();
             projectile.direction = direction;
-            projectile.damagePayload = 1;
+            projectile.damagePayload = damage;
         }
 
     }
@@ -227,7 +229,7 @@ public partial class Player : CharacterBody2D
             projectile.chargeLevel = chargeLevel;
             projectile.Rotation = direction.Angle();
             projectile.direction = direction;
-            projectile.damagePayload = 1;
+            projectile.damagePayload = damage;
             projectile.imports = true;
         }
     }
@@ -243,27 +245,26 @@ public partial class Player : CharacterBody2D
     }
 
     //damage functions
-    public void Hit(float damage, Node attacker)
+    public void Hit(float damage, Vector2 hitVector)
     {
         if (!isHurt)
         {
-            ActualHP -= damage;
+            currentHP -= damage;
             isHurt = true;
-            hurtTimer.Start();
-            if (attacker != null)
+            if (hitVector != Vector2.Zero)
             {
-                if (attacker is Enemy enemy)
-                {
-                    Velocity = (enemy.GlobalPosition - GlobalPosition).Normalized() * 100;
-                }
+                Velocity = hitVector;
+                hurtTimer.WaitTime = 1;
             }
+            else
+            {
+                hurtTimer.WaitTime = 0.5f;
+            }
+            hurtTimer.Start();
 
         }
     }
-    public void OnHurtTimerTimeout()
-    {
-        isHurt = false;
-    }
+    public void OnHurtTimerTimeout() { isHurt = false; }
 
     //other functions
     private void SetStats()
@@ -279,13 +280,16 @@ public partial class Player : CharacterBody2D
             //if new save
             MaxHP = 100;
             MaxMP = 100;
-            ActualHP = MaxHP;
-            ActualMP = MaxMP;
-            oracleLevel = 4;
+            currentHP = MaxHP;
+            currentMP = MaxMP;
+            damage = 10;
+            oracleLevel = 1;
             dashCooldown = 2f;
             SOCooldown = 0f;
         }
     }
+    public float GetHP() { return currentHP; }
+    public float GetMP() {  return currentMP; }
     private void Animate()
     {
         //jump & fall
@@ -388,7 +392,12 @@ public partial class Player : CharacterBody2D
         //func calls
         if (hurtTimer.TimeLeft > 0.5)
         {
-
+            Velocity = new Vector2(
+                Velocity.X > 0 ? Mathf.Max(0,Velocity.X-(float)delta*700) 
+                               : Mathf.Min(0,Velocity.X+(float)delta*700),
+                Velocity.Y
+            );
+            fall(delta);
         }
         else
         {

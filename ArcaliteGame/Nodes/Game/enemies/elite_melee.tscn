@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqi8f7sibpus8"]
+
+[ext_resource type="Script" path="res://Scripts/Game/Enemies/EliteMelee.cs" id="1_50tk0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_joyky"]
+animations = [{
+"frames": [],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4e8eb"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qr2ur"]
+radius = 5.0
+height = 108.0
+
+[node name="EliteMelee" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 132
+floor_max_angle = 0.802851
+script = ExtResource("1_50tk0")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_joyky")
+animation = &"die"
+
+[node name="DirectionTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="RoamCooldown" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="SpecialAttackCooldown" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="HurtTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4e8eb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="AttackRange" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AttackRange"]
+polygon = PackedVector2Array(14, -14, 30, -14, 32, 2, 19, 7)
+
+[node name="AttackRangeSpecial" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeSpecial"]
+position = Vector2(0, 5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_qr2ur")
+
+[connection signal="timeout" from="DirectionTimer" to="." method="OnDirectionTimerTimeout"]
+[connection signal="timeout" from="RoamCooldown" to="." method="OnRoamCoolDownTimeout"]
+[connection signal="timeout" from="AttackCooldown" to="." method="AtkCooldownTimeout"]
+[connection signal="timeout" from="HurtTimer" to="." method="OnHurtTimerTimeout"]
+[connection signal="body_entered" from="AttackRange" to="." method="AttackRangeBodyEntered"]
+[connection signal="body_exited" from="AttackRange" to="." method="AttackRangeBodyExited"]
