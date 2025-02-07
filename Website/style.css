@@ -4,7 +4,7 @@
     
 }
 
-[data-bs-theme="light"]{
+[data-bs-theme="dark"]{
     --font: rgb(21, 21, 21);
     --font2: #6a6a7a;
     --font3:#CEB992;
@@ -12,17 +12,19 @@
     --bg-element: ;
     --acc1: #9D91A3 ;
     --acc2: #ad91a3b8;
-    --menu: url("./img/lightmenu.png");
+    --menu: #6a6a7a;
+    --menu-gradient: #858585;
 }
-[data-bs-theme="dark"] { 
-    --font: green;
+[data-bs-theme="light"] { 
+    --font: rgb(184, 184, 184);
     --font2: #c5c5dd;
     --font3:#CEB992;
     --bg: url("./img/dark.png");
     --bg-element: ;
     --acc1:#514663 ;
     --acc2: ;
-    --menu: url("./img/darkmenu.png");
+    --menu: #858585;
+    --menu-gradient: #c5c5dd;
 }
 
 html{
@@ -170,7 +172,7 @@ main{
 header{
     height: calc(100vh - 45px);
     width: 100vw;
-    min-height: 150px;
+    min-height: 320px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -184,9 +186,8 @@ header{
     top: 0; /* Stick the navbar to the top */
     width: 100%;
     z-index: 1000; /* Ensure it stays on top of other content */
-    background-color: #000;
-    box-shadow: 20px 20px 10px#000;
     border-radius: 0;
+    background: linear-gradient(to bottom, var(--font2) 40%, var(--menu-gradient));
 }
 
 .dropdown {
@@ -198,7 +199,6 @@ header{
 .dropdown button{
     background-color: transparent;
     border: none;
-    color: var(--font);
     padding: 0px 20px;
     height: 100%;
 }
@@ -263,14 +263,10 @@ ul{
 
 h1{
     margin: 0;
-    font-size: 20rem;
+    font-size: 320px;
     color: var(--font2) ;
     font-family: 'Title';
-    text-shadow: 
-        -1px -1px 0 #858585,  
-        1px -1px 0 #858585,
-        -1px 1px 0 #858585,
-        1px 1px 0 #858585; /* Shadow color (border) */
+    margin-top: -100px;
 }
 
 h2{
@@ -283,6 +279,14 @@ h2{
 h3{
     font-size: 1.5rem ;
     color: var(--font3);
+}
+
+h1, h2{
+    text-shadow: 
+        -1px -1px 0 #858585,  
+        1px -1px 0 #858585,
+        -1px 1px 0 #858585,
+        1px 1px 0 #858585; /* Shadow color (border) */
 }
 
 .control{
@@ -513,7 +517,7 @@ tr:first-child{
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 768px) { /* medium screen */
     
     .navbar-expand-lg .navbar-nav {
         display: none; 
@@ -584,5 +588,8 @@ tr:first-child{
 
     header{
         height: 30vh;
+    }
+    h1{
+        font-size: 15rem;
     }
 }
