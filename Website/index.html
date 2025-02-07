@@ -42,7 +42,7 @@
                       role="switch"
                       id="flexSwitchCheckChecked"
                       checked
-                      onclick="myFunction()"
+                      onclick="themeChange()"
                     />
                 </li>
                 
@@ -54,7 +54,7 @@
     </nav>
 
     <script>
-        function myFunction() {
+        function themeChange() {
         var element = document.body;
         element.dataset.bsTheme =
           element.dataset.bsTheme == "light" ? "dark" : "light";
@@ -97,37 +97,67 @@
               </div>
     
         </div>
-        <h2 id="characterid">Karakterek</h2>
-        <div class="flex-container" id="characters">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Karakter</h3>
+            <h2 id="characterid">Karakterek</h2>
+            <div class="flex-container" id="characters">
+                <div class="card character-card" data-character="Character 1">
+                    <div class="card-body">
+                        <h3 class="card-title">Karakter 1</h3>
+                    </div>
+                    <img src="./img/character.png" class="card-img-bottom" alt="Character 1">
                 </div>
-                <img src="./img/index.png" class="card-img-top " alt="...">
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Karakter</h3>
+        
+                <div class="card character-card" data-character="Character 2">
+                    <div class="card-body">
+                        <h3 class="card-title">Karakter 2</h3>
+                    </div>
+                    <img src="./img/character.png" class="card-img-bottom" alt="Character 2">
                 </div>
-                <img src="./img/index.png" class="card-img-bottom" alt="...">
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Karakter</h3>
+        
+                <div class="card character-card" data-character="Character 3">
+                    <div class="card-body">
+                        <h3 class="card-title">Karakter 3</h3>
+                    </div>
+                    <img src="./img/character.png" class="card-img-bottom" alt="Character 3">
                 </div>
-                <img src="./img/index.png" class="card-img-bottom" alt="...">
             </div>
-            
-        </div>
+        
+            <!-- Offcanvas -->
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="characterOffcanvas">
+                <div class="offcanvas-header">
+                    <h5 id="offcanvasTitle">Character Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p id="offcanvasContent">Character information will be shown here.</p>
+                </div>
+            </div>
+        
+            <!-- Bootstrap 5.3.3 JS Bundle (includes Popper.js) -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        
+            <script>
+                document.querySelectorAll(".character-card").forEach(card => {
+                    card.addEventListener("click", function () {
+                        let characterName = this.getAttribute("data-character");
+        
+                        // Update Offcanvas content
+                        document.getElementById("offcanvasTitle").textContent = characterName;
+                        document.getElementById("offcanvasContent").textContent = characterName + " details will be displayed here.";
+        
+                        // Show Offcanvas
+                        let offcanvas = new bootstrap.Offcanvas(document.getElementById("characterOffcanvas"));
+                        offcanvas.show();
+                    });
+                });
+            </script>
     </main>
     <footer class="flex-container">
         <div id="devs">
         <h2>Készítők</h2>
             <div class="flex-container" id="dev">
-                <img src="./img/index.png">
-                <img src="./img/index.png">
-                <img src="./img/index.png">
+                <img src="./img/character.png">
+                <img src="./img/character.png">
+                <img src="./img/character.png">
             </div>
         </div>
         <div id="link">

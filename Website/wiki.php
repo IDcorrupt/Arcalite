@@ -32,7 +32,7 @@
                 <li class="nav-item"><div class="dropdown">
                     <button class="nav-link">Profil</button>
                     <div class="dropdown-content">
-                        <a class="nav-link" href="./profile.html">Bejelentkezés</a>
+                        <a class="nav-link" href="./login.html">Bejelentkezés</a>
                     </div>
                 </div></li>
                 <li class="nav-item"><div class="form-check form-switch mx-4">
@@ -42,7 +42,7 @@
                       role="switch"
                       id="flexSwitchCheckChecked"
                       checked
-                      onclick="myFunction()"
+                      onclick="themeChange()"
                     />
                 </li>
                 
@@ -54,7 +54,7 @@
     </nav>
 
     <script>
-        function myFunction() {
+        function themeChange() {
         var element = document.body;
         element.dataset.bsTheme =
           element.dataset.bsTheme == "light" ? "dark" : "light";
@@ -91,3 +91,4 @@
 
         </div>
     </main>
+</body>
