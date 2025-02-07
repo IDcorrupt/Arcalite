@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Title';
-    src: url('RevolverBlackletter-Regular.otf') format('opentype');
+    src: url('./FontsFree-Net-RajjahFamillia-Medium.ttf') format('truetype');
     
 }
 
@@ -10,7 +10,7 @@
     --font3:#CEB992;
     --bg: url("./img/light.png");
     --bg-element: ;
-    --acc1: #9D91A3 ;
+    --acc1: #aca0b3d6 ;
     --acc2: #ad91a3b8;
     --menu: #6a6a7a;
     --menu-gradient: #858585;
@@ -21,7 +21,7 @@
     --font3:#CEB992;
     --bg: url("./img/dark.png");
     --bg-element: ;
-    --acc1:#514663 ;
+    --acc1:#514663d1 ;
     --acc2: ;
     --menu: #858585;
     --menu-gradient: #c5c5dd;
@@ -142,8 +142,7 @@ html{
 body{
     width: 100vw;
     margin: 0;
-    font-size: 1.2rem ;
-    /* background-color: var(--bg-color) !important; */
+    font-size: min(20px) ;
     color: var(--font) ;
     background-image: var(--bg); /* Replace with your image path */
     background-size: cover; /* Makes sure the image covers the whole area */
@@ -263,16 +262,15 @@ ul{
 
 h1{
     margin: 0;
-    font-size: 320px;
+    font-size: min(20vw, 250px);
     color: var(--font2) ;
     font-family: 'Title';
-    margin-top: -100px;
 }
 
 h2{
     text-align: center;
     align-self: baseline;
-    font-size: 2rem ;
+    font-size:  ;
     color: var(--font2);
 }
 
@@ -304,6 +302,7 @@ h1, h2{
     width: 18rem;
     padding: 10px;
     background-color: #585563;
+    flex-direction: column;
 }
 
 .card .btn{
@@ -311,6 +310,9 @@ h1, h2{
     height: 50px;
 }
 
+#characters .card{
+    cursor: pointer;
+}
 
 .control p{
     text-align: center;
@@ -425,7 +427,7 @@ label{
     height: fit-content;
     width: auto;
     margin: 0px 30px;
-    flex-direction: column;
+
 }
 
 .character img{
@@ -434,8 +436,9 @@ label{
 }
 
 footer{
-    height: 45vh;
+    height: fit-content;
     padding: 0px ;
+    flex-wrap: nowrap !important;
 }
 
 #devs{
@@ -453,15 +456,13 @@ footer{
 }
 
 #devs img{
-    height: 50px;
-    width: 50px;
+    height: auto;
+    width: 30%;
 }
 
 #devs h2{
-    position: absolute;
-    left: 33.32%;
     text-align: center;
-    transform: translate(-50%, 5%);
+    width: 100%;
 }
 
 
@@ -470,7 +471,7 @@ footer{
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
-    background-color: #f1f1f1;
+    background-color: var(--menu);
   }
   
   /* Style the buttons that are used to open the tab content */
@@ -491,7 +492,7 @@ footer{
   
   /* Create an active/current tablink class */
   .tab button.active {
-    background-color: #ccc;
+    background-color: var(--menu-gradient);
   }
   
   /* Style the tab content */
@@ -502,7 +503,7 @@ footer{
 
 table{
     width: 100%;
-
+    background-color: var(--acc1)
 }
 
 th{
@@ -589,7 +590,10 @@ tr:first-child{
     header{
         height: 30vh;
     }
-    h1{
-        font-size: 15rem;
+}
+
+@media (min-width: 1400px){
+    body{
+        font-size: min(1.5vw, 40px);
     }
 }
