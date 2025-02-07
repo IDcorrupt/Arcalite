@@ -1,18 +1,14 @@
 <?php
 
-if ($_SERVER["REQUEST_METHOD"] != "GET") {
-    ReturnError(405, "Hiba az API-hívásban.");
-}
-
 require_once "config.php";
 
-checkProperFields("GET", "userid", "request_type");
+checkValidity("GET", "userid", "request_type");
 
 $userid = $_GET['userid'];
 
 switch($_GET['request_type']) {
     case "ENEMY":
-        checkProperFields("GET", "userid", "langid", "request_type");
+        checkValidity("GET", "userid", "langid", "request_type");
         $langid = $_GET['langid'];
 
         $sql = "SELECT
@@ -31,7 +27,7 @@ switch($_GET['request_type']) {
         break;
 
     case "ITEM":
-        checkProperFields("GET", "userid", "langid", "request_type");
+        checkValidity("GET", "userid", "langid", "request_type");
         $langid = $_GET['langid'];
 
         $sql = "SELECT

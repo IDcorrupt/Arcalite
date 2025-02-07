@@ -2,12 +2,7 @@
 
 require_once "config.php";
 
-if ($_SERVER["REQUEST_METHOD"] != "POST") {
-    ReturnError(405, "Hiba az API-hívásban.");
-}
-
-checkProperFields("POST", "username", "email", "password");
-
+checkValidity("POST", "username", "email", "password");
 
 require_once "connection.php";
 
