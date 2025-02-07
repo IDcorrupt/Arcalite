@@ -47,6 +47,4 @@ $response = array(
     "message" => "Sikeres regisztráció!"
 );
 
-header("Content-Type: application/json");
-http_response_code(201);
-echo json_encode($response, JSON_PRETTY_PRINT);
+ReturnResult($response, 201);
