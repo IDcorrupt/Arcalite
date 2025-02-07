@@ -33,7 +33,8 @@ $(document).ready(function() {
                 location.reload();
             },
             error: (data) => {
-                $('#register_error').html(data.responseText)
+                $('#register_error').html(data.responseJSON.message);
+                console.log(data);
             }
         });
     
@@ -56,11 +57,11 @@ $(document).ready(function() {
             global: false,
             success: (data) => {
                 open("/", "_self");
-                document.cookie = `userid=${data.id}; max-age=${30*60} ; path=/; secure; SameSite=Strict`;
-                document.cookie = `username=${data.username}; max-age=${30*60} ; path=/; secure; SameSite=Strict`;
+                document.cookie = `userid=${data.id}; path=/; secure; SameSite=Strict`;
+                document.cookie = `username=${data.username}; path=/; secure; SameSite=Strict`;
             },
             error: (data) => {
-                $('#login_error').html(data.responseText);
+                $('#login_error').html(data.responseJSON.message);
             }
         });
     });
@@ -108,7 +109,7 @@ $(document).ready(function() {
                 $('#newpwd_newpwd_container').hide();
             },
             error: (data) => {
-                $('#login_error').html(data.responseText);
+                $('#login_error').html(data.responseJSON.message);
             }
         })
     });

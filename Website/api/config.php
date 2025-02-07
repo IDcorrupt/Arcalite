@@ -10,7 +10,6 @@ function ReturnError($code = 500, $message = "") {
     http_response_code($code);
     die();
 }
-
 function ReturnQuery($sql) {
     require_once "connection.php";
     $result = $db->query($sql);
@@ -31,13 +30,16 @@ function ReturnResult($result_array, $code = 200) {
     http_response_code($code);
 }
 
-function checkProperFields($method, ...$fields) {
-    if (!hasProperFields($method, $fields)) {
+function checkValidity($method, ...$fields) {
+    if ($_SERVER['REQUEST_METHOD'] != $method) {
+        ReturnError(405, "Hiba az API-hívásban.");
+    }
+    if (!hasProperFields($fields)) {
         ReturnError(400, "Hiba az API-hívásban.");
     }
 }
 
-function hasProperFields($method, $fields) {
+function hasProperFields($fields) {
     if (count($_REQUEST) != count($fields)) {return false;}
     foreach ($fields as $f) { if (!isset($_REQUEST[$f])) { return false; } }
     return true;

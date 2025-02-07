@@ -2,18 +2,13 @@
 
 require_once "config.php";
 
-
-if ($_SERVER["REQUEST_METHOD"] != "GET") {
-    ReturnError(405, "Hiba az API-hívásban.");
-}
-
-checkProperFields("GET", "type", "langid");
+checkValidity("GET", "type", "langid");
 
 $langid = $_GET['langid'];
 
 switch ($_GET["type"]) {
     case "profile":
-        //ide a limit considerable
+        //limit is considerable here
         $sql = "SELECT
                     profile.username AS `Felhasználónév`,
                     profile.played AS `Játékidő`,
