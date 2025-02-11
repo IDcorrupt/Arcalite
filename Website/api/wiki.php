@@ -11,6 +11,7 @@ switch($_GET['request_type']) {
         $langid = $_GET['langid'];
 
         $sql = "SELECT
+                    enemy.id AS `id`,
                     enemy.hp AS `hp`,
                     enemy.image AS `image`,
                     enemydesc.name AS `name`,
@@ -29,6 +30,7 @@ switch($_GET['request_type']) {
         $langid = $_GET['langid'];
 
         $sql = "SELECT
+                    item.id AS `id`,
                     item.image AS `image`,
                     itemdesc.name AS `name`,
                     itemdesc.description AS `desc`
@@ -44,9 +46,9 @@ switch($_GET['request_type']) {
 
     case "STATISTICS":
         $sql = "SELECT 
-                (SELECT COUNT(*) FROM enemplay WHERE playerid = $userid) AS `enemyFound`,
+                (SELECT COUNT(*) FROM enemplay WHERE playerid IN (SELECT id FROM player WHERE profileid = $userid)) AS `enemyFound`,
                 (SELECT COUNT(*) FROM enemy) AS `enemyAll`,
-                (SELECT COUNT(*) FROM itemplay WHERE playerid = $userid) AS `itemFound`,
+                (SELECT COUNT(*) FROM itemplay WHERE playerid IN (SELECT id FROM player WHERE profileid = $userid)) AS `itemFound`,
                 (SELECT COUNT(*) FROM item) AS `itemAll`;";
         break;
     default:
