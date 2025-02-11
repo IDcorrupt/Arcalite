@@ -270,7 +270,6 @@ h1{
 h2{
     text-align: center;
     align-self: baseline;
-    font-size:  ;
     color: var(--font2);
 }
 
@@ -299,10 +298,11 @@ h1, h2{
 
 .card{
     text-align: center;
-    width: 18rem;
+    width: 17.7rem;
     padding: 10px;
     background-color: #585563;
     flex-direction: column;
+    margin: 20px
 }
 
 .card .btn{
@@ -520,6 +520,10 @@ tr:first-child{
 
 @media (max-width: 768px) { /* medium screen */
     
+    .card{
+        width: 17rem;
+    }
+
     .navbar-expand-lg .navbar-nav {
         display: none; 
     }
@@ -591,7 +595,6 @@ tr:first-child{
         height: 30vh;
     }
 }
-
 @media (min-width: 1400px){
     body{
         font-size: min(1.5vw, 40px);
