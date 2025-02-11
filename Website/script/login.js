@@ -56,7 +56,7 @@ $(document).ready(function() {
             data: payload,
             global: false,
             success: (data) => {
-                open("/", "_self");
+                open("index.html", "_self");
                 document.cookie = `userid=${data.id}; path=/; secure; SameSite=Strict`;
                 document.cookie = `username=${data.username}; path=/; secure; SameSite=Strict`;
             },
