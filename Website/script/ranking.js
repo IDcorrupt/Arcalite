@@ -3,8 +3,7 @@ var lastOrdered = null;
 var currentTable = null;
 
 $(document).ready(function() {
-    FetchRankings("Profile");
-    FetchRankings("GameThrough");
+        FetchRankings("GameThrough");
 });
 
 function FetchRankings(type) {
