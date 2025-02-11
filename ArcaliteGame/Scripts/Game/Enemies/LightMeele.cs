@@ -15,6 +15,7 @@ public partial class LightMeele : Enemy
         currentHP = maxHP;
         damage = 5;
         atkCooldown.WaitTime = 1;
+        jumpStrength = 400;
     }
 
     protected override void Attack()

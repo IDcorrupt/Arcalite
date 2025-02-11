@@ -66,7 +66,7 @@ public partial class Player : CharacterBody2D
 
     public override void _Ready()
     {
-        Globals.Player = this;
+        Globals.player = this;
         //Get nodes
         HitBox = GetNode<CollisionShape2D>("HitBox");
         Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");

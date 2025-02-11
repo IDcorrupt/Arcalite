@@ -13,8 +13,9 @@ public partial class LightRanged : Enemy
         currentHP = maxHP;
         damage = 10;
         atkCooldown.WaitTime = 1.5f;
+        jumpStrength = 400;
     }
-
+    
     protected override void Attack()
     {
         base.Attack();
@@ -31,14 +32,14 @@ public partial class LightRanged : Enemy
         }
     }
 
-    public override void Update(double delta)
-    {
+     public override void Update(double delta)
+     {
         if(lineOfSight.GetCollider() is Player)
         {
             playerInAtkRange = true;
         }else playerInAtkRange = false;
         base.Update(delta);
-    }
+     }
 
     public override void _PhysicsProcess(double delta)
     {

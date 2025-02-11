@@ -14,7 +14,7 @@ public partial class Ui : Control
 
     public override void _Process(double delta)
     {
-        HPnum.Text = "HP: " + Mathf.Round(Globals.Player.GetHP()); 
-        MPnum.Text = "MP: " + Mathf.Round(Globals.Player.GetMP()); 
+        HPnum.Text = "HP: " + Mathf.Round(Globals.player.GetHP()); 
+        MPnum.Text = "MP: " + Mathf.Round(Globals.player.GetMP()); 
     }
 }

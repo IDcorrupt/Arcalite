@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Transactions;
 
 public partial class Enemy : CharacterBody2D
 {
@@ -14,6 +15,8 @@ public partial class Enemy : CharacterBody2D
     [Export] public float slowFactor = 1;
 
     //values
+    private bool jumped = false;
+
     protected bool isDead = false;
     protected bool playerInAtkRange = false;
     protected bool isAttacking = false;
@@ -22,9 +25,10 @@ public partial class Enemy : CharacterBody2D
     public bool isChasing;
     public bool isRoaming = true;
     public Vector2 Direction;
-    public float roamSpeed = 30f;
-    public float chaseSpeed = 120f;
-    public float speed = 0f;
+    protected float roamSpeed = 30f;
+    protected float chaseSpeed = 120f;
+    protected float speed = 0f;
+    protected float jumpStrength;
     
     protected float prevDir = 0;
     protected Vector2 hitVector;
@@ -36,6 +40,8 @@ public partial class Enemy : CharacterBody2D
     protected Timer hurtTimer;
     private Sprite2D indicator;
     private Area2D attackRange;
+    private Area2D obstacleDetect;
+    private Area2D jumpTrigger;
     protected AnimatedSprite2D sprite;
 
     protected Player player;
@@ -45,7 +51,7 @@ public partial class Enemy : CharacterBody2D
     {
         parent = (EnemyControl)GetParent();
         sprite = GetNode<AnimatedSprite2D>("Sprite");
-        player = Globals.Player;
+        player = Globals.player;
 
         dirTimer = GetNode<Timer>("DirectionTimer");
         RoamCooldown = GetNode<Timer>("RoamCooldown");
@@ -53,7 +59,9 @@ public partial class Enemy : CharacterBody2D
         hurtTimer = GetNode<Timer>("HurtTimer");
         
         attackRange = GetNode<Area2D>("AttackRange");
-        
+        obstacleDetect = GetNode<Area2D>("ObstacleDetect");
+        jumpTrigger = GetNode<Area2D>("JumpTrigger");
+
         //debug
         indicator = GetNode<Sprite2D>("indicator");
     }
@@ -65,64 +73,69 @@ public partial class Enemy : CharacterBody2D
     //movement
     public void Move(double delta)
     {
+        if(jumpTrigger.GetOverlappingBodies().Count == 0 && obstacleDetect.GetOverlappingBodies().Count >0 && !jumped)
+        {
+            Velocity = new Vector2(Velocity.X, Velocity.Y -jumpStrength);
+            jumped = true;
+        }
+        //moving
+        if (!isChasing)
+        {
+            //idle
+            if (dirTimer.Paused)
+                dirTimer.Paused = false;
+            if (RoamCooldown.Paused)
+                RoamCooldown.Paused = false;
+            indicator.Modulate = Color.Color8(255, 0, 0, 255);
+            if (Direction.X != 0)
+            {
+                if (speed < roamSpeed) speed += (float)delta * 70;
+                Velocity = Direction * speed;
+                prevDir = Direction.X;
+            }
+            else if (Direction.X == 0)
+            {
+                if (speed > 0)
+                    speed -= (float)delta * 100;
+                else
+                {
+                    speed = 0;
+                    prevDir = 0;
+                }
+                Velocity = new Vector2(prevDir, Velocity.Y);
+
+
+            }
+            isRoaming = true;
+        }
+        else if (isChasing)
+        {
+            //chasing
+            //pause idle timers
+            dirTimer.Paused = true;
+            RoamCooldown.Paused = true;
+
+            //debug indicator and direction calculation
+            indicator.Modulate = Color.Color8(0, 0, 255, 255);
+            Direction = GlobalPosition.DirectionTo(player.GlobalPosition);
+
+            if (speed < chaseSpeed) speed += (float)delta * 200;
+            else if (speed > chaseSpeed) speed -= (float)delta * 200;
+            Velocity = new Vector2(Direction.X*speed, Velocity.Y);
+        }
+    }
+    private void Fall(double delta)
+    {
         if (!IsOnFloor())
         {
-            //if falling
-            Velocity = new Vector2(0, Velocity.Y + (float)(Globals.GRAVITY * delta));
-            return;
+            Velocity = new Vector2(Velocity.X, Velocity.Y + (float)(Globals.GRAVITY * delta));
+            jumped = true;
         }
         else
         {
-            //moving
-            if (!isChasing)
-            {
-                //idle
-                if (dirTimer.Paused)
-                    dirTimer.Paused = false;
-                if (RoamCooldown.Paused)
-                    RoamCooldown.Paused = false;
-                indicator.Modulate = Color.Color8(255, 0, 0, 255);
-                if (Direction.X != 0)
-                {
-                    if (speed < roamSpeed) speed += (float)delta * 70;
-                    Velocity = Direction * speed;
-                    prevDir = Direction.X;
-                }
-                else if (Direction.X == 0)
-                {
-                    if (speed > 0)
-                        speed -= (float)delta * 100;
-                    else
-                    {
-                        speed = 0;
-                        prevDir = 0;
-                    }
-                    Velocity = new Vector2(prevDir, Velocity.Y);
-
-
-                }
-                isRoaming = true;
-            }
-            else if (isChasing)
-            {
-                //chasing
-                //pause idle timers
-                dirTimer.Paused = true;
-                RoamCooldown.Paused = true;
-
-                //debug indicator and direction calculation
-                indicator.Modulate = Color.Color8(0, 0, 255, 255);
-                Direction = GlobalPosition.DirectionTo(player.GlobalPosition);
-
-                if (speed < chaseSpeed) speed += (float)delta * 200;
-                Velocity = Direction * speed;
-                //nullify vertical velocity for chase vel
-                Velocity = new Vector2(Velocity.X, 0);
-            }
+            jumped = false;    //reset jump bool if on ground
         }
-
     }
-
     //idle logic
     public void OnDirectionTimerTimeout()
     {
@@ -182,7 +195,6 @@ public partial class Enemy : CharacterBody2D
         isAttacking = true;
 
     }
-
     public virtual void Hit(float damage, Vector2 hitVector)
     {
         if (!isDead && !isHurt)
@@ -214,12 +226,16 @@ public partial class Enemy : CharacterBody2D
             sprite.FlipH = true;
             indicator.Position = new Vector2(-6, -16);
             attackRange.RotationDegrees = 180;
+            jumpTrigger.RotationDegrees = 180;
+            obstacleDetect.RotationDegrees = 180;
         }
         else
         {
             sprite.FlipH = false;
             indicator.Position = new Vector2(6, -16);
             attackRange.RotationDegrees = 0;
+            jumpTrigger.RotationDegrees = 0;
+            obstacleDetect.RotationDegrees = 0;
         }
     }
     protected virtual void Animate()
@@ -245,12 +261,15 @@ public partial class Enemy : CharacterBody2D
     }
 
 
+
+
     public virtual void Update(double delta)
     {
+        Fall(delta);
+        if (currentHP <=0)
+            isDead = true;
         if (!isDead)
         {
-            if (currentHP <=0)
-                isDead = true;
             if (isHurt)
                 Velocity = new Vector2(Velocity.X > 0 ? Velocity.X - (float)delta * 700 : Velocity.X + (float)delta * 700, Velocity.Y);
             if (isAttacking || atkCooldown.TimeLeft > 0)
@@ -276,8 +295,15 @@ public partial class Enemy : CharacterBody2D
         }
         else
         {
-            Velocity = Vector2.Zero;
-            sprite.Play("die");
+            //fall and only die on floor
+            if (IsOnFloor())
+            {
+                Velocity = Vector2.Zero;
+                sprite.Play("die");
+            }else
+            {
+                Velocity = new Vector2(Velocity.X - 200 * (float)delta, Velocity.Y);
+            }
         }
     }
     public override void _PhysicsProcess(double delta)

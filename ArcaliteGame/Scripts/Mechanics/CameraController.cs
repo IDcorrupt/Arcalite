@@ -62,6 +62,8 @@ public partial class CameraController : Node2D
         }
     }
 
+
+    //MIGHT BE DEPRECATED CUZ OF NEW THING
     public void LeftTriggerEntered(Node2D body)
     {
         if(body is Player)
@@ -125,6 +127,19 @@ public partial class CameraController : Node2D
     }
     public override void _Process(double delta)
     {
+        //room correction / new room switcher
+
+        if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X > 330)
+            MoveCamera("left");
+        else if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X < -330)
+            MoveCamera("right");
+
+        //VECTICAL CURRENTLY REMOVED
+/*        if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y > 190)
+            MoveCamera("top");
+        else if(camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y < -190)
+            MoveCamera("bot");*/
+
         //debug freecam
         if (Input.IsActionJustPressed("freecam_toggle"))
         {

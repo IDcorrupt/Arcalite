@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://sp0xoa4003y1"]
+[gd_scene load_steps=38 format=3 uid="uid://sp0xoa4003y1"]
 
 [ext_resource type="Texture2D" uid="uid://b1kcycve1n2tl" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/shark.png" id="1_ie5ln"]
 [ext_resource type="Script" path="res://Scripts/Game/Enemies/LightRanged.cs" id="1_qxpks"]
@@ -221,6 +221,12 @@ size = Vector2(5, 5)
 [sub_resource type="CircleShape2D" id="CircleShape2D_q227e"]
 radius = 175.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dkn2o"]
+size = Vector2(90, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3dpg3"]
+size = Vector2(24, 24)
+
 [node name="LightRanged" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 132
@@ -256,6 +262,7 @@ texture = SubResource("PlaceholderTexture2D_wqdoi")
 
 [node name="AttackRange" type="Area2D" parent="."]
 visible = false
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
 shape = SubResource("CircleShape2D_q227e")
@@ -264,6 +271,25 @@ debug_color = Color(1, 0, 0, 0.419608)
 [node name="LineOfSight" type="RayCast2D" parent="."]
 target_position = Vector2(175, 0)
 collision_mask = 5
+
+[node name="JumpTrigger" type="Area2D" parent="."]
+position = Vector2(0, -50)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpTrigger"]
+position = Vector2(23, 0)
+shape = SubResource("RectangleShape2D_dkn2o")
+debug_color = Color(0.615686, 0.356863, 1, 0.419608)
+
+[node name="ObstacleDetect" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleDetect"]
+position = Vector2(34, 0)
+shape = SubResource("RectangleShape2D_3dpg3")
+debug_color = Color(0.615686, 0.356863, 1, 0.419608)
 
 [connection signal="animation_finished" from="Sprite" to="." method="OnSpriteAnimationFinished"]
 [connection signal="timeout" from="DirectionTimer" to="." method="OnDirectionTimerTimeout"]
