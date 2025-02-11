@@ -10,7 +10,7 @@ $(document).ready(function() {
 function FetchRankings(type) {
     let payload = {
         type: type,
-        langid: 1
+        langid: getCookie(langid)
     }
 
     $.ajax({
@@ -23,7 +23,8 @@ function FetchRankings(type) {
             FillTable(type, data);
         },
         error: (data) => {
-            alert(`Hiba az adatok lekérésében.\n(${data.code} ${data.message})`)
+            alert(`Hiba az adatok lekérésében!`);
+            console.error(`Hiba az API kérésben: ${data.code} ${data.message}`);
         }
     });
 }

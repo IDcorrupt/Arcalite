@@ -2,13 +2,12 @@
 
 require_once "config.php";
 
-checkValidity("GET", "userid", "request_type");
+checkValidity("GET", "userid", "langid", "request_type");
 
 $userid = $_GET['userid'];
 
 switch($_GET['request_type']) {
     case "ENEMY":
-        checkValidity("GET", "userid", "langid", "request_type");
         $langid = $_GET['langid'];
 
         $sql = "SELECT
@@ -27,7 +26,6 @@ switch($_GET['request_type']) {
         break;
 
     case "ITEM":
-        checkValidity("GET", "userid", "langid", "request_type");
         $langid = $_GET['langid'];
 
         $sql = "SELECT
@@ -46,8 +44,10 @@ switch($_GET['request_type']) {
 
     case "STATISTICS":
         $sql = "SELECT 
-                (SELECT COUNT(*) FROM enemplay WHERE playerid = $userid) AS `enemy`,
-                (SELECT COUNT(*) FROM itemplay WHERE playerid = $userid) AS `item`;";
+                (SELECT COUNT(*) FROM enemplay WHERE playerid = $userid) AS `enemyFound`,
+                (SELECT COUNT(*) FROM enemy) AS `enemyAll`,
+                (SELECT COUNT(*) FROM itemplay WHERE playerid = $userid) AS `itemFound`,
+                (SELECT COUNT(*) FROM item) AS `itemAll`;";
         break;
     default:
         ReturnError(400, "Hiba az API-hívásban.");

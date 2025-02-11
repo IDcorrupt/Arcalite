@@ -33,8 +33,7 @@ $(document).ready(function() {
                 location.reload();
             },
             error: (data) => {
-                $('#register_error').html(data.responseJSON.message);
-                console.log(data);
+                $('#register_error').html(data.message);
             }
         });
     
@@ -59,6 +58,7 @@ $(document).ready(function() {
                 open("index.html", "_self");
                 document.cookie = `userid=${data.id}; path=/; secure; SameSite=Strict`;
                 document.cookie = `username=${data.username}; path=/; secure; SameSite=Strict`;
+                document.cookie = `langid=1; path=/; secure; SameSite=Strict`;
             },
             error: (data) => {
                 $('#login_error').html(data.responseJSON.message);
@@ -109,7 +109,7 @@ $(document).ready(function() {
                 $('#newpwd_newpwd_container').hide();
             },
             error: (data) => {
-                $('#login_error').html(data.responseJSON.message);
+                $('#login_error').html(data.message);
             }
         })
     });
