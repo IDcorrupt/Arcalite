@@ -15,7 +15,8 @@ function ReturnQuery($sql) {
     $result = $db->query($sql);
     
     if (!$result) {    
-        ReturnError(500, "Hiba az SQL lekérdezésben: (Hibakód: $db->errno) $db->error");
+        //ReturnError(500, "Hiba az SQL lekérdezésben: (Hibakód: $db->errno) $db->error");
+        ReturnError(500, "Baj az SQL-lel");
     }
     
     $return = array();
