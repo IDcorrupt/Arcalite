@@ -15,7 +15,10 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <link id="base" rel="stylesheet" href="style.css">
+    <script src="script/jquery-3.7.1.min.js"></script>
+    <script src="script/ranking.js"></script>
 </head>
 <body data-bs-theme="light">
     <nav class="navbar navbar-expand-md sticky-top">
@@ -73,135 +76,51 @@
         <div id="Profile" class="tabcontent">
             <table>
                 <tr>
-                    <th onclick="sortTable(0)">Name</th>
-                    <th onclick="sortTable(1)">Time Played</th>
-                    <th onclick="sortTable(2)">Achievements</th>
-                    <th onclick="sortTable(3)">Playthroughs</th>
-                </tr>
-                <tr>
-                    <th>Név</th>
-                    <th>Játékidő</th>
-                    <th>Mérföldkő száma</th>
-                    <th>Végigjátszások száma</th>
-                </tr>
-                <tr>
-                    <th>Név</th>
-                    <th>Játékidő</th>
-                    <th>Mérföldkő száma</th>
-                    <th>Végigjátszások száma</th>
-                </tr>
-                <tr>
-                    <th>Név</th>
-                    <th>Játékidő</th>
-                    <th>Mérföldkő száma</th>
-                    <th>Végigjátszások száma</th>
-                </tr>
-                <tr>
-                    <th>Név</th>
-                    <th>Játékidő</th>
-                    <th>Mérföldkő száma</th>
-                    <th>Végigjátszások száma</th>
-                </tr>
-                <tr>
-                    <th>Név</th>
-                    <th>Játékidő</th>
-                    <th>Mérföldkő száma</th>
-                    <th>Végigjátszások száma</th>
-                </tr>
+                    <th onclick='sortTable("Profile", 0)'>Name</th>
+                    <th onclick='sortTable("Profile", 1)'>Time Played</th>
+                    <th onclick='sortTable("Profile", 2)'>Achievements</th>
+                    <th onclick='sortTable("Profile", 3)'>Playthroughs</th>
+                </tr> 
             </table>
         </div>
         
         <div id="GameThrough" class="tabcontent">
             <table>
                 <tr>
-                    <th onclick="sortTable(0)">Name</th>
-                    <th onclick="sortTable(1)">PlayerName</th>
-                    <th onclick="sortTable(2)">Player Character</th>
-                    <th onclick="sortTable(3)">Time</th>
-                    <th onclick="sortTable(4)">Room</th>
-                    <th onclick="sortTable(5)">Enemy fought</th>
-                    <th onclick="sortTable(6)">Item found</th>
-                </tr>
-                <tr>
-                    <th>Karakter neve</th>
-                    <th>Játékos neve</th>
-                    <th>Karaktermodell</th>
-                    <th>Idő</th>
-                    <th>Hol tart</th>
-                    <th>Ellenségek legyőzve</th>
-                    <th>Tárgyak</th>
-                </tr>
-                <tr>
-                    <th>Karakter neve</th>
-                    <th>Játékos neve</th>
-                    <th>Karaktermodell</th>
-                    <th>Idő</th>
-                    <th>Hol tart</th>
-                    <th>Ellenségek legyőzve</th>
-                    <th>Tárgyak</th>
-                </tr>
-                <tr>
-                    <th>Karakter neve</th>
-                    <th>Játékos neve</th>
-                    <th>Karaktermodell</th>
-                    <th>Idő</th>
-                    <th>Hol tart</th>
-                    <th>Ellenségek legyőzve</th>
-                    <th>Tárgyak</th>
-                </tr>
-                <tr>
-                    <th>Karakter neve</th>
-                    <th>Játékos neve</th>
-                    <th>Karaktermodell</th>
-                    <th>Idő</th>
-                    <th>Hol tart</th>
-                    <th>Ellenségek legyőzve</th>
-                    <th>Tárgyak</th>
-                </tr>
-                <tr>
-                    <th>Karakter neve</th>
-                    <th>Játékos neve</th>
-                    <th>Karaktermodell</th>
-                    <th>Idő</th>
-                    <th>Hol tart</th>
-                    <th>Ellenségek legyőzve</th>
-                    <th>Tárgyak</th>
-                </tr>
-                <tr>
-                    <th>Karakter neve</th>
-                    <th>Játékos neve</th>
-                    <th>Karaktermodell</th>
-                    <th>Idő</th>
-                    <th>Hol tart</th>
-                    <th>Ellenségek legyőzve</th>
-                    <th>Tárgyak</th>
+                    <th onclick='sortTable("GameThrough", 0)'>Name</th>
+                    <th onclick='sortTable("GameThrough", 1)'>PlayerName</th>
+                    <th onclick='sortTable("GameThrough", 2)'>Player Character</th>
+                    <th onclick='sortTable("GameThrough", 3)'>Time</th>
+                    <th onclick='sortTable("GameThrough", 4)'>Room</th>
+                    <th onclick='sortTable("GameThrough", 5)'>Enemy fought</th>
+                    <th onclick='sortTable("GameThrough", 6)'>Item found</th>
                 </tr>
             </table>
         </div>
         
-          <script>
-              document.getElementById("defaultOpen").click();
+        <script>
+            document.getElementById("defaultOpen").click();
             function openRank(evt, base) {
-  // Declare all variables
-  var i, tabcontent, tablinks;
+                // Declare all variables
+                var i, tabcontent, tablinks;
 
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
 
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+                // Get all elements with class="tablinks" and remove the class "active"
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
 
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(base).style.display = "block";
-  evt.currentTarget.className += " active";
-}
-          </script>
+                // Show the current tab, and add an "active" class to the button that opened the tab
+                document.getElementById(base).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
   
     </main>
 </body>
