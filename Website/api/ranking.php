@@ -23,7 +23,7 @@ switch ($_GET["type"]) {
         $sql = "SELECT
                     player.name AS `Karakter`,
                     profile.username AS `Profil`,
-                    avatardesc.name AS `Ąvatár`,
+                    avatardesc.name AS `Avatár`,
                     player.playtime AS `Játékidő`,
                     player.levelid AS `Elért_szint`,
                     COUNT(enemplay.enemyid) AS `Felfedezett_ellenfelek`,
