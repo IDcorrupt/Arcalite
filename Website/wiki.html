@@ -16,6 +16,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link id="base" rel="stylesheet" href="style.css">
+
+    <script src="script/jquery-3.7.1.min.js"></script>
+    <script src="script/common.js"></script>
+    <script src="script/wiki.js"></script>
 </head>
 <body data-bs-theme="light">
     <nav class="navbar navbar-expand-md sticky-top">
@@ -27,7 +31,7 @@
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="#">
                     </a></li>
                 <li class="nav-item active"><a class="nav-link" href="./index.html">Kezdőlap</a></li>
-                <li class="nav-item"><a class="nav-link" href="./wiki.php">Lexikon</a></li>
+                <li class="nav-item"><a class="nav-link" href="./wiki.html">Lexikon</a></li>
                 <li class="nav-item"><a class="nav-link" href="./ranking.html">Ranglista</a></li>
                 <li class="nav-item"><div class="dropdown">
                     <button class="nav-link">Profil</button>
@@ -60,34 +64,19 @@
           element.dataset.bsTheme == "light" ? "dark" : "light";
       }
     </script>
-<?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "arcalite";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    echo "Connected successfully";
-?>
 
     <header class="flex-container">
         <h1>Arcalite</h1>
     </header>
     <main>
-        <h2>Tárgyak</h2>
-        <div>
+        <h2>Tárgyak <span id="itemcount"></span></h2>
+        <div id="items">
             <!-- pics, name and detalis from database
                 default grey img and no text if havent obtained yet
              -->
         </div>
-        <h2>Ellenségek</h2>
-        <div>
+        <h2>Ellenségek <span id="enemycount"></span></h2>
+        <div id="enemies">
 
         </div>
     </main>

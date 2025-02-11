@@ -30,7 +30,9 @@ INSERT INTO leveldesc (levelid, languageid, name, description) VALUES
 REPLACE INTO profile (id, username, password, played, email) VALUES
 (1, "haro", PASSWORD("haro"), '00:00', "haro@gmail.com"),
 (2, "feri", PASSWORD("Ferike123"), '00:00', "ferenc001_@gmail.com"),
-(3, "laci", PASSWORD("LaszloLaszlo"), '05:19', "zeczi.laszlo@gmail.com");
+(3, "laci", PASSWORD("LaszloLaszlo"), '05:19', "zeczi.laszlo@gmail.com"),
+(4, "alcsi", PASSWORD("aladar001"), '00:24:32', "aladar1@gmail.com"),
+(5, "vinko08", PASSWORD("vince2008"), '00:13:13', "vince2008@gmail.com");
 
 REPLACE INTO avatar (id, image) VALUES
 (1, "kep1.png"),
