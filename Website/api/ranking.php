@@ -7,12 +7,12 @@ checkValidity("GET", "type", "langid");
 $langid = $_GET['langid'];
 
 switch ($_GET["type"]) {
-    case "profile":
+    case "Profile":
         //limit is considerable here
         $sql = "SELECT
                     profile.username AS `Felhasználónév`,
                     profile.played AS `Játékidő`,
-                    COUNT(proach.achievementid) AS `Elért mérföldkövek`,
+                    COUNT(proach.achievementid) AS `Elért_mérföldkövek`,
                     COUNT(CASE WHEN player.levelid = (SELECT MAX(id) FROM level) THEN player.id END) AS `Végigjátszások`
                 FROM 
                     profile 
@@ -20,15 +20,15 @@ switch ($_GET["type"]) {
                     LEFT JOIN player ON profile.id = player.profileid
                 GROUP BY profile.id;";
         break;
-    case "game":
+    case "GameThrough":
         $sql = "SELECT
                     player.name AS `Karakter`,
                     profile.username AS `Profil`,
                     avatardesc.name AS `Ąvatár`,
                     player.playtime AS `Játékidő`,
-                    player.levelid AS `Elért szint`,
-                    COUNT(enemplay.enemyid) AS `Felfedezett ellenfelek`,
-                    COUNT(itemplay.itemid) AS `Felfedezett tárgyak`
+                    player.levelid AS `Elért_szint`,
+                    COUNT(enemplay.enemyid) AS `Felfedezett_ellenfelek`,
+                    COUNT(itemplay.itemid) AS `Felfedezett_tárgyak`
                 FROM 
                     player
                     INNER JOIN profile ON player.profileid = profile.id
@@ -37,7 +37,7 @@ switch ($_GET["type"]) {
                     INNER JOIN lang ON avatardesc.languageid = lang.id
                     INNER JOIN enemplay ON enemplay.playerid = player.id
                     INNER JOIN itemplay ON itemplay.playerid = player.id
-                WHERE lang = $langid;";
+                WHERE lang.id = $langid;";
         break;
     default:
         break;
