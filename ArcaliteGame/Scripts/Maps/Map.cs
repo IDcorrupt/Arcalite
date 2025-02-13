@@ -4,23 +4,32 @@ using System;
 public partial class Map : Node2D
 {
 
-    PackedScene Player = (PackedScene)ResourceLoader.Load("res://Nodes/Game/player.tscn");
+    PackedScene playerScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/player.tscn");
     GameScene parent;
+    Player player;
+
+    CameraController camera;
 
     bool debugtrigger = false;
 
     public override void _Ready()
     {
         parent = GetParent() as GameScene;
+        camera = GetNode("CameraController") as CameraController;
         Globals.spawnPoint = GetNode<Node2D>("SpawnPoint");
-        Node2D player = (Node2D)Player.Instantiate();
+        player = playerScene.Instantiate() as Player;
         AddChild(player);
 
     }
 
-    public override void _Process(double delta)
+    public void Respawn()
     {
-       
+        camera.RespawnMove();
+        foreach(EnemyControl controller in GetTree().GetNodesInGroup("Controllers"))
+        {
+            controller.DespawnEnemies();    
+        }
+        player.SetStats();
     }
 
 }

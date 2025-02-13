@@ -33,33 +33,36 @@ public partial class CameraController : Node2D
     }
 
 
+    public void RespawnMove()
+    {
+        camera.PositionSmoothingEnabled = false;
+        cooldownTimer.Start();
+    }
+
 
     //camera movement
     public void MoveCamera(string direction)
     {
-        if (!cooling)
+
+        GD.Print("moving: " + direction);
+        switch (direction)
         {
-            cooldownTimer.Start();
-            cooling = true; 
-            GD.Print("moving: " + direction);
-            switch (direction)
-            {
-                case "top":
-                    camera.Position = new Vector2(camera.Position.X, camera.Position.Y - 360);
-                    break;
-                case "right":
-                    camera.Position = new Vector2(camera.Position.X + 640, camera.Position.Y);
-                    break;
-                case "bot":
-                    camera.Position = new Vector2(camera.Position.X, camera.Position.Y + 360);
-                    break;
-                case "left":
-                    camera.Position = new Vector2(camera.Position.X - 640, camera.Position.Y);
-                    break;
-                default:
-                    break;
-            }
+            case "top":
+                camera.Position = new Vector2(camera.Position.X, camera.Position.Y - 360);
+                break;
+            case "right":
+                camera.Position = new Vector2(camera.Position.X + 640, camera.Position.Y);
+                break;
+            case "bot":
+                camera.Position = new Vector2(camera.Position.X, camera.Position.Y + 360);
+                break;
+            case "left":
+                camera.Position = new Vector2(camera.Position.X - 640, camera.Position.Y);
+                break;
+            default:
+                break;
         }
+        
     }
 
 
@@ -124,6 +127,7 @@ public partial class CameraController : Node2D
     public void CooldownTimerTimeout()
     {
         cooling = false;
+        camera.PositionSmoothingEnabled = true;
     }
     public override void _Process(double delta)
     {
@@ -135,10 +139,10 @@ public partial class CameraController : Node2D
             MoveCamera("right");
 
         //VECTICAL CURRENTLY REMOVED
-/*        if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y > 190)
+        if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y > 190)
             MoveCamera("top");
-        else if(camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y < -190)
-            MoveCamera("bot");*/
+        else if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y < -190)
+            MoveCamera("bot");
 
         //debug freecam
         if (Input.IsActionJustPressed("freecam_toggle"))

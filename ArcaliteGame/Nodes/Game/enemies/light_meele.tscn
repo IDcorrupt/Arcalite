@@ -184,6 +184,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_xpb5c")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_uxbem")
 }],
 "loop": true,
@@ -212,7 +220,7 @@ metadata/Type = "Enemy"
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3p25d")
-animation = &"walk"
+animation = &"idle"
 
 [node name="DirectionTimer" type="Timer" parent="."]
 one_shot = true

@@ -193,6 +193,8 @@ public partial class Enemy : CharacterBody2D
     {
         //shell func, attack is different for each type
         isAttacking = true;
+        Velocity = Vector2.Zero;
+        speed = 0;
 
     }
     public virtual void Hit(float damage, Vector2 hitVector)
@@ -244,9 +246,12 @@ public partial class Enemy : CharacterBody2D
         {
             sprite.Play("attack");
         }
-        else if((IsOnFloor() || Velocity.X > 0) && !isDead)
+        else if((IsOnFloor() && Velocity.X != 0) && !isDead)
         {
             sprite.Play("walk");
+        }else if(Velocity.X == 0 && !isDead)
+        {
+            sprite.Play("idle");
         }
     }
     public void OnSpriteAnimationFinished()
@@ -254,6 +259,7 @@ public partial class Enemy : CharacterBody2D
         if (sprite.Animation == "attack")
         {
             isAttacking = false;
+            sprite.Play("idle");
             atkCooldown.Start();
         }
         else if (sprite.Animation == "die")
@@ -286,7 +292,7 @@ public partial class Enemy : CharacterBody2D
             {
                 //if not attacking & being attacked -> move, attack if in attack range
                 Move(delta);
-                if (playerInAtkRange)
+                if (playerInAtkRange && isChasing)
                     Attack();
             }
             if (Direction.X < 0)

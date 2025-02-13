@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://sp0xoa4003y1"]
+[gd_scene load_steps=39 format=3 uid="uid://sp0xoa4003y1"]
 
 [ext_resource type="Texture2D" uid="uid://b1kcycve1n2tl" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/shark.png" id="1_ie5ln"]
 [ext_resource type="Script" path="res://Scripts/Game/Enemies/LightRanged.cs" id="1_qxpks"]
@@ -96,6 +96,10 @@ region = Rect2(704, 512, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_b0fil"]
 atlas = ExtResource("3_fvgt3")
 region = Rect2(768, 512, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bwaui"]
+atlas = ExtResource("1_ie5ln")
+region = Rect2(0, 0, 64, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rndro"]
 atlas = ExtResource("1_ie5ln")
@@ -196,6 +200,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_bwaui")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_rndro")
 }, {
 "duration": 1.0,
@@ -247,7 +259,6 @@ wait_time = 3.0
 one_shot = true
 
 [node name="AttackCooldown" type="Timer" parent="."]
-wait_time = 3.0
 one_shot = true
 
 [node name="HurtTimer" type="Timer" parent="."]

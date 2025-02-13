@@ -47,6 +47,11 @@ public partial class EnemyControl : Node2D
 
     public void OnTimerTimeout()
     {
+        DespawnEnemies();
+    }
+
+    public void DespawnEnemies()
+    {
         foreach (Node2D node in enemySpawnPoints)
         {
             if (node is EnemySpawner spawner)
@@ -57,10 +62,12 @@ public partial class EnemyControl : Node2D
         }
         despawningInProgress = false;
     }
-
-
     public override void _Process(double delta)
     {
+        if (Globals.player.GetIsDead())
+        {
+            playerInRoom = false;
+        }
         if (playerInRange && !enemiesActive)
         {
             SpawnTimer.Stop();
@@ -86,6 +93,7 @@ public partial class EnemyControl : Node2D
             SpawnTimer.Stop();
         }
 
+        //attack mode
         if (playerInRoom)
         {
             foreach(Node node in GetChildren())

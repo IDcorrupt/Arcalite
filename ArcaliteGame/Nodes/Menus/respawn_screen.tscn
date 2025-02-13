@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1sqs3vx2yf0t"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/RespawnScreen.cs" id="1_xw5fb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2krr"]
+bg_color = Color(0, 0, 0, 0.207843)
+
+[node name="RespawnScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 320.0
+offset_top = 180.0
+offset_right = 320.0
+offset_bottom = 180.0
+script = ExtResource("1_xw5fb")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -180.0
+offset_right = 320.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u2krr")
+
+[node name="YouDied" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = -138.0
+offset_top = -127.885
+offset_right = 138.0
+offset_bottom = -43.885
+theme_override_font_sizes/normal_font_size = 61
+text = "You Died"
+fit_content = true
+
+[node name="Respawn" type="Button" parent="."]
+layout_mode = 0
+offset_left = -50.0
+offset_top = -41.0
+offset_right = 50.0
+offset_bottom = -10.0
+text = "Respawn
+"
+
+[node name="MainMenu" type="Button" parent="."]
+layout_mode = 0
+offset_left = -51.0
+offset_right = 49.0
+offset_bottom = 31.0
+text = "Main Menu"
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 0
+offset_left = -50.0
+offset_top = 41.0
+offset_right = 50.0
+offset_bottom = 72.0
+text = "Quit Game
+"

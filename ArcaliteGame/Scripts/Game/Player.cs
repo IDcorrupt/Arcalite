@@ -22,7 +22,6 @@ public partial class Player : CharacterBody2D
     private int jumpStrength = 450;     //jump height/strength
     private const float GRAVITY = Globals.GRAVITY;
     private float prevDir = 0;          //last movement direction for deceleration
-    private bool isHurt = false;
 
     //dash
     private float dashCooldown;        //dash cooldown constant
@@ -44,6 +43,10 @@ public partial class Player : CharacterBody2D
     private int chargeLevel = 0;
     private float SOCooldown;           //Oracle cooldown constant
     private float SODelta = 0f;         //Oracle cooldown remaining
+
+    //other
+    private bool isHurt = false;
+    private bool isDead = false;
 
     //stats
     private float MaxHP = 100;
@@ -88,18 +91,18 @@ public partial class Player : CharacterBody2D
     {
         Vector2 direction = new();
 
-        direction.X = Convert.ToInt32(Input.IsActionPressed("move_right")) - Convert.ToInt32(Input.IsActionPressed("move_left"));
+        direction.X = Convert.ToInt32(Input.IsActionPressed("move_right")) + Convert.ToInt32(Input.IsActionPressed("move_right-alt")) - Convert.ToInt32(Input.IsActionPressed("move_left")) - Convert.ToInt32(Input.IsActionPressed("move_left-alt"));
         if (direction.X == 1) Sprite.FlipH = false;
         else if (direction.X == -1) Sprite.FlipH = true;
-        if (Input.IsActionPressed("move_jump"))
+        if (Input.IsActionPressed("move_jump") || Input.IsActionPressed("move_jump-alt"))
         {
             if (IsOnFloor())
             {
                 direction.Y = -1;
             }
         }
-        if (Input.IsActionPressed("move_crouch")) isCrouching = true; else isCrouching = false;
-        if (Input.IsActionPressed("move_dash") && dashDelta == 0) dashed = true;
+        if (Input.IsActionPressed("move_crouch") || Input.IsActionPressed("move_crouch-alt")) isCrouching = true; else isCrouching = false;
+        if ((Input.IsActionPressed("move_dash") || Input.IsActionPressed("move_dash-alt")) && dashDelta == 0) dashed = true;
         return direction;
     }
     public void Movement(double delta)
@@ -250,6 +253,11 @@ public partial class Player : CharacterBody2D
         if (!isHurt)
         {
             currentHP -= damage;
+            if(currentHP <= 0)
+            {
+                isDead = true;
+                return;
+            }
             isHurt = true;
             if (hitVector != Vector2.Zero)
             {
@@ -267,12 +275,15 @@ public partial class Player : CharacterBody2D
     public void OnHurtTimerTimeout() { isHurt = false; }
 
     //other functions
-    private void SetStats()
+    public void SetStats()
     {
         if (Globals.hasSavefile)
         {
             //if loading from save
             //dont have save file yet 
+
+
+
 
         }
         else
@@ -287,6 +298,20 @@ public partial class Player : CharacterBody2D
             dashCooldown = 2f;
             SOCooldown = 0f;
         }
+        //reset state
+        dashDelta = 0;
+        BADelta = 0;
+        CADelta = 0;
+        CACharge = 0;
+        SODelta = 0;
+        vel = 0;
+        prevDir = 0;
+        Velocity = Vector2.Zero;
+        isHurt = false;
+        isDead = false;
+        isDashing = false;
+        isCrouching = false;
+        GlobalPosition = Globals.spawnPoint.Position;
     }
     public float GetHP() { return currentHP; }
     public float GetMP() {  return currentMP; }
@@ -335,79 +360,95 @@ public partial class Player : CharacterBody2D
                 //crouch walk anims here
             }
         }
-
+    }
+    public void OnSpriteAnimationFinished()
+    {
+        if(Sprite.Animation == "die")
+        { 
+            //////////////////////////
+        }
     }
     private void Update(double delta)
     {
-        //attacks
-        if ((Input.IsActionPressed("attack_normal") || Input.IsActionPressed("attack_normal-alt")) && BADelta == 0 && !CAisCharging)
+        if (!isDead)
         {
-            BasicAttack();
-            BADelta = BACooldown;
-        }
-        if (Input.IsActionJustPressed("attack_charge") || Input.IsActionJustPressed("attack_charge-alt"))
-        {
-            CAisCharging = true;
-        }
-        if (Input.IsActionJustReleased("attack_charge") || Input.IsActionJustReleased("attack_charge-alt"))
-        {
-            CAisCharging = false;
-        }
-        if (CAisCharging)
-        {
-            CACharge += Mathf.Round((float)delta * 50);
-            if (CACharge >= 100)
+            //attacks
+            if ((Input.IsActionPressed("attack_normal") || Input.IsActionPressed("attack_normal-alt")) && BADelta == 0 && !CAisCharging)
             {
-                chargeLevel = 4;
+                BasicAttack();
+                BADelta = BACooldown;
             }
-            else if (CACharge >= 80)
+            if (Input.IsActionJustPressed("attack_charge") || Input.IsActionJustPressed("attack_charge-alt"))
             {
-                chargeLevel = 3;
+                CAisCharging = true;
             }
-            else if (CACharge >= 60)
+            if (Input.IsActionJustReleased("attack_charge") || Input.IsActionJustReleased("attack_charge-alt"))
             {
-                chargeLevel = 2;
+                CAisCharging = false;
             }
-            else if (CACharge >= 40)
+            if (CAisCharging)
             {
-                chargeLevel = 1;
+                CACharge += Mathf.Round((float)delta * 50);
+                if (CACharge >= 100)
+                {
+                    chargeLevel = 4;
+                }
+                else if (CACharge >= 80)
+                {
+                    chargeLevel = 3;
+                }
+                else if (CACharge >= 60)
+                {
+                    chargeLevel = 2;
+                }
+                else if (CACharge >= 40)
+                {
+                    chargeLevel = 1;
+                }
+
             }
+            else
+            {
+                if (CACharge > 40)
+                {
+                    ChargeAttack(chargeLevel);
+                    CADelta = CACooldown;
+                }
+                CACharge = 0;
+            }
+            if ((Input.IsActionJustPressed("spell_oracle") || Input.IsActionJustPressed("spell_oracle-alt")) && SODelta == 0)
+            {
+                OracleSpell();
+                SODelta = SOCooldown;
+            }
+
+            //func calls
+            if (hurtTimer.TimeLeft > 0.5)
+            {
+                Velocity = new Vector2(
+                    Velocity.X > 0 ? Mathf.Max(0,Velocity.X-(float)delta*700) 
+                                   : Mathf.Min(0,Velocity.X+(float)delta*700),
+                    Velocity.Y
+                );
+                fall(delta);
+            }
+            else
+            {
+                Movement(delta);
+            }
+            Animate();
+            MoveAndSlide();
 
         }
         else
         {
-            if (CACharge > 40)
-            {
-                ChargeAttack(chargeLevel);
-                CADelta = CACooldown;
-            }
-            CACharge = 0;
+            if(Sprite.Animation != "die")
+                Sprite.Play("die");
         }
-        if ((Input.IsActionJustPressed("spell_oracle") || Input.IsActionJustPressed("spell_oracle-alt")) && SODelta == 0)
-        {
-            OracleSpell();
-            SODelta = SOCooldown;
-        }
-
-        //func calls
-        if (hurtTimer.TimeLeft > 0.5)
-        {
-            Velocity = new Vector2(
-                Velocity.X > 0 ? Mathf.Max(0,Velocity.X-(float)delta*700) 
-                               : Mathf.Min(0,Velocity.X+(float)delta*700),
-                Velocity.Y
-            );
-            fall(delta);
-        }
-        else
-        {
-            Movement(delta);
-        }
-        Animate();
-        MoveAndSlide();
     }
 
-
+    //getters/setters
+    public bool GetIsDead() { return isDead; }
     public override void _PhysicsProcess(double delta)
     {
         if (Globals.playerControl)

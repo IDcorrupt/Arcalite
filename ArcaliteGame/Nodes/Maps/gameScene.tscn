@@ -6,3 +6,8 @@
 script = ExtResource("1_i5mp0")
 
 [node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="DeathTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="DeathTimer" to="." method="DeathTimer_Timeout"]

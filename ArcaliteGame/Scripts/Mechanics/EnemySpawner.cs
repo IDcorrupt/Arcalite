@@ -4,67 +4,64 @@ using System.Diagnostics;
 
 public partial class EnemySpawner : Node2D
 {
-    [Export] bool LightMelee;
-    [Export] bool HeavyMelee;
-    [Export] bool Caster;
-    [Export] bool EliteMelee;
-    [Export] bool EliteCaster;
+    private enum EnemyClass
+    {
+        None,
+        LightMelee,
+        HeavyMelee,
+        LightRanged,
+        HeavyRanged,
+        Elite
+    }
+    [Export] EnemyClass enemyClass;
 
 
     private PackedScene lightMeleeScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/light_meele.tscn");
     private PackedScene HeavyMeleeScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/heavy_melee.tscn");
-    private PackedScene CasterScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/light_ranged.tscn");
-    private PackedScene EliteMeleeScene;
-    private PackedScene EliteCasterScene;
+    private PackedScene LightRangedScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/light_ranged.tscn");
+    private PackedScene HeavyRangedScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/heavy_ranged.tscn");
 
     private PackedScene ActiveEnemyType;
-    private Node ActiveEnemy;
+    private Enemy ActiveEnemy;
 
     private EnemyControl parent;
     public override void _Ready()
     {
         parent = (EnemyControl)GetParent();
-        if (LightMelee)
-            ActiveEnemyType = lightMeleeScene;
-        else if (HeavyMelee)
-            ActiveEnemyType = HeavyMeleeScene;
-        else if (Caster)
-            ActiveEnemyType = CasterScene;
-        else if (EliteMelee)
-            ActiveEnemyType = EliteMeleeScene;
-        else if (EliteCaster)
-            ActiveEnemyType = EliteCasterScene;
-        else
-            ActiveEnemyType = null;
     }
     public void Spawn()
     {
-        if (ActiveEnemyType != null)
+        switch (enemyClass)
         {
-            ActiveEnemy = ActiveEnemyType.Instantiate();
-            if(ActiveEnemy is LightMeele ActiveLightMelee)
-            {
-                ActiveLightMelee.Name = "LightMelee" + this.Name.ToString()[Name.ToString().Length-1];
-                ActiveLightMelee.GlobalPosition = Position;
-                ActiveEnemy = ActiveLightMelee;
-            }
-            else if (ActiveEnemy is HeavyMelee ActiveHeavyMelee)
-            {
-                ActiveHeavyMelee.Name = "ActiveHeavyMelee" + this.Name.ToString()[Name.ToString().Length - 1];
-                ActiveHeavyMelee.GlobalPosition = Position;
-                ActiveEnemy = ActiveHeavyMelee;
-            }
-            else if(ActiveEnemy is LightRanged ActiveLightRanged)
-            {
-                ActiveLightRanged.Name = "LightRanged" + this.Name.ToString()[Name.ToString().Length - 1];
-                ActiveLightRanged.GlobalPosition = Position;
-                ActiveEnemy = ActiveLightRanged;
-            }
-
-            //other type handling with else if-s
-            AddSibling(ActiveEnemy);
-        }
-        
+            case EnemyClass.LightMelee:
+                ActiveEnemy = lightMeleeScene.Instantiate() as Enemy;
+                ActiveEnemy.Name = "LightMelee" + this.Name.ToString()[Name.ToString().Length - 1];
+                ActiveEnemy.GlobalPosition = Position;
+                AddSibling(ActiveEnemy);
+                break;
+            case EnemyClass.HeavyMelee:
+                ActiveEnemy = HeavyMeleeScene.Instantiate() as Enemy;
+                ActiveEnemy.Name = "ActiveHeavyMelee" + this.Name.ToString()[Name.ToString().Length - 1];
+                ActiveEnemy.GlobalPosition = Position;
+                AddSibling(ActiveEnemy);
+                break;
+            case EnemyClass.LightRanged:
+                ActiveEnemy = LightRangedScene.Instantiate() as Enemy;
+                ActiveEnemy.Name = "LightRanged" + this.Name.ToString()[Name.ToString().Length - 1];
+                ActiveEnemy.GlobalPosition = Position;
+                AddSibling(ActiveEnemy);
+                break;
+            case EnemyClass.HeavyRanged:
+                ActiveEnemy = HeavyRangedScene.Instantiate() as Enemy;
+                ActiveEnemy.Name = "LightRanged" + this.Name.ToString()[Name.ToString().Length - 1];
+                ActiveEnemy.GlobalPosition = Position;
+                AddSibling(ActiveEnemy);
+                break;
+            case EnemyClass.Elite:
+                break;
+            default:
+                break;
+        }        
     }
     public void Despawn()
     {
