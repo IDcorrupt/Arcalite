@@ -1,7 +1,6 @@
 <?php
-header("Content-Type: application/json");
-
 function ReturnError($code = 500, $message = "") {
+    header("Content-Type: application/json");    
     $return = array(
         "code" => $code,
         "message" => $message
@@ -10,8 +9,17 @@ function ReturnError($code = 500, $message = "") {
     http_response_code($code);
     die();
 }
+
+
+function ReturnResult($result_array, $code = 200) {
+    header("Content-Type: application/json");    
+    echo json_encode($result_array);
+    http_response_code($code);
+    die();
+}
+
 function ReturnQuery($sql) {
-    require_once "connection.php";
+    require "connection.php";
     $result = $db->query($sql);
     
     if (!$result) {    
@@ -19,16 +27,7 @@ function ReturnQuery($sql) {
         ReturnError(500, "Baj az SQL-lel");
     }
     
-    $return = array();
-    while ($line = $result->fetch_assoc()) {
-        $return[] = $line;
-    }
-    ReturnResult($return);
-}
-
-function ReturnResult($result_array, $code = 200) {
-    echo json_encode($result_array, JSON_PRETTY_PRINT);
-    http_response_code($code);
+    ReturnResult($result->fetch_all(MYSQLI_ASSOC));
 }
 
 function checkValidity($method, ...$fields) {

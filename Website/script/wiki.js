@@ -31,7 +31,7 @@ function FetchData(type) {
         },
         error: (data) => {
             alert(`Hiba az adatok lekérésében!`);
-            console.error(`Hiba az API kérésben: ${data.code} ${data.message}`);
+            console.error(`Hiba az API kérésben: ${data.responseJSON.code} ${data.responseJSON.message}`);
         }
     });
 }

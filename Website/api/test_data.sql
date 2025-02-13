@@ -6,10 +6,26 @@ REPLACE INTO lang (id, name) VALUES
 --TODO: AT LEAST DOING THE FIRST COUPLE LEVELS (UNDEAD)
 
 INSERT INTO enemy (id, hp, image) VALUES 
-();
+(1, 100, 'zombie.png'),
+(2, 75, 'skeleton.png'),
+(3, 150, 'troll.png'),
+(4, 100, 'lich.png'),
+(5, 100, 'robot.png'),
+(6, 150, 'axerobot.png'),
+(7, 75, 'photonrobot.png'),
+(8, 150, 'knight.png'),
+(9, 100, 'photonturret.png');
 
 INSERT INTO enemydesc (enemyid, languageid, name, description) VALUES 
-();
+(1, 1, "Zombi", "Alapszintű közelharci szörny. Közel jön, megüt."),
+(2, 1, "Csontváz", "Alapszintű mágus."),
+(3, 1, "Troll gólem", "Alapszintű elit közelharci szörny. Odajön, megüt. Alapképessége az átlagnál nagyobb erejű ütése, illetve különleges képessége a föld megrengetése a földre ütéssel, mely megnehezíti ellenfeleit a mozgásban."),
+(4, 1, "Lich", "Alapszintű elit mágus. Alaptámadásai erősebbek az átlagnál, különleges képessége, hogy segítségére csontvázakat képes teremteni."),
+(5, 1, "Robot", "A mechanikus világ alapszörnye. Képességei nincsenek, egyszerű közelharci ellenfél."),
+(6, 1, "Baltás robot", "Különleges, harcra hatékony robot. Kezei helyén balta van, mellyel egyszerűen győzi le ellenfeleit."),
+(7, 1, "Fényágyús robot", "A mechanikus világ mágusa. Fényágyúja nagy sebességgel szór ellenfeleire fotonokat, melyek együttesen égetik porrá a céljukat."),
+(8, 1, "Lovag", "Pengeéles kardjával és villámgyors lovával komoly kihívást képes teremteni ellenfeleinek. Különleges képessége a kiszemelt ellenfelére való ráfutás, mely sebességével alig lehet felvenni a versenyt."),
+(9, 1, "Lövőtorony", "Ez a szerkezet is a fotonokkal égetés technikáját használja, ám egy új fejlesztésű technológia által sokkal hatékonyabb, fájdalmasabb minden lövése, és minderre fel képes követőlövedékeket is kilőni, melyek biztosítják a teli találatot.");
 
 INSERT INTO item (id image) VALUES
 ();

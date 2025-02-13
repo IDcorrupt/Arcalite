@@ -10,7 +10,7 @@ $(document).ready(function() {
 function FetchRankings(type) {
     let payload = {
         type: type,
-        langid: getCookie(langid)
+        langid: getCookie("langid")
     }
 
     $.ajax({
