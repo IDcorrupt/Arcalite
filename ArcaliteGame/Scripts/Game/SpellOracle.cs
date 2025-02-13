@@ -10,18 +10,15 @@ public partial class SpellOracle : Node2D
 
     private bool slowing = false;
     private float slowDuration = 10;
-    private HashSet<Node> previouslyDetectedObjects = new HashSet<Node>();      //need to remove slow from exiting targets
-    private HashSet<Node> currentObjects = new HashSet<Node>();
+    private List<Node> affectedEntities = new List<Node>();
 
 
     AnimatedSprite2D sprite;
     Area2D area;
-    ShapeCast2D slowArea;
     public override void _Ready()
     {
         sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         area = GetNode<Area2D>("Area2D");
-        slowArea = GetNode<ShapeCast2D>("ShapeCast2D");
         sprite.Play("cast");   
     }
 
@@ -69,52 +66,50 @@ public partial class SpellOracle : Node2D
         }
     }
 
-    public void Slow()
+    public void OnBodyEntered(Node2D body)
     {
-        if (slowArea.IsColliding())
+        GD.PrintErr(body.Name+" entered");
+        if (slowing)
         {
-            for (int i = 0; i < slowArea.GetCollisionCount(); i++)
+            if(body is Enemy enemy)
             {
-                Node collider = slowArea.GetCollider(i) as Node;
-                currentObjects.Add(collider);
-
+                affectedEntities.Add(enemy);
+                enemy.slowFactor = slowFactor;
+                enemy.isSlowed = true;
+            }
+            else if(body is CasterProjectile proj)
+            {
+                affectedEntities.Add(proj);
+                proj.slowFactor = slowFactor;
+                proj.isSlowed = true;
             }
         }
-
-
-        //handle exits
-        foreach (Node obj in previouslyDetectedObjects)
+    }
+    public void OnBodyExited(Node2D body)
+    {
+        GD.PrintErr(body.Name+" exited");
+        if (body is Enemy enemy)
         {
-            if (!currentObjects.Contains(obj))
-            {
-                if (obj is LightMeele Lmeele)
-                {
-                    Lmeele.isSlowed = false;
-                }
-            }
+            GD.Print("enemy removed? " + affectedEntities.Remove((Enemy)enemy));
+            enemy.slowFactor = 1;
+            enemy.isSlowed = false;
         }
-        //handle enters
-        foreach (Node obj in currentObjects)
+        else if (body is CasterProjectile proj)
         {
-            if (!previouslyDetectedObjects.Contains(obj))
-            {
-                if (obj is LightMeele Lmeele)   //ADD HANDLING FOR OTHER TYPES OF ENEMIES WHEN THEY EXIST
-                {
-                    Lmeele.isSlowed = true;
-                    Lmeele.slowFactor = slowFactor;
-                }
-            }
+            GD.Print("projectile removed? " + affectedEntities.Remove((CasterProjectile)proj));
+            proj.slowFactor = 1;
+            proj.isSlowed = false;
         }
     }
 
     public void OnTreeExit()
     {
-        foreach (Node obj in currentObjects)
+        foreach (Node obj in affectedEntities)
         {
-            if (obj is LightMeele Lmeele)   //ADD HANDLING FOR OTHER TYPES OF ENEMIES WHEN THEY EXIST
-            {
-                Lmeele.isSlowed = false;
-            }   
+            if (obj is Enemy enemy) 
+                enemy.isSlowed = false;
+            else if(obj is CasterProjectile castproj)
+                castproj.isSlowed = false;
         }
     }
     public override void _Process(double delta)
@@ -131,22 +126,20 @@ public partial class SpellOracle : Node2D
             switch (level)
             {
                 case 1:
-                    slowFactor = 0.75f;
-                    break;
-                case 2:
                     slowFactor = 0.5f;
                     break;
-                case 3:
+                case 2:
                     slowFactor = 0.25f;
                     break;
-                case 4:
+                case 3:
                     slowFactor = 0.1f;
+                    break;
+                case 4:
+                    slowFactor = 0.05f;
                     break;
                 default:
                     break;
             }
-            Slow();
-
         }
     }
 }

@@ -3,6 +3,9 @@ using System;
 
 public partial class CasterProjectile : CharacterBody2D
 {
+    [Export] public bool isSlowed;
+    [Export] public float slowFactor;
+
     public Vector2 direction;
     public float damagePayload;
 
@@ -45,7 +48,13 @@ public partial class CasterProjectile : CharacterBody2D
         if (!targetHit)
         {
             Vector2 vel = direction * 700 * (float)delta;
-
+            if (isSlowed)
+            {
+                vel *= slowFactor;
+            }else
+                slowFactor = 0;
+            GD.Print("proj vel: " + vel);
+            GD.Print("slowfactor: " + slowFactor);
             var collision = MoveAndCollide(vel);
 
             if (collision != null && (collision.GetCollider() is StaticBody2D || collision.GetCollider() is TileMapLayer))

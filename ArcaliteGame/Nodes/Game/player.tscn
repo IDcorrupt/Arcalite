@@ -351,5 +351,23 @@ metadata/_aseprite_wizard_source_file_hash_ = "9d6240360366c3ebf3e1ab834a8f3984"
 [node name="HurtTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="DashCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="BasicAttackCooldown" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="ChargeAttackCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="OracleCooldown" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="SpellECooldown" type="Timer" parent="."]
+
+[node name="SpellQCooldown" type="Timer" parent="."]
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnSpriteAnimationFinished"]
 [connection signal="timeout" from="HurtTimer" to="." method="OnHurtTimerTimeout"]

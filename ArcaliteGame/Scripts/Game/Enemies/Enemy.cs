@@ -121,7 +121,8 @@ public partial class Enemy : CharacterBody2D
 
             if (speed < chaseSpeed) speed += (float)delta * 200;
             else if (speed > chaseSpeed) speed -= (float)delta * 200;
-            Velocity = new Vector2(Direction.X*speed, Velocity.Y);
+            //slowfactor added here
+            Velocity = new Vector2(Direction.X*speed*slowFactor, Velocity.Y);
         }
     }
     private void Fall(double delta)
@@ -321,9 +322,6 @@ public partial class Enemy : CharacterBody2D
         }
 
         Update(delta);
-        //apply slow
-        Velocity *= slowFactor;
-
         Animate();
         MoveAndSlide();
     }

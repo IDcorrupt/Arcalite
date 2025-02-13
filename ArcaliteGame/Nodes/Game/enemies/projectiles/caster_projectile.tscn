@@ -244,7 +244,7 @@ animations = [{
 
 [node name="caster_projectile" type="CharacterBody2D"]
 collision_layer = 16
-collision_mask = 133
+collision_mask = 141
 script = ExtResource("1_gtb48")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

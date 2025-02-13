@@ -24,8 +24,6 @@ public partial class Player : CharacterBody2D
     private float prevDir = 0;          //last movement direction for deceleration
 
     //dash
-    private float dashCooldown;        //dash cooldown constant
-    private float dashDelta = 0f;           //dash cooldown remaining
     private bool dashed = false;            //dash initiated
     private float dashSpeed = 2000f;        //initial dash speed
     private float dashDecayRate = 15000f;   //dash speed decay rate
@@ -34,15 +32,9 @@ public partial class Player : CharacterBody2D
     private Vector2 dashVector;             //fixed vector for dash endpoint -> dash follows mouse otherwise :3
 
     //attacks
-    private float BACooldown = 0.1f;    //basic attack cooldown constant
-    private float BADelta = 0f;         //basic attack cooldown remaining
-    private float CACooldown = 5f;      //charge attack cooldown constant
-    private float CADelta = 0f;         //charge attack cooldown remaining
     private bool CAisCharging = false;  //is charge attack currently charging
     private float CACharge = 0f;        //used to track charge progress
     private int chargeLevel = 0;
-    private float SOCooldown;           //Oracle cooldown constant
-    private float SODelta = 0f;         //Oracle cooldown remaining
 
     //other
     private bool isHurt = false;
@@ -65,7 +57,14 @@ public partial class Player : CharacterBody2D
     private PackedScene chargeProjectile;
     private PackedScene spellOracle;
     private AnimatedSprite2D Sprite;
+
     private Timer hurtTimer;
+    private Timer dashCooldown;
+    private Timer BACooldown;
+    private Timer CACooldown;
+    private Timer SOCooldown;
+    private Timer SECooldown;
+    private Timer SQCooldown;
 
     public override void _Ready()
     {
@@ -74,6 +73,13 @@ public partial class Player : CharacterBody2D
         HitBox = GetNode<CollisionShape2D>("HitBox");
         Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         hurtTimer = GetNode<Timer>("HurtTimer");
+        dashCooldown = GetNode("DashCooldown") as Timer;
+        BACooldown = GetNode("BasicAttackCooldown") as Timer;
+        CACooldown = GetNode("ChargeAttackCooldown") as Timer;
+        SOCooldown = GetNode("OracleCooldown") as Timer;
+        SECooldown = GetNode("SpellECooldown") as Timer;
+        SQCooldown = GetNode("SpellQCooldown") as Timer;
+
         basicProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/basic_projectile.tscn");
         chargeProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/charge_projectile.tscn");
         spellOracle = (PackedScene)ResourceLoader.Load("res://Nodes/Game/spell_oracle.tscn");
@@ -102,7 +108,7 @@ public partial class Player : CharacterBody2D
             }
         }
         if (Input.IsActionPressed("move_crouch") || Input.IsActionPressed("move_crouch-alt")) isCrouching = true; else isCrouching = false;
-        if ((Input.IsActionPressed("move_dash") || Input.IsActionPressed("move_dash-alt")) && dashDelta == 0) dashed = true;
+        if ((Input.IsActionPressed("move_dash") || Input.IsActionPressed("move_dash-alt")) && dashCooldown.TimeLeft == 0) dashed = true;
         return direction;
     }
     public void Movement(double delta)
@@ -127,7 +133,7 @@ public partial class Player : CharacterBody2D
         if (dashed)
         {
             dashed = false;
-            dashDelta = dashCooldown;
+            dashCooldown.Start();
             Dash();
         }
 
@@ -158,12 +164,6 @@ public partial class Player : CharacterBody2D
             Velocity = new Vector2(Velocity.X, Velocity.Y - jumpStrength);
         }
 
-
-        if (dashDelta > 0)
-        {
-            dashDelta -= (float)delta;
-        }
-        else dashDelta = 0;
         CrouchApply();
         fall(delta);
     }
@@ -253,6 +253,8 @@ public partial class Player : CharacterBody2D
         if (!isHurt)
         {
             currentHP -= damage;
+            //reset dash speed to avoid dash buffering
+            currentDashSpeed = 0;
             if(currentHP <= 0)
             {
                 isDead = true;
@@ -272,7 +274,6 @@ public partial class Player : CharacterBody2D
 
         }
     }
-    public void OnHurtTimerTimeout() { isHurt = false; }
 
     //other functions
     public void SetStats()
@@ -289,21 +290,23 @@ public partial class Player : CharacterBody2D
         else
         {
             //if new save
+            //stats
             MaxHP = 100;
             MaxMP = 100;
             currentHP = MaxHP;
             currentMP = MaxMP;
             damage = 10;
             oracleLevel = 1;
-            dashCooldown = 2f;
-            SOCooldown = 0f;
+
+            //cooldowns
+            dashCooldown.WaitTime = 2f;
+            BACooldown.WaitTime = 0.2f;
+            CACooldown.WaitTime = 1f;
+            SOCooldown.WaitTime = 10f;
+            SECooldown.WaitTime = 5f;
+            SQCooldown.WaitTime = 5f;
         }
         //reset state
-        dashDelta = 0;
-        BADelta = 0;
-        CADelta = 0;
-        CACharge = 0;
-        SODelta = 0;
         vel = 0;
         prevDir = 0;
         Velocity = Vector2.Zero;
@@ -313,8 +316,19 @@ public partial class Player : CharacterBody2D
         isCrouching = false;
         GlobalPosition = Globals.spawnPoint.Position;
     }
-    public float GetHP() { return currentHP; }
-    public float GetMP() {  return currentMP; }
+
+    //signal functions
+    public void OnSpriteAnimationFinished()
+    {
+        if(Sprite.Animation == "die")
+        { 
+            //////////////////////////
+        }
+    }
+    public void OnHurtTimerTimeout() { isHurt = false; }
+
+
+    //other functions
     private void Animate()
     {
         //jump & fall
@@ -361,24 +375,18 @@ public partial class Player : CharacterBody2D
             }
         }
     }
-    public void OnSpriteAnimationFinished()
-    {
-        if(Sprite.Animation == "die")
-        { 
-            //////////////////////////
-        }
-    }
     private void Update(double delta)
     {
         if (!isDead)
         {
             //attacks
-            if ((Input.IsActionPressed("attack_normal") || Input.IsActionPressed("attack_normal-alt")) && BADelta == 0 && !CAisCharging)
+            if ((Input.IsActionPressed("attack_normal") || Input.IsActionPressed("attack_normal-alt")) && BACooldown.TimeLeft == 0 && !CAisCharging)
             {
                 BasicAttack();
-                BADelta = BACooldown;
+                BACooldown.Start();
             }
-            if (Input.IsActionJustPressed("attack_charge") || Input.IsActionJustPressed("attack_charge-alt"))
+            //CA charge sequence control
+            if ((Input.IsActionJustPressed("attack_charge") || Input.IsActionJustPressed("attack_charge-alt")) && CACooldown.TimeLeft == 0)
             {
                 CAisCharging = true;
             }
@@ -386,6 +394,8 @@ public partial class Player : CharacterBody2D
             {
                 CAisCharging = false;
             }
+
+            //charging & appropriate level
             if (CAisCharging)
             {
                 CACharge += Mathf.Round((float)delta * 50);
@@ -409,20 +419,22 @@ public partial class Player : CharacterBody2D
             }
             else
             {
+                //launch CA
                 if (CACharge > 40)
                 {
                     ChargeAttack(chargeLevel);
-                    CADelta = CACooldown;
+                    CACooldown.Start();
                 }
                 CACharge = 0;
             }
-            if ((Input.IsActionJustPressed("spell_oracle") || Input.IsActionJustPressed("spell_oracle-alt")) && SODelta == 0)
+            //oracle
+            if ((Input.IsActionJustPressed("spell_oracle") || Input.IsActionJustPressed("spell_oracle-alt")) && SOCooldown.TimeLeft == 0)
             {
                 OracleSpell();
-                SODelta = SOCooldown;
+                SOCooldown.Start();
             }
 
-            //func calls
+            //hit knockback management
             if (hurtTimer.TimeLeft > 0.5)
             {
                 Velocity = new Vector2(
@@ -449,31 +461,16 @@ public partial class Player : CharacterBody2D
 
     //getters/setters
     public bool GetIsDead() { return isDead; }
+    public float GetHP() { return currentHP; }
+    public float GetMP() { return currentMP; }
+    
+
+    //deltaloop
     public override void _PhysicsProcess(double delta)
     {
         if (Globals.playerControl)
         {
             Update(delta);
-
-
-
-            //cooldown resets
-            if (BADelta > 0)
-            {
-                BADelta -= (float)delta;
-            }
-            else BADelta = 0;
-            if (CADelta > 0)
-            {
-                CADelta -= (float)delta;
-            }
-            else CADelta = 0;
-            if (SODelta > 0)
-            {
-                SODelta -= (float)delta;
-            }
-            else SODelta = 0;
         }
-
     }
 }
