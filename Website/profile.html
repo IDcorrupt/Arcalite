@@ -30,14 +30,15 @@
                 <li class="nav-item"><a class="nav-link" href="./wiki.php">Lexikon</a></li>
                 <li class="nav-item"><a class="nav-link" href="./ranking.html">Ranglista</a></li>
                 <li class="nav-item"><div class="dropdown">
-                    <button class="nav-link" href="./profile.html">Profil</button>
+                    <button class="nav-link">Profil</button>
                     <div class="dropdown-content">
+                        <a class="nav-link" href="./profile.html">Profil</a>
                         <a class="nav-link" href="./login.html">Bejelentkezés</a>
                         <a class="nav-link" href="./signup.html">Regisztráció</a>
                         <a class="nav-link">Letöltés</a>
                     </div>
                 </div></li>
-                <li class="nav-item"><div class="form-check form-switch mx-4">
+                <li class="nav-item"><div class="form-check form-switch">
                     <input
                       class="form-check-input p-2"
                       type="checkbox"
@@ -47,14 +48,10 @@
                       onclick="themeChange()"
                     />
                 </li>
-                
-                
-                
-                
             </ul>
-            <li class="nav-item"><a class="nav-link" href="./profile.html">Letöltés</a></li>
         </div>
     </nav>
+
 
     <script>
         function themeChange() {
@@ -63,8 +60,14 @@
           element.dataset.bsTheme == "light" ? "dark" : "light";
       }
     </script>
-    <main class="flex-container">
+    <main class="flex-container profilemain">
         <div class="profile">
-            <img src="./img/button.png">
+            <img src="./img/index.png">
+            <h2>Karakter név</h2>
+        </div>
+        <div class="profile">
+            <h3>Felhasználónév</h3>
+            <p>Szoba: </p>
+            <p>Mérföldkövek: 0/N</p>
         </div>
     </main>

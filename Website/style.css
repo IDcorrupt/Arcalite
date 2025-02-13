@@ -274,6 +274,7 @@ h2{
     align-self: baseline;
     font-size: min(8vw, 80px);
     color: var(--font2);
+    width: 100%;
 }
 
 h3{
@@ -301,7 +302,7 @@ h1, h2{
 
 .card{
     text-align: center;
-    width: 17.7rem;
+    width: 18rem;
     padding: 10px;
     background-color: #585563;
     flex-direction: column;
@@ -383,7 +384,34 @@ d{
 }
 
 .profile{
-    
+    background-color: #6f6a82;
+    height: 100%;
+    width: 30%;
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.profile:last-child{
+    width: 70%;
+}
+
+.profile img{
+    width: 90%;
+    height: auto;
+    aspect-ratio: 3/4;
+    margin: auto;
+}
+
+.profile h2{
+    font-size: max(2vw, 16px);
+}
+
+.profilemain{
+    height: calc(100vh - 68px);
+    padding: 10% !important;
+    padding-top: 6% !important;
+    padding-bottom: 6% !important;
 }
 
 form{
@@ -532,10 +560,6 @@ tr:first-child{
 
 @media (max-width: 768px) { /* medium screen */
     
-    .card{
-        width: 17rem;
-    }
-
     .navbar-expand-lg .navbar-nav {
         display: none; 
     }
@@ -552,6 +576,16 @@ tr:first-child{
 
     footer{
         height: 30vh;
+    }
+
+    .profile{
+        flex-direction: column;
+        width: 100%;
+        height: fit-content
+    }
+
+    .profile:last-child{
+        width: 100%;
     }
 
     #devs{
@@ -573,6 +607,11 @@ tr:first-child{
         display: block;
         overflow-x: auto;
         white-space: nowrap;
+    }
+
+    .profile{
+        flex-direction: column;
+        width: 100%;
     }
 
     .control{
@@ -607,6 +646,7 @@ tr:first-child{
         height: 30vh;
     }
 }
+
 @media (min-width: 1400px){
     body{
         font-size: min(1.5vw, 40px);
