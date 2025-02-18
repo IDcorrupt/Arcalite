@@ -165,8 +165,6 @@ position = Vector2(167, 258)
 
 [node name="EnemySpawnPoint1" parent="EnemyControl" instance=ExtResource("5_ennxe")]
 position = Vector2(404, 225)
-LightMelee = true
 
 [node name="EnemySpawnPoint2" parent="EnemyControl" instance=ExtResource("5_ennxe")]
 position = Vector2(479, 231)
-LightMelee = true

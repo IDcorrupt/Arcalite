@@ -207,18 +207,17 @@ script = ExtResource("1_tfgop")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_cfljs")
-animation = &"sustained_start"
+animation = &"cast"
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 2
+collision_mask = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
 shape = SubResource("CircleShape2D_2eidv")
-disabled = true
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
 scale = Vector2(3.3, 3.3)
 shape = SubResource("CircleShape2D_8bl2w")
 target_position = Vector2(0, 0)
@@ -227,4 +226,6 @@ collide_with_areas = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnAnimationFinished"]
 [connection signal="animation_looped" from="AnimatedSprite2D" to="." method="OnAnimationLooped"]
+[connection signal="body_entered" from="Area2D" to="." method="OnBodyEntered"]
+[connection signal="body_exited" from="Area2D" to="." method="OnBodyExited"]
 [connection signal="tree_exiting" from="ShapeCast2D" to="." method="OnTreeExit"]

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public partial class SpellOracle : Node2D
 {
@@ -10,18 +11,15 @@ public partial class SpellOracle : Node2D
 
     private bool slowing = false;
     private float slowDuration = 10;
-    private HashSet<Node> previouslyDetectedObjects = new HashSet<Node>();      //need to remove slow from exiting targets
-    private HashSet<Node> currentObjects = new HashSet<Node>();
+    private List<Node> affectedEntities = new List<Node>();
 
 
     AnimatedSprite2D sprite;
     Area2D area;
-    ShapeCast2D slowArea;
     public override void _Ready()
     {
         sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         area = GetNode<Area2D>("Area2D");
-        slowArea = GetNode<ShapeCast2D>("ShapeCast2D");
         sprite.Play("cast");   
     }
 
@@ -69,57 +67,39 @@ public partial class SpellOracle : Node2D
         }
     }
 
-    public void Slow()
+    public void OnBodyEntered(Node2D body)
     {
-        if (slowArea.IsColliding())
-        {
-            for (int i = 0; i < slowArea.GetCollisionCount(); i++)
-            {
-                Node collider = slowArea.GetCollider(i) as Node;
-                currentObjects.Add(collider);
-
-            }
-        }
-
-
-        //handle exits
-        foreach (Node obj in previouslyDetectedObjects)
-        {
-            if (!currentObjects.Contains(obj))
-            {
-                if (obj is LightMeele Lmeele)
-                {
-                    Lmeele.isSlowed = false;
-                }
-            }
-        }
-        //handle enters
-        foreach (Node obj in currentObjects)
-        {
-            if (!previouslyDetectedObjects.Contains(obj))
-            {
-                if (obj is LightMeele Lmeele)   //ADD HANDLING FOR OTHER TYPES OF ENEMIES WHEN THEY EXIST
-                {
-                    Lmeele.isSlowed = true;
-                    Lmeele.slowFactor = slowFactor;
-                }
-            }
-        }
+        GD.PrintErr(body.Name+" entered");
+        if(body is Enemy enemy)
+            affectedEntities.Add(enemy);
+        else if(body is CasterProjectile proj)
+            affectedEntities.Add(proj);
+    }
+    public void OnBodyExited(Node2D body)
+    {
+        GD.PrintErr(body.Name+" exited");
+        if (body is Enemy enemy)
+            GD.Print("enemy removed? " + affectedEntities.Remove((Enemy)enemy));
+        else if (body is CasterProjectile proj)
+            GD.Print("projectile removed? " + affectedEntities.Remove((CasterProjectile)proj));
     }
 
     public void OnTreeExit()
     {
-        foreach (Node obj in currentObjects)
+        foreach (Node obj in affectedEntities)
         {
-            if (obj is LightMeele Lmeele)   //ADD HANDLING FOR OTHER TYPES OF ENEMIES WHEN THEY EXIST
-            {
-                Lmeele.isSlowed = false;
-            }   
+            if (obj is Enemy enemy) 
+                enemy.isSlowed = false;
+            else if(obj is CasterProjectile castproj)
+                castproj.isSlowed = false;
         }
     }
     public override void _Process(double delta)
     {
         GlobalPosition = targetPosition;
+        foreach (Node obj in affectedEntities)
+            GD.Print(obj.Name);
+
 
         if (slowDuration == 0)
         {
@@ -131,22 +111,51 @@ public partial class SpellOracle : Node2D
             switch (level)
             {
                 case 1:
-                    slowFactor = 0.75f;
-                    break;
-                case 2:
                     slowFactor = 0.5f;
                     break;
-                case 3:
+                case 2:
                     slowFactor = 0.25f;
                     break;
-                case 4:
+                case 3:
                     slowFactor = 0.1f;
+                    break;
+                case 4:
+                    slowFactor = 0.05f;
                     break;
                 default:
                     break;
             }
-            Slow();
 
+            foreach (Node obj in affectedEntities)
+            {
+                if (obj is Enemy enemy)
+                {
+                    enemy.isSlowed = true;
+                    enemy.slowFactor = slowFactor;
+                }
+                else if (obj is CasterProjectile castproj)
+                {
+                    castproj.isSlowed = true;
+                    castproj.slowFactor = slowFactor;
+                }
+            }
         }
+        else
+        {
+            foreach (Node obj in affectedEntities)
+            {
+                if (obj is Enemy enemy)
+                {
+                    enemy.isSlowed = false;
+                    enemy.slowFactor = 1;
+                }
+                else if (obj is CasterProjectile castproj)
+                {
+                    castproj.isSlowed = false;
+                    castproj.slowFactor = 1;
+                }
+            }
+        }
+                
     }
 }

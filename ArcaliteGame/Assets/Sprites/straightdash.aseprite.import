@@ -3,11 +3,12 @@
 importer="aseprite_wizard.plugin"
 type="SpriteFrames"
 uid="uid://sovmoh6fg201"
-valid=false
+path="res://.godot/imported/straightdash.aseprite-1ee445626172c318ec59441afd995a13.res"
 
 [deps]
 
 source_file="res://Assets/Sprites/straightdash.aseprite"
+dest_files=["res://.godot/imported/straightdash.aseprite-1ee445626172c318ec59441afd995a13.res"]
 
 [params]
 

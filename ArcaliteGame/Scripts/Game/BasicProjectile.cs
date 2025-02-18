@@ -33,8 +33,18 @@ public partial class BasicProjectile : CharacterBody2D
 		animatedSprite.Position = new Vector2(0, 0);
         animatedSprite.Play("terrain_hit");
 	}
-	public void HitEnemy()
+	public void HitEnemy(Enemy enemy)
 	{
+		//damage stuff
+        int dir = 0;
+        if ((enemy.GlobalPosition - GlobalPosition).Normalized().X > 0)
+            dir = 1;
+        else if ((enemy.GlobalPosition - GlobalPosition).Normalized().X < 0)
+            dir = -1;
+		Vector2 hitVector = new Vector2(dir*200, 0);
+		enemy.Hit(damagePayload, hitVector);
+		
+        //animation
         animatedSprite.Position = new Vector2(0, 0);
         animatedSprite.Play("enemy_hit");
     }
@@ -57,18 +67,10 @@ public partial class BasicProjectile : CharacterBody2D
 				Vector2 collisionNormal = collision.GetNormal();
 
 				HitTerrain(collisionNormal);
-			}else if (collision != null && collision.GetCollider() is CharacterBody2D)
+			}else if (collision != null && collision.GetCollider() is Enemy)
 			{
-				Node collider = collision.GetCollider() as Node;
-				if (collider.HasMeta("Type"))
-				{
-					if ((string)collider.GetMeta("Type") == "Enemy")
-					{
-						targetHit = true;
-						HitEnemy();
-					}
-				}
-
+				targetHit = true;
+				HitEnemy(collision.GetCollider() as Enemy);
 			}
             
         }

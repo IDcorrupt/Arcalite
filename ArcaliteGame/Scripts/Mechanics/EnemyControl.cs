@@ -47,6 +47,11 @@ public partial class EnemyControl : Node2D
 
     public void OnTimerTimeout()
     {
+        DespawnEnemies();
+    }
+
+    public void DespawnEnemies()
+    {
         foreach (Node2D node in enemySpawnPoints)
         {
             if (node is EnemySpawner spawner)
@@ -57,10 +62,12 @@ public partial class EnemyControl : Node2D
         }
         despawningInProgress = false;
     }
-
-
     public override void _Process(double delta)
     {
+        if (Globals.player.GetIsDead())
+        {
+            playerInRoom = false;
+        }
         if (playerInRange && !enemiesActive)
         {
             SpawnTimer.Stop();
@@ -86,24 +93,23 @@ public partial class EnemyControl : Node2D
             SpawnTimer.Stop();
         }
 
-        if (playerInRoom)
+        //attack mode
+        /*if (playerInRoom)
         {
             foreach(Node node in GetChildren())
             {
 
-                if (node is LightMeele lightMelee)
-                    lightMelee.isChasing = true;
-                //[TBD] add all other enemy types when they start existing
+                if (node is Enemy enemy)
+                    enemy.isChasing = true;
             }
         }
         else
         {
             foreach (Node node in GetChildren())
             {
-                if (node is LightMeele lightMelee)
-                    lightMelee.isChasing = false;
-                //[TBD] add all other enemy types when they start existing
+                if (node is Enemy enemy)
+                    enemy.isChasing = false;
             }
-        }
+        }*/
     }
 }

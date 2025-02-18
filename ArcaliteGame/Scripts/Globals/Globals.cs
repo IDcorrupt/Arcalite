@@ -17,7 +17,7 @@ public partial class Globals : Node
     public static Node2D activeMap = null;
 
     //player cuz i need it everywhere
-    public static Player Player = null;
+    public static Player player = null;
 
 
     //settings
