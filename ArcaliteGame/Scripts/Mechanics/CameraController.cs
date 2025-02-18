@@ -10,11 +10,7 @@ public partial class CameraController : Node2D
 
 
     private Camera2D camera;
-    private Area2D topTrigger;
-    private Area2D botTrigger;
-    private Area2D leftTrigger;
-    private Area2D rightTrigger;
-
+    private StaticBody2D hitBox;
     private Area2D enemyTrigger;
 
     Timer cooldownTimer;
@@ -22,10 +18,7 @@ public partial class CameraController : Node2D
     public override void _Ready()
     {
         camera = GetNode<Camera2D>("Camera");
-        topTrigger = GetNode<Area2D>("Camera/CamTriggers/TopTrigger");
-        botTrigger = GetNode<Area2D>("Camera/CamTriggers/BotTrigger");
-        leftTrigger = GetNode<Area2D>("Camera/CamTriggers/LeftTrigger");
-        rightTrigger = GetNode<Area2D>("Camera/CamTriggers/RightTrigger");
+        hitBox = GetNode("Camera/edgeCollisions") as StaticBody2D;
 
         enemyTrigger = GetNode<Area2D>("Camera/EnemyTrigger");
 
@@ -39,6 +32,10 @@ public partial class CameraController : Node2D
         cooldownTimer.Start();
     }
 
+    public void LockPlayer(bool value)
+    {
+        hitBox.SetCollisionLayerValue(3, value);
+    }
 
     //camera movement
     public void MoveCamera(string direction)

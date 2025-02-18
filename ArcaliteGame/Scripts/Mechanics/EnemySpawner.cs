@@ -29,7 +29,7 @@ public partial class EnemySpawner : Node2D
     {
         parent = (EnemyControl)GetParent();
     }
-    public void Spawn()
+    public bool Spawn()
     {
         switch (enemyClass)
         {
@@ -61,11 +61,17 @@ public partial class EnemySpawner : Node2D
                 break;
             default:
                 break;
-        }        
+        }
+        if (ActiveEnemy != null) return true;
+        else return false;
     }
-    public void Despawn()
+    public bool Despawn()
     {
         if (ActiveEnemy != null)
+        {
             ActiveEnemy.QueueFree();
+            return true;
+        }
+        else return false;
     }
 }

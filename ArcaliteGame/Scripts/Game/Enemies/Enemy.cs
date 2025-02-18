@@ -82,7 +82,9 @@ public partial class Enemy : CharacterBody2D
     public void Move(double delta)
     {
         //jump
-        if(jumpTrigger.GetOverlappingBodies().Count == 0 && obstacleDetect.GetOverlappingBodies().Count >0 && !jumped)
+        if(jumpTrigger.GetOverlappingBodies().Count == 0 && obstacleDetect.GetOverlappingBodies().Count >0 &&   //collisions
+            !jumped &&          //can jump
+            (Velocity.X > 0 || Velocity.X <0))     //is moving
         {
             Velocity = new Vector2(Velocity.X, Velocity.Y -jumpStrength);
             jumped = true;
@@ -278,11 +280,15 @@ public partial class Enemy : CharacterBody2D
             atkCooldown.Start();
         }
         else if (sprite.Animation == "die")
-            QueueFree();
+            Die();
     }
 
 
-
+    private void Die()
+    {
+        parent.enemyAmount--;
+        QueueFree();    
+    }
 
     public virtual void Update(double delta)
     {
@@ -330,7 +336,7 @@ public partial class Enemy : CharacterBody2D
 
         //update line of sight
         lineOfSight.TargetPosition = player.GlobalPosition - GlobalPosition;
-        if (lineOfSight.IsColliding() && lineOfSight.GetCollider() is Player)
+        if (lineOfSight.IsColliding() && lineOfSight.GetCollider() is Player && !player.GetIsDead())
             isChasing = true;
         else if(chaseBuffer.TimeLeft == 0)
         {
@@ -349,7 +355,6 @@ public partial class Enemy : CharacterBody2D
         Update(delta);
         MoveAndSlide();
         Animate();
-        GD.Print("velocity: " + Velocity.ToString());
     }
 
 

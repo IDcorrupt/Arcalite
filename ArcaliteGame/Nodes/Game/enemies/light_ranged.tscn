@@ -314,5 +314,6 @@ collision_mask = 133
 [connection signal="timeout" from="RoamCooldown" to="." method="OnRoamCoolDownTimeout"]
 [connection signal="timeout" from="AttackCooldown" to="." method="AtkCooldownTimeout"]
 [connection signal="timeout" from="HurtTimer" to="." method="OnHurtTimerTimeout"]
+[connection signal="timeout" from="ChaseBuffer" to="." method="OnChaseBufferTimeout"]
 [connection signal="body_entered" from="AttackRange" to="." method="AttackRangeBodyEntered"]
 [connection signal="body_exited" from="AttackRange" to="." method="AttackRangeBodyExited"]

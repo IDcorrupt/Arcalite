@@ -58,11 +58,11 @@ position = Vector2(320, 180)
 texture = SubResource("PlaceholderTexture2D_nkfhg")
 
 [node name="CamTriggers" type="Node2D" parent="Camera"]
+visible = false
 position = Vector2(-320, -180)
 
 [node name="LeftTrigger" type="Area2D" parent="Camera/CamTriggers"]
 process_mode = 4
-visible = false
 position = Vector2(0, 180)
 collision_layer = 64
 
@@ -71,7 +71,6 @@ shape = SubResource("RectangleShape2D_qlh17")
 
 [node name="RightTrigger" type="Area2D" parent="Camera/CamTriggers"]
 process_mode = 4
-visible = false
 position = Vector2(640, 180)
 collision_layer = 64
 
@@ -80,7 +79,6 @@ shape = SubResource("RectangleShape2D_qlh17")
 
 [node name="TopTrigger" type="Area2D" parent="Camera/CamTriggers"]
 process_mode = 4
-visible = false
 position = Vector2(320, 0)
 collision_layer = 64
 
@@ -89,7 +87,6 @@ shape = SubResource("RectangleShape2D_msxgn")
 
 [node name="BotTrigger" type="Area2D" parent="Camera/CamTriggers"]
 process_mode = 4
-visible = false
 position = Vector2(320, 360)
 collision_layer = 64
 

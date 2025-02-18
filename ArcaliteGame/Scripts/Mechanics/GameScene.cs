@@ -5,7 +5,7 @@ public partial class GameScene : Node2D
 {
 	Resource cursor = ResourceLoader.Load("res://Assets/Placeholder assets/Cursors/PNG/White/crosshair124.png");
 	PackedScene debugMap = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/map_debug.tscn");
-	//PackedScene Map1 = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/map_0.tscn");
+	PackedScene Map1 = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/map_0.tscn");
 	PackedScene pauseMenu = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/pause_menu.tscn");
 	PackedScene UIscene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/ui.tscn");
 	PackedScene RespawnScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/respawn_screen.tscn");
@@ -26,8 +26,8 @@ public partial class GameScene : Node2D
 		UILayer.AddChild(UInode);
 		
 		//add map
-		mapNode = (Node2D)debugMap.Instantiate();
-		//mapNode = (Node2D)Map1.Instantiate();
+		//mapNode = (Node2D)debugMap.Instantiate();
+		mapNode = (Node2D)Map1.Instantiate();
 		mapNode.Name = "Map";
 		Globals.activeMap = mapNode;
 		AddChild(mapNode);
