@@ -28,6 +28,4 @@ if ($result) {
     $return["message"] = "Hiba a frissítés közben! Az új jelszó nem került beállításra!";
 }
 
-header("Content-Type: application/json");
-echo json_encode($return);
-http_response_code($return["code"]);
+ReturnResult($return, $return['code']);
