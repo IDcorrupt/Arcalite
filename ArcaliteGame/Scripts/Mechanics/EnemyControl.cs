@@ -94,7 +94,7 @@ public partial class EnemyControl : Node2D
         }
 
         //attack mode
-        if (playerInRoom)
+        /*if (playerInRoom)
         {
             foreach(Node node in GetChildren())
             {
@@ -110,6 +110,6 @@ public partial class EnemyControl : Node2D
                 if (node is Enemy enemy)
                     enemy.isChasing = false;
             }
-        }
+        }*/
     }
 }

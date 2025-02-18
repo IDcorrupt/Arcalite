@@ -248,7 +248,7 @@ script = ExtResource("1_qxpks")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(-3, -3)
 sprite_frames = SubResource("SpriteFrames_h8iru")
-animation = &"walk"
+animation = &"idle"
 
 [node name="DirectionTimer" type="Timer" parent="."]
 one_shot = true
@@ -262,6 +262,9 @@ one_shot = true
 one_shot = true
 
 [node name="HurtTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ChaseBuffer" type="Timer" parent="."]
 one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -279,7 +282,7 @@ collision_layer = 0
 shape = SubResource("CircleShape2D_q227e")
 debug_color = Color(1, 0, 0, 0.419608)
 
-[node name="LineOfSight" type="RayCast2D" parent="."]
+[node name="Targeting" type="RayCast2D" parent="."]
 target_position = Vector2(175, 0)
 collision_mask = 5
 
@@ -301,6 +304,10 @@ collision_mask = 4
 position = Vector2(34, 0)
 shape = SubResource("RectangleShape2D_3dpg3")
 debug_color = Color(0.615686, 0.356863, 1, 0.419608)
+
+[node name="LineOfSight" type="RayCast2D" parent="."]
+target_position = Vector2(110, 0)
+collision_mask = 133
 
 [connection signal="animation_finished" from="Sprite" to="." method="OnSpriteAnimationFinished"]
 [connection signal="timeout" from="DirectionTimer" to="." method="OnDirectionTimerTimeout"]

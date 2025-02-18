@@ -4,11 +4,11 @@ using System;
 public partial class LightRanged : Enemy
 {
     private PackedScene projectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/projectiles/caster_projectile.tscn");
-    private RayCast2D lineOfSight;
+    private RayCast2D targetingLine;
     public override void _Ready()
     {
         base._Ready();
-        lineOfSight = GetNode("LineOfSight") as RayCast2D;
+        targetingLine = GetNode("Targeting") as RayCast2D;
         maxHP = 20;
         currentHP = maxHP;
         damage = 10;
@@ -19,7 +19,7 @@ public partial class LightRanged : Enemy
     protected override void Attack()
     {
         base.Attack();
-        if (lineOfSight.GetCollider() is Player)
+        if (targetingLine.GetCollider() is Player)
         {
             //shoot
             CasterProjectile castproj = (CasterProjectile)projectile.Instantiate();
@@ -34,7 +34,7 @@ public partial class LightRanged : Enemy
 
      public override void Update(double delta)
      {
-        if(lineOfSight.GetCollider() is Player)
+        if(targetingLine.GetCollider() is Player)
         {
             playerInAtkRange = true;
         }else playerInAtkRange = false;
@@ -44,6 +44,6 @@ public partial class LightRanged : Enemy
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-        lineOfSight.LookAt(player.GlobalPosition);
+        targetingLine.LookAt(player.GlobalPosition);
     }
 }

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public partial class SpellOracle : Node2D
 {
@@ -69,37 +70,18 @@ public partial class SpellOracle : Node2D
     public void OnBodyEntered(Node2D body)
     {
         GD.PrintErr(body.Name+" entered");
-        if (slowing)
-        {
-            if(body is Enemy enemy)
-            {
-                affectedEntities.Add(enemy);
-                enemy.slowFactor = slowFactor;
-                enemy.isSlowed = true;
-            }
-            else if(body is CasterProjectile proj)
-            {
-                affectedEntities.Add(proj);
-                proj.slowFactor = slowFactor;
-                proj.isSlowed = true;
-            }
-        }
+        if(body is Enemy enemy)
+            affectedEntities.Add(enemy);
+        else if(body is CasterProjectile proj)
+            affectedEntities.Add(proj);
     }
     public void OnBodyExited(Node2D body)
     {
         GD.PrintErr(body.Name+" exited");
         if (body is Enemy enemy)
-        {
             GD.Print("enemy removed? " + affectedEntities.Remove((Enemy)enemy));
-            enemy.slowFactor = 1;
-            enemy.isSlowed = false;
-        }
         else if (body is CasterProjectile proj)
-        {
             GD.Print("projectile removed? " + affectedEntities.Remove((CasterProjectile)proj));
-            proj.slowFactor = 1;
-            proj.isSlowed = false;
-        }
     }
 
     public void OnTreeExit()
@@ -115,6 +97,9 @@ public partial class SpellOracle : Node2D
     public override void _Process(double delta)
     {
         GlobalPosition = targetPosition;
+        foreach (Node obj in affectedEntities)
+            GD.Print(obj.Name);
+
 
         if (slowDuration == 0)
         {
@@ -140,6 +125,37 @@ public partial class SpellOracle : Node2D
                 default:
                     break;
             }
+
+            foreach (Node obj in affectedEntities)
+            {
+                if (obj is Enemy enemy)
+                {
+                    enemy.isSlowed = true;
+                    enemy.slowFactor = slowFactor;
+                }
+                else if (obj is CasterProjectile castproj)
+                {
+                    castproj.isSlowed = true;
+                    castproj.slowFactor = slowFactor;
+                }
+            }
         }
+        else
+        {
+            foreach (Node obj in affectedEntities)
+            {
+                if (obj is Enemy enemy)
+                {
+                    enemy.isSlowed = false;
+                    enemy.slowFactor = 1;
+                }
+                else if (obj is CasterProjectile castproj)
+                {
+                    castproj.isSlowed = false;
+                    castproj.slowFactor = 1;
+                }
+            }
+        }
+                
     }
 }

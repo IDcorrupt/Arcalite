@@ -314,6 +314,9 @@ one_shot = true
 [node name="HurtTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="ChaseBuffer" type="Timer" parent="."]
+one_shot = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0ynrc")
 
@@ -329,7 +332,7 @@ visible = false
 shape = SubResource("CircleShape2D_uveyp")
 debug_color = Color(1, 0, 0, 0.419608)
 
-[node name="LineOfSight" type="RayCast2D" parent="."]
+[node name="Targeting" type="RayCast2D" parent="."]
 target_position = Vector2(250, 0)
 collision_mask = 5
 
@@ -352,6 +355,9 @@ collision_mask = 4
 position = Vector2(17, 0)
 shape = SubResource("RectangleShape2D_ubeio")
 debug_color = Color(0.615686, 0.356863, 1, 0.419608)
+
+[node name="LineOfSight" type="RayCast2D" parent="."]
+collision_mask = 133
 
 [connection signal="animation_finished" from="Sprite" to="." method="OnSpriteAnimationFinished"]
 [connection signal="timeout" from="DirectionTimer" to="." method="OnDirectionTimerTimeout"]

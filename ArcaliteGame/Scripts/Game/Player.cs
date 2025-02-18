@@ -8,11 +8,11 @@ using System.Text;
 
 public partial class Player : CharacterBody2D
 {
-    //values
+//values
     //crouch
     private int defHB_X = 16;       //hitbox for crouch
-    private int defHB_Y = 29;       //hitbo for crouch
-    private bool isCrouching = false;    //crouch bool (at least it should be bool but i didn't change it back)
+    private int defHB_Y = 29;       //hitbox for crouch
+    private bool isCrouching = false;    //crouch bool
     private bool crouchDown = false;    // up & down required for animations
     private bool crouchUp = false;
 
@@ -40,7 +40,7 @@ public partial class Player : CharacterBody2D
     private bool isHurt = false;
     private bool isDead = false;
 
-    //stats
+//stats
     private float MaxHP = 100;
     private float MaxMP = 100;
     //spd & dot if class system get implemented
@@ -51,7 +51,7 @@ public partial class Player : CharacterBody2D
 
     private int oracleLevel;
 
-    //nodes
+//nodes
     private CollisionShape2D HitBox;
     private PackedScene basicProjectile;
     private PackedScene chargeProjectile;
@@ -60,6 +60,7 @@ public partial class Player : CharacterBody2D
 
     private Timer hurtTimer;
     private Timer dashCooldown;
+    //attackcooldowns
     private Timer BACooldown;
     private Timer CACooldown;
     private Timer SOCooldown;
@@ -296,7 +297,7 @@ public partial class Player : CharacterBody2D
             currentHP = MaxHP;
             currentMP = MaxMP;
             damage = 10;
-            oracleLevel = 1;
+            oracleLevel = 2;
 
             //cooldowns
             dashCooldown.WaitTime = 2f;

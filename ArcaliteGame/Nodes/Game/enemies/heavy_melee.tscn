@@ -316,6 +316,7 @@ floor_max_angle = 0.802851
 script = ExtResource("1_ok2i2")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_l32ot")
 animation = &"idle"
@@ -334,15 +335,19 @@ one_shot = true
 [node name="HurtTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="ChaseBuffer" type="Timer" parent="."]
+one_shot = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 7.5)
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_m1jxv")
 
 [node name="indicator" type="Sprite2D" parent="."]
-position = Vector2(29, -19)
+position = Vector2(29, -27)
 texture = SubResource("PlaceholderTexture2D_j6u8p")
 
 [node name="AttackRange" type="Area2D" parent="."]
+position = Vector2(0, -8)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
@@ -351,7 +356,7 @@ shape = SubResource("RectangleShape2D_s47iu")
 debug_color = Color(0.993985, 0, 0.229261, 0.42)
 
 [node name="JumpTrigger" type="Area2D" parent="."]
-position = Vector2(0, -90)
+position = Vector2(0, -98)
 collision_layer = 0
 collision_mask = 4
 
@@ -361,7 +366,7 @@ shape = SubResource("RectangleShape2D_de3kb")
 debug_color = Color(0.615686, 0.356863, 1, 0.419608)
 
 [node name="ObstacleDetect" type="Area2D" parent="."]
-position = Vector2(0, -9)
+position = Vector2(0, -17)
 collision_layer = 0
 collision_mask = 4
 
@@ -369,6 +374,10 @@ collision_mask = 4
 position = Vector2(39, 16)
 shape = SubResource("RectangleShape2D_mof2g")
 debug_color = Color(0.615686, 0.356863, 1, 0.419608)
+
+[node name="LineOfSight" type="RayCast2D" parent="."]
+target_position = Vector2(110, 0)
+collision_mask = 133
 
 [connection signal="animation_finished" from="Sprite" to="." method="OnSpriteAnimationFinished"]
 [connection signal="timeout" from="DirectionTimer" to="." method="OnDirectionTimerTimeout"]
