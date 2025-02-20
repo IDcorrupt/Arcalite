@@ -52,21 +52,54 @@
         </div>
     </nav>
 
-    <script>
-        function themeChange() {
-        var element = document.body;
-        element.dataset.bsTheme =
-          element.dataset.bsTheme == "light" ? "dark" : "light";
-      }
-    </script>
     <main class="flex-container profilemain">
-        <div class="profile">
-            <img src="./img/index.png">
-            <h2>Karakter név</h2>
-        </div>
-        <div class="profile">
+        <div class="profile profiletab">
             <h3>Felhasználónév</h3>
-            <p>Szoba: </p>
-            <p>Mérföldkövek: 0/N</p>
+
+            <div class="tab">
+                <button class="tablinks" id="defaultOpen" onclick="openRank(event, 'Character1')">Character1</button>
+                <button class="tablinks" onclick="openRank(event, 'Character2')">Character2</button>
+            </div>
+            
+            <!-- Tab content -->
+            <div id="Character1" class="profile tabcontent ">
+                <img class="profile-img" src="./img/index.png">
+                <p>Szoba: </p>
+                <p>Mérföldkövek: 0/N</p>
+            </div>
+            
+            <div id="Character2" class="profile tabcontent ">
+                <img class="profile-img" src="./img/index.png">
+                <p>Szoba: </p>
+                <p>Mérföldkövek: 0/N</p>
+            </div>
+            
+            <script>
+                document.getElementById("defaultOpen").click();
+                function openRank(evt, base) {
+                    // Declare all variables
+                    var i, tabcontent, tablinks;
+    
+                    // Get all elements with class="tabcontent" and hide them
+                    tabcontent = document.getElementsByClassName("tabcontent");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+    
+                    // Get all elements with class="tablinks" and remove the class "active"
+                    tablinks = document.getElementsByClassName("tablinks");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+    
+                    // Show the current tab, and add an "active" class to the button that opened the tab
+                    document.getElementById(base).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
+            </script>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script/styleScript.js"></script>
+</body>
+</html>

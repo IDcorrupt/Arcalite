@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Title';
-    src: url('./FontsFree-Net-RajjahFamillia-Medium.ttf') format('truetype');
+    src: url('./fonts/FontsFree-Net-RajjahFamillia-Medium.ttf') format('truetype');
     
 }
 
@@ -39,7 +39,7 @@ html{
 }
 
 /* From Uiverse.io by dylanharriscameron */ 
-.delete-button {
+.key-button {
     background-color: #000;
     color: #fff;
     font-size: 44px;
@@ -65,7 +65,7 @@ html{
     transform: perspective(70px) rotateX(5deg) rotateY(0deg);
   }
   
-  .delete-button::after {
+  .key-button::after {
     content: '';
     position: absolute;
     top: 0;
@@ -80,7 +80,7 @@ html{
     transition: all .1s ease-in-out 0s;
   }
   
-  .delete-button::before {
+  .key-button::before {
     content: '';
     position: absolute;
     top: 0;
@@ -97,7 +97,7 @@ html{
     transition: all .1s ease-in-out 0s;
   }
   
-  .delete-button:active {
+  .key-button:active {
     will-change: transform;
     transform: perspective(80px) rotateX(5deg) rotateY(1deg) translateY(3px) scale(0.96);
     height: 64px;
@@ -109,11 +109,11 @@ html{
     transition: all .1s ease-in-out 0s;
   }
   
-  .delete-button::after:active {
+  .key-button::after:active {
     background-image: linear-gradient(to bottom,rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2));
   }
   
-  .delete-button:active::before {
+  .key-button:active::before {
     content: "";
     display: block;
     position: absolute;
@@ -136,7 +136,7 @@ html{
     }
   }
   
-  .delete-button:focus {
+  .key-button:focus {
     outline: none;
   }
 body{
@@ -252,13 +252,9 @@ ul{
     justify-content: space-evenly;
 }
 
-#video{
-    display: flex;
+#video{  /* video id does not exist anymore. I dont know why it works, and I dont want to*/
     width: 40%;
-    
-        display: flex;
-        justify-content: center; /* Center horizontally */
-        align-items: center; /* Center vertically if needed */
+    justify-content: center;
     margin: 25px;
 }
 
@@ -290,23 +286,12 @@ h1, h2{
         1px 1px 0 #858585; /* Shadow color (border) */
 }
 
-.control{
-    width: 500px;
-    height: fit-content;
-    margin: 15px;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: 50px repeat(2, 100px);
-    align-items: center;
-}
-
 .card{
     text-align: center;
-    width: 18rem;
     padding: 10px;
     background-color: #585563;
-    flex-direction: column;
-    margin: 30px
+    margin: 30px;
+    width: 18rem;
 }
 
 .card .btn{
@@ -314,24 +299,8 @@ h1, h2{
     height: 50px;
 }
 
-#characters .card{
+.character .card{
     cursor: pointer;
-}
-
-.control p{
-    text-align: center;
-    margin: 0;
-    width: 100%;
-    grid-column: 2;
-    grid-row: 1;
-}
-
-.control img{
-    height: 60px;
-    width: 60px;
-    grid-column: 2;
-    grid-row: 2;
-    justify-self: center;
 }
 
 d{
@@ -349,21 +318,6 @@ d{
     align-self: normal;
 }
 
-#controlid{
-
-}
-
-#controls{
-    flex-wrap: wrap;
-}
-
-#login{
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
 
 #login h2{
     align-self: baseline;
@@ -383,21 +337,35 @@ d{
     flex-direction: column;
 }
 
+#login{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .profile{
     background-color: #6f6a82;
-    height: 100%;
-    width: 30%;
+    height: 100vh;
     padding: 30px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.profiletab{
+    display: block;
+    width: 100%;
 }
 .profile:last-child{
     width: 70%;
 }
 
-.profile img{
-    width: 90%;
+.profile-img{
+    max-width: 100%;
     height: auto;
     aspect-ratio: 3/4;
     margin: auto;
@@ -455,25 +423,10 @@ label{
 }
 
 iframe{
-    width: 36vw;
-    height: 20.25vw;
+    width: 50%;
+    aspect-ratio: 16/9;
 }
 
-.characters{
-    padding: 0px;
-}
-
-.character{
-    height: fit-content;
-    width: auto;
-    margin: 0px 30px;
-
-}
-
-.character img{
-    height: 50vh;
-    width: auto;
-}
 
 footer{
     height: fit-content;
@@ -481,26 +434,22 @@ footer{
     flex-wrap: nowrap !important;
 }
 
-#devs{
+.devs{
     width: 66.67vw;
     height: 100%;
 }
 
-#dev{
-    height: 100%;
-}
-
-#link{
+.link{
     width: 33.32vw;
     height: 100%;
 }
 
-#devs img{
+.devs img{
     height: auto;
     width: 30%;
 }
 
-#devs h2{
+.devs h2{
     text-align: center;
     width: 100%;
 }
@@ -543,12 +492,14 @@ footer{
 
 table{
     width: 100%;
-    background-color: var(--acc1)
+    background-color: var(--acc1);
+    user-select: none;
 }
 
 th{
     border: 1px solid black;
     font-weight: unset;
+    cursor: pointer;
 }
 
 
@@ -559,7 +510,19 @@ tr:first-child{
 
 
 @media (max-width: 768px) { /* medium screen */
-    
+
+    body{
+        text-align: center;
+    }
+
+    iframe{
+        width: 80%;
+    }
+
+    .nav-item{
+        margin: auto;
+    }
+
     .navbar-expand-lg .navbar-nav {
         display: none; 
     }
@@ -575,7 +538,8 @@ tr:first-child{
     }
 
     footer{
-        height: 30vh;
+        height: fit-content;
+        flex-direction: column;
     }
 
     .profile{
@@ -588,16 +552,16 @@ tr:first-child{
         width: 100%;
     }
 
-    #devs{
+    .devs{
         width: 100vw;
     }
 
-    #link{
+    .link{
         width: 100vw;
         height: fit-content;
     }
 
-    #devs h2{
+    .devs h2{
         left: 0;
         transform: translate(0,0);
         width: 100%;
@@ -612,25 +576,6 @@ tr:first-child{
     .profile{
         flex-direction: column;
         width: 100%;
-    }
-
-    .control{
-        width: 70vw;
-        height: fit-content;
-        margin: 10px;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .control p{
-
-    }
-    
-    .control img{
-        margin: 15px;
-
     }
     
     d{
@@ -650,5 +595,9 @@ tr:first-child{
 @media (min-width: 1400px){
     body{
         font-size: min(1.5vw, 40px);
+    }
+
+    iframe{
+        width: 40%;
     }
 }
