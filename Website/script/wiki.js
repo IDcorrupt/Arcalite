@@ -43,12 +43,25 @@ function writeStats(data) {
 
 function showItems(data) {
     for (let i = 0; i < data.length; i++) {
+        let offcanvasId = `itemOffcanvas_${data[i].id}`; // Unique ID for each offcanvas
+
         $("#items").append(`
-            <article id='item_${data[i].id}'>
-                <h3>${data[i].name}</h3>
-                <img src="img/items/${data[i].image}" alt="${data[i].name}">
-                <p>${data[i].desc}</p>
-            </article>
+            <div class="card item-card" data-bs-toggle="offcanvas" data-bs-target="#${offcanvasId}" data-item="${data[i].name}">
+                <div class="card-body">
+                    <h3 class="card-title">${data[i].name}</h3>
+                </div>
+                <img src="img/items/${data[i].image}" class="card-img-bottom" alt="${data[i].name}">
+            </div>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="${offcanvasId}">
+                <div class="offcanvas-header">
+                    <h3 class="card-title">${data[i].name}</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p>${data[i].desc}</p>
+                </div>
+            </div>
         `);
     }
 }
@@ -56,13 +69,26 @@ function showItems(data) {
 
 function showEnemies(data) {
     for (let i = 0; i < data.length; i++) {
+        let offcanvasId = `enemyOffcanvas_${data[i].id}`;
+
         $("#enemies").append(`
-            <article id='enemy_${data[i].id}'>
-                <h3>${data[i].name}</h3>
-                <img src="img/enemies/${data[i].image}" alt="${data[i].name}">
-                <p>Max. életpont: ${data[i].hp}</p>
-                <p>${data[i].desc}</p>
-            </article>
+            <div class="card enemy-card" data-bs-toggle="offcanvas" data-bs-target="#${offcanvasId}" data-enemy="${data[i].name}">
+                <div class="card-body">
+                    <h3 class="card-title">${data[i].name}</h3>
+                </div>
+                <img src="img/enemies/${data[i].image}" class="card-img-bottom" alt="${data[i].name}">
+            </div>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="${offcanvasId}">
+                <div class="offcanvas-header">
+                    <h3 class="card-title">${data[i].name}</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p>Max HP: ${data[i].hp}</p>
+                    <p>${data[i].desc}</p>
+                </div>
+            </div>
         `);
     }
 }

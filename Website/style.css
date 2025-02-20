@@ -303,6 +303,14 @@ h1, h2{
     cursor: pointer;
 }
 
+.card img{
+    aspect-ratio: 3/4;
+}
+
+.control-img{
+    aspect-ratio: unset !important;
+}
+
 d{
     grid-column: 1/3;
     grid-row: 3;
@@ -347,11 +355,9 @@ d{
 
 .profile{
     background-color: #6f6a82;
-    height: 100vh;
     padding: 30px;
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
@@ -365,8 +371,7 @@ d{
 }
 
 .profile-img{
-    max-width: 100%;
-    height: auto;
+    max-width: 20%;
     aspect-ratio: 3/4;
     margin: auto;
 }
@@ -377,9 +382,6 @@ d{
 
 .profilemain{
     height: calc(100vh - 68px);
-    padding: 10% !important;
-    padding-top: 6% !important;
-    padding-bottom: 6% !important;
 }
 
 form{
@@ -545,7 +547,7 @@ tr:first-child{
     .profile{
         flex-direction: column;
         width: 100%;
-        height: fit-content
+        height: fit-content;
     }
 
     .profile:last-child{
