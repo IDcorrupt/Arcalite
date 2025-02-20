@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://dtwxqo8wyx1pw"]
+[gd_scene load_steps=44 format=3 uid="uid://dtwxqo8wyx1pw"]
 
 [ext_resource type="Texture2D" uid="uid://ccmt4ma2jpt0u" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/penguin.png" id="1_cl5ob"]
 [ext_resource type="Script" path="res://Scripts/Game/Enemies/HeavyRanged.cs" id="1_l1duq"]
@@ -93,10 +93,6 @@ region = Rect2(768, 448, 64, 64)
 atlas = ExtResource("3_jm67h")
 region = Rect2(704, 448, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_744df"]
-atlas = ExtResource("3_jm67h")
-region = Rect2(640, 448, 64, 64)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_442it"]
 atlas = ExtResource("3_jm67h")
 region = Rect2(576, 448, 64, 64)
@@ -180,7 +176,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -220,9 +216,6 @@ animations = [{
 "texture": SubResource("AtlasTexture_utpi7")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_744df")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_442it")
 }, {
 "duration": 1.0,
@@ -245,7 +238,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die",
-"speed": 25.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -270,7 +263,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 10.0
+"speed": 15.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ynrc"]
@@ -283,10 +276,7 @@ size = Vector2(5, 5)
 radius = 250.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_irin3"]
-size = Vector2(35, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ubeio"]
-size = Vector2(16, 16)
+size = Vector2(15, 16)
 
 [node name="HeavyRanged" type="CharacterBody2D"]
 collision_layer = 2
@@ -294,11 +284,9 @@ collision_mask = 132
 script = ExtResource("1_l1duq")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(2, -8.5)
+position = Vector2(1, -8.5)
 sprite_frames = SubResource("SpriteFrames_jovaw")
 animation = &"walk"
-frame = 2
-frame_progress = 0.29256
 
 [node name="DirectionTimer" type="Timer" parent="."]
 one_shot = true
@@ -342,7 +330,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpTrigger"]
-position = Vector2(7.5, 0)
+position = Vector2(15.5, 0)
 shape = SubResource("RectangleShape2D_irin3")
 debug_color = Color(0.615686, 0.356863, 1, 0.419608)
 
@@ -351,10 +339,15 @@ position = Vector2(0, -0.5)
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleDetect"]
-position = Vector2(17, 0)
-shape = SubResource("RectangleShape2D_ubeio")
-debug_color = Color(0.615686, 0.356863, 1, 0.419608)
+[node name="right" type="CollisionPolygon2D" parent="ObstacleDetect"]
+modulate = Color(0, 0.14902, 1, 1)
+position = Vector2(9, 0)
+polygon = PackedVector2Array(0, -7, 0, 8, 7, -7)
+
+[node name="left" type="CollisionPolygon2D" parent="ObstacleDetect"]
+modulate = Color(0, 0.14902, 1, 1)
+position = Vector2(-9, 0)
+polygon = PackedVector2Array(0, -7, 0, 8, -7, -7)
 
 [node name="LineOfSight" type="RayCast2D" parent="."]
 collision_mask = 133

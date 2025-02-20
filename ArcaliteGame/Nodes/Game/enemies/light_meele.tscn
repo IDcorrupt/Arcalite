@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dmcjsoh4jx60g"]
+[gd_scene load_steps=33 format=3 uid="uid://dmcjsoh4jx60g"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Enemies/LightMeele.cs" id="1_yaydj"]
 [ext_resource type="Texture2D" uid="uid://v4gnk750ktm1" path="res://Assets/10count.png" id="2_31yna"]
@@ -136,7 +136,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -180,7 +180,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die",
-"speed": 20.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -206,10 +206,7 @@ size = Vector2(9, 21)
 size = Vector2(5, 5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c8qfr"]
-size = Vector2(35, 21)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s3drx"]
-size = Vector2(12.3333, 21)
+size = Vector2(22, 21)
 
 [node name="LightMelee" type="CharacterBody2D"]
 collision_layer = 2
@@ -220,7 +217,7 @@ metadata/Type = "Enemy"
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3p25d")
-animation = &"idle"
+animation = &"attack"
 
 [node name="DirectionTimer" type="Timer" parent="."]
 one_shot = true
@@ -250,7 +247,7 @@ texture = SubResource("PlaceholderTexture2D_2gd46")
 collision_layer = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AttackRange"]
-polygon = PackedVector2Array(-4.5, 0, -4.5, -11, 6, -11, 13, -5, 13, 5, 6, 11, -4.5, 11)
+polygon = PackedVector2Array(-4.5, -10.5, 4.5, -10.5, 12, -5, 12, 5, 4.5, 10.5, -4.5, 10.5)
 
 [node name="JumpTrigger" type="Area2D" parent="."]
 position = Vector2(0, -50)
@@ -258,7 +255,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpTrigger"]
-position = Vector2(12.5, 0)
+position = Vector2(15, 0)
 shape = SubResource("RectangleShape2D_c8qfr")
 debug_color = Color(0.61558, 0.357686, 1, 0.42)
 
@@ -266,10 +263,16 @@ debug_color = Color(0.61558, 0.357686, 1, 0.42)
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleDetect"]
-position = Vector2(6.33333, 4.96705e-07)
-shape = SubResource("RectangleShape2D_s3drx")
-debug_color = Color(0.615686, 0.356863, 1, 0.419608)
+[node name="right" type="CollisionPolygon2D" parent="ObstacleDetect"]
+modulate = Color(0, 0.14902, 1, 1)
+position = Vector2(6, 0)
+polygon = PackedVector2Array(-1.5, 10.5, -1.5, -10.5, 6, -10.5)
+
+[node name="left" type="CollisionPolygon2D" parent="ObstacleDetect"]
+modulate = Color(0, 0.14902, 1, 1)
+position = Vector2(-3, 0)
+polygon = PackedVector2Array(-1.5, 10.5, -1.5, -10.5, -9, -10.5)
+disabled = true
 
 [node name="LineOfSight" type="RayCast2D" parent="."]
 target_position = Vector2(110, 0)

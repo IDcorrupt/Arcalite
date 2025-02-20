@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://sp0xoa4003y1"]
+[gd_scene load_steps=38 format=3 uid="uid://sp0xoa4003y1"]
 
 [ext_resource type="Texture2D" uid="uid://b1kcycve1n2tl" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/shark.png" id="1_ie5ln"]
 [ext_resource type="Script" path="res://Scripts/Game/Enemies/LightRanged.cs" id="1_qxpks"]
@@ -152,7 +152,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -196,7 +196,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die",
-"speed": 20.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -221,7 +221,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 6.0
+"speed": 15.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vekda"]
@@ -234,10 +234,7 @@ size = Vector2(5, 5)
 radius = 175.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dkn2o"]
-size = Vector2(90, 24)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3dpg3"]
-size = Vector2(24, 24)
+size = Vector2(37, 24)
 
 [node name="LightRanged" type="CharacterBody2D"]
 collision_layer = 2
@@ -292,7 +289,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpTrigger"]
-position = Vector2(23, 0)
+position = Vector2(29.5, 0)
 shape = SubResource("RectangleShape2D_dkn2o")
 debug_color = Color(0.615686, 0.356863, 1, 0.419608)
 
@@ -300,10 +297,15 @@ debug_color = Color(0.615686, 0.356863, 1, 0.419608)
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleDetect"]
-position = Vector2(34, 0)
-shape = SubResource("RectangleShape2D_3dpg3")
-debug_color = Color(0.615686, 0.356863, 1, 0.419608)
+[node name="right" type="CollisionPolygon2D" parent="ObstacleDetect"]
+modulate = Color(0, 0.14902, 1, 1)
+position = Vector2(22, 0)
+polygon = PackedVector2Array(0, -12, 0, 12, 9, -12)
+
+[node name="left" type="CollisionPolygon2D" parent="ObstacleDetect"]
+modulate = Color(0, 0.14902, 1, 1)
+position = Vector2(-22, 0)
+polygon = PackedVector2Array(0, -12, 0, 12, -9, -12)
 
 [node name="LineOfSight" type="RayCast2D" parent="."]
 target_position = Vector2(110, 0)

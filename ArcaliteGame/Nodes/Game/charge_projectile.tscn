@@ -232,7 +232,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"enemy_hit",
-"speed": 20.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -270,7 +270,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"fly",
-"speed": 20.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -314,7 +314,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"terrain_hit",
-"speed": 20.0
+"speed": 15.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vn5kn"]
@@ -331,7 +331,9 @@ script = ExtResource("1_fagxr")
 position = Vector2(-32, -1)
 rotation = -1.5708
 sprite_frames = SubResource("SpriteFrames_8l2se")
-animation = &"enemy_hit"
+animation = &"terrain_hit"
+frame = 12
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = -1.5708

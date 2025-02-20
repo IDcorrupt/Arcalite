@@ -56,9 +56,8 @@ public partial class GameScene : Node2D
 			deathTimer.Start();
 		}
 		else if (!Globals.player.GetIsDead())
-			deadtrigger = false;
-		else
 		{
+			deadtrigger = false;
 			if (Globals.gameActive && Input.IsActionJustPressed("ui_cancel"))
 			{
 				//pause ingame sequences

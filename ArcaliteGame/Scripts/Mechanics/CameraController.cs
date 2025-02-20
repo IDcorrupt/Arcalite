@@ -30,6 +30,7 @@ public partial class CameraController : Node2D
     {
         camera.PositionSmoothingEnabled = false;
         cooldownTimer.Start();
+        LockPlayer(false);
     }
 
     public void LockPlayer(bool value)

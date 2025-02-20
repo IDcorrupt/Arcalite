@@ -10,7 +10,7 @@ public partial class HeavyMelee : Enemy
         currentHP = maxHP;
         damage = 15;
         atkCooldown.WaitTime = 1;
-        jumpStrength = 600;
+        jumpStrength = 500;
     }
     protected override void Animate()
     {

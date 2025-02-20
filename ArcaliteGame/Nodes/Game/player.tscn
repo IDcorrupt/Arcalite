@@ -176,7 +176,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"crouch",
-"speed": 16.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -196,7 +196,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"dash_straight",
-"speed": 16.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -249,7 +249,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die",
-"speed": 20.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -311,7 +311,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 16.0
+"speed": 15.0
 }]
 
 [node name="Player" type="CharacterBody2D"]
@@ -329,8 +329,7 @@ texture_filter = 1
 position = Vector2(0, -2)
 scale = Vector2(0.638, 0.638)
 sprite_frames = SubResource("SpriteFrames_rhc80")
-animation = &"walk"
-frame_progress = 0.654611
+animation = &"crouch"
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": false,

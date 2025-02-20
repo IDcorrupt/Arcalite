@@ -69,38 +69,46 @@ public partial class SpellOracle : Node2D
 
     public void OnBodyEntered(Node2D body)
     {
-        GD.PrintErr(body.Name+" entered");
-        if(body is Enemy enemy)
+        if (body is Enemy enemy)
             affectedEntities.Add(enemy);
         else if(body is CasterProjectile proj)
             affectedEntities.Add(proj);
     }
     public void OnBodyExited(Node2D body)
     {
-        GD.PrintErr(body.Name+" exited");
         if (body is Enemy enemy)
+        {
+            enemy.isSlowed = false;
+            enemy.slowFactor = 1;
             GD.Print("enemy removed? " + affectedEntities.Remove((Enemy)enemy));
+        }
         else if (body is CasterProjectile proj)
+        {
+            proj.isSlowed = false;
+            proj.slowFactor = 1;
             GD.Print("projectile removed? " + affectedEntities.Remove((CasterProjectile)proj));
+        }
     }
 
     public void OnTreeExit()
     {
         foreach (Node obj in affectedEntities)
         {
-            if (obj is Enemy enemy) 
+            if (obj is Enemy enemy)
+            {
                 enemy.isSlowed = false;
-            else if(obj is CasterProjectile castproj)
+                enemy.slowFactor = 1;
+            }
+            else if (obj is CasterProjectile castproj)
+            {
                 castproj.isSlowed = false;
+                castproj.slowFactor = 1;
+            }
         }
     }
     public override void _Process(double delta)
     {
         GlobalPosition = targetPosition;
-        foreach (Node obj in affectedEntities)
-            GD.Print(obj.Name);
-
-
         if (slowDuration == 0)
         {
             slowing = false;

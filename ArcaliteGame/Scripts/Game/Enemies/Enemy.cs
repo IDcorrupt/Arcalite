@@ -42,6 +42,8 @@ public partial class Enemy : CharacterBody2D
     private Sprite2D indicator;
     private Area2D attackRange;
     private Area2D obstacleDetect;
+    private CollisionPolygon2D obstacleDetectLeft;
+    private CollisionPolygon2D obstacleDetectRight;
     private Area2D jumpTrigger;
     protected AnimatedSprite2D sprite;
 
@@ -62,10 +64,13 @@ public partial class Enemy : CharacterBody2D
         atkCooldown = GetNode<Timer>("AttackCooldown");
         hurtTimer = GetNode<Timer>("HurtTimer");
         chaseBuffer = GetNode<Timer>("ChaseBuffer");
+
         chaseBuffer.WaitTime = 3f;
         
         attackRange = GetNode<Area2D>("AttackRange");
         obstacleDetect = GetNode<Area2D>("ObstacleDetect");
+        obstacleDetectLeft = GetNode<CollisionPolygon2D>("ObstacleDetect/left");
+        obstacleDetectRight = GetNode<CollisionPolygon2D>("ObstacleDetect/right");
         jumpTrigger = GetNode<Area2D>("JumpTrigger");
 
         lineOfSight = GetNode("LineOfSight") as RayCast2D;
@@ -246,7 +251,9 @@ public partial class Enemy : CharacterBody2D
             indicator.Position = new Vector2(-6, -16);
             attackRange.RotationDegrees = 180;
             jumpTrigger.RotationDegrees = 180;
-            obstacleDetect.RotationDegrees = 180;
+            obstacleDetectRight.Disabled = true;
+            obstacleDetectLeft.Disabled = false;
+
         }
         else
         {
@@ -254,7 +261,8 @@ public partial class Enemy : CharacterBody2D
             indicator.Position = new Vector2(6, -16);
             attackRange.RotationDegrees = 0;
             jumpTrigger.RotationDegrees = 0;
-            obstacleDetect.RotationDegrees = 0;
+            obstacleDetectRight.Disabled = false;
+            obstacleDetectLeft.Disabled = true;
         }
     }
     protected virtual void Animate()

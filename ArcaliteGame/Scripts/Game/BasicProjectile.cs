@@ -30,7 +30,7 @@ public partial class BasicProjectile : CharacterBody2D
         Rotation = hitAngle;
 
 		//play explosion
-		animatedSprite.Position = new Vector2(0, 0);
+		animatedSprite.Position = new Vector2(0, -5);
         animatedSprite.Play("terrain_hit");
 	}
 	public void HitEnemy(Enemy enemy)

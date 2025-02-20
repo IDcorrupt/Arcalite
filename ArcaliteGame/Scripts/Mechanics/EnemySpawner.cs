@@ -69,7 +69,7 @@ public partial class EnemySpawner : Node2D
     {
         if (ActiveEnemy != null)
         {
-            ActiveEnemy.QueueFree();
+            ActiveEnemy.Free();
             return true;
         }
         else return false;
