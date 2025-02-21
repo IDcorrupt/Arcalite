@@ -332,9 +332,8 @@ d{
 }
 
 
-#login h2{
-    align-self: baseline;
-    margin-left: 6vw;
+#login-main{
+    flex-direction: column;
 }
 
 .login{
@@ -424,7 +423,6 @@ label{
     justify-content: space-evenly;
     flex-wrap: wrap;
     padding: 50px;
-    flex-direction: column;
 }
 
 .video{
