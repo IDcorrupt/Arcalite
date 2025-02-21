@@ -2,21 +2,14 @@ const verification_num_of_digits = 6;
 var verification_code;
 
 $(document).ready(function() {
-
-    //----------REGISZTRÁCIÓ----------
-
     $('#registerform').on('submit', register);
-
-    //----------BEJELENTKEZÉS----------
-
     $('#loginform').on('submit', login);
-
-    //----------ELFELEJTETT JELSZÓ----------
-
     $('#forgotpwd').click(forgotten_sendCode);
     $('#newpwd_verify').click(forgotten_verifyCode);
     $('#newpwd_set').click(forgotten_setNewPassword);
 });
+
+//----------REGISZTRÁCIÓ----------
 
 function register(event) {
     event.preventDefault();
@@ -51,6 +44,8 @@ function register(event) {
 
 }
 
+//----------BEJELENTKEZÉS----------
+
 function login(event) {
     event.preventDefault();
 
@@ -65,16 +60,17 @@ function login(event) {
         data: payload,
         global: false,
         success: (data) => {
-            open("index.html", "_self");
+            window.open("index.html", "_self");
             document.cookie = `userid=${data.id}; path=/; secure; SameSite=Strict`;
             document.cookie = `username=${data.username}; path=/; secure; SameSite=Strict`;
-            document.cookie = `langid=1; path=/; secure; SameSite=Strict`;
         },
         error: (data) => {
             $('#login_error').html(data.responseJSON.message);
         }
     });
 }
+
+//----------ELFELEJTETT JELSZÓ----------
 
 function forgotten_sendCode() {
     $('#newpwd_authcode_container').hide();
@@ -128,7 +124,7 @@ function forgotten_sendCode() {
 }
 
 function forgotten_verifyCode() {
-    if ($('#newpwd_authcode').val() == "" || !isFinite($('#newpwd_authcode').val())) {
+    if ($('#newpwd_authcode').val() == "" || isNaN($('#newpwd_authcode').val())) {
         alert("Adja meg az e-mailben kapott kódot!");
         return;
     }
