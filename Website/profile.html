@@ -16,6 +16,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link id="base" rel="stylesheet" href="style.css">
+
+    <script src="script/common.js"></script>
 </head>
 <body data-bs-theme="light">
     <nav class="navbar navbar-expand-md sticky-top">
@@ -29,15 +31,10 @@
                 <li class="nav-item active"><a class="nav-link" href="./index.html">Kezdőlap</a></li>
                 <li class="nav-item"><a class="nav-link" href="./wiki.html">Lexikon</a></li>
                 <li class="nav-item"><a class="nav-link" href="./ranking.html">Ranglista</a></li>
-                <li class="nav-item"><div class="dropdown">
-                    <button class="nav-link">Profil</button>
-                    <div class="dropdown-content">
-                        <a class="nav-link" href="./profile.html">Profil</a>
-                        <a class="nav-link" href="./login.html">Bejelentkezés</a>
-                        <a class="nav-link" href="./signup.html">Regisztráció</a>
-                        <a class="nav-link">Letöltés</a>
-                    </div>
-                </div></li>
+                <li class="nav-item">
+                    <a id="nav_profil" class="nav-link" href="./profile.html">Profil</a>
+                    <a id="nav_login" class="nav-link" href="./login.html">Bejelentkezés</a>
+                </li>
                 <li class="nav-item"><div class="form-check form-switch">
                     <input
                       class="form-check-input p-2"

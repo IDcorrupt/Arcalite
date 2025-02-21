@@ -7,3 +7,13 @@ function getCookie(cookieName) {
     }
     return null;
 }
+
+$(document).ready(() => {
+    if (getCookie("userid") == null) {
+        $("#nav_profil").hide();
+        $("#nav_login").show();
+    } else {
+        $("#nav_profil").show();
+        $("#nav_login").hide();
+    }
+});
