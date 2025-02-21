@@ -10,7 +10,7 @@ public partial class Enemy : CharacterBody2D
     protected float damage;
 
     //external
-    [Export] protected int namenum;
+    //[Export] protected int namenum;
     [Export] public bool isSlowed = false;
     [Export] public float slowFactor = 1;
 
@@ -21,6 +21,8 @@ public partial class Enemy : CharacterBody2D
     protected bool playerInAtkRange = false;
     protected bool isAttacking = false;
     protected bool isHurt = false;
+    protected bool lostVision = false;
+    protected bool bufferRan = true;
     
     public bool isChasing;
     public bool isRoaming = true;
@@ -186,10 +188,9 @@ public partial class Enemy : CharacterBody2D
     //attack logic
     private void AtkCooldownTimeout()
     {
-        if (playerInAtkRange)
+        if (playerInAtkRange && !player.GetIsDead())
         {
-            sprite.Frame = 0;
-            sprite.Play("attack");
+            Attack();
         }
         else
         {
@@ -215,6 +216,7 @@ public partial class Enemy : CharacterBody2D
     {
         //shell func, attack is different for each type
         isAttacking = true;
+        sprite.Play("attack");
         Velocity = Vector2.Zero;
         speed = 0;
 
@@ -267,16 +269,14 @@ public partial class Enemy : CharacterBody2D
     }
     protected virtual void Animate()
     {
-        if (isAttacking)
+        if (!isAttacking)
         {
-            sprite.Play("attack");
-        }
-        else if((IsOnFloor() && Velocity.X > 1) && !isDead)
-        {
-            sprite.Play("walk");
-        }else if(Velocity.X == 0 && !isDead)
-        {
-            sprite.Play("idle");
+            if (atkCooldown.TimeLeft > 0)
+                sprite.Play("idle");
+            else if((IsOnFloor() && Velocity.X > 1) && !isDead)
+                sprite.Play("walk");
+            else if(Velocity.X == 0 && !isDead)
+                sprite.Play("idle");
         }
     }
     public void OnSpriteAnimationFinished()
@@ -317,7 +317,7 @@ public partial class Enemy : CharacterBody2D
                 //stop moving after attacking
                 Velocity = new Vector2(0, Velocity.Y);
             }
-            else if (!isAttacking && !isHurt)
+            else if (!isAttacking)
             {
                 //if not attacking & being attacked -> move, attack if in attack range
                 Move(delta);
@@ -342,18 +342,33 @@ public partial class Enemy : CharacterBody2D
             }
         }
 
-        //update line of sight
-        lineOfSight.TargetPosition = player.GlobalPosition - GlobalPosition;
-        if (lineOfSight.IsColliding() && lineOfSight.GetCollider() is Player && !player.GetIsDead())
-            isChasing = true;
-        else if(chaseBuffer.TimeLeft == 0)
+        //strict disengage if player is dead
+        if(player.GetIsDead())
+            isChasing = false;
+        else
         {
-            chaseBuffer.Start();
+            //update line of sight
+            lineOfSight.TargetPosition = player.GlobalPosition - GlobalPosition;
+            if (lineOfSight.IsColliding() && lineOfSight.GetCollider() is Player)
+            {
+                bufferRan = false;
+                isChasing = true;
+            }
+            else
+                lostVision = true;
+            if (lostVision && !bufferRan)
+            {
+                bufferRan = true;
+                chaseBuffer.Start();
+            }
         }
+        
     }
+
 
     public override void _PhysicsProcess(double delta)
     {
+        GD.Print("chasebuffer time: " + chaseBuffer.TimeLeft);
         //modifier for oracle functionality
         if (!isSlowed)
         {
@@ -364,7 +379,4 @@ public partial class Enemy : CharacterBody2D
         MoveAndSlide();
         Animate();
     }
-
-
-
 }

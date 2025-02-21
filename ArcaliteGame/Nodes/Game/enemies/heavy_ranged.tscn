@@ -286,7 +286,7 @@ script = ExtResource("1_l1duq")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -8.5)
 sprite_frames = SubResource("SpriteFrames_jovaw")
-animation = &"walk"
+animation = &"attack"
 
 [node name="DirectionTimer" type="Timer" parent="."]
 one_shot = true
