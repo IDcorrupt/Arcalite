@@ -102,6 +102,8 @@ $(document).ready(function() {
 
                 verification_code = "";
                 for (let i = 0; i < verification_num_of_digits; i++) { verification_code += Math.floor(Math.random() * 10); }
+                
+                /* IDE KÉNE VALAMI MEGOLDÁS A KÓDRA ^^ */
                 alert(`Az email-ben megkapott kód: ${verification_code}`);
                 
                 $('#newpwd_authcode').val("");
