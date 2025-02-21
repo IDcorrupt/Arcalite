@@ -307,6 +307,11 @@ h1, h2{
     aspect-ratio: 3/4;
 }
 
+.empty{
+    background-color: #000;
+    height: 445px;
+}
+
 .control-img{
     aspect-ratio: unset !important;
 }
@@ -333,7 +338,7 @@ d{
 }
 
 .login{
-    height: 75vh;
+    height: fit-content; /*ideiglenes*/
     width: 30vw; /*for profile change*/
     min-width: 350px;
     min-height: 500px;
@@ -343,6 +348,7 @@ d{
     align-items: center;
     display: flex;
     flex-direction: column;
+
 }
 
 #login{
@@ -418,6 +424,7 @@ label{
     justify-content: space-evenly;
     flex-wrap: wrap;
     padding: 50px;
+    flex-direction: column;
 }
 
 .video{
