@@ -369,16 +369,24 @@ d{
 
 .profiletab{
     display: block;
-    width: 100%;
-}
-.profile:last-child{
     width: 70%;
+    height: 100%;
 }
 
 .profile-img{
-    max-width: 20%;
     aspect-ratio: 3/4;
     margin: auto;
+    width: 100%;
+}
+
+.profile-details{
+    height: 100%;
+    width: 32%;
+    text-align: center;
+}
+
+#profile-mid{
+    margin: 2%;
 }
 
 .profile h2{

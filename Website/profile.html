@@ -55,7 +55,7 @@
     <main class="flex-container profilemain">
         <div class="profile profiletab">
             <h3>Felhasználónév</h3>
-
+            <p>Mérföldkövek: N/N</p>
             <div class="tab">
                 <button class="tablinks" id="defaultOpen" onclick="openRank(event, 'Character1')">Character1</button>
                 <button class="tablinks" onclick="openRank(event, 'Character2')">Character2</button>
@@ -63,23 +63,28 @@
             
             <!-- Tab content -->
             <div id="Character1" class="profile tabcontent">
-                <div>
-                <img class="profile-img" src="./img/index.png">
+                <div class="profile-details">
+                    <img class="profile-img" src="./img/index.png">
                 </div>
-                <div>
-                <p>Szoba: </p>
-                <p>Mérföldkövek: 0/N</p>
+                <div class="profile-details" id="profile-mid">
+                    <p>Szoba: </p>
+                </div>
+                <div class="profile-details">
+                    <p>Életpont: </p>
+                    <p>Mana: </p>
                 </div>
             </div>
             
             <div id="Character2" class="profile tabcontent">
-                <div>
+                <div class="profile-details">
                     <img class="profile-img" src="./img/index.png">
                 </div>
-                <div>
+                <div class="profile-details" id="profile-mid">
                     <p>Szoba: </p>
-                    <p>Mérföldkövek: 0/N</p>
-                    <p>ez egy másik tab eskü</p>
+                </div>
+                <div class="profile-details">
+                    <p>Életpont: </p>
+                    <p>Mana: aaa a a a a a a a a a </p>
                 </div>
             </div>
             
