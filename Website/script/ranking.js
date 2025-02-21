@@ -3,13 +3,11 @@ var lastOrdered = null;
 var currentTable = null;
 
 $(document).ready(function() {
-    console.log("meghívva")
     FetchRankings("Profile");
     FetchRankings("GameThrough");
 });
 
 function FetchRankings(type) {
-    console.log("fgv meghívva")
     let payload = {
         type: type,
         langid: getCookie("langid")
@@ -21,7 +19,6 @@ function FetchRankings(type) {
         data: payload,
         global: false,
         success: (data) => {
-            console.log(data);
             FillTable(type, data);
         },
         error: (data) => {
@@ -58,7 +55,6 @@ function FillTable(type, data) {
                     </tr>`);
             }
             break;
-    
     }
     
 }

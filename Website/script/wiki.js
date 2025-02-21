@@ -1,4 +1,13 @@
 $(document).ready(function() {
+    if (getCookie("userid") == null) {
+        $("#itemcount").text("");
+        $("#enemycount").text("");
+        for (let i = 0; i < 3; i++) {
+            $("#items").append(`<div class="card empty"></div>`);
+            $("#enemies").append(`<div class="card empty"></div>`);
+        }
+        return;
+    }
     FetchData("STATISTICS");
     FetchData("ITEM");
     FetchData("ENEMY");
