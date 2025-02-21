@@ -523,6 +523,10 @@ tr:first-child{
     font-weight: 700;
 }
 
+#profileFunctions {
+    margin-bottom: 10px;
+}
+
 
 @media (max-width: 768px) { /* medium screen */
 
