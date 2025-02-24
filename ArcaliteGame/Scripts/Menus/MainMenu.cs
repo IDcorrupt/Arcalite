@@ -15,6 +15,7 @@ public partial class MainMenu : Control
     private PackedScene submenuWebsite = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/submenuWebsite.tscn");
     private PackedScene submenuUser = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/submenuUser.tscn");
 
+    private TileMapLayer background;
     public override void _Ready()
     {
         Start = GetNode<Button>("Start");
@@ -26,6 +27,8 @@ public partial class MainMenu : Control
         Website.Pressed += WebsitePressed;
         Quit.Pressed += QuitPressed;
         
+        background = GetNode("bg") as TileMapLayer;
+        background.TileSet = TilesetLoader.LoadedTileset;
     }
 
 
@@ -53,6 +56,8 @@ public partial class MainMenu : Control
     }
     public override void _Process(double delta)
     {
+        if (TilesetLoader.LoadedTileset != null)
+            background.TileSet = TilesetLoader.LoadedTileset;
         if (submenuOpen)
         {
             Start.Visible = false;

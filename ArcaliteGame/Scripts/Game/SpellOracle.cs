@@ -10,16 +10,16 @@ public partial class SpellOracle : Node2D
     [Export] public float slowFactor;
 
     private bool slowing = false;
-    private float slowDuration = 10;
     private List<Node> affectedEntities = new List<Node>();
 
-
+    Timer durationTimer;
     AnimatedSprite2D sprite;
     Area2D area;
     public override void _Ready()
     {
         sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         area = GetNode<Area2D>("Area2D");
+        durationTimer = GetNode("Duration") as Timer;
         sprite.Play("cast");   
     }
 
@@ -34,21 +34,21 @@ public partial class SpellOracle : Node2D
             switch (level)
             {
                 case 1:
-                    slowDuration = 10;
+                    durationTimer.WaitTime = 5;
                     break;
                 case 2:
-                    slowDuration = 20;
+                    durationTimer.WaitTime = 10;
                     break;
                 case 3:
-                    slowDuration = 30;
+                    durationTimer.WaitTime = 15;
                     break;
                 case 4:
-                    slowDuration = 40;
+                    durationTimer.WaitTime = 20;
                     break;
                 default:
                     break;
             }
-
+            durationTimer.Start();
         }
         else if(sprite.Animation == "sustained_start")
         {
@@ -56,17 +56,15 @@ public partial class SpellOracle : Node2D
         }
         else if(sprite.Animation == "sustained_end")
         {
-            QueueFree();
-        }
-    }
-    public void OnAnimationLooped()
-    {
-        if (slowing)
-        {
-            slowDuration -= 1;
+            TreeExit();
         }
     }
 
+    public void OnDurationTimeout()
+    {
+        slowing = false;
+        sprite.Play("sustained_end");
+    }
     public void OnBodyEntered(Node2D body)
     {
         if (body is Enemy enemy)
@@ -90,7 +88,7 @@ public partial class SpellOracle : Node2D
         }
     }
 
-    public void OnTreeExit()
+    private void TreeExit()
     {
         foreach (Node obj in affectedEntities)
         {
@@ -105,15 +103,12 @@ public partial class SpellOracle : Node2D
                 castproj.slowFactor = 1;
             }
         }
+        QueueFree();
     }
     public override void _Process(double delta)
     {
+        GD.Print("duration timer: " + durationTimer.TimeLeft);
         GlobalPosition = targetPosition;
-        if (slowDuration == 0)
-        {
-            slowing = false;
-            sprite.Play("sustained_end");
-        }
         if (slowing)
         {
             switch (level)

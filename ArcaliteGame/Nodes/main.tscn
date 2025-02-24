@@ -3,4 +3,5 @@
 [ext_resource type="Script" path="res://Scripts/MainNode.cs" id="1_723er"]
 
 [node name="MainNode" type="Node2D"]
+position = Vector2(320, 180)
 script = ExtResource("1_723er")

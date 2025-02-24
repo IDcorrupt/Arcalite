@@ -221,21 +221,28 @@ public partial class Enemy : CharacterBody2D
         speed = 0;
 
     }
-    public virtual void Hit(float damage, Vector2 hitVector)
+    public virtual void Hit(float damage, Node2D attacker)
     {
         if (!isDead && !isHurt)
         {
             isHurt = true;
             currentHP -= damage;
-            if(hitVector != Vector2.Zero)
+            if(attacker != null)
             {
                 //knockback
-                Velocity = hitVector;
+                int dir = 0;
+                if ((GlobalPosition - attacker.GlobalPosition).Normalized().X > 0)
+                    dir = 1;
+                else if ((GlobalPosition - attacker.GlobalPosition).Normalized().X < 0)
+                    dir = -1;
+                Velocity = new Vector2(dir * 200, 0);
+
+
                 hurtTimer.WaitTime = 1;
             }
             else
             {
-                hurtTimer.WaitTime = 0.5f;
+                hurtTimer.WaitTime = 0.2f;
             }
             hurtTimer.Start();
         }
@@ -368,7 +375,6 @@ public partial class Enemy : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        GD.Print("chasebuffer time: " + chaseBuffer.TimeLeft);
         //modifier for oracle functionality
         if (!isSlowed)
         {

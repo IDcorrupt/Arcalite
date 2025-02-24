@@ -1,8 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://ct5ut31hpqlw5"]
+[gd_scene load_steps=31 format=3 uid="uid://ct5ut31hpqlw5"]
 
 [ext_resource type="Texture2D" uid="uid://c7lhjm65dxbws" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 4/184.png" id="1_isjag"]
 [ext_resource type="Script" path="res://Scripts/Game/SpellOracle.cs" id="1_tfgop"]
 [ext_resource type="Texture2D" uid="uid://n7261op5ga55" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 12/586.png" id="2_1coxv"]
+[ext_resource type="Texture2D" uid="uid://cmv8crqt0wbob" path="res://Assets/empty.png" id="4_uaj51"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5pnbs"]
 atlas = ExtResource("1_isjag")
@@ -152,6 +153,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_821ck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_uaj51")
 }],
 "loop": false,
 "name": &"sustained_end",
@@ -199,7 +203,6 @@ animations = [{
 radius = 33.0
 
 [node name="Oracle" type="Node2D"]
-scale = Vector2(2, 2)
 script = ExtResource("1_tfgop")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -214,7 +217,10 @@ collision_mask = 18
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_2eidv")
 
+[node name="Duration" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnAnimationFinished"]
-[connection signal="animation_looped" from="AnimatedSprite2D" to="." method="OnAnimationLooped"]
 [connection signal="body_entered" from="Area2D" to="." method="OnBodyEntered"]
 [connection signal="body_exited" from="Area2D" to="." method="OnBodyExited"]
+[connection signal="timeout" from="Duration" to="." method="OnDurationTimeout"]

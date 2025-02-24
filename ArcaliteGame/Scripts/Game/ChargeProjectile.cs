@@ -34,13 +34,7 @@ public partial class ChargeProjectile : CharacterBody2D
     public void HitEnemy(Enemy enemy)
     {
         //damage stuff
-        int dir = 0;
-        if ((enemy.GlobalPosition - GlobalPosition).Normalized().X > 0)
-            dir = 1;
-        else if ((enemy.GlobalPosition - GlobalPosition).Normalized().X < 0)
-            dir = -1;
-        Vector2 hitVector = new Vector2(dir * 200, 0);
-        enemy.Hit(damagePayload, hitVector);
+        enemy.Hit(damagePayload, this);
 
         //animation
         animatedSprite.Position = new Vector2(0, 0);

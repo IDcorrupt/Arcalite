@@ -296,7 +296,7 @@ public partial class Player : CharacterBody2D
             MaxMP = 100;
             currentHP = MaxHP;
             currentMP = MaxMP;
-            damage = 10;
+            damage = 5;
             oracleLevel = 2;
 
             //cooldowns
