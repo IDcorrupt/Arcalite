@@ -29,11 +29,13 @@ function FetchRankings(type) {
 }
 
 function FillTable(type, data) {
+    let username = getCookie("username");
     switch(type) {
         case "Profile":
             for (let i=0; i < data.length; i++) {
+                let format = (username == data[i].Felhasználónév) ? "userrow" : "";
                 $(`#${type} tbody`).append(
-                    `<tr>
+                    `<tr class="${format}">
                         <td>${data[i].Felhasználónév}</td>
                         <td>${data[i].Játékidő}</td>
                         <td>${data[i].Elért_mérföldkövek}</td>
@@ -43,8 +45,9 @@ function FillTable(type, data) {
             break;
         case "GameThrough":
             for (let i=0; i < data.length; i++) {
+                let format = (username == data[i].Profil) ? "userrow" : "";
                 $(`#${type} tbody`).append(
-                    `<tr>
+                    `<tr class="${format}">
                         <td>${data[i].Profil}</td>
                         <td>${data[i].Karakter}</td>
                         <td>${data[i].Avatár}</td>
