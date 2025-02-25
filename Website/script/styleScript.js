@@ -67,5 +67,5 @@ function openRank(evt, base) {
 
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(base).style.display = "flex";
-    evt.currentTarget.className += " active";
+    evt.target.className += " active";
 }

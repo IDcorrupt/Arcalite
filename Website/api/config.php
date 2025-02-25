@@ -19,7 +19,9 @@ function ReturnResult($result_array, $code = 200) {
 }
 
 function ReturnQuery($sql) {
-    require "connection.php";
+    global $db;
+    require_once "connection.php";
+
     $result = $db->query($sql);
     
     if (!$result) {    

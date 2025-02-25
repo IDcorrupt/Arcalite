@@ -8,14 +8,6 @@ function getCookie(cookieName) {
     return null;
 }
 
-function logout() {
-    if (confirm("Biztosan ki szeretne jelentkezni?")) {
-        document.cookie = "  userid=; path=/; expires="+ new Date(1970, 1, 1);
-        document.cookie = "username=; path=/; expires="+ new Date(1970, 1, 1);
-        window.open("index.html", "_self");
-    }
-}
-
 $(document).ready(() => {
     //lang csak ideiglenesen van itt, majd át lehet rakni nyelvválasztóba
     document.cookie = `langid=1; path=/; secure; SameSite=Strict`;
