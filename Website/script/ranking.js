@@ -3,6 +3,7 @@ var lastOrdered = null;
 var currentTable = null;
 
 $(document).ready(function() {
+    document.getElementById("defaultOpen").click();
     FetchRankings("Profile");
     FetchRankings("GameThrough");
 });

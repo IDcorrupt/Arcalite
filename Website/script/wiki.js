@@ -52,7 +52,7 @@ function writeStats(data) {
 
 function showItems(data) {
     for (let i = 0; i < data.length; i++) {
-        let offcanvasId = `itemOffcanvas_${data[i].id}`; // Unique ID for each offcanvas
+        let offcanvasId = `itemOffcanvas_${data[i].id}`;
 
         $("#items").append(`
             <div class="card item-card" data-bs-toggle="offcanvas" data-bs-target="#${offcanvasId}" data-item="${data[i].name}">

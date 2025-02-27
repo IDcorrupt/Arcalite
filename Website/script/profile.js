@@ -18,7 +18,6 @@ $(document).ready(() => {
         data: payload,
         global: false,
         success: (data) => {
-            console.log(data);
             FillTabs(data);
         },
         error: (data) => {

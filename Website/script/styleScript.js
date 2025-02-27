@@ -48,7 +48,6 @@ function themeChange() {
     element.dataset.bsTheme == "light" ? "dark" : "light";
 }
 
-document.getElementById("defaultOpen").click();
 function openRank(evt, base) {
     // Declare all variables
     var i, tabcontent, tablinks;
