@@ -43,9 +43,15 @@ document.querySelectorAll(".item-card").forEach(card => {
 });
 
 function themeChange() {
-    var element = document.body;
-    element.dataset.bsTheme =
-    element.dataset.bsTheme == "light" ? "dark" : "light";
+    let newTheme = getCookie("theme") == "light" ? "dark" : "light";
+    document.cookie = `theme=${newTheme}; path=/; secure; SameSite=Strict`;
+    setTheme();
+}
+
+function setTheme() {
+    let currentTheme = getCookie("theme");
+    document.body.dataset.bsTheme = currentTheme;
+    document.getElementById("flexSwitchCheckChecked").checked = currentTheme == "light";
 }
 
 function openRank(evt, base) {
