@@ -28,6 +28,8 @@ $(document).ready(() => {
 });
 
 function FillTabs(data) {
+    $("#h3_username").text(getCookie("username"));
+    
     $("#characterTabs").html("");
     $("#characterContents").html("");
 

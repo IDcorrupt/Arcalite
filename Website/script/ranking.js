@@ -38,9 +38,9 @@ function FillTable(type, data) {
                 $(`#${type} tbody`).append(
                     `<tr class="${format}">
                         <td>${data[i].Felhasználónév}</td>
-                        <td>${data[i].Játékidő}</td>
-                        <td>${data[i].Elért_mérföldkövek}</td>
-                        <td>${data[i].Végigjátszások}</td>
+                        <td class="text-center">${data[i].Játékidő}</td>
+                        <td class="text-center">${data[i].Elért_mérföldkövek}</td>
+                        <td class="text-center">${data[i].Végigjátszások}</td>
                     </tr>`);
             }
             break;
@@ -52,10 +52,10 @@ function FillTable(type, data) {
                         <td>${data[i].Profil}</td>
                         <td>${data[i].Karakter}</td>
                         <td>${data[i].Avatár}</td>
-                        <td>${data[i].Játékidő}</td>
-                        <td>${data[i].Elért_szint}</td>
-                        <td>${data[i].Felfedezett_ellenfelek}</td>
-                        <td>${data[i].Felfedezett_tárgyak}</td>
+                        <td class="text-center">${data[i].Játékidő}</td>
+                        <td class="text-center">${data[i].Elért_szint}</td>
+                        <td class="text-center">${data[i].Felfedezett_ellenfelek}</td>
+                        <td class="text-center">${data[i].Felfedezett_tárgyak}</td>
                     </tr>`);
             }
             break;
