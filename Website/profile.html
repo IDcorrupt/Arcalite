@@ -19,7 +19,7 @@
 
     <script src="script/jquery-3.7.1.min.js"></script>
     <script src="script/common.js"></script>
-    <script src="script/profile.js"></script>
+    <script src="script/profile.js" defer></script>
 </head>
 <body data-bs-theme="light">
     <nav class="navbar navbar-expand-md sticky-top">
@@ -60,37 +60,10 @@
             </div>
 
             <div id="characterTabs" class="tab">
-                <button class="tablinks" id="defaultOpen" onclick="openRank(event, 'Character1')">Character1</button>
-                <button class="tablinks" onclick="openRank(event, 'Character2')">Character2</button>
             </div>
             
             <!-- Tab content -->
             <div id="characterContents">
-                <div id="Character1" class="profile tabcontent">
-                    <div class="profile-details">
-                        <img class="profile-img" src="./img/index.png">
-                    </div>
-                    <div class="profile-details" id="profile-mid">
-                        <p>Szoba: </p>
-                    </div>
-                    <div class="profile-details">
-                        <p>Életpont: </p>
-                        <p>Mana: </p>
-                    </div>
-                </div>
-                
-                <div id="Character2" class="profile tabcontent">
-                    <div class="profile-details">
-                        <img class="profile-img" src="./img/index.png">
-                    </div>
-                    <div class="profile-details" id="profile-mid">
-                        <p>Szoba: </p>
-                    </div>
-                    <div class="profile-details">
-                        <p>Életpont: </p>
-                        <p>Mana: aaa a a a a a a a a a </p>
-                    </div>
-                </div>
             </div>
             
         </div>
