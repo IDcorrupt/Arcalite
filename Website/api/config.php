@@ -1,11 +1,11 @@
 <?php
-function ReturnError($code = 500, $message = "") {
-    header("Content-Type: application/json");    
+function ReturnMessage($code = 500, $message = "") {
+    header("Content-Type: application/json; charset=utf-8");    
     $return = array(
         "code" => $code,
         "message" => $message
     );
-    echo json_encode($return, JSON_PRETTY_PRINT);
+    echo json_encode($return);
     http_response_code($code);
     die();
 }
@@ -25,7 +25,7 @@ function ReturnQuery($sql) {
     $result = $db->query($sql);
     
     if (!$result) {    
-        ReturnError(500, "Hiba az SQL lekérdezésben: (Hibakód: $db->errno) $db->error");
+        ReturnMessage(500, "Hiba az SQL lekérdezésben: (Hibakód: $db->errno) $db->error");
     }
     
     ReturnResult($result->fetch_all(MYSQLI_ASSOC));
@@ -33,10 +33,10 @@ function ReturnQuery($sql) {
 
 function checkValidity($method, ...$fields) {
     if ($_SERVER['REQUEST_METHOD'] != $method) {
-        ReturnError(405, "Hiba az API-hívásban.");
+        ReturnMessage(405, "Hiba az API-hívásban.");
     }
     if (!hasProperFields($fields)) {
-        ReturnError(400, "Hiba az API-hívásban.");
+        ReturnMessage(400, "Hiba az API-hívásban.");
     }
 }
 

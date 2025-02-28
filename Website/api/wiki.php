@@ -59,7 +59,7 @@ switch($_GET['request_type']) {
                 (SELECT COUNT(*) FROM item) AS `itemAll`;";
         break;
     default:
-        ReturnError(400, "Hiba az API-hívásban.");
+        ReturnMessage(400, "Hiba az API-hívásban.");
 }
 
 ReturnQuery($sql);

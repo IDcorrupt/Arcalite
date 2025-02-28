@@ -22,7 +22,7 @@
     --bg: url("./img/dark.png");
     --bg-element: ;
     --acc1:#514663d1 ;
-    --acc2: ;
+    --acc2: #4b3f5fd1;
     --menu: #858585;
     --menu-gradient: #c5c5dd;
 }
@@ -296,6 +296,11 @@ h3{
     color: var(--font3);
 }
 
+h4 {
+    color: var(--font3);
+    margin-top: 20px;
+}
+
 h1, h2{
     text-shadow: 
         -1px -1px 0 #858585,  
@@ -474,6 +479,10 @@ label{
 
 #profileFunctions {
     margin-bottom: 10px;
+    padding: 5px;
+}
+#profileFunctions div {
+    padding: 5px;
 }
 
 
@@ -568,18 +577,18 @@ table{
     background-color: var(--acc1);
     user-select: none;
     table-layout: auto;
+    scrollbar-width: 5px;
+}
+
+th, td {
+    border: 1px solid var(--font2);
 }
 
 th{
-    border: 1px solid black;
-    font-weight: unset;
-    cursor: pointer;
+    background-color: var(--acc2);
     text-align: center;
+    cursor: pointer;
     padding: 13px 0;
-}
-
-tr:first-child{
-    font-weight: 700;
 }
 
 .userrow {
@@ -588,6 +597,17 @@ tr:first-child{
 
 
 /*--------------------RESPONSIVITY--------------------*/
+
+
+@media (max-width: 840px) {    
+    /*----------TABLES----------*/
+
+    table {
+        display: block;
+        overflow-x: scroll;
+        scrollbar-width: thin;
+    }
+}
 
 @media (max-width: 768px) { /* medium screen */
 
@@ -662,15 +682,11 @@ tr:first-child{
         width: 100%;
     }
 
-    
     /*----------TABLES----------*/
 
-    table {
-        display: block;
-        overflow-x: visible;
-        white-space: nowrap;
+    td:not(.text-center) {
+        text-align: left;
     }
-
 
     /*----------PROFLE, LOGIN, REGISTER----------*/
 

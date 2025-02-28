@@ -43,7 +43,7 @@ function FillTable(type, data) {
                         <td class="text-center">${data[i].Végigjátszások}</td>
                     </tr>`);
             }
-            break;
+        break;
         case "GameThrough":
             for (let i=0; i < data.length; i++) {
                 let format = (username == data[i].Profil) ? "userrow" : "";
@@ -58,7 +58,7 @@ function FillTable(type, data) {
                         <td class="text-center">${data[i].Felfedezett_tárgyak}</td>
                     </tr>`);
             }
-            break;
+        break;
     }
     
 }
