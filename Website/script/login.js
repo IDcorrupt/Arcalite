@@ -110,7 +110,8 @@ function forgotten_sendCode() {
             for (let i = 0; i < verification_num_of_digits; i++) { verification_code += Math.floor(Math.random() * 10); }
             
             /* IDE KÉNE VALAMI MEGOLDÁS A KÓDRA ^^ */
-            alert(`Az email-ben megkapott kód: ${verification_code}`);
+            //alert(`Az email-ben megkapott kód: ${verification_code}`);
+            sendVerificationEmail(data.email, data.username, verification_code)
             
             $('#login_base').hide();
             $('#newpwd_authcode').val("");
@@ -119,6 +120,31 @@ function forgotten_sendCode() {
         },
         error: (data) => {
             $('#login_error').html(data.message);
+        }
+    })
+}
+
+function sendVerificationEmail(email, name, code) {
+    let payload = {
+        service_id: "service_0bn5ksk",
+        template_id: "template_5phw0br",
+        user_id: "zXoo2LhCRJHkRSH4q",
+        template_params: {
+            'to_name': name,
+            'to_email':email,
+            'message': code
+        }
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "https://api.emailjs.com/api/v1.0/email/send",
+        data: JSON.stringify(payload),
+        contentType: "application/json",
+        global: false,
+        error: (data) => {
+            alert("E-mail elküldése sikertelen!");
+            console.error(data);  
         }
     })
 }
