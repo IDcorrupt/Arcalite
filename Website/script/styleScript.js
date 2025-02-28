@@ -51,7 +51,7 @@ function themeChange() {
 function setTheme() {
     let currentTheme = getCookie("theme");
     document.body.dataset.bsTheme = currentTheme;
-    document.getElementById("flexSwitchCheckChecked").checked = currentTheme == "light";
+    document.getElementById("flexSwitchCheckChecked").checked = currentTheme != "dark";
 }
 
 function openRank(evt, base) {

@@ -16,7 +16,7 @@ $result = $db->query($query);
 $num_of_users = intval($result->fetch_assoc()['db']);
 
 if ($num_of_users > 0) {
-    ReturnError(409, "Már van fiók regisztrálva ehhez az e-mail címhez!");
+    ReturnMessage(409, "Már van fiók regisztrálva ehhez az e-mail címhez!");
 }
 
 
@@ -25,7 +25,7 @@ $result = $db->query(query: $query);
 $num_of_users = intval($result->fetch_assoc()['db']);
 
 if ($num_of_users > 0) {
-    ReturnError(409, "Már van fiók ilyen felhasználónévvel!");
+    ReturnMessage(409, "Már van fiók ilyen felhasználónévvel!");
 }
 
 
@@ -33,7 +33,7 @@ $query = "INSERT INTO `profile` (`username`, `email`, `password`) VALUES ('$user
 $result = $db->query($query);
 
 if (!$result) {
-    ReturnError(500, "Hiba az adatok feltöltése közben.");
+    ReturnMessage(500, "Hiba az adatok feltöltése közben.");
 }
 
 

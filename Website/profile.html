@@ -55,9 +55,21 @@
         <div class="profile profiletab">
             <h3 id="h3_username">Felhasználónév</h3>
 
+            <h4>Profilműveletek</h4>
             <div id="profileFunctions">
-                <button type="button" class="btn btn-danger" id="logout" onclick="logout()">Kijelentkezés</button>
+                <div>
+                    <button type="button" class="btn btn-primary" id="newName" onclick="changeName()">Név megváltoztatása</button>
+                    <button type="button" class="btn btn-primary" id="newEmail" onclick="changeEmail()">E-mail cím megváltoztatása</button>
+                    <button type="button" class="btn btn-primary" id="newPassword" onclick="changePassword()">Jelszó megváltoztatása</button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-danger" id="logout" onclick="askLogout()">Kijelentkezés</button>
+                    <button type="button" class="btn btn-danger" id="delete" onclick="">Profil törlése</button>
+                </div>
             </div>
+
+            
+            <h4>Karakterek</h4>
 
             <div id="characterTabs" class="tab">
             </div>
