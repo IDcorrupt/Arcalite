@@ -3,6 +3,7 @@ var lastOrdered = null;
 var currentTable = null;
 
 $(document).ready(function() {
+    document.getElementById("defaultOpen").click();
     FetchRankings("Profile");
     FetchRankings("GameThrough");
 });
@@ -29,32 +30,35 @@ function FetchRankings(type) {
 }
 
 function FillTable(type, data) {
+    let username = getCookie("username");
     switch(type) {
         case "Profile":
             for (let i=0; i < data.length; i++) {
+                let format = (username == data[i].Felhasználónév) ? "userrow" : "";
                 $(`#${type} tbody`).append(
-                    `<tr>
+                    `<tr class="${format}">
                         <td>${data[i].Felhasználónév}</td>
-                        <td>${data[i].Játékidő}</td>
-                        <td>${data[i].Elért_mérföldkövek}</td>
-                        <td>${data[i].Végigjátszások}</td>
+                        <td class="text-center">${data[i].Játékidő}</td>
+                        <td class="text-center">${data[i].Elért_mérföldkövek}</td>
+                        <td class="text-center">${data[i].Végigjátszások}</td>
                     </tr>`);
             }
-            break;
+        break;
         case "GameThrough":
             for (let i=0; i < data.length; i++) {
+                let format = (username == data[i].Profil) ? "userrow" : "";
                 $(`#${type} tbody`).append(
-                    `<tr>
+                    `<tr class="${format}">
                         <td>${data[i].Profil}</td>
                         <td>${data[i].Karakter}</td>
                         <td>${data[i].Avatár}</td>
-                        <td>${data[i].Játékidő}</td>
-                        <td>${data[i].Elért_szint}</td>
-                        <td>${data[i].Felfedezett_ellenfelek}</td>
-                        <td>${data[i].Felfedezett_tárgyak}</td>
+                        <td class="text-center">${data[i].Játékidő}</td>
+                        <td class="text-center">${data[i].Elért_szint}</td>
+                        <td class="text-center">${data[i].Felfedezett_ellenfelek}</td>
+                        <td class="text-center">${data[i].Felfedezett_tárgyak}</td>
                     </tr>`);
             }
-            break;
+        break;
     }
     
 }

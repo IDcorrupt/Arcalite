@@ -8,30 +8,54 @@ $langid = $_GET['langid'];
 
 switch ($_GET["type"]) {
     case "Profile":
-        $sql = "SELECT
+        $sql = "WITH
+                achs AS (
+                    SELECT profileid AS id, COUNT(achievementid) AS count
+                    FROM proach
+                    GROUP BY profileid
+                ),
+                games AS (
+                    SELECT profile.id AS id, COUNT(*) AS count
+                    FROM profile LEFT JOIN player ON profile.id = player.profileid
+                    WHERE player.levelid = (SELECT MAX(id) FROM level)
+                    GROUP BY profile.id
+                )
+                
+                SELECT
                     profile.username AS `Felhasználónév`,
                     profile.played AS `Játékidő`,
-                    COUNT(proach.achievementid) AS `Elért_mérföldkövek`,
-                    COUNT(CASE WHEN player.levelid = (SELECT MAX(id) FROM level) THEN player.id END) AS `Végigjátszások`
+                    COALESCE(achs.count, 0) AS `Elért_mérföldkövek`,
+                    COALESCE(games.count, 0) AS `Végigjátszások`
                 FROM 
                     profile 
-                    LEFT JOIN proach ON profile.id = proach.profileid
-                    LEFT JOIN player ON profile.id = player.profileid
-                GROUP BY profile.id;";
+                    LEFT JOIN achs ON profile.id = achs.id
+                    LEFT JOIN games ON profile.id = games.id;";
         break;
     case "GameThrough":
-        $sql = "SELECT
+        $sql = "WITH 
+                enemies AS (
+                    SELECT playerid AS id, COUNT(enemyid) AS count
+                    FROM enemplay
+                    GROUP BY playerid
+                ),
+                items AS (
+                    SELECT playerid AS id, COUNT(itemid) AS count
+                    FROM itemplay
+                    GROUP BY playerid
+                )
+                
+                SELECT
                     player.name AS `Karakter`,
                     profile.username AS `Profil`,
                     avatardesc.name AS `Avatár`,
                     player.playtime AS `Játékidő`,
                     player.levelid AS `Elért_szint`,
-                    COUNT(enemplay.enemyid) AS `Felfedezett_ellenfelek`,
-                    COUNT(itemplay.itemid) AS `Felfedezett_tárgyak`
+                    COALESCE(enemies.count, 0) AS `Felfedezett_ellenfelek`,
+                    COALESCE(items.count, 0) AS `Felfedezett_tárgyak`
                 FROM 
                     player
-                    LEFT JOIN enemplay ON enemplay.playerid = player.id
-                    LEFT JOIN itemplay ON itemplay.playerid = player.id
+                    LEFT JOIN enemies ON enemies.id = player.id
+                    LEFT JOIN items ON items.id = player.id
                     INNER JOIN profile ON player.profileid = profile.id
                     INNER JOIN avatar ON player.avatarid = avatar.id
                     INNER JOIN avatardesc ON avatardesc.avatarid = avatar.id

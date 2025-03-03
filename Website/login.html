@@ -15,19 +15,26 @@
         <a href="./index.html">Vissza  a főoldalra</a>        
         <div class="login profile" id="registerdiv" style="display: none;">
             <h2>Regisztráció</h2>
-            <form id="registerform">
-                <label for="reg_username">Felhasználónév: </label>
-                <input type="text" id="reg_username" required>
-                <label for="reg_email">E-mail:</label>
-                <input type="email" id="reg_email" required>
-                <label for="reg_password">Jelszó: </label>
-                <input type="password" id="reg_password" required>
-                <label for="reg_passwordagain">Jelszó újra: </label>
-                <input type="password" id="reg_passwordagain" required>
-                <p id="pwdagain_error" hidden>Nem egyezik a fentebb megadott jelszóval!</p>
-                <input type="submit" id="register_btn" value="Regisztrál">
-                <p id="register_error"></p>
-            </form>
+            <div id="register_base">
+                <form id="registerform">
+                    <label for="reg_username">Felhasználónév: </label>
+                    <input type="text" id="reg_username" required>
+                    <label for="reg_email">E-mail:</label>
+                    <input type="email" id="reg_email" required>
+                    <label for="reg_password">Jelszó: </label>
+                    <input type="password" id="reg_password" required>
+                    <label for="reg_passwordagain">Jelszó újra: </label>
+                    <input type="password" id="reg_passwordagain" required>
+                    <p id="pwdagain_error" hidden>Nem egyezik a fentebb megadott jelszóval!</p>
+                    <input type="submit" id="register_btn" value="Regisztrál">
+                    <p id="register_error"></p>
+                </form>
+            </div>
+            <div id="register_verification" hidden>
+                <label for="register_code">Adja meg az e-mailben kapott kódot:</label>
+                <input type="text" id="register_code">
+                <input type="submit" id="register_verify" value="Kód ellenőrzése">
+            </div>
             <p>Már van fiókja? <a href="#" onclick="switchToLogin()">Jelentkezzen be</a></p>
         </div>
         <div class="login profile" id="logindiv">

@@ -22,7 +22,7 @@
     --bg: url("./img/dark.png");
     --bg-element: ;
     --acc1:#514663d1 ;
-    --acc2: ;
+    --acc2: #4b3f5fd1;
     --menu: #858585;
     --menu-gradient: #c5c5dd;
 }
@@ -31,6 +31,9 @@ html{
     scrollbar-width: none; /*no scrollbar for Firefox*/
     overflow-x: hidden;
 }
+
+
+/*--------------------KEYBOARD KEYS--------------------*/
 
 /* Hide scrollbar for webkit browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
@@ -69,9 +72,9 @@ html{
       0px 2px 1px rgba(0, 0, 0, 0.3),
       0px 2px 1px rgba(255, 255, 255, 0.1);
     transform: perspective(70px) rotateX(5deg) rotateY(0deg);
-  }
-  
-  .key-button::after {
+}
+
+.key-button::after {
     content: '';
     position: absolute;
     top: 0;
@@ -82,11 +85,11 @@ html{
     z-index: -1;
     border-radius: 15px;
     box-shadow: inset 4px 0px 0px rgba(255, 255, 255, 0.1),
-      inset 4px -8px 0px rgba(0, 0, 0, 0.3);
+        inset 4px -8px 0px rgba(0, 0, 0, 0.3);
     transition: all .1s ease-in-out 0s;
-  }
-  
-  .key-button::before {
+}
+
+.key-button::before {
     content: '';
     position: absolute;
     top: 0;
@@ -94,32 +97,32 @@ html{
     left: 0;
     right: 0;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
     background-position: bottom right, bottom right;
     background-size: 100% 100%, 100% 100%;
     background-repeat: no-repeat;
     z-index: -1;
     border-radius: 15px;
     transition: all .1s ease-in-out 0s;
-  }
-  
-  .key-button:active {
+}
+
+.key-button:active {
     will-change: transform;
     transform: perspective(80px) rotateX(5deg) rotateY(1deg) translateY(3px) scale(0.96);
     height: 64px;
     border: 0.25px solid rgba(0, 0, 0, 0.2);
     box-shadow: inset -4px -8px 0px rgba(255, 255, 255, 0.2),
-      inset -4px -6px 0px rgba(0, 0, 0, 0.8),
-      0px 1px 0px rgba(0, 0, 0, 0.9),
-      0px 1px 0px rgba(255, 255, 255, 0.2);
+        inset -4px -6px 0px rgba(0, 0, 0, 0.8),
+        0px 1px 0px rgba(0, 0, 0, 0.9),
+        0px 1px 0px rgba(255, 255, 255, 0.2);
     transition: all .1s ease-in-out 0s;
-  }
-  
-  .key-button::after:active {
+}
+
+.key-button::after:active {
     background-image: linear-gradient(to bottom,rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2));
-  }
-  
-  .key-button:active::before {
+}
+
+.key-button:active::before {
     content: "";
     display: block;
     position: absolute;
@@ -130,21 +133,25 @@ html{
     background-color: rgba(255, 255, 255, 0.1);
     animation: overlay 0.1s ease-in-out 0s;
     pointer-events: none;
-  }
-  
-  @keyframes overlay {
+}
+
+@keyframes overlay {
     from {
-      opacity: 0;
+        opacity: 0;
     }
-  
+
     to {
-      opacity: 1;
+        opacity: 1;
     }
-  }
-  
-  .key-button:focus {
+}
+
+.key-button:focus {
     outline: none;
-  }
+}
+
+
+/*--------------------GENERIC--------------------*/
+
 body{
     width: 100vw;
     margin: 0;
@@ -171,17 +178,9 @@ main{
     height:fit-content;
     flex-wrap: wrap;
 }
-header{
-    height: calc(100vh - 45px);
-    width: 100vw;
-    min-height: 320px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
+
+
+/*--------------------NAVBAR--------------------*/
 
 .navbar{
     position: sticky; /* This makes the navbar sticky */
@@ -260,35 +259,67 @@ ul{
     justify-content: space-evenly;
 }
 
-#video{  /* video id does not exist anymore. I dont know why it works, and I dont want to*/
-    width: 40%;
+
+/*--------------------HEADERS--------------------*/
+
+header{
+    height: 40vh;
+
+    width: 100vw;
+    min-height: 320px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
     justify-content: center;
-    margin: 25px;
+    align-items: center;
 }
 
-h1{
+header h1{
+    font-size: min(20vw, 200px);
+
     margin: 0;
-    font-size: min(20vw, 250px);
     color: var(--font2) ;
     font-family: 'Title';
     user-select: none;
 }
 
+header.index-header {
+    height: calc(100vh - 45px);
+}
+
+header.index-header h1 {
+    font-size: min(20vw, 250px);
+}
+
+header.index-header {
+    height: calc(100vh - 45px);
+}
+
+header.index-header h1 {
+    font-size: min(20vw, 250px);
+}
+
 h2{
     text-align: center;
     align-self: baseline;
-    font-size: min(8vw, 80px);
+    font-size: min(8vw, 70px);
     color: var(--font2);
     width: 100%;
 }
 
 h3{
-    font-size: 1.5rem ;
+    font-size: 2.5rem ;
     color: var(--font2) !important;
 }
 
 h5{
     color: var(--font2);
+}
+
+h4 {
+    color: var(--font3);
+    margin-top: 20px;
 }
 
 h1, h2{
@@ -298,6 +329,9 @@ h1, h2{
         -1px 1px 0 #858585,
         1px 1px 0 #858585; /* Shadow color (border) */
 }
+
+
+/*--------------------CARDS--------------------*/
 
 .card{
     text-align: center;
@@ -322,6 +356,17 @@ h1, h2{
     aspect-ratio: 3/4;
 }
 
+*[class$="-card"] {
+    cursor: pointer;
+    transition: all .25s ease-out;
+}
+
+*[class$="-card"]:hover {
+    box-shadow: 0 0 25px 5px var(--acc1);
+    transform: scale(1.05);
+
+}
+
 .empty{
     background-color: #000;
     height: 445px;
@@ -338,6 +383,7 @@ d{
     width: 100%;
     text-align: center;
 }
+
 #gif{
     height: 150px;
     width: 100%;
@@ -346,6 +392,8 @@ d{
     align-self: normal;
 }
 
+
+/*--------------------LOGIN & REGISTER--------------------*/
 
 #login-main{
     flex-direction: column;
@@ -373,6 +421,17 @@ d{
     flex-wrap: wrap;
 }
 
+
+/*--------------------PROFILE, LOGIN, REGISTER--------------------*/
+
+.flex-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 50px;
+}
+
 .profile{
     background-color: #6f6a82;
     padding: 30px;
@@ -384,7 +443,7 @@ d{
 
 .profiletab{
     display: block;
-    width: 70%;
+    width: 90%;
     height: 100%;
     position: relative;
 }
@@ -439,6 +498,7 @@ form{
     display:flex;
     flex-wrap: wrap;
 }
+
 input{
     width: 100%;
     margin: 3% 0;
@@ -459,12 +519,21 @@ label{
     align-self: last baseline;
 }
 
-.flex-container{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    padding: 50px;
+#profileFunctions {
+    margin-bottom: 10px;
+    padding: 5px;
+}
+#profileFunctions div {
+    padding: 5px;
+}
+
+
+/*--------------------VIDEO ON HOMEPAGE--------------------*/
+
+#video{  /* video id does not exist anymore. I dont know why it works, and I dont want to*/
+    width: 40%;
+    justify-content: center;
+    margin: 25px;
 }
 
 .video{
@@ -476,6 +545,8 @@ iframe{
     aspect-ratio: 16/9;
 }
 
+
+/*--------------------FOOTER--------------------*/
 
 footer{
     height: fit-content;
@@ -504,16 +575,17 @@ footer{
 }
 
 
+/*--------------------TABCONTENT--------------------*/
 
 /* Style the tab */
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: var(--menu);
-  }
+}
   
-  /* Style the buttons that are used to open the tab content */
-  .tab button {
+/* Style the buttons that are used to open the tab content */
+.tab button {
     background-color: inherit;
     float: left;
     border: none;
@@ -521,56 +593,81 @@ footer{
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
-  }
-  
-  /* Change background color of buttons on hover */
-  .tab button:hover {
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
     background-color: #ddd;
-  }
-  
-  /* Create an active/current tablink class */
-  .tab button.active {
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
     background-color: var(--menu-gradient);
-  }
-  
-  /* Style the tab content */
-  .tabcontent {
+}
+
+/* Style the tab content */
+.tabcontent {
     border: 1px solid #ccc;
     border-top: none;
-  }
+}
+
+
+/*--------------------TABLES--------------------*/
 
 table{
     width: 100%;
     background-color: var(--acc1);
     user-select: none;
+    table-layout: auto;
+    scrollbar-width: 5px;
+}
+
+th, td {
+    border: 1px solid var(--font2);
 }
 
 th{
-    border: 1px solid black;
-    font-weight: unset;
+    background-color: var(--acc2);
+    text-align: center;
     cursor: pointer;
+    padding: 13px 0;
+}
+
+.userrow {
+    background-color: #4f7e49d6;
 }
 
 
+/*--------------------RESPONSIVITY--------------------*/
 
-tr:first-child{
-    font-weight: 700;
+
+@media (max-width: 840px) {    
+    /*----------TABLES----------*/
+
+    table {
+        display: block;
+        overflow-x: scroll;
+        scrollbar-width: thin;
+    }
 }
-
-#profileFunctions {
-    margin-bottom: 10px;
-}
-
 
 @media (max-width: 768px) { /* medium screen */
+
+    /*----------GENERIC----------*/
 
     body{
         text-align: center;
     }
+    
+
+    /*----------VIDEO ON HOMEPAGE----------*/
 
     iframe{
         width: 80%;
     }
+    
+
+    /*----------NAVBAR----------*/
 
     .nav-item{
         margin: auto;
@@ -586,9 +683,16 @@ tr:first-child{
     .navbar-nav{
         width: 100%;
     }
+
+
+    /*----------CARDS----------*/
+
     .character img{
         height: 30vh;
     }
+    
+
+    /*----------FOOTER----------*/
 
     footer{
         height: fit-content;
@@ -620,11 +724,13 @@ tr:first-child{
         width: 100%;
     }
 
-    table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
+    /*----------TABLES----------*/
+
+    td:not(.text-center) {
+        text-align: left;
     }
+
+    /*----------PROFLE, LOGIN, REGISTER----------*/
 
     .profile{
         flex-direction: column;
@@ -639,6 +745,9 @@ tr:first-child{
         width: 100%;
         height: auto;
     }
+   
+    
+    /*----------HEADER----------*/
 
     header{
         height: 30vh;

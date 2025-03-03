@@ -43,12 +43,17 @@ document.querySelectorAll(".item-card").forEach(card => {
 });
 
 function themeChange() {
-    var element = document.body;
-    element.dataset.bsTheme =
-    element.dataset.bsTheme == "light" ? "dark" : "light";
+    let newTheme = getCookie("theme") == "light" ? "dark" : "light";
+    document.cookie = `theme=${newTheme}; path=/; secure; SameSite=Strict`;
+    setTheme();
 }
 
-document.getElementById("defaultOpen").click();
+function setTheme() {
+    let currentTheme = getCookie("theme");
+    document.body.dataset.bsTheme = currentTheme;
+    document.getElementById("flexSwitchCheckChecked").checked = currentTheme != "dark";
+}
+
 function openRank(evt, base) {
     // Declare all variables
     var i, tabcontent, tablinks;
@@ -67,5 +72,5 @@ function openRank(evt, base) {
 
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(base).style.display = "flex";
-    evt.currentTarget.className += " active";
+    evt.target.className += " active";
 }
