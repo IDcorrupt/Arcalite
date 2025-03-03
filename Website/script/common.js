@@ -12,7 +12,7 @@ function logout() {
     if (confirm("Biztosan ki szeretne jelentkezni?")) {
         document.cookie = "  userid=; path=/; expires="+ new Date(1970, 1, 1);
         document.cookie = "username=; path=/; expires="+ new Date(1970, 1, 1);
-        window.open("index.html", "_self");
+        window.open("login.html", "_self");
     }
 }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" class="profilepage">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,11 +51,15 @@
 
     <main class="flex-container profilemain">
         <div class="profile profiletab">
-            <h3>Felhasználónév</h3>
+            
 
+            <div class="wrapprofilediv">
+                <div class="profileheader">
+                <h3>Felhasználónév</h3>
             <div id="profileFunctions">
                 <button type="button" class="btn btn-danger" id="logout" onclick="logout()">Kijelentkezés</button>
             </div>
+        </div>
 
             <div class="tab">
                 <button class="tablinks" id="defaultOpen" onclick="openRank(event, 'Character1')">Character1</button>
@@ -89,7 +93,7 @@
                 </div>
             </div>
             
-            
+        </div>
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
