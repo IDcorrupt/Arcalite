@@ -107,7 +107,7 @@ public partial class SpellOracle : Node2D
     }
     public override void _Process(double delta)
     {
-        GD.Print("duration timer: " + durationTimer.TimeLeft);
+        if(Globals.player.GetIsDead()) OnDurationTimeout();
         GlobalPosition = targetPosition;
         if (slowing)
         {

@@ -7,7 +7,9 @@ public partial class CameraController : Node2D
     //debug
     private bool freecamToggle = false;
     //debug
-
+    
+    
+    [Signal] public delegate void CameraMovedEventHandler(string dir);
 
     private Camera2D camera;
     private StaticBody2D hitBox;
@@ -60,7 +62,7 @@ public partial class CameraController : Node2D
             default:
                 break;
         }
-        
+        EmitSignal(SignalName.CameraMoved, direction);
     }
 
 

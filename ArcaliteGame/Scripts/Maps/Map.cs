@@ -7,6 +7,7 @@ public partial class Map : Node2D
     PackedScene playerScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/player.tscn");
     GameScene parent;
     Player player;
+    GpuParticles2D rain;
 
     CameraController camera;
 
@@ -18,8 +19,9 @@ public partial class Map : Node2D
         camera = GetNode("CameraController") as CameraController;
         Globals.spawnPoint = GetNode<Node2D>("SpawnPoint");
         player = playerScene.Instantiate() as Player;
+        rain = GetNode("FX/Rain") as GpuParticles2D;
         AddChild(player);
-
+        rain.Emitting = true;
     }
 
     public void Respawn()
@@ -32,4 +34,18 @@ public partial class Map : Node2D
         player.SetStats();
     }
 
+    public void OnCameraMoved(string direction)
+    {
+        switch (direction)
+        {
+            case "left":
+                rain.GlobalPosition = new Vector2(rain.GlobalPosition.X - 640, rain.GlobalPosition.Y);
+                break;
+            case "right":
+                rain.GlobalPosition = new Vector2(rain.GlobalPosition.X + 640, rain.GlobalPosition.Y);
+                break;
+            default:
+                break;
+        }
+    }
 }

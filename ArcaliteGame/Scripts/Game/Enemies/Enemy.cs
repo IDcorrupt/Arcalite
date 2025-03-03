@@ -91,9 +91,10 @@ public partial class Enemy : CharacterBody2D
         //jump
         if(jumpTrigger.GetOverlappingBodies().Count == 0 && obstacleDetect.GetOverlappingBodies().Count >0 &&   //collisions
             !jumped &&          //can jump
-            (Velocity.X > 0 || Velocity.X <0))     //is moving
+            (Velocity.X > 0 || Velocity.X <0) &&     //is moving
+            IsOnFloor())        //on ground
         {
-            Velocity = new Vector2(Velocity.X, Velocity.Y -jumpStrength);
+            Velocity = new Vector2(Velocity.X, Velocity.Y -(jumpStrength * slowFactor));
             jumped = true;
         }
         //moving
@@ -116,7 +117,7 @@ public partial class Enemy : CharacterBody2D
             {
                 if (speed < roamSpeed) speed += (float)delta * 70;
                 else if (speed > roamSpeed+20) speed -= (float)delta * 70;
-                Velocity = new Vector2(Direction.X * speed * slowFactor, Velocity.Y * slowFactor);
+                Velocity = new Vector2(Direction.X * speed * slowFactor, Velocity.Y);
                 prevDir = Direction.X;
             }
             else if (Direction.X == 0)
@@ -129,8 +130,6 @@ public partial class Enemy : CharacterBody2D
                     prevDir = 0;
                 }
                 Velocity = new Vector2(prevDir * speed, Velocity.Y);
-
-
             }
             isRoaming = true;
         }
@@ -145,23 +144,20 @@ public partial class Enemy : CharacterBody2D
             indicator.Modulate = Color.Color8(0,0, 255);
             Direction = GlobalPosition.DirectionTo(player.GlobalPosition);
 
+            //regulate acceleration/deceleration
             if (speed < chaseSpeed) speed += (float)delta * 200;
             else if (speed > chaseSpeed) speed -= (float)delta * 200;
+
             //slowfactor added here
-            Velocity = new Vector2(Direction.X*speed*slowFactor, Velocity.Y*slowFactor);
+            Velocity = new Vector2(Direction.X*speed*slowFactor, Velocity.Y);
         }
     }
     private void Fall(double delta)
     {
         if (!IsOnFloor())
-        {
-            Velocity = new Vector2(Velocity.X, Velocity.Y + (float)(Globals.GRAVITY * delta));
-            jumped = true;
-        }
+            Velocity = new Vector2(Velocity.X, Velocity.Y + (float)(Globals.GRAVITY * delta * slowFactor));
         else
-        {
             jumped = false;    //reset jump bool if on ground
-        }
     }
     //idle logic
     public void OnDirectionTimerTimeout()
@@ -189,14 +185,9 @@ public partial class Enemy : CharacterBody2D
     private void AtkCooldownTimeout()
     {
         if (playerInAtkRange && !player.GetIsDead())
-        {
             Attack();
-        }
         else
-        {
             isAttacking = false;
-        }
-
     }
     public void AttackRangeBodyEntered(Node2D body)
     {
@@ -219,7 +210,6 @@ public partial class Enemy : CharacterBody2D
         sprite.Play("attack");
         Velocity = Vector2.Zero;
         speed = 0;
-
     }
     public virtual void Hit(float damage, Node2D attacker)
     {
