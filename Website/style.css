@@ -1,39 +1,39 @@
 @font-face {
     font-family: 'Title';
     src: url('./fonts/FontsFree-Net-RajjahFamillia-Medium.ttf') format('truetype');
-    
+}
+
+:root{
+    --green: #47a159;
+    --orange: #b37d47;
+    --red: #9c2828;
+    --blue: #407899;
+    --brand: #8447A1;
+    --purple_light: #c08fd6;
+    --purple_dark: #471060;
+    --grey_light: #8f8295;
+    --grey_dark: #35233e;
 }
 
 [data-bs-theme="dark"]{
-    --font: rgb(21, 21, 21);
-    --font2: #6a6a7a;
-    --font3:#CEB992;
-    --bg: url("./img/light.png");
-    --bg-element: ;
-    --acc1: #aca0b3d6 ;
-    --acc2: #ad91a3b8;
-    --menu: #6a6a7a;
-    --menu-gradient: #858585;
+    --font: #f5e8fb;
+    --font2: #cbc5ce;
+    --bg: url("./img/dark.png");
+    --bg-element: url("./img/dark_layer.png");
+    --menu: var(--grey_light);
 }
 [data-bs-theme="light"] { 
-    --font: rgb(184, 184, 184);
-    --font2: #c5c5dd;
-    --font3:#CEB992;
-    --bg: url("./img/dark.png");
-    --bg-element: ;
-    --acc1:#514663d1 ;
-    --acc2: #4b3f5fd1;
-    --menu: #858585;
-    --menu-gradient: #c5c5dd;
+    --font: #1A0225;
+    --font2: #17061f;
+    --bg: url("./img/light.png");
+    --bg-element: url("./img/light_layer.png");;
+    --menu: var(--grey_dark);
 }
 
 html{
     scrollbar-width: none; /*no scrollbar for Firefox*/
     overflow-x: hidden;
 }
-
-
-/*--------------------KEYBOARD KEYS--------------------*/
 
 /* Hide scrollbar for webkit browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
@@ -45,7 +45,7 @@ html{
     overflow:hidden;
 }
 
-
+/*--------------------KEYBOARD KEYS--------------------*/
 
 /* From Uiverse.io by dylanharriscameron */ 
 .key-button {
@@ -157,10 +157,7 @@ body{
     margin: 0;
     font-size: min(20px) ;
     color: var(--font2);
-    background-image: var(--bg); /* Replace with your image path */
-    background-size: cover; /* Makes sure the image covers the whole area */
-    background-attachment: fixed; /* Keeps the background fixed during scroll */
-    background-position: center; /* Centers the background image */
+/* Centers the background image */
     height: 100%; 
 }
 
@@ -188,7 +185,7 @@ main{
     width: 100%;
     z-index: 1000; /* Ensure it stays on top of other content */
     border-radius: 0;
-    background: linear-gradient(to bottom, var(--font2) 40%, var(--menu-gradient));
+    background-color: var(--purple);
     padding: 10px;
 }
 
@@ -264,9 +261,11 @@ ul{
 
 header{
     height: 40vh;
-
+    position: relative;
     width: 100vw;
     min-height: 320px;
+    background-image: var(--bg); /* Replace with your image path */
+
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -275,21 +274,32 @@ header{
     align-items: center;
 }
 
-header h1{
+.parallax-image{
+    position: absolute;/* Adjust the vertical position as needed */
+  width: 100%;
+  height: 100%;
+  animation: move 10s linear infinite; /* Adjust animation duration and speed */
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%); /* Adjust the translation value for the animation */
+  }
+}
+
+#layer2{
+    z-index: 0;
+}
+
+h1{
     font-size: min(20vw, 200px);
-
     margin: 0;
-    color: var(--font2) ;
+    color: var(--font) ;
     font-family: 'Title';
-    user-select: none;
-}
-
-header.index-header {
-    height: calc(100vh - 45px);
-}
-
-header.index-header h1 {
-    font-size: min(20vw, 250px);
+    z-index: 1;
 }
 
 header.index-header {
@@ -304,31 +314,24 @@ h2{
     text-align: center;
     align-self: baseline;
     font-size: min(8vw, 70px);
-    color: var(--font2);
+    color: var(--font);
     width: 100%;
 }
 
 h3{
-    font-size: 2.5rem ;
+    font-size: 1.5rem ;
     color: var(--font2) !important;
+}
+
+h4 {
+    color: var(--font2);
+    margin-top: 20px;
 }
 
 h5{
     color: var(--font2);
 }
 
-h4 {
-    color: var(--font3);
-    margin-top: 20px;
-}
-
-h1, h2{
-    text-shadow: 
-        -1px -1px 0 #858585,  
-        1px -1px 0 #858585,
-        -1px 1px 0 #858585,
-        1px 1px 0 #858585; /* Shadow color (border) */
-}
 
 
 /*--------------------CARDS--------------------*/
@@ -341,12 +344,15 @@ h1, h2{
     margin: 30px;
     width: 18rem;
     aspect-ratio: 3/4;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    perspective: 1000px; /* Adds perspective for 3D effect */
 }
 
 .card .btn{
     width: 50px;
     height: 50px;
 }
+
 
 .character .card{
     cursor: pointer;
@@ -464,10 +470,6 @@ d{
     margin: 2%;
 }
 
-#profileFunctions{
-    
-}
-
 .profileheader{
     display: flex; /* Use flexbox for alignment */
     justify-content: space-between; /* Space between elements */
@@ -550,7 +552,7 @@ iframe{
 
 footer{
     height: fit-content;
-    padding: 0px ;
+    padding: 0px !important;
     flex-wrap: nowrap !important;
 }
 
@@ -559,21 +561,30 @@ footer{
     height: 100%;
 }
 
+.devs .card{
+    width: 30%;
+    --bs-card-spacer-y: 0;
+}
+
+.devs .card-body{
+    padding: 0;
+}
+
 .link{
     width: 33.32vw;
     height: 100%;
 }
 
-.devs img{
-    height: auto;
-    width: 30%;
-}
 
 .devs h2{
     text-align: center;
     width: 100%;
 }
 
+#dev{
+    padding: 0;
+    flex-wrap: nowrap !important;
+}
 
 /*--------------------TABCONTENT--------------------*/
 
@@ -651,6 +662,32 @@ th{
     }
 }
 
+@media (max-width: 1080px){
+
+    footer{
+        height: fit-content;
+        flex-direction: column;
+    }
+
+    .devs{
+        width: 100vw;
+    }
+
+
+
+    .link{
+        width: 100vw;
+        height: fit-content;
+    }
+
+    .devs h2{
+        left: 0;
+        transform: translate(0,0);
+        width: 100%;
+    }
+
+}
+
 @media (max-width: 768px) { /* medium screen */
 
     /*----------GENERIC----------*/
@@ -659,6 +696,13 @@ th{
         text-align: center;
     }
     
+    .devs .card{
+        width: 15rem;
+    }
+
+    #dev{
+        flex-wrap: wrap !important;
+    }
 
     /*----------VIDEO ON HOMEPAGE----------*/
 
@@ -694,10 +738,7 @@ th{
 
     /*----------FOOTER----------*/
 
-    footer{
-        height: fit-content;
-        flex-direction: column;
-    }
+    
 
     .profile{
         flex-direction: column;
@@ -709,20 +750,7 @@ th{
         width: 100%;
     }
 
-    .devs{
-        width: 100vw;
-    }
-
-    .link{
-        width: 100vw;
-        height: fit-content;
-    }
-
-    .devs h2{
-        left: 0;
-        transform: translate(0,0);
-        width: 100%;
-    }
+    
 
     /*----------TABLES----------*/
 
