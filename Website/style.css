@@ -3,6 +3,11 @@
     src: url('./fonts/FontsFree-Net-RajjahFamillia-Medium.ttf') format('truetype');
 }
 
+@font-face{
+    font-family: 'SimpleTitle';
+    src: url('./fonts/CsKaiserRegularDemo-e95Ye.otf') format('opentype');
+}
+
 :root{
     --green: #47a159;
     --orange: #b37d47;
@@ -13,21 +18,28 @@
     --purple_dark: #471060;
     --grey_light: #8f8295;
     --grey_dark: #35233e;
+    /*cloud colors*/
+    --c_dark1: #5c3882;
+    --c_light1: #763cb5;
 }
 
 [data-bs-theme="dark"]{
     --font: #f5e8fb;
     --font2: #cbc5ce;
+    --bg-color: var(--c_dark1);
+    --bg-gradient: #3A1F47;
     --bg: url("./img/dark.png");
     --bg-element: url("./img/dark_layer.png");
-    --menu: var(--grey_light);
+    --menu: #432e5d;
 }
 [data-bs-theme="light"] { 
     --font: #1A0225;
     --font2: #17061f;
+    --bg-color: var(--c_light1);
+    --bg-gradient:;
     --bg: url("./img/light.png");
     --bg-element: url("./img/light_layer.png");;
-    --menu: var(--grey_dark);
+    --menu: #805ca2;
 }
 
 html{
@@ -159,6 +171,7 @@ body{
     color: var(--font2);
 /* Centers the background image */
     height: 100%; 
+    background-color: var(--bg-color);
 }
 
 p{
@@ -174,6 +187,7 @@ p{
 main{
     height:fit-content;
     flex-wrap: wrap;
+    background-image: linear-gradient(var(--bg-color), var(--bg-gradient));
 }
 
 
@@ -185,7 +199,7 @@ main{
     width: 100%;
     z-index: 1000; /* Ensure it stays on top of other content */
     border-radius: 0;
-    background-color: var(--purple);
+    background-color: var(--menu);
     padding: 10px;
 }
 
@@ -229,13 +243,19 @@ main{
     padding-left: none ;
 }
 .form-check-input {
-    border: none ;
-
+    border: var(--bs-border-width) solid var(--font);
     background-color: var(--acc1) ;
 }
 
 .form-check-input:checked {
     background-color: var(--acc1) ;
+    border-color: var(--font);
+}
+
+.form-check-input:focus{
+    border-color: unset;
+    outline: unset;
+    box-shadow: unset;
 }
 
 .navbar-nav{
@@ -262,33 +282,36 @@ ul{
 header{
     height: 40vh;
     position: relative;
-    width: 100vw;
+    width: 100%;
     min-height: 320px;
     background-image: var(--bg); /* Replace with your image path */
-
-    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     text-align: center;
+    background-size: auto 100%;
     justify-content: center;
     align-items: center;
 }
 
 .parallax-image{
-    position: absolute;/* Adjust the vertical position as needed */
-  width: 100%;
-  height: 100%;
-  animation: move 10s linear infinite; /* Adjust animation duration and speed */
+    position: absolute;
+    width: 200vw; /* The image will be doubled, allowing the duplicated section */
+    height: 40vh;
+    animation: move 10s ease-in-out infinite; /* Smooth animation */
+    background-image: var(--bg-element);
+    background-size: cover;
+    background-repeat: repeat-x;
+
 }
 
 @keyframes move {
-  0% {
-    transform: translateX(0);
+    0% { 
+      transform: translateX(0); /* Starting position: Left edge */
+    }
+    100% { 
+      transform: translateX(100%); /* Image moves to the middle (half of the image's width) */
+    }
   }
-  100% {
-    transform: translateX(-100%); /* Adjust the translation value for the animation */
-  }
-}
 
 #layer2{
     z-index: 0;
@@ -302,7 +325,7 @@ h1{
     z-index: 1;
 }
 
-header.index-header {
+header.index-header, .parallax-image{
     height: calc(100vh - 45px);
 }
 
@@ -316,6 +339,7 @@ h2{
     font-size: min(8vw, 70px);
     color: var(--font);
     width: 100%;
+    font-family: 'SimpleTitle';
 }
 
 h3{
@@ -554,6 +578,7 @@ footer{
     height: fit-content;
     padding: 0px !important;
     flex-wrap: nowrap !important;
+    background-color: var(--bg-gradient);
 }
 
 .devs{
@@ -790,4 +815,13 @@ th{
     iframe{
         width: 40%;
     }
+
+    .card{
+        width: 20rem;
+    }
+
+    .devs .card{
+        width: 20rem;
+    }
+
 }
