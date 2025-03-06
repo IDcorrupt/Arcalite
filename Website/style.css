@@ -21,6 +21,10 @@
     /*cloud colors*/
     --c_dark1: #5c3882;
     --c_light1: #763cb5;
+    --c_dark2: #432e5d;
+    --c_light2: #805ca2;
+    --c_light2_shadow:#624580;
+    --c_dark2_shadow:#25173B;
 }
 
 [data-bs-theme="dark"]{
@@ -30,16 +34,18 @@
     --bg-gradient: #3A1F47;
     --bg: url("./img/dark.png");
     --bg-element: url("./img/dark_layer.png");
-    --menu: #432e5d;
+    --menu: var(--c_dark2);
+    --menu_active: var(--c_dark2_shadow);
 }
 [data-bs-theme="light"] { 
     --font: #1A0225;
     --font2: #17061f;
     --bg-color: var(--c_light1);
-    --bg-gradient:;
+    --bg-gradient:#492469;
     --bg: url("./img/light.png");
     --bg-element: url("./img/light_layer.png");;
-    --menu: #805ca2;
+    --menu: var(--c_light2);
+    --menu_active: var(--c_light2_shadow);
 }
 
 html{
@@ -579,6 +585,7 @@ footer{
     padding: 0px !important;
     flex-wrap: nowrap !important;
     background-color: var(--bg-gradient);
+    align-items: baseline !important;
 }
 
 .devs{
@@ -600,6 +607,13 @@ footer{
     height: 100%;
 }
 
+.link-content{
+    
+}
+
+a{
+    color: var(--font2) !important;
+}
 
 .devs h2{
     text-align: center;
@@ -633,12 +647,12 @@ footer{
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-    background-color: #ddd;
+    background-color: var(--menu_active);
 }
 
 /* Create an active/current tablink class */
-.tab button.active {
-    background-color: var(--menu-gradient);
+.tab button:active, .tab button:focused{
+    background-color: var(--menu_active);
 }
 
 /* Style the tab content */
