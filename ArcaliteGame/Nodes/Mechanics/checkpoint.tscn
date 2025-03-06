@@ -1,0 +1,207 @@
+[gd_scene load_steps=31 format=3 uid="uid://rra3jq10ihxr"]
+
+[ext_resource type="Script" uid="uid://br6vjgmcnetjm" path="res://Scripts/Mechanics/Checkpoint.cs" id="1_lhg5q"]
+[ext_resource type="Texture2D" uid="uid://b2evnikiat5gu" path="res://Assets/Placeholder assets/500 Bullet 24x24 Free/Bullet 24x24 Free Part 4B.png" id="2_h40ay"]
+[ext_resource type="Texture2D" uid="uid://bbko2bq46g3hk" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 14/652.png" id="3_271on"]
+[ext_resource type="Texture2D" uid="uid://cmv8crqt0wbob" path="res://Assets/empty.png" id="4_h0tbo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_271on"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4cvh"]
+atlas = ExtResource("2_h40ay")
+region = Rect2(384, 192, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_673b8"]
+atlas = ExtResource("2_h40ay")
+region = Rect2(408, 192, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6tq6v"]
+atlas = ExtResource("2_h40ay")
+region = Rect2(432, 192, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wp2m3"]
+atlas = ExtResource("2_h40ay")
+region = Rect2(456, 192, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2wj1"]
+atlas = ExtResource("2_h40ay")
+region = Rect2(480, 192, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l143i"]
+atlas = ExtResource("2_h40ay")
+region = Rect2(504, 192, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ussc0"]
+atlas = ExtResource("2_h40ay")
+region = Rect2(528, 192, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pd5h5"]
+atlas = ExtResource("2_h40ay")
+region = Rect2(552, 192, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34wm0"]
+atlas = ExtResource("3_271on")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4vi6"]
+atlas = ExtResource("3_271on")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yt1pe"]
+atlas = ExtResource("3_271on")
+region = Rect2(128, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awt6r"]
+atlas = ExtResource("3_271on")
+region = Rect2(192, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kjeq"]
+atlas = ExtResource("3_271on")
+region = Rect2(256, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_al7dk"]
+atlas = ExtResource("3_271on")
+region = Rect2(320, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vco8q"]
+atlas = ExtResource("3_271on")
+region = Rect2(384, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yibyd"]
+atlas = ExtResource("3_271on")
+region = Rect2(448, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vni4j"]
+atlas = ExtResource("3_271on")
+region = Rect2(512, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhh5x"]
+atlas = ExtResource("3_271on")
+region = Rect2(576, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dq8g3"]
+atlas = ExtResource("3_271on")
+region = Rect2(640, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fmgdm"]
+atlas = ExtResource("3_271on")
+region = Rect2(704, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pymaj"]
+atlas = ExtResource("3_271on")
+region = Rect2(768, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rwe4"]
+atlas = ExtResource("3_271on")
+region = Rect2(832, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_truxg"]
+atlas = ExtResource("3_271on")
+region = Rect2(896, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nucdl"]
+atlas = ExtResource("3_271on")
+region = Rect2(960, 192, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_co8ip"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4cvh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_673b8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6tq6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wp2m3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2wj1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l143i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ussc0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pd5h5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34wm0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4vi6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yt1pe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awt6r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kjeq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_al7dk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vco8q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yibyd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vni4j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vhh5x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dq8g3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fmgdm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pymaj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rwe4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_truxg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nucdl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_h0tbo")
+}],
+"loop": false,
+"name": &"triggered",
+"speed": 15.0
+}]
+
+[node name="Checkpoint" type="Node2D"]
+script = ExtResource("1_lhg5q")
+
+[node name="TriggerArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
+shape = SubResource("RectangleShape2D_271on")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_co8ip")
+animation = &"idle"
+frame_progress = 0.769296
+
+[connection signal="body_entered" from="TriggerArea" to="." method="TriggerAreaBodyEntered"]

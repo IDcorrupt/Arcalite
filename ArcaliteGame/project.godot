@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Globals="*res://Scripts/Globals/Globals.cs"
 ConfigFileHandler="*res://Scripts/Globals/ConfigFileHandler.cs"
 TilesetLoader="*res://Scripts/Globals/TilesetLoader.cs"
+SaveLoadHandler="*res://Scripts/Globals/SaveLoadHandler.cs"
 
 [display]
 
@@ -34,7 +35,7 @@ project/assembly_name="Arcalite"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")
+enabled=PackedStringArray("res://addons/BurstParticles2D/plugin.cfg")
 
 [input]
 

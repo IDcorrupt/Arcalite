@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=4 uid="uid://b16nh4vhtdeho"]
+[gd_scene load_steps=8 format=4 uid="uid://b16nh4vhtdeho"]
 
 [ext_resource type="Script" uid="uid://uoonx2bghxay" path="res://Scripts/Maps/Map.cs" id="1_4qp3d"]
 [ext_resource type="PackedScene" uid="uid://dbay08psod1qd" path="res://Nodes/Mechanics/camera_controller.tscn" id="2_cemhq"]
 [ext_resource type="TileSet" uid="uid://da8wv2dgdjslp" path="res://Assets/Tilesheet/tranquil.res" id="3_30vh6"]
 [ext_resource type="PackedScene" uid="uid://dodk5iiiisuu4" path="res://Nodes/Game/enemies/enemy_control.tscn" id="4_38mkx"]
+[ext_resource type="PackedScene" uid="uid://rra3jq10ihxr" path="res://Nodes/Mechanics/checkpoint.tscn" id="4_n6o25"]
 [ext_resource type="PackedScene" uid="uid://c7bw1cggtiyst" path="res://Nodes/Game/enemies/enemy_spawn_point.tscn" id="5_kbhp1"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gpj2h"]
@@ -50,8 +51,8 @@ tile_map_data = PackedByteArray("AAASABIABwBKABcAAAATABIABwBIABkAAAAUABIABwBIABg
 tile_set = ExtResource("3_30vh6")
 collision_enabled = false
 
-[node name="SpawnPoint" type="Node2D" parent="."]
-position = Vector2(382, 202)
+[node name="Checkpoint0" parent="." instance=ExtResource("4_n6o25")]
+position = Vector2(391, 274)
 
 [node name="Controllers" type="Node2D" parent="."]
 

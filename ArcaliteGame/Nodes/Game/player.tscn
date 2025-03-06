@@ -353,7 +353,6 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_j4qxm")
 
 [node name="HitBox" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -0.714285)
 shape = SubResource("RectangleShape2D_h8j3f")
 

@@ -14,7 +14,7 @@ public partial class Globals : Node
 
     //active stuff
     public static Node2D spawnPoint = null;
-    public static Node2D activeMap = null;
+    public static string activeMap = null;
 
     //player cuz i need it everywhere
     public static Player player = null;

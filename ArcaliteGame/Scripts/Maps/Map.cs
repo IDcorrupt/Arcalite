@@ -11,19 +11,38 @@ public partial class Map : Node2D
 
     CameraController camera;
 
+
     bool debugtrigger = false;
 
     public override void _Ready()
     {
         parent = GetParent() as GameScene;
         camera = GetNode("CameraController") as CameraController;
-        Globals.spawnPoint = GetNode<Node2D>("SpawnPoint");
+        if (Globals.hasSavefile)
+        {
+            Globals.spawnPoint = GetNode<Node2D>("");       //LOAD CHECKPOINT FROM SAVEFILE HERE
+
+        }
+        else
+            Globals.spawnPoint = GetNode<Node2D>("Checkpoint0");
+
         player = playerScene.Instantiate() as Player;
         rain = GetNode("FX/Rain") as GpuParticles2D;
-        AddChild(player);
         rain.Emitting = true;
+        AddChild(player);
     }
-
+    private void SetRoomStatus(bool savefile)
+    {
+        if (savefile)
+        {
+            foreach (EnemyControl controller in GetTree().GetNodesInGroup("Controllers"))
+                controller.SetRoomCleared(true);    //ADD CLEAR STATUS FROM SAVEFILE HERE
+        }else
+        {
+            foreach(EnemyControl controller in GetTree().GetNodesInGroup("Controllers"))
+                controller.SetRoomCleared(false);
+        }
+    }
     public void Respawn()
     {
         camera.RespawnMove();

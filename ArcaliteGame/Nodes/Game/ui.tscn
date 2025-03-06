@@ -99,3 +99,13 @@ centered = false
 position = Vector2(569, 30)
 sprite_frames = SubResource("SpriteFrames_0dtax")
 animation = &"Ready"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 321.0
+offset_top = 215.0
+offset_right = 329.0
+offset_bottom = 223.0
+text = "help"
+
+[connection signal="pressed" from="Button" to="." method="onhelppressed"]

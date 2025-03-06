@@ -4,11 +4,13 @@ using System;
 public partial class GameScene : Node2D
 {
 	Resource cursor = ResourceLoader.Load("res://Assets/Placeholder assets/Cursors/PNG/White/crosshair124.png");
-	PackedScene debugMap = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/map_debug.tscn");
-	PackedScene Map1 = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/map_0.tscn");
-	PackedScene pauseMenu = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/pause_menu.tscn");
+	PackedScene pauseMenuScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/pause_menu.tscn");
 	PackedScene UIscene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/ui.tscn");
 	PackedScene RespawnScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/respawn_screen.tscn");
+
+	//MAPS
+	PackedScene Map100 = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/map_debug.tscn");
+	PackedScene Map0 = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/map_0.tscn");
 
 	Timer deathTimer;
 	bool deadtrigger = false;	//shouldn't need this, but i do because i cant think of a better idea to not start the timer every frame
@@ -27,9 +29,10 @@ public partial class GameScene : Node2D
 		
 		//add map
 		//mapNode = (Node2D)debugMap.Instantiate();
-		mapNode = (Node2D)Map1.Instantiate();
+		mapNode = (Node2D)Map0.Instantiate();
+		//save original map name to globals (name changes next line for identification
+		Globals.activeMap = mapNode.Name;
 		mapNode.Name = "Map";
-		Globals.activeMap = mapNode;
 		AddChild(mapNode);
 		//start game
 		Globals.gameActive = true;
@@ -63,7 +66,7 @@ public partial class GameScene : Node2D
 				//pause ingame sequences
 				Globals.gameActive = false;
 				//initiate pause menu
-				pauseMenuNode = (Control)pauseMenu.Instantiate();
+				pauseMenuNode = (Control)pauseMenuScene.Instantiate();
 				UILayer.AddChild(pauseMenuNode);
 				//hide ui
 				UInode.Visible = false;

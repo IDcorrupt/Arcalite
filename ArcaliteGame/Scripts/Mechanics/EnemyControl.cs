@@ -78,6 +78,11 @@ public partial class EnemyControl : Node2D
         }
         despawningInProgress = false;
     }
+
+    public void SetRoomCleared(bool cleared)
+    {
+        roomCleared = cleared;
+    }
     public override void _Process(double delta)
     {
         if (!roomCleared)

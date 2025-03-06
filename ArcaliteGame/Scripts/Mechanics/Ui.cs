@@ -24,7 +24,10 @@ public partial class Ui : Control
         dashCooldownBar.Hide();
     }
 
-
+    public void onhelppressed()
+    {
+        SaveLoadHandler.Load();
+    }
     private void Player_Dashed(float cooldown)
     {
         dashCooldownBar.Show();
