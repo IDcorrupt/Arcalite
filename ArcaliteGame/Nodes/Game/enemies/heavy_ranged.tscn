@@ -1,7 +1,7 @@
 [gd_scene load_steps=44 format=3 uid="uid://dtwxqo8wyx1pw"]
 
 [ext_resource type="Texture2D" uid="uid://ccmt4ma2jpt0u" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/penguin.png" id="1_cl5ob"]
-[ext_resource type="Script" path="res://Scripts/Game/Enemies/HeavyRanged.cs" id="1_l1duq"]
+[ext_resource type="Script" uid="uid://bthb332j357tx" path="res://Scripts/Game/Enemies/HeavyRanged.cs" id="1_l1duq"]
 [ext_resource type="Texture2D" uid="uid://v4gnk750ktm1" path="res://Assets/10count.png" id="1_yvi18"]
 [ext_resource type="Texture2D" uid="uid://ci61jnj31yis8" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 15/723.png" id="3_jm67h"]
 

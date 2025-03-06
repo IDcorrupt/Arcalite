@@ -1,6 +1,6 @@
 [gd_scene load_steps=43 format=3 uid="uid://bl2c36bljfwig"]
 
-[ext_resource type="Script" path="res://Scripts/Game/BasicProjectile.cs" id="1_i8qdc"]
+[ext_resource type="Script" uid="uid://ctwihxbk62bvl" path="res://Scripts/Game/BasicProjectile.cs" id="1_i8qdc"]
 [ext_resource type="Texture2D" uid="uid://dr853m24j6d51" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 9/427.png" id="2_3fchs"]
 [ext_resource type="Texture2D" uid="uid://b2wq1k3rsti3o" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 12/579.png" id="3_gbg4q"]
 [ext_resource type="Texture2D" uid="uid://cmv8crqt0wbob" path="res://Assets/empty.png" id="3_p0liv"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=49 format=3 uid="uid://d246uiu3u4ern"]
 
-[ext_resource type="Script" path="res://Scripts/Game/ChargeProjectile.cs" id="1_fagxr"]
+[ext_resource type="Script" uid="uid://coe01sgrpe2sb" path="res://Scripts/Game/ChargeProjectile.cs" id="1_fagxr"]
 [ext_resource type="Texture2D" uid="uid://cbrkssy2nj32" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 10/464.png" id="1_nm1s6"]
 [ext_resource type="Texture2D" uid="uid://bavx8d4fv5dec" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 14/674.png" id="2_oaavg"]
 [ext_resource type="Texture2D" uid="uid://bp7j8ooiseax3" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 11/529.png" id="3_2iopn"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=4 uid="uid://cos7up0ym3ra5"]
 
-[ext_resource type="Script" path="res://Scripts/Menus/MainMenu.cs" id="1_ily1d"]
+[ext_resource type="Script" uid="uid://gwu7w0obhoxw" path="res://Scripts/Menus/MainMenu.cs" id="1_ily1d"]
 [ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="2_rnbbc"]
 
 [node name="MainMenu" type="Control"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://d4mg7kpomu4je"]
 
-[ext_resource type="Script" path="res://Scripts/Mechanics/Ui.cs" id="1_f025f"]
+[ext_resource type="Script" uid="uid://bw81mk3jt7fwe" path="res://Scripts/Mechanics/Ui.cs" id="1_f025f"]
 [ext_resource type="Texture2D" uid="uid://de8mwe0cmbyrt" path="res://Assets/Icons/Dash/dash_Cooldown.png" id="2_13e54"]
 [ext_resource type="Texture2D" uid="uid://cyp8gf66hrhdi" path="res://Assets/Icons/ChargeAttack/ca_Cooldown.png" id="2_qqwp7"]
 [ext_resource type="Texture2D" uid="uid://bqucfy8ub1eny" path="res://Assets/Icons/ChargeAttack/ca_Ready.png" id="3_2gkhm"]
@@ -76,7 +76,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Icons" type="Node" parent="."]
+[node name="Icons" type="Node2D" parent="."]
 
 [node name="DashCooldownBar" type="Sprite2D" parent="Icons"]
 position = Vector2(594, 42)

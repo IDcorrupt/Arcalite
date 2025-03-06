@@ -1,6 +1,6 @@
-[gd_scene load_steps=52 format=3 uid="uid://dbunyy0mgmnu1"]
+[gd_scene load_steps=50 format=3 uid="uid://dbunyy0mgmnu1"]
 
-[ext_resource type="Script" path="res://Scripts/Game/Player.cs" id="1_e7w0v"]
+[ext_resource type="Script" uid="uid://bylk3iiwa5rpy" path="res://Scripts/Game/Player.cs" id="1_e7w0v"]
 [ext_resource type="Texture2D" uid="uid://bor8wt8g1nswd" path="res://Assets/Sprites/charcrouch.png" id="2_qyefv"]
 [ext_resource type="Texture2D" uid="uid://sflxfl54e2s3" path="res://Assets/Sprites/straightdash.png" id="3_gaowq"]
 [ext_resource type="Texture2D" uid="uid://b6pa0e7mt7dvb" path="res://Assets/Sprites/jump.png" id="4_eas1s"]
@@ -8,16 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://k3kg7hcjy1h7" path="res://Assets/Sprites/ase spritesheets/char_walk.png" id="5_cm63i"]
 [ext_resource type="Texture2D" uid="uid://cmv8crqt0wbob" path="res://Assets/empty.png" id="5_nfai4"]
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j4qxm"]
-spread = 180.0
-initial_velocity_min = 15.75
-initial_velocity_max = 15.75
-gravity = Vector3(0, 0, 0)
-scale_min = 0.4
-scale_max = 0.4
-color = Color(0.833333, 0, 1, 1)
-
-[sub_resource type="Image" id="Image_78opw"]
+[sub_resource type="Image" id="Image_yis2i"]
 data = {
 "data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255),
 "format": "RGBA8",
@@ -27,19 +18,16 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_l30sx"]
-image = SubResource("Image_78opw")
+image = SubResource("Image_yis2i")
 
-[sub_resource type="Image" id="Image_oda32"]
-data = {
-"data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255),
-"format": "RGBA8",
-"height": 5,
-"mipmaps": false,
-"width": 5
-}
-
-[sub_resource type="ImageTexture" id="ImageTexture_7a1kd"]
-image = SubResource("Image_oda32")
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j4qxm"]
+spread = 180.0
+initial_velocity_min = 15.75
+initial_velocity_max = 15.75
+gravity = Vector3(0, 0, 0)
+scale_min = 0.4
+scale_max = 0.4
+color = Color(0.833333, 0, 1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h8j3f"]
 size = Vector2(16, 29)
@@ -353,26 +341,16 @@ collision_mask = 4
 floor_max_angle = 0.872665
 script = ExtResource("1_e7w0v")
 
-[node name="FX(GPU)" type="GPUParticles2D" parent="."]
-visible = false
+[node name="FX" type="GPUParticles2D" parent="."]
 z_index = -1
-amount = 20
-process_material = SubResource("ParticleProcessMaterial_j4qxm")
+emitting = false
+amount = 80
+amount_ratio = 0.2
 texture = SubResource("ImageTexture_l30sx")
 lifetime = 1.5
 fixed_fps = 15
-
-[node name="FX" type="CPUParticles2D" parent="."]
-emitting = false
-amount = 20
-texture = SubResource("ImageTexture_7a1kd")
-spread = 180.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 15.0
-initial_velocity_max = 15.0
-scale_amount_min = 0.4
-scale_amount_max = 0.4
-color = Color(0.583333, 0, 1, 1)
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_j4qxm")
 
 [node name="HitBox" type="CollisionShape2D" parent="."]
 visible = false
@@ -423,9 +401,9 @@ one_shot = true
 wait_time = 10.0
 one_shot = true
 
-[node name="SpellECooldown" type="Timer" parent="."]
-
 [node name="SpellQCooldown" type="Timer" parent="."]
+
+[node name="SpellECooldown" type="Timer" parent="."]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnSpriteAnimationFinished"]
 [connection signal="timeout" from="HurtTimer" to="." method="OnHurtTimerTimeout"]

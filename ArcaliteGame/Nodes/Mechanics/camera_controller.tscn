@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://dbay08psod1qd"]
 
-[ext_resource type="Script" path="res://Scripts/Mechanics/CameraController.cs" id="1_bkkum"]
+[ext_resource type="Script" uid="uid://c6qtds30nkfwb" path="res://Scripts/Mechanics/CameraController.cs" id="1_bkkum"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fjovn"]
 size = Vector2(1360, 20)

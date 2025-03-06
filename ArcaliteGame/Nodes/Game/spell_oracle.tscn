@@ -1,7 +1,7 @@
 [gd_scene load_steps=31 format=3 uid="uid://ct5ut31hpqlw5"]
 
 [ext_resource type="Texture2D" uid="uid://c7lhjm65dxbws" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 4/184.png" id="1_isjag"]
-[ext_resource type="Script" path="res://Scripts/Game/SpellOracle.cs" id="1_tfgop"]
+[ext_resource type="Script" uid="uid://d0nqslac1vfwb" path="res://Scripts/Game/SpellOracle.cs" id="1_tfgop"]
 [ext_resource type="Texture2D" uid="uid://n7261op5ga55" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 12/586.png" id="2_1coxv"]
 [ext_resource type="Texture2D" uid="uid://cmv8crqt0wbob" path="res://Assets/empty.png" id="4_uaj51"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=33 format=3 uid="uid://dmcjsoh4jx60g"]
 
-[ext_resource type="Script" path="res://Scripts/Game/Enemies/LightMeele.cs" id="1_yaydj"]
+[ext_resource type="Script" uid="uid://dbs6nh4vnvgel" path="res://Scripts/Game/Enemies/LightMeele.cs" id="1_yaydj"]
 [ext_resource type="Texture2D" uid="uid://v4gnk750ktm1" path="res://Assets/10count.png" id="2_31yna"]
 [ext_resource type="Texture2D" uid="uid://3usmmqxmemtl" path="res://Assets/Sprites/Lajos.png" id="2_xpb5c"]
 [ext_resource type="Texture2D" uid="uid://da58ncvai25rb" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 12/569.png" id="3_h3jum"]

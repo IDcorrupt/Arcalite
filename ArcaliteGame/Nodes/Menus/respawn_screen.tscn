@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c1sqs3vx2yf0t"]
 
-[ext_resource type="Script" path="res://Scripts/Menus/RespawnScreen.cs" id="1_xw5fb"]
+[ext_resource type="Script" uid="uid://dminxyfaeneg0" path="res://Scripts/Menus/RespawnScreen.cs" id="1_xw5fb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2krr"]
 bg_color = Color(0, 0, 0, 0.207843)

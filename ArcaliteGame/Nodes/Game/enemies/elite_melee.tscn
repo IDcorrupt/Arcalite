@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://cqi8f7sibpus8"]
 
-[ext_resource type="Script" path="res://Scripts/Game/Enemies/EliteMelee.cs" id="1_50tk0"]
+[ext_resource type="Script" uid="uid://75fn0nlikjvf" path="res://Scripts/Game/Enemies/EliteMelee.cs" id="1_50tk0"]
 [ext_resource type="Texture2D" uid="uid://v4gnk750ktm1" path="res://Assets/10count.png" id="2_1os1x"]
 [ext_resource type="Texture2D" uid="uid://cgrbvd2dbh0lm" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/tornado.png" id="3_0iaa4"]
 

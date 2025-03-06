@@ -1,7 +1,7 @@
 [gd_scene load_steps=38 format=3 uid="uid://sp0xoa4003y1"]
 
 [ext_resource type="Texture2D" uid="uid://b1kcycve1n2tl" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/shark.png" id="1_ie5ln"]
-[ext_resource type="Script" path="res://Scripts/Game/Enemies/LightRanged.cs" id="1_qxpks"]
+[ext_resource type="Script" uid="uid://dpqm2lht0dqnl" path="res://Scripts/Game/Enemies/LightRanged.cs" id="1_qxpks"]
 [ext_resource type="Texture2D" uid="uid://v4gnk750ktm1" path="res://Assets/10count.png" id="2_hkpwd"]
 [ext_resource type="Texture2D" uid="uid://bc1m757vywtk7" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 13/623.png" id="3_fvgt3"]
 

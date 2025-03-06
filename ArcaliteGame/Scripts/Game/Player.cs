@@ -68,7 +68,7 @@ public partial class Player : CharacterBody2D
     private Timer SECooldown;
     private Timer SQCooldown;
 
-    private CpuParticles2D FX;
+    private GpuParticles2D FX;
     //signals
     [Signal] public delegate void DashedEventHandler(float cooldown);
     [Signal] public delegate void ChargeAttackedEventHandler(float cooldown);
@@ -86,7 +86,7 @@ public partial class Player : CharacterBody2D
         SECooldown = GetNode("SpellECooldown") as Timer;
         SQCooldown = GetNode("SpellQCooldown") as Timer;
 
-        FX = GetNode("FX") as CpuParticles2D;
+        FX = GetNode("FX") as GpuParticles2D;
 
         basicProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/basic_projectile.tscn");
         chargeProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/charge_projectile.tscn");
@@ -408,25 +408,25 @@ public partial class Player : CharacterBody2D
                 if (CACharge >= 100)
                 {
                     chargeLevel = 4;
-                    FX.Amount = 80;
+                    FX.AmountRatio = 1f;
                     speedmodifier = 0.2f;
                 }
                 else if (CACharge >= 80)
                 {
                     chargeLevel = 3;
-                    FX.Amount = 60;
+                    FX.AmountRatio = 0.8f;
                     speedmodifier = 0.4f;
                 }
                 else if (CACharge >= 60)
                 {
                     chargeLevel = 2;
-                    FX.Amount = 40;
+                    FX.AmountRatio = 0.6f;
                     speedmodifier = 0.6f;
                 }
                 else if (CACharge >= 40)
                 {
                     chargeLevel = 1;
-                    FX.Amount = 20;
+                    FX.AmountRatio = 0.4f;
                     speedmodifier = 0.8f;
                 }
             }
@@ -441,7 +441,7 @@ public partial class Player : CharacterBody2D
                 }
                 CACharge = 0;
                 FX.Emitting = false;
-                FX.Amount = 20;
+                FX.AmountRatio = 0.2f;
                 speedmodifier = 1;
                 dashed = false;
                 dashVector = Vector2.Zero;
