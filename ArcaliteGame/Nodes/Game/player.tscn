@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://dbunyy0mgmnu1"]
+[gd_scene load_steps=52 format=3 uid="uid://dbunyy0mgmnu1"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Player.cs" id="1_e7w0v"]
 [ext_resource type="Texture2D" uid="uid://bor8wt8g1nswd" path="res://Assets/Sprites/charcrouch.png" id="2_qyefv"]
@@ -7,6 +7,39 @@
 [ext_resource type="Texture2D" uid="uid://ddx0i2g5cvejm" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 13/633.png" id="4_k7apo"]
 [ext_resource type="Texture2D" uid="uid://k3kg7hcjy1h7" path="res://Assets/Sprites/ase spritesheets/char_walk.png" id="5_cm63i"]
 [ext_resource type="Texture2D" uid="uid://cmv8crqt0wbob" path="res://Assets/empty.png" id="5_nfai4"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j4qxm"]
+spread = 180.0
+initial_velocity_min = 15.75
+initial_velocity_max = 15.75
+gravity = Vector3(0, 0, 0)
+scale_min = 0.4
+scale_max = 0.4
+color = Color(0.833333, 0, 1, 1)
+
+[sub_resource type="Image" id="Image_78opw"]
+data = {
+"data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255),
+"format": "RGBA8",
+"height": 5,
+"mipmaps": false,
+"width": 5
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_l30sx"]
+image = SubResource("Image_78opw")
+
+[sub_resource type="Image" id="Image_oda32"]
+data = {
+"data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255),
+"format": "RGBA8",
+"height": 5,
+"mipmaps": false,
+"width": 5
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_7a1kd"]
+image = SubResource("Image_oda32")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h8j3f"]
 size = Vector2(16, 29)
@@ -320,7 +353,29 @@ collision_mask = 4
 floor_max_angle = 0.872665
 script = ExtResource("1_e7w0v")
 
+[node name="FX(GPU)" type="GPUParticles2D" parent="."]
+visible = false
+z_index = -1
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_j4qxm")
+texture = SubResource("ImageTexture_l30sx")
+lifetime = 1.5
+fixed_fps = 15
+
+[node name="FX" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+texture = SubResource("ImageTexture_7a1kd")
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 15.0
+scale_amount_min = 0.4
+scale_amount_max = 0.4
+color = Color(0.583333, 0, 1, 1)
+
 [node name="HitBox" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -0.714285)
 shape = SubResource("RectangleShape2D_h8j3f")
 
@@ -333,7 +388,11 @@ animation = &"crouch"
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": false,
-"pending_changes": {},
+"pending_changes": {
+"embed_tex": false,
+"layers": [],
+"should_round_fps": true
+},
 "slice_section": false
 }
 metadata/_aseprite_wizard_config_ = {

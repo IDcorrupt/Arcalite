@@ -35,6 +35,7 @@ public partial class Player : CharacterBody2D
     private bool CAisCharging = false;  //is charge attack currently charging
     private float CACharge = 0f;        //used to track charge progress
     private int chargeLevel = 0;
+    private float speedmodifier = 1;
 
     //other
     private bool isHurt = false;
@@ -67,19 +68,25 @@ public partial class Player : CharacterBody2D
     private Timer SECooldown;
     private Timer SQCooldown;
 
+    private CpuParticles2D FX;
+    //signals
+    [Signal] public delegate void DashedEventHandler(float cooldown);
+    [Signal] public delegate void ChargeAttackedEventHandler(float cooldown);
     public override void _Ready()
     {
         Globals.player = this;
         //Get nodes
-        HitBox = GetNode<CollisionShape2D>("HitBox");
-        Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-        hurtTimer = GetNode<Timer>("HurtTimer");
+        HitBox = GetNode("HitBox") as CollisionShape2D;
+        Sprite = GetNode("AnimatedSprite2D") as AnimatedSprite2D;
+        hurtTimer = GetNode("HurtTimer") as Timer;
         dashCooldown = GetNode("DashCooldown") as Timer;
         BACooldown = GetNode("BasicAttackCooldown") as Timer;
         CACooldown = GetNode("ChargeAttackCooldown") as Timer;
         SOCooldown = GetNode("OracleCooldown") as Timer;
         SECooldown = GetNode("SpellECooldown") as Timer;
         SQCooldown = GetNode("SpellQCooldown") as Timer;
+
+        FX = GetNode("FX") as CpuParticles2D;
 
         basicProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/basic_projectile.tscn");
         chargeProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/charge_projectile.tscn");
@@ -101,7 +108,7 @@ public partial class Player : CharacterBody2D
         direction.X = Convert.ToInt32(Input.IsActionPressed("move_right")) + Convert.ToInt32(Input.IsActionPressed("move_right-alt")) - Convert.ToInt32(Input.IsActionPressed("move_left")) - Convert.ToInt32(Input.IsActionPressed("move_left-alt"));
         if (direction.X == 1) Sprite.FlipH = false;
         else if (direction.X == -1) Sprite.FlipH = true;
-        if (Input.IsActionPressed("move_jump") || Input.IsActionPressed("move_jump-alt"))
+        if ((Input.IsActionPressed("move_jump") || Input.IsActionPressed("move_jump-alt")) && !CAisCharging)
         {
             if (IsOnFloor())
             {
@@ -119,19 +126,22 @@ public partial class Player : CharacterBody2D
         {
             if (currentDashSpeed > 0)
             {
+                //gradually decay dash speed
                 currentDashSpeed -= dashDecayRate * (float)delta;
                 Velocity = dashVector * Mathf.Max(currentDashSpeed, 0);
             }
             else
             {
+                //exit dash
                 isDashing = false;
+                EmitSignal(SignalName.Dashed, dashCooldown.WaitTime);
             }
             MoveAndSlide();
             return;
         }
 
         //initiate dash
-        if (dashed)
+        if (dashed && !CAisCharging)
         {
             dashed = false;
             dashCooldown.Start();
@@ -144,7 +154,7 @@ public partial class Player : CharacterBody2D
         {
             if (vel < maxSpeed) vel += delta * 2000;
             else if (vel > maxSpeed) vel -= delta * 2000;
-            Velocity = new Vector2((float)(input.X * vel), Velocity.Y);
+            Velocity = new Vector2((float)(input.X * vel) * speedmodifier, Velocity.Y);
             prevDir = input.X;
         }
         else if (input.X == 0)
@@ -158,7 +168,7 @@ public partial class Player : CharacterBody2D
                 vel = 0;
                 prevDir = 0;
             }
-            Velocity = new Vector2((float)(prevDir * vel), Velocity.Y);
+            Velocity = new Vector2((float)(prevDir * vel) * speedmodifier, Velocity.Y);
         }
         if (input.Y != 0)
         {
@@ -166,17 +176,18 @@ public partial class Player : CharacterBody2D
         }
 
         CrouchApply();
-        fall(delta);
+        Fall(delta);
     }
     public void Dash()
     {
+        //set dash diretion and engage
         dashVector = (GetGlobalMousePosition() - GlobalPosition).Normalized();
         currentDashSpeed = dashSpeed;
         Velocity = dashVector * currentDashSpeed;
         isDashing = true;
         dashed = false;
     }
-    public void fall(double delta)
+    public void Fall(double delta)
     {
         Velocity = new Vector2(Velocity.X, Velocity.Y + (float)(GRAVITY * delta));
     }
@@ -235,6 +246,7 @@ public partial class Player : CharacterBody2D
             projectile.direction = direction;
             projectile.damagePayload = damage;
             projectile.imports = true;
+            EmitSignal(SignalName.ChargeAttacked, CACooldown.WaitTime);
         }
     }
     public void OracleSpell()
@@ -387,47 +399,55 @@ public partial class Player : CharacterBody2D
                 BACooldown.Start();
             }
             //CA charge sequence control
-            if ((Input.IsActionJustPressed("attack_charge") || Input.IsActionJustPressed("attack_charge-alt")) && CACooldown.TimeLeft == 0)
+            if ((Input.IsActionPressed("attack_charge") || Input.IsActionPressed("attack_charge-alt")) && CACooldown.TimeLeft == 0)
             {
                 CAisCharging = true;
-            }
-            if (Input.IsActionJustReleased("attack_charge") || Input.IsActionJustReleased("attack_charge-alt"))
-            {
-                CAisCharging = false;
-            }
-
-            //charging & appropriate level
-            if (CAisCharging)
-            {
+                FX.Emitting = true;
+                //charging to appropriate level
                 CACharge += Mathf.Round((float)delta * 50);
                 if (CACharge >= 100)
                 {
                     chargeLevel = 4;
+                    FX.Amount = 80;
+                    speedmodifier = 0.2f;
                 }
                 else if (CACharge >= 80)
                 {
                     chargeLevel = 3;
+                    FX.Amount = 60;
+                    speedmodifier = 0.4f;
                 }
                 else if (CACharge >= 60)
                 {
                     chargeLevel = 2;
+                    FX.Amount = 40;
+                    speedmodifier = 0.6f;
                 }
                 else if (CACharge >= 40)
                 {
                     chargeLevel = 1;
+                    FX.Amount = 20;
+                    speedmodifier = 0.8f;
                 }
-
             }
-            else
+            if (Input.IsActionJustReleased("attack_charge") || Input.IsActionJustReleased("attack_charge-alt"))
             {
-                //launch CA
+                //shoot CA
+                CAisCharging = false;
                 if (CACharge > 40)
                 {
                     ChargeAttack(chargeLevel);
                     CACooldown.Start();
                 }
                 CACharge = 0;
+                FX.Emitting = false;
+                FX.Amount = 20;
+                speedmodifier = 1;
+                dashed = false;
+                dashVector = Vector2.Zero;
             }
+
+
             //oracle
             if ((Input.IsActionJustPressed("spell_oracle") || Input.IsActionJustPressed("spell_oracle-alt")) && SOCooldown.TimeLeft == 0)
             {
@@ -443,7 +463,7 @@ public partial class Player : CharacterBody2D
                                    : Mathf.Min(0,Velocity.X+(float)delta*700),
                     Velocity.Y
                 );
-                fall(delta);
+                Fall(delta);
             }
             else
             {
