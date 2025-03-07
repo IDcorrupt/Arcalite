@@ -42,7 +42,7 @@ function verifyRegister() {
     }
     
     uploadNewProfile();
-    window.open("index.html", "_self");
+    window.open("login.html", "_self");
 }
 
 function uploadNewProfile() {

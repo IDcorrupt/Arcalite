@@ -209,6 +209,11 @@ main{
     padding: 10px;
 }
 
+.nav-item{
+    display: flex;
+    align-items: center;
+}
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -270,8 +275,7 @@ main{
 }
 
 .navbar-brand{
-    background-color: #000;
-    width: 46px;
+
 }
 
 li{
@@ -501,7 +505,7 @@ d{
 }
 
 .profileheader{
-    display: flex; /* Use flexbox for alignment */
+    /* Use flexbox for alignment */
     justify-content: space-between; /* Space between elements */
     align-items: center;
 }
