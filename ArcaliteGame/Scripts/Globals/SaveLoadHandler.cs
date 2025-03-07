@@ -4,26 +4,35 @@ using System.Collections.Generic;
 
 public partial class SaveLoadHandler : Node
 {
-    static string savepath = "user://saves";
+    static string savepath = "user://savefile.txt";
 
 
-    public static void Save(List<bool> roomsCleared, float MaxHP, float MaxMP, float currentHP, float currentMP, float attackDamage)
+    public static void Save(List<bool> roomsCleared, float MaxHP, float MaxMP, float currentHP, float currentMP, float attackDamage, List<float> cooldowns)
     {
         //[TBD] ADD ITEMS WHEN THEY START EXISTING
         var file = FileAccess.Open(savepath, FileAccess.ModeFlags.Write);
-        GD.Print("storing active map: " + Globals.activeMap);
-        file.StoreString(Globals.activeMap);
-        file.StoreVar(Globals.spawnPoint.Name.ToString());
-        foreach(var room in roomsCleared)
-            file.StoreString(room.ToString());
-        /*file.StoreVar(MaxHP);
-        file.StoreVar(MaxMP);
-        file.StoreVar(currentHP);
-        file.StoreVar(currentMP);
-        file.StoreVar(attackDamage);*/
+        //map
+        file.StoreLine(Globals.activeMap);
+        //checkpoint
+        file.StoreLine(Globals.spawnPoint.Name.ToString());
+        //rooms cleared
+        file.StoreLine(String.Join("; ", roomsCleared));
+        //player max hp
+        file.StoreLine(MaxHP.ToString());
+        //player max mp
+        file.StoreLine(MaxMP.ToString());
+        //player current hp
+        file.StoreLine(currentHP.ToString());
+        //player current mp
+        file.StoreLine(currentMP.ToString());
+        //player attack damage
+        file.StoreLine(attackDamage.ToString());
+        //player cooldowns
+        file.StoreString(String.Join("; ", cooldowns));
+        file.Close();
     }
 
-    public bool CheckSave()
+    public static bool CheckSave()
     {
         if (FileAccess.FileExists(savepath))
             return true;
@@ -32,11 +41,11 @@ public partial class SaveLoadHandler : Node
     public static void Load()
     {
         var file = FileAccess.Open(savepath, FileAccess.ModeFlags.Read);
-        GD.Print("activemap: " + file.GetLine());
-        file.GetAsText();
-        //ADD DATA HERE
+        string[] data = file.GetAsText().Split('\n');
+        foreach (string s in data)
+        {
+            GD.Print(s);
+            Globals.currentSave.Add(s);
+        }
     }
-
-
-
 }

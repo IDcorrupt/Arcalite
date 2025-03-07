@@ -8,6 +8,8 @@ public partial class Checkpoint : Node2D
 {
     private Area2D triggerArea;
     private AnimatedSprite2D sprite;
+    private Map map;
+    public bool triggered;
 
     public override void _Ready()
     {
@@ -15,28 +17,38 @@ public partial class Checkpoint : Node2D
         triggerArea = GetNode("TriggerArea") as Area2D;
         sprite = GetNode("AnimatedSprite2D") as AnimatedSprite2D;
         sprite.Play("idle");
+        map = GetParent().GetParent() as Map;
     }
 
 
     public void TriggerAreaBodyEntered(Node2D body)
     {
-        TriggerCheckpoint();
+        if(!triggered)
+            TriggerCheckpoint();
     }
     public void OnAnimationFinished()
     {
         if (sprite.Animation == "triggered")
-        QueueFree();
+            sprite.Play("empty");
     }
 
     private void TriggerCheckpoint()
     {
-        List<bool> asd = new List<bool>();
-        asd.Add(false);
-        asd.Add(false);
-        asd.Add(true);
-        asd.Add(false);
-        SaveLoadHandler.Save(asd, 100, 100, 50, 50, 10);
+        Globals.spawnPoint.QueueFree();
         sprite.Play("triggered");
+        Globals.spawnPoint = this;
+        SaveLoadHandler.Save(map.roomStatus(), Globals.player.GetMaxHP(), Globals.player.GetMaxMP(), Globals.player.GetCurrentHP(), Globals.player.GetCurrentMP(), Globals.player.GetAttackDamage(), Globals.player.GetCooldowns());
     }
 
+    public void Empty()
+    {
+        triggered = true;
+        sprite.Play("empty");
+    }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        
+    }
 }

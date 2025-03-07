@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
@@ -85,6 +86,9 @@ public partial class Player : CharacterBody2D
         SOCooldown = GetNode("OracleCooldown") as Timer;
         SECooldown = GetNode("SpellECooldown") as Timer;
         SQCooldown = GetNode("SpellQCooldown") as Timer;
+
+        //basic attack cooldown doesn't change with "levels"
+        BACooldown.WaitTime = 0.2f;
 
         FX = GetNode("FX") as GpuParticles2D;
 
@@ -294,11 +298,20 @@ public partial class Player : CharacterBody2D
         if (Globals.hasSavefile)
         {
             //if loading from save
-            //dont have save file yet 
+            //stats
+            MaxHP = (float)Convert.ToDecimal(Globals.currentSave[3]);
+            MaxMP = (float)Convert.ToDecimal(Globals.currentSave[4]);
+            currentHP = (float)Convert.ToDecimal(Globals.currentSave[5]);
+            currentMP = (float)Convert.ToDecimal(Globals.currentSave[6]);
+            damage = (float)Convert.ToDecimal(Globals.currentSave[7]);
 
-
-
-
+            //cooldowns
+            string[] cooldownstrings = Globals.currentSave[8].Split(";");
+            dashCooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[0]);
+            CACooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[1]);
+            SOCooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[2]);
+            SECooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[3]);
+            SQCooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[4]);
         }
         else
         {
@@ -313,7 +326,6 @@ public partial class Player : CharacterBody2D
 
             //cooldowns
             dashCooldown.WaitTime = 2f;
-            BACooldown.WaitTime = 0.2f;
             CACooldown.WaitTime = 1f;
             SOCooldown.WaitTime = 10f;
             SECooldown.WaitTime = 5f;
@@ -482,9 +494,21 @@ public partial class Player : CharacterBody2D
 
     //getters/setters
     public bool GetIsDead() { return isDead; }
-    public float GetHP() { return currentHP; }
-    public float GetMP() { return currentMP; }
-    
+    public float GetMaxHP() { return MaxHP; }
+    public float GetMaxMP() { return MaxMP; }
+    public float GetCurrentHP() { return currentHP; }
+    public float GetCurrentMP() { return currentMP; }
+    public float GetAttackDamage() { return damage; }
+    public List<float> GetCooldowns()
+    {
+        List<float> cooldowns = new List<float>();
+        cooldowns.Add((float)dashCooldown.WaitTime);
+        cooldowns.Add((float)CACooldown.WaitTime);
+        cooldowns.Add((float)SOCooldown.WaitTime);
+        cooldowns.Add((float)SECooldown.WaitTime);
+        cooldowns.Add((float)SQCooldown.WaitTime);
+        return cooldowns;
+    }
 
     //deltaloop
     public override void _PhysicsProcess(double delta)

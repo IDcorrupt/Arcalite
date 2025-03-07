@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.ComponentModel.Design;
 using System.Runtime.CompilerServices;
 
 public partial class SubmenuStart : Control
@@ -25,23 +26,22 @@ public partial class SubmenuStart : Control
         {
             //special appearance for disabled button
         }
+        Globals.hasSavefile = SaveLoadHandler.CheckSave();
+        if(Globals.hasSavefile) 
+            Continue.Disabled = false;
+        else Continue.Disabled = true;
     }
 
     public void ContinuePressed()
     {
-        if (Globals.hasSavefile)
-        {
-            //save loading here
-        }
-        else
-        {
-            //nothing because no savefile
-            //will delete this else case later
-        }
+        SaveLoadHandler.Load();
+        Globals.playerControl = true;
+        GetTree().ChangeSceneToFile("res://Nodes/Maps/gameScene.tscn");
     }
     public void NewGamePressed()
     {
         Globals.playerControl = true;
+        Globals.hasSavefile = false;
         GetTree().ChangeSceneToFile("res://Nodes/Maps/gameScene.tscn");
     }
     public void BackPressed()

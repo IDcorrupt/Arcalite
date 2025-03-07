@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public partial class EnemyControl : Node2D
 {
-    [Export]
-    public string room;
     public int enemyAmount = 0;
     public bool playerInRange = false;
     public bool playerInRoom = false;
@@ -121,4 +119,6 @@ public partial class EnemyControl : Node2D
         else
             camera.LockPlayer(false);
     }
+
+    public bool isRoomCleared() { return roomCleared; }
 }

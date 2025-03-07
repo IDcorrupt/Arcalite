@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 public partial class ConfigFileHandler : Node
 {
     static ConfigFile config = new ConfigFile();
-    const string SETTINGS_FILE_PATH = "res://settings.ini";
+    const string SETTINGS_FILE_PATH = "user://settings.ini";
     public static Dictionary<string, Dictionary<string, Variant>> settingChanges = new Dictionary<string, Dictionary<string, Variant>>();
 
     static int[] resXvalues = { 3840, 2560, 1920, 1280, 640 };

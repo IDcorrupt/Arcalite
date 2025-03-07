@@ -24,10 +24,6 @@ public partial class Ui : Control
         dashCooldownBar.Hide();
     }
 
-    public void onhelppressed()
-    {
-        SaveLoadHandler.Load();
-    }
     private void Player_Dashed(float cooldown)
     {
         dashCooldownBar.Show();
@@ -65,8 +61,8 @@ public partial class Ui : Control
             player.Dashed += Player_Dashed;
             player.ChargeAttacked += Player_ChargeAttacked;
         }
-        HPnum.Text = "HP: " + Mathf.Round(Globals.player.GetHP()); 
-        MPnum.Text = "MP: " + Mathf.Round(Globals.player.GetMP()); 
+        HPnum.Text = "HP: " + Mathf.Round(Globals.player.GetCurrentHP()); 
+        MPnum.Text = "MP: " + Mathf.Round(Globals.player.GetCurrentMP()); 
     }
 
 

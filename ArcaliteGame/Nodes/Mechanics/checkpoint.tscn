@@ -107,6 +107,14 @@ region = Rect2(960, 192, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("4_h0tbo")
+}],
+"loop": false,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_i4cvh")
 }, {
 "duration": 1.0,
@@ -202,6 +210,7 @@ shape = SubResource("RectangleShape2D_271on")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_co8ip")
 animation = &"idle"
-frame_progress = 0.769296
+frame = 3
+frame_progress = 0.696011
 
 [connection signal="body_entered" from="TriggerArea" to="." method="TriggerAreaBodyEntered"]

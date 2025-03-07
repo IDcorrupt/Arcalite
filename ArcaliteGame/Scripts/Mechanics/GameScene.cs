@@ -8,17 +8,16 @@ public partial class GameScene : Node2D
 	PackedScene UIscene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/ui.tscn");
 	PackedScene RespawnScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/respawn_screen.tscn");
 
-	//MAPS
-	PackedScene Map100 = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/map_debug.tscn");
-	PackedScene Map0 = (PackedScene)ResourceLoader.Load("res://Nodes/Maps/map_0.tscn");
+	//Map scene (loading is dynamic in the ready func because of how saving was implemented)
+	PackedScene MapScene;
 
 	Timer deathTimer;
-	bool deadtrigger = false;	//shouldn't need this, but i do because i cant think of a better idea to not start the timer every frame
+	bool deadtrigger = false;	//shouldn't need this, but i do because i cant think of a better idea to not restart the timer every frame
 	CanvasLayer UILayer;
 	Control UInode;
 	Control pauseMenuNode;
 	Control respawnScreen;
-	Node2D mapNode;
+	Map mapNode;
 
 	public override void _Ready()
 	{
@@ -26,21 +25,28 @@ public partial class GameScene : Node2D
 		UILayer = GetNode<CanvasLayer>("UILayer");
 		UInode = (Control)UIscene.Instantiate();
 		UILayer.AddChild(UInode);
-		
+
 		//add map
-		//mapNode = (Node2D)debugMap.Instantiate();
-		mapNode = (Node2D)Map0.Instantiate();
+		if (Globals.hasSavefile)
+		{
+			string mapname = Globals.currentSave[0];
+			MapScene = ResourceLoader.Load($"res://Nodes/Maps/{mapname}.tscn") as PackedScene;
+		}
+		else
+			MapScene = ResourceLoader.Load("res://Nodes/Maps/map_0.tscn") as PackedScene;
+		mapNode = MapScene.Instantiate() as Map;
 		//save original map name to globals (name changes next line for identification
 		Globals.activeMap = mapNode.Name;
 		mapNode.Name = "Map";
 		AddChild(mapNode);
-		//start game
-		Globals.gameActive = true;
 		//add custom cursor
 		Input.SetCustomMouseCursor(cursor);
-
 		//respawn stuff
 		deathTimer = GetNode("DeathTimer") as Timer;
+
+
+		//start game
+		Globals.gameActive = true;
 	}
 
     private void DeathTimer_Timeout()

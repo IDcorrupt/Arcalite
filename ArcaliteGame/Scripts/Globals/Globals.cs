@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Globals : Node
 {
@@ -8,12 +9,13 @@ public partial class Globals : Node
     public static bool playerControl = false;
     //bool for checking if user has an active savefile
     public static bool hasSavefile = false;
+    public static List<string> currentSave = new List<string>();
     //needed for pause menu
     public static bool gameActive = false;
     public const float GRAVITY = 1500f;
 
     //active stuff
-    public static Node2D spawnPoint = null;
+    public static Checkpoint spawnPoint = null;
     public static string activeMap = null;
 
     //player cuz i need it everywhere
