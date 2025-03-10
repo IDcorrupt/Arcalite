@@ -8,6 +8,8 @@ public partial class Enemy : CharacterBody2D
     protected float maxHP;
     protected float currentHP;
     protected float damage;
+    //item drop chance
+    protected int dropChance;
 
     //external
     //[Export] protected int namenum;
@@ -53,11 +55,13 @@ public partial class Enemy : CharacterBody2D
 
     protected Player player;
     protected EnemyControl parent;
+    private Node2D itemContainer;
 
 
     public override void _Ready()
     {
         parent = (EnemyControl)GetParent();
+        itemContainer = parent.GetParent().GetParent().GetNode("Items") as Node2D;
         sprite = GetNode<AnimatedSprite2D>("Sprite");
         player = Globals.player;
 
@@ -288,10 +292,18 @@ public partial class Enemy : CharacterBody2D
             Die();
     }
 
+    //die logic
+    private void DropItem(Enums.itemType itemtype)
+    {
+        Item item = new Item(itemtype);
+        
 
+    }
     private void Die()
     {
         parent.enemyAmount--;
+        if (Math.RNG(dropChance))
+            DropItem(Enums.itemType.shard);
         QueueFree();    
     }
 

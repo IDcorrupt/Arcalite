@@ -21,6 +21,8 @@ Globals="*res://Scripts/Globals/Globals.cs"
 ConfigFileHandler="*res://Scripts/Globals/ConfigFileHandler.cs"
 TilesetLoader="*res://Scripts/Globals/TilesetLoader.cs"
 SaveLoadHandler="*res://Scripts/Globals/SaveLoadHandler.cs"
+Enums="*res://Scripts/Globals/Enums.cs"
+Math="*res://Scripts/Globals/Math.cs"
 
 [display]
 
@@ -205,6 +207,7 @@ locale/translations_pot_files=PackedStringArray("res://Nodes/Menus/mainmenu.tscn
 2d_physics/layer_8="CameraSolidHitbox"
 2d_physics/layer_9="CameraEnemyPreloadTrigger"
 2d_physics/layer_10="EnemyControllerSelf"
+2d_physics/layer_11="ItemSelf"
 
 [rendering]
 

@@ -4,16 +4,8 @@ using System.Diagnostics;
 
 public partial class EnemySpawner : Node2D
 {
-    private enum EnemyClass
-    {
-        None,
-        LightMelee,
-        HeavyMelee,
-        LightRanged,
-        HeavyRanged,
-        Elite
-    }
-    [Export] EnemyClass enemyClass;
+    
+    [Export] Enums.EnemyClass EnemyClass;
 
 
     private PackedScene lightMeleeScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/light_meele.tscn");
@@ -31,33 +23,33 @@ public partial class EnemySpawner : Node2D
     }
     public bool Spawn()
     {
-        switch (enemyClass)
+        switch (EnemyClass)
         {
-            case EnemyClass.LightMelee:
+            case Enums.EnemyClass.LightMelee:
                 ActiveEnemy = lightMeleeScene.Instantiate() as Enemy;
                 ActiveEnemy.Name = "LightMelee" + this.Name.ToString()[Name.ToString().Length - 1];
                 ActiveEnemy.GlobalPosition = Position;
                 AddSibling(ActiveEnemy);
                 break;
-            case EnemyClass.HeavyMelee:
+            case Enums.EnemyClass.HeavyMelee:
                 ActiveEnemy = HeavyMeleeScene.Instantiate() as Enemy;
                 ActiveEnemy.Name = "ActiveHeavyMelee" + this.Name.ToString()[Name.ToString().Length - 1];
                 ActiveEnemy.GlobalPosition = Position;
                 AddSibling(ActiveEnemy);
                 break;
-            case EnemyClass.LightRanged:
+            case Enums.EnemyClass.LightRanged:
                 ActiveEnemy = LightRangedScene.Instantiate() as Enemy;
                 ActiveEnemy.Name = "LightRanged" + this.Name.ToString()[Name.ToString().Length - 1];
                 ActiveEnemy.GlobalPosition = Position;
                 AddSibling(ActiveEnemy);
                 break;
-            case EnemyClass.HeavyRanged:
+            case Enums.EnemyClass.HeavyRanged:
                 ActiveEnemy = HeavyRangedScene.Instantiate() as Enemy;
                 ActiveEnemy.Name = "LightRanged" + this.Name.ToString()[Name.ToString().Length - 1];
                 ActiveEnemy.GlobalPosition = Position;
                 AddSibling(ActiveEnemy);
                 break;
-            case EnemyClass.Elite:
+            case Enums.EnemyClass.Elite:
                 break;
             default:
                 break;

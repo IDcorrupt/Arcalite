@@ -107,6 +107,8 @@ enemyClass = 3
 position = Vector2(13, 97)
 enemyClass = 1
 
+[node name="Items" type="Node2D" parent="."]
+
 [node name="FX" type="Node" parent="."]
 
 [node name="Rain" type="GPUParticles2D" parent="FX"]

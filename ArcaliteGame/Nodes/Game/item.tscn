@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://bvtb8koe5o5bu"]
+
+[ext_resource type="Texture2D" uid="uid://cbflaoc16h6ce" path="res://Assets/Placeholder assets/Free RPG asset Pack/PACK/separate files/circlet.png" id="1_ixxw6"]
+[ext_resource type="Script" uid="uid://da22j3t35yojk" path="res://Scripts/Game/Item.cs" id="1_pi8uj"]
+[ext_resource type="Texture2D" uid="uid://do767uvuws88x" path="res://Assets/Placeholder assets/Free RPG asset Pack/PACK/separate files/watermelon.png" id="3_ygrbr"]
+[ext_resource type="Texture2D" uid="uid://bu7ik7fuvi5bm" path="res://Assets/Placeholder assets/Free RPG asset Pack/PACK/separate files/shield_01.png" id="4_egtyp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pi8uj"]
+radius = 7.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8dqdw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ixxw6")
+}],
+"loop": true,
+"name": &"necklace",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ygrbr")
+}],
+"loop": true,
+"name": &"shard",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_egtyp")
+}],
+"loop": true,
+"name": &"shield",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ygrbr"]
+size = Vector2(15, 15)
+
+[node name="Item" type="CharacterBody2D"]
+collision_layer = 1024
+collision_mask = 132
+script = ExtResource("1_pi8uj")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_pi8uj")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8dqdw")
+animation = &"necklace"
+
+[node name="GroundDetect" type="RayCast2D" parent="."]
+target_position = Vector2(0, 15)
+collision_mask = 132
+
+[node name="hitBox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ygrbr")
+debug_color = Color(0.665793, 0.511594, 0, 0.42)
