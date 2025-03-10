@@ -5,7 +5,7 @@
 
 @font-face{
     font-family: 'SimpleTitle';
-    src: url('./fonts/CsKaiserRegularDemo-e95Ye.otf') format('opentype');
+    src: url('./fonts/Enchanted\ Land.otf') format('opentype');
 }
 
 :root{
@@ -36,6 +36,7 @@
     --bg-element: url("./img/dark_layer.png");
     --menu: var(--c_dark2);
     --menu_active: var(--c_dark2_shadow);
+    --card-type-1: url("./img/dark_card.png");
 }
 [data-bs-theme="light"] { 
     --font: #1A0225;
@@ -46,6 +47,7 @@
     --bg-element: url("./img/light_layer.png");;
     --menu: var(--c_light2);
     --menu_active: var(--c_light2_shadow);
+    --card-type-1: url("./img/light_card.png");
 }
 
 html{
@@ -214,6 +216,10 @@ main{
     align-items: center;
 }
 
+.navbar-brand{
+    margin: 0;
+}
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -353,8 +359,10 @@ h2{
 }
 
 h3{
-    font-size: 1.5rem ;
+    font-size: 2rem ;
+    line-height: 30px;
     color: var(--font2) !important;
+    font-family: "SimpleTitle";
 }
 
 h4 {
@@ -373,14 +381,16 @@ h5{
 .card{
     text-align: center;
     padding: 10px;
-    background-image: url("./img/card1.png");
-    background-size: cover;
+    background-image: var(--card-type-1);
+    background-size: 100% 100%; /* This makes the background image cover the entire div */
+    background-position: center;
     margin: 30px;
     width: 18rem;
     aspect-ratio: 3/4;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     perspective: 1000px; /* Adds perspective for 3D effect */
 }
+
 
 .card .btn{
     width: 50px;
@@ -473,7 +483,6 @@ d{
 }
 
 .profile{
-    background-color: #6f6a82;
     padding: 30px;
     display: flex;
     flex-wrap: wrap;
@@ -596,15 +605,10 @@ footer{
     width: 66.67vw;
     height: 100%;
 }
-
+/* 
 .devs .card{
-    width: 30%;
     --bs-card-spacer-y: 0;
-}
-
-.devs .card-body{
-    padding: 0;
-}
+} */
 
 .link{
     width: 33.32vw;
@@ -612,30 +616,40 @@ footer{
 }
 
 .link-content{
-    
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+}
+
+.link-content p{
+    width: 100%;
 }
 
 a{
     color: var(--font2) !important;
 }
 
-.devs h2{
+/* .devs h2{
     text-align: center;
     width: 100%;
 }
-
+*/
 #dev{
     padding: 0;
     flex-wrap: nowrap !important;
-}
+} 
 
 /*--------------------TABCONTENT--------------------*/
 
 /* Style the tab */
 .tab {
     overflow: hidden;
-    border: 1px solid #ccc;
+    border: 1px solid var(--purple_light);
     background-color: var(--menu);
+}
+
+tr:first-child{
+    background-color: var(--bg-gradient);
 }
   
 /* Style the buttons that are used to open the tab content */
@@ -677,7 +691,7 @@ table{
 }
 
 th, td {
-    border: 1px solid var(--font2);
+    border: 1px solid var(--purple_light);
 }
 
 th{
@@ -688,7 +702,7 @@ th{
 }
 
 .userrow {
-    background-color: #4f7e49d6;
+    background-color: var(--brand);
 }
 
 
@@ -735,6 +749,10 @@ th{
 
     /*----------GENERIC----------*/
 
+    header{
+        height: 40vh !important;
+    }
+
     body{
         text-align: center;
     }
@@ -774,10 +792,6 @@ th{
 
     /*----------CARDS----------*/
 
-    .character img{
-        height: 30vh;
-    }
-    
 
     /*----------FOOTER----------*/
 
@@ -842,4 +856,14 @@ th{
         width: 20rem;
     }
 
+}
+
+@media (max-width: 576px){
+    .flex-container{
+        padding: 0;
+    }
+
+    .devs .card{
+        width: 18rem;
+    }
 }
