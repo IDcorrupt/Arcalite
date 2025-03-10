@@ -67,11 +67,18 @@ public partial class EnemySpawner : Node2D
     }
     public bool Despawn()
     {
-        if (ActiveEnemy != null)
+        if (ActiveEnemy != null && IsInstanceValid(ActiveEnemy))
         {
+            GD.Print("current enemy: " + ActiveEnemy);
             ActiveEnemy.Free();
+            ActiveEnemy = null;
             return true;
         }
-        else return false;
+        else
+        {
+            ActiveEnemy = null;
+            return false;
+        }
+
     }
 }

@@ -34,18 +34,20 @@ public partial class SaveLoadHandler : Node
 
     public static bool CheckSave()
     {
+        //check if savefile exists
         if (FileAccess.FileExists(savepath))
             return true;
         else return false;
     }
     public static void Load()
     {
+        //delete save in memory
+        Globals.currentSave = new List<string>();
+        //opne file
         var file = FileAccess.Open(savepath, FileAccess.ModeFlags.Read);
         string[] data = file.GetAsText().Split('\n');
+        //load to memory
         foreach (string s in data)
-        {
-            GD.Print(s);
             Globals.currentSave.Add(s);
-        }
     }
 }

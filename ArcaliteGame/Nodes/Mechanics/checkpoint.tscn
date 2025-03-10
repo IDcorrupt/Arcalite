@@ -214,3 +214,4 @@ frame = 3
 frame_progress = 0.696011
 
 [connection signal="body_entered" from="TriggerArea" to="." method="TriggerAreaBodyEntered"]
+[connection signal="body_exited" from="TriggerArea" to="." method="TriggerAreaBodyExited"]

@@ -16,15 +16,26 @@ public partial class Checkpoint : Node2D
         base._Ready();
         triggerArea = GetNode("TriggerArea") as Area2D;
         sprite = GetNode("AnimatedSprite2D") as AnimatedSprite2D;
-        sprite.Play("idle");
         map = GetParent().GetParent() as Map;
+        sprite.Play("idle");
+        TreeExiting += Checkpoint_TreeExiting;
     }
 
+    private void Checkpoint_TreeExiting()
+    {
+        GD.Print($"{this.Name} exiting tree");
+    }
 
     public void TriggerAreaBodyEntered(Node2D body)
     {
-        if(!triggered)
+        if(!triggered && sprite.Animation == "idle")
             TriggerCheckpoint();
+    }
+    public void TriggerAreaBodyExited(Node2D body)
+    {
+        //scuffed solution for new game / map switch saving -> spawning on a checkpoint sets it to empty -> doesn't save
+        if(Name == "Checkpoint0")
+            SaveLoadHandler.Save(map.roomStatus(), Globals.player.GetMaxHP(), Globals.player.GetMaxMP(), Globals.player.GetCurrentHP(), Globals.player.GetCurrentMP(), Globals.player.GetAttackDamage(), Globals.player.GetCooldowns());
     }
     public void OnAnimationFinished()
     {
@@ -35,8 +46,8 @@ public partial class Checkpoint : Node2D
     private void TriggerCheckpoint()
     {
         Globals.spawnPoint.QueueFree();
-        sprite.Play("triggered");
         Globals.spawnPoint = this;
+        sprite.Play("triggered");
         SaveLoadHandler.Save(map.roomStatus(), Globals.player.GetMaxHP(), Globals.player.GetMaxMP(), Globals.player.GetCurrentHP(), Globals.player.GetCurrentMP(), Globals.player.GetAttackDamage(), Globals.player.GetCooldowns());
     }
 
@@ -44,11 +55,6 @@ public partial class Checkpoint : Node2D
     {
         triggered = true;
         sprite.Play("empty");
-    }
 
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
-        
     }
 }

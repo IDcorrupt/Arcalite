@@ -236,10 +236,10 @@ public partial class Enemy : CharacterBody2D
             }
             hurtTimer.Start();
         }
-        GD.Print(this.Name + " hp left: " + currentHP);
     }
     private void OnHurtTimerTimeout() { isHurt = false; }
     public void OnChaseBufferTimeout() { isChasing = false; }
+
     //appearance
     private void Flip(bool dir)
     {

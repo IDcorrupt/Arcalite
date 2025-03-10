@@ -28,23 +28,27 @@ public partial class Map : Node2D
         if (Globals.hasSavefile)
         {
             //delete(free) all checkpoints before the current one (so they can't be activated -> no save cheesing
-            int marker = Globals.currentSave[1].Last(); //number at the end of checkpoint name
+            GD.Print("saveline 1: "+Globals.currentSave[1]);
+            GD.Print("marker : "+Globals.currentSave[1].Last());
+            int marker = Convert.ToInt32(Globals.currentSave[1].Last()); //number at the end of checkpoint name
+            GD.Print("marker var: " + marker);
             int counter = 0;
             while (Convert.ToInt32(checkpointContainer.GetChildren()[counter].Name.ToString().Last()) < marker)
             {
-                GD.Print("marker is: " + marker);
-                GD.Print("checkpoint in qiestion"); //STOPPED HERE, THIS DOESNT WORK
-                checkpointContainer.GetChildren()[counter].Free();
+                GD.Print("checkpoint in question");
+                checkpointContainer.GetChildren()[counter].QueueFree();
                 counter++;
             }
             //set spawnpoint
-            GD.Print($"CheckPoints/{Globals.currentSave[1]}");
+            GD.Print($"Current checkpoint path: CheckPoints/{Globals.currentSave[1]}");
             Globals.spawnPoint = GetNode($"CheckPoints/{Globals.currentSave[1]}") as Checkpoint;
-            SetRoomStatus();
             camera.RespawnMove();
         }
         else
+        {
             Globals.spawnPoint = GetNode("CheckPoints/Checkpoint0") as Checkpoint;
+        }
+        SetRoomStatus();
         Globals.spawnPoint.Empty();
 
         //fx
@@ -54,18 +58,26 @@ public partial class Map : Node2D
         //player
         player = playerScene.Instantiate() as Player;
         AddChild(player);
+
     }
     private void SetRoomStatus()
     {
+        GD.Print("saveile: "+Globals.hasSavefile);
+
         int i = 0;
-        string[] roomBools = Globals.currentSave[2].Split(';');
-        foreach (EnemyControl controller in GetTree().GetNodesInGroup("Controllers"))
+        if (Globals.hasSavefile)
         {
-            controller.SetRoomCleared(Boolean.Parse(roomBools[i]));
-            /*if (roomBools[i] == "true")
-                controller.SetRoomCleared(true);
-            else if(roomBools[i] == "false")
-                controller.SetRoomCleared(false);*/
+            string[] roomBools = Globals.currentSave[2].Split(';');
+            foreach (EnemyControl controller in GetTree().GetNodesInGroup("Controllers"))
+            {
+                controller.SetRoomCleared(Boolean.Parse(roomBools[i]));
+                i++;
+            }
+        }
+        else
+        {
+            foreach (EnemyControl controller in GetTree().GetNodesInGroup("Controllers"))
+                controller.SetRoomCleared(false);
         }
     }
     public void Respawn()

@@ -44,7 +44,6 @@ public partial class CameraController : Node2D
     public void MoveCamera(string direction)
     {
 
-        GD.Print("moving: " + direction);
         switch (direction)
         {
             case "top":
