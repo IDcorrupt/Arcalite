@@ -1,27 +1,44 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Ui : Control
 {
+    //components
     RichTextLabel HPnum;
     RichTextLabel MPnum;
     AnimatedSprite2D dashIcon;
     Sprite2D dashCooldownBar;
     AnimatedSprite2D CAIcon;
     Sprite2D CACooldownBar;
+    AnimatedSprite2D SpellEIcon;
+    Sprite2D SpellECooldownBar; 
+    AnimatedSprite2D SpellQIcon;
+    Sprite2D SpellQCooldownBar;
 
+    //equipped items
+    Enums.itemType spellE = Enums.itemType.empty;
+    Enums.itemType spellQ = Enums.itemType.empty;
     //localized player for ease of use
     Player player;
     public override void _Ready()
     {
         HPnum = GetNode("HPNumDisplay") as RichTextLabel;
         MPnum = GetNode("MPNumDisplay") as RichTextLabel;
-        dashIcon = GetNode("Icons/DashIcon") as AnimatedSprite2D;
-        dashCooldownBar = GetNode("Icons/DashCooldownBar") as Sprite2D;
-        CAIcon = GetNode("Icons/CAIcon") as AnimatedSprite2D;
-        CACooldownBar = GetNode("Icons/CACooldownBar") as Sprite2D;
+        //cooldown components
+        dashIcon = GetNode("Icons/Dash/Icon") as AnimatedSprite2D;
+        dashCooldownBar = GetNode("Icons/Dash/CooldownBar") as Sprite2D;
+        CAIcon = GetNode("Icons/ChargeAttack/Icon") as AnimatedSprite2D;
+        CACooldownBar = GetNode("Icons/ChargeAttack/CooldownBar") as Sprite2D;
+        SpellEIcon = GetNode("Icons/SpellE/Icon") as AnimatedSprite2D;
+        SpellECooldownBar = GetNode("Icons/SpellE/CooldownBar") as Sprite2D;
+        SpellQIcon = GetNode("Icons/SpellQ/Icon") as AnimatedSprite2D;
+        SpellQCooldownBar = GetNode("Icons/SpellQ/CooldownBar") as Sprite2D;
+
         CACooldownBar.Hide();
         dashCooldownBar.Hide();
+        SpellECooldownBar.Hide();
+        SpellQCooldownBar.Hide();
     }
 
     private void Player_Dashed(float cooldown)
@@ -43,7 +60,7 @@ public partial class Ui : Control
         CACooldownBar.Show();
         CACooldownBar.Scale = new Vector2(0, CACooldownBar.Scale.Y);
         var CACooldown = GetTree().CreateTween();
-        CACooldown.Finished += CACooldown_Finished; ;
+        CACooldown.Finished += CACooldown_Finished;
         CACooldown.TweenProperty(CACooldownBar, "scale", new Vector2(32.0f, CACooldownBar.Scale.Y), cooldown);
         CAIcon.Play("Cooldown");
     }
@@ -51,6 +68,80 @@ public partial class Ui : Control
     {
         CACooldownBar.Hide();
         CAIcon.Play("Ready");
+    }
+    private void Player_SpellECast(float cooldown)
+    {
+        if (spellE != Enums.itemType.empty)
+        {
+            SpellECooldownBar.Show();
+            SpellECooldownBar.Scale = new Vector2(0, SpellECooldownBar.Scale.Y);
+            var spellECooldown = GetTree().CreateTween();
+            spellECooldown.Finished += SpellECooldown_Finished;
+            spellECooldown.TweenProperty(SpellECooldownBar, "scale", new Vector2(32.0f, SpellECooldownBar.Scale.Y), cooldown);
+            SpellEIcon.Play(spellE.ToString()+"_Cooldown");
+        }
+    }
+    private void SpellECooldown_Finished()
+    {
+        SpellECooldownBar.Hide();
+        SpellEIcon.Play(spellE.ToString()+"_Ready");
+    }
+    private void Player_SpellQCast(float cooldown)
+    {
+        if (spellQ != Enums.itemType.empty)
+        {
+            SpellQCooldownBar.Show();
+            SpellQCooldownBar.Scale = new Vector2(0, SpellQCooldownBar.Scale.Y);
+            var spellQCooldown = GetTree().CreateTween();
+            spellQCooldown.Finished += SpellQCooldown_Finished;
+            spellQCooldown.TweenProperty(SpellQCooldownBar, "scale", new Vector2(32.0f, SpellQCooldownBar.Scale.Y), cooldown);
+            SpellQIcon.Play(spellQ.ToString()+"_Cooldown");
+        }
+    }
+    private void SpellQCooldown_Finished()
+    {
+        SpellQCooldownBar.Hide();
+        SpellQIcon.Play(spellQ.ToString()+"_Ready");
+    }
+
+    private void UpdateItems(List<int> items)
+    {
+        spellE = (Enums.itemType)items[0];
+        switch (spellE)
+        {
+            case Enums.itemType.empty:
+                SpellEIcon.Hide();
+                SpellECooldownBar.Hide();
+                break;
+            case Enums.itemType.necklace:
+                SpellEIcon.Play(spellE.ToString() + "_Ready");
+                SpellEIcon.Show();
+                break;
+            case Enums.itemType.shield:
+                SpellEIcon.Play(spellE.ToString() + "_Ready");
+                SpellEIcon.Show();
+                break;
+            default:
+                break;
+        }
+        spellQ = (Enums.itemType)items[1];
+        switch (spellQ)
+        {
+            case Enums.itemType.empty:
+                SpellQIcon.Hide();
+                SpellQCooldownBar.Hide();
+                break;
+            case Enums.itemType.necklace:
+                SpellQIcon.Play(spellQ.ToString() + "_Ready");
+                SpellQIcon.Show();
+                break;
+            case Enums.itemType.shield:
+                SpellQIcon.Play(spellQ.ToString() + "_Ready");
+                SpellQIcon.Show();
+                break;
+            default:
+                break;
+        }
     }
 
     public override void _Process(double delta)
@@ -60,10 +151,14 @@ public partial class Ui : Control
             player = Globals.player;
             player.Dashed += Player_Dashed;
             player.ChargeAttacked += Player_ChargeAttacked;
+            player.SpellECast += Player_SpellECast;
+            player.SpellQCast += Player_SpellQCast;
+            player.ItemsModified += Player_ItemsModified;
+            UpdateItems(player.GetEquips());
         }
         HPnum.Text = "HP: " + Mathf.Round(Globals.player.GetCurrentHP()); 
         MPnum.Text = "MP: " + Mathf.Round(Globals.player.GetCurrentMP()); 
     }
 
-
+    private void Player_ItemsModified() { UpdateItems(player.GetEquips()); }
 }

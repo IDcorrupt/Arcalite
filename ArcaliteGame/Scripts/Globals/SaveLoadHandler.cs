@@ -7,9 +7,8 @@ public partial class SaveLoadHandler : Node
     static string savepath = "user://savefile.txt";
 
 
-    public static void Save(List<bool> roomsCleared, float MaxHP, float MaxMP, float currentHP, float currentMP, float attackDamage, List<float> cooldowns)
+    public static void Save(List<bool> roomsCleared, float MaxHP, float MaxMP, float currentHP, float currentMP, float attackDamage, List<float> cooldowns, List<int> equippedItems)
     {
-        //[TBD] ADD ITEMS WHEN THEY START EXISTING
         var file = FileAccess.Open(savepath, FileAccess.ModeFlags.Write);
         //map
         file.StoreLine(Globals.activeMap);
@@ -28,7 +27,9 @@ public partial class SaveLoadHandler : Node
         //player attack damage
         file.StoreLine(attackDamage.ToString());
         //player cooldowns
-        file.StoreString(String.Join("; ", cooldowns));
+        file.StoreLine(String.Join("; ", cooldowns));
+        //items
+        file.StoreString(String.Join(", ", equippedItems));
         file.Close();
     }
 

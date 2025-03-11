@@ -5,9 +5,10 @@ public partial class Enums : Node
 {
     public enum itemType
     {
-        necklace,
-        shield,
-        shard
+        empty = 0,
+        necklace = 1,
+        shield = 2,
+        shard = 3,
 
     }
     public enum EnemyClass

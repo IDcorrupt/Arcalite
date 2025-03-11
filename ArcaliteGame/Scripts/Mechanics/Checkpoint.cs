@@ -35,7 +35,16 @@ public partial class Checkpoint : Node2D
     {
         //scuffed solution for new game / map switch saving -> spawning on a checkpoint sets it to empty -> doesn't save
         if(Name == "Checkpoint0")
-            SaveLoadHandler.Save(map.roomStatus(), Globals.player.GetMaxHP(), Globals.player.GetMaxMP(), Globals.player.GetCurrentHP(), Globals.player.GetCurrentMP(), Globals.player.GetAttackDamage(), Globals.player.GetCooldowns());
+            SaveLoadHandler.Save(
+                map.roomStatus(), 
+                Globals.player.GetMaxHP(), 
+                Globals.player.GetMaxMP(), 
+                Globals.player.GetCurrentHP(), 
+                Globals.player.GetCurrentMP(), 
+                Globals.player.GetAttackDamage(), 
+                Globals.player.GetCooldowns(), 
+                Globals.player.GetEquips()
+                );
     }
     public void OnAnimationFinished()
     {
@@ -48,7 +57,16 @@ public partial class Checkpoint : Node2D
         Globals.spawnPoint.QueueFree();
         Globals.spawnPoint = this;
         sprite.Play("triggered");
-        SaveLoadHandler.Save(map.roomStatus(), Globals.player.GetMaxHP(), Globals.player.GetMaxMP(), Globals.player.GetCurrentHP(), Globals.player.GetCurrentMP(), Globals.player.GetAttackDamage(), Globals.player.GetCooldowns());
+        SaveLoadHandler.Save(
+            map.roomStatus(), 
+            Globals.player.GetMaxHP(), 
+            Globals.player.GetMaxMP(), 
+            Globals.player.GetCurrentHP(), 
+            Globals.player.GetCurrentMP(), 
+            Globals.player.GetAttackDamage(), 
+            Globals.player.GetCooldowns(), 
+            Globals.player.GetEquips()
+            );
     }
 
     public void Empty()

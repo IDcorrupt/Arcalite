@@ -45,18 +45,21 @@ script = ExtResource("1_pi8uj")
 
 [node name="PickupArea" type="Area2D" parent="."]
 collision_layer = 0
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 shape = SubResource("CircleShape2D_pi8uj")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_8dqdw")
-animation = &"necklace"
+animation = &"shield"
 
-[node name="GroundDetect" type="RayCast2D" parent="."]
-target_position = Vector2(0, 15)
+[node name="FloatTrigger" type="RayCast2D" parent="."]
+target_position = Vector2(0, 12)
 collision_mask = 132
 
 [node name="hitBox" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ygrbr")
 debug_color = Color(0.665793, 0.511594, 0, 0.42)
+
+[connection signal="body_entered" from="PickupArea" to="." method="OnTriggerAreaEntered"]

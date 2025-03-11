@@ -9,23 +9,45 @@ public partial class Item : CharacterBody2D
     private AnimatedSprite2D sprite;
     private Area2D area;
     private RayCast2D floatTrigger;
-    private Enums.itemType type;
+    private bool groundHit;
+
+    //item properties
+    [Export] private Enums.itemType type;
+    [Export] private float itemCooldown = 5;
+    //[DEBUG] constructor for manual spawning (from scene editor)
+    public Item()
+    {
+        Random dirRandom  = new Random();
+        Vector2 throwDir = new Vector2(-150, 0);
+        throwDir = throwDir.Rotated(0.5f + (float)dirRandom.NextDouble() * (Mathf.Pi - 1.0f));
+        Velocity = throwDir;
+    }
+    //constructor
     public Item(Enums.itemType type)
     {
         this.type = type;
+        Random dirRandom = new Random();
+        Vector2 throwDir = new Vector2(-150, 0);
+        throwDir = throwDir.Rotated(0.5f + (float)dirRandom.NextDouble() * (Mathf.Pi - 1.0f));
+        Velocity = throwDir;
     }
     public override void _Ready()
     {
         base._Ready();
         sprite = GetNode("Sprite") as AnimatedSprite2D;
         area = GetNode("PickupArea") as Area2D;
+        floatTrigger = GetNode("FloatTrigger") as RayCast2D;
+
+        //determine item type
         switch (type)
         {
             case Enums.itemType.necklace:
                 sprite.Play("necklace");
+                itemCooldown = 10f;
                 break;
             case Enums.itemType.shield:
                 sprite.Play("shield");
+                itemCooldown = 20f;
                 break;
             case Enums.itemType.shard:
                 sprite.Play("shard");
@@ -38,24 +60,58 @@ public partial class Item : CharacterBody2D
     private Vector2 Float(double delta)
     {
         Vector2 vel = Velocity;
-        if (floatTrigger.IsColliding())
+        if (!floatTrigger.IsColliding() & !groundHit)
         {
-            vel.Y -= Globals.GRAVITY * (float)delta;
+            //initial fall
+            vel.Y += Globals.GRAVITY / 3 * (float)delta;
+        }else if (!floatTrigger.IsColliding())
+        {
+            //dropped item state float downwards
+            vel.Y += Globals.GRAVITY / 15 * (float)delta;
+            //cap Y
+            if (vel.Y > 20)
+                vel.Y = 20;
         }
         else
         {
-            vel.Y += Globals.GRAVITY * (float)delta;
+            //dropped item state float upwards
+            vel.Y -= Globals.GRAVITY / 30 * (float)delta;
+            //cap Y
+            if (vel.Y < -20)
+                vel.Y = -20;
         }
-        if (vel.X < 0) 
-            vel.X += 100 * (float)delta;
-        else if (vel.X > 0)
-            vel.X -= 100 * (float)delta; 
+        //gradually slow horizontal movement
+        if (vel.X < -10)
+            vel.X += 120 * (float)delta;
+        else if (vel.X > 10)
+            vel.X -= 120 * (float)delta;
+        else
+            vel.X = 0;
+
+
         return vel;
+    }
+
+    public void OnTriggerAreaEntered(Node2D body)
+    {
+        if(body is Player player)
+        {
+            //send pickup notif to player here (func)
+            Globals.player.PickupItem(type, itemCooldown);
+            QueueFree();
+        }
     }
 
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
+
+        if (floatTrigger.IsColliding() && !groundHit)
+        {
+            groundHit = true;
+            Velocity = new Vector2(0, Velocity.Y);
+        }
         Velocity = Float(delta);
+        MoveAndSlide();
     }
 }

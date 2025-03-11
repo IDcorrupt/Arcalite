@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Runtime.CompilerServices;
 using System.Transactions;
 
 public partial class Enemy : CharacterBody2D
@@ -9,7 +10,7 @@ public partial class Enemy : CharacterBody2D
     protected float currentHP;
     protected float damage;
     //item drop chance
-    protected int dropChance;
+    protected int shardDropRate;
 
     //external
     //[Export] protected int namenum;
@@ -293,17 +294,20 @@ public partial class Enemy : CharacterBody2D
     }
 
     //die logic
-    private void DropItem(Enums.itemType itemtype)
+    private void DropItems(Enums.itemType itemtype = Enums.itemType.shard, int customDropRate = 0)
     {
-        Item item = new Item(itemtype);
-        
+        Item item;
+        if (itemtype == Enums.itemType.shard && Math.RNG(shardDropRate))
+            item = new Item(itemtype);
+        else if(Math.RNG(customDropRate))
+            item = new Item(itemtype);
 
     }
     private void Die()
     {
         parent.enemyAmount--;
-        if (Math.RNG(dropChance))
-            DropItem(Enums.itemType.shard);
+        //empty item func call -> shard drop
+        DropItems();
         QueueFree();    
     }
 

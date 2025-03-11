@@ -1,10 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://d4mg7kpomu4je"]
+[gd_scene load_steps=17 format=3 uid="uid://d4mg7kpomu4je"]
 
 [ext_resource type="Script" uid="uid://bw81mk3jt7fwe" path="res://Scripts/Mechanics/Ui.cs" id="1_f025f"]
 [ext_resource type="Texture2D" uid="uid://de8mwe0cmbyrt" path="res://Assets/Icons/Dash/dash_Cooldown.png" id="2_13e54"]
 [ext_resource type="Texture2D" uid="uid://cyp8gf66hrhdi" path="res://Assets/Icons/ChargeAttack/ca_Cooldown.png" id="2_qqwp7"]
 [ext_resource type="Texture2D" uid="uid://bqucfy8ub1eny" path="res://Assets/Icons/ChargeAttack/ca_Ready.png" id="3_2gkhm"]
 [ext_resource type="Texture2D" uid="uid://cy8hqhi3lph21" path="res://Assets/Icons/Dash/dash_Ready.png" id="3_2w15c"]
+[ext_resource type="Texture2D" uid="uid://ss724n1rhqwn" path="res://Assets/Icons/Necklace/necklace_Cooldown.png" id="6_nffpf"]
+[ext_resource type="Texture2D" uid="uid://c25u34ai4e5ib" path="res://Assets/Icons/Necklace/necklace_Ready.png" id="7_8ix5p"]
+[ext_resource type="Texture2D" uid="uid://byqmmeu2l110b" path="res://Assets/Icons/Shield/shield_Cooldown.png" id="8_mqexw"]
+[ext_resource type="Texture2D" uid="uid://lq70xbogwtpy" path="res://Assets/Icons/Shield/shield_Ready.png" id="9_gb0wl"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ubv0j"]
 
@@ -48,6 +52,45 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_qoyub"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_nffpf")
+}],
+"loop": true,
+"name": &"necklace_Cooldown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_8ix5p")
+}],
+"loop": true,
+"name": &"necklace_Ready",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_mqexw")
+}],
+"loop": true,
+"name": &"shield_Cooldown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_gb0wl")
+}],
+"loop": true,
+"name": &"shield_Ready",
+"speed": 5.0
+}]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_24col"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_j1f8t"]
+
 [node name="UI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -78,24 +121,54 @@ autowrap_mode = 0
 
 [node name="Icons" type="Node2D" parent="."]
 
-[node name="DashCooldownBar" type="Sprite2D" parent="Icons"]
-position = Vector2(594, 42)
+[node name="Dash" type="Node2D" parent="Icons"]
+position = Vector2(610, 20)
+
+[node name="CooldownBar" type="Sprite2D" parent="Icons/Dash"]
+position = Vector2(-16, 15)
 scale = Vector2(32, 5)
 texture = SubResource("CanvasTexture_ubv0j")
 centered = false
 
-[node name="DashIcon" type="AnimatedSprite2D" parent="Icons"]
-position = Vector2(610, 30)
+[node name="Icon" type="AnimatedSprite2D" parent="Icons/Dash"]
 sprite_frames = SubResource("SpriteFrames_1r34d")
 animation = &"Ready"
 
-[node name="CACooldownBar" type="Sprite2D" parent="Icons"]
-position = Vector2(553, 42)
+[node name="ChargeAttack" type="Node2D" parent="Icons"]
+position = Vector2(570, 20)
+
+[node name="CooldownBar" type="Sprite2D" parent="Icons/ChargeAttack"]
+position = Vector2(-16, 15)
 scale = Vector2(32, 5)
 texture = SubResource("CanvasTexture_h20vd")
 centered = false
 
-[node name="CAIcon" type="AnimatedSprite2D" parent="Icons"]
-position = Vector2(569, 30)
+[node name="Icon" type="AnimatedSprite2D" parent="Icons/ChargeAttack"]
 sprite_frames = SubResource("SpriteFrames_0dtax")
 animation = &"Ready"
+
+[node name="SpellE" type="Node2D" parent="Icons"]
+position = Vector2(530, 20)
+
+[node name="Icon" type="AnimatedSprite2D" parent="Icons/SpellE"]
+sprite_frames = SubResource("SpriteFrames_qoyub")
+animation = &"necklace_Ready"
+
+[node name="CooldownBar" type="Sprite2D" parent="Icons/SpellE"]
+position = Vector2(-16, 15)
+scale = Vector2(32, 5)
+texture = SubResource("CanvasTexture_24col")
+centered = false
+
+[node name="SpellQ" type="Node2D" parent="Icons"]
+position = Vector2(490, 20)
+
+[node name="CooldownBar" type="Sprite2D" parent="Icons/SpellQ"]
+position = Vector2(-16, 15)
+scale = Vector2(32, 5)
+texture = SubResource("CanvasTexture_j1f8t")
+centered = false
+
+[node name="Icon" type="AnimatedSprite2D" parent="Icons/SpellQ"]
+sprite_frames = SubResource("SpriteFrames_qoyub")
+animation = &"shield_Ready"

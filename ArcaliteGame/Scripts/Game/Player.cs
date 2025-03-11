@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
@@ -38,6 +39,11 @@ public partial class Player : CharacterBody2D
     private int chargeLevel = 0;
     private float speedmodifier = 1;
 
+    //EQ abilities
+    private Enums.itemType spellItemE = Enums.itemType.empty;
+    private Enums.itemType spellItemQ = Enums.itemType.empty;
+    
+
     //other
     private bool isHurt = false;
     private bool isDead = false;
@@ -73,6 +79,9 @@ public partial class Player : CharacterBody2D
     //signals
     [Signal] public delegate void DashedEventHandler(float cooldown);
     [Signal] public delegate void ChargeAttackedEventHandler(float cooldown);
+    [Signal] public delegate void SpellECastEventHandler(float cooldown);   
+    [Signal] public delegate void SpellQCastEventHandler(float cooldown);
+    [Signal] public delegate void ItemsModifiedEventHandler();
     public override void _Ready()
     {
         Globals.player = this;
@@ -263,6 +272,91 @@ public partial class Player : CharacterBody2D
             oracle.level = oracleLevel;
         }
     }
+    public void SpellE()
+    {
+        if(SECooldown.TimeLeft == 0)
+        {
+            switch (spellItemE)
+            {
+                case Enums.itemType.necklace:
+                    SpamAbility();
+                    break;
+                case Enums.itemType.shield:
+                    ShieldAbility();
+                    break;
+                default: 
+                    break;
+            }
+            EmitSignal(SignalName.SpellECast, SECooldown.WaitTime);
+        }
+    }
+    public void SpellQ()
+    {
+        if (SQCooldown.TimeLeft == 0)
+        {
+            switch (spellItemQ)
+            {
+                case Enums.itemType.necklace:
+                    SpamAbility();
+                    break;
+                case Enums.itemType.shield:
+                    ShieldAbility();
+                    break;
+                default: break;
+            }
+            EmitSignal(SignalName.SpellQCast, SQCooldown.WaitTime);
+
+        }
+    }
+
+    private void SpamAbility()
+    {
+        //necklace item ability: reduced attack cooldown, increased dispersion
+        
+    }
+    private void ShieldAbility()
+    {
+        //attack immunity for 2 sec (time not final)
+    }
+    public void PickupItem(Enums.itemType itemtype, float cooldown)
+    {
+        GD.Print("pickup called");
+        switch (itemtype)
+        {
+            case Enums.itemType.necklace:
+                //equip only if other item doesn't have it already
+                if (spellItemE is Enums.itemType.empty && spellItemQ != Enums.itemType.necklace)
+                {
+                    spellItemE = Enums.itemType.necklace;
+                    SECooldown.WaitTime = cooldown;
+                }
+                else if (spellItemQ is Enums.itemType.empty && spellItemE != Enums.itemType.necklace)
+                {
+                    spellItemQ = Enums.itemType.necklace;
+                    SQCooldown.WaitTime = cooldown;
+                }
+                break;
+            case Enums.itemType.shield:
+                GD.Print("shield detected");
+                if (spellItemE is Enums.itemType.empty && spellItemQ != Enums.itemType.shield)
+                {
+                    GD.Print("E slot populated");
+                    spellItemE = Enums.itemType.shield;
+                    SECooldown.WaitTime = cooldown;
+                }
+                else if (spellItemQ is Enums.itemType.empty && spellItemE != Enums.itemType.shield)
+                {
+                    GD.Print("Q slot populated");
+                    spellItemQ = Enums.itemType.shield;
+                    SQCooldown.WaitTime = cooldown;
+                }
+                break;
+            default:
+                break;
+        }
+        EmitSignal(SignalName.ItemsModified);
+
+    }
 
     //damage functions
     public void Hit(float damage, Vector2 hitVector)
@@ -312,6 +406,10 @@ public partial class Player : CharacterBody2D
             SOCooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[2]);
             SECooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[3]);
             SQCooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[4]);
+            string[] items = Globals.currentSave[9].Split(";");
+            spellItemE = (Enums.itemType)Convert.ToInt32(items[0]);
+            spellItemQ = (Enums.itemType)Convert.ToInt32(items[1]);
+
         }
         else
         {
@@ -508,6 +606,13 @@ public partial class Player : CharacterBody2D
         cooldowns.Add((float)SECooldown.WaitTime);
         cooldowns.Add((float)SQCooldown.WaitTime);
         return cooldowns;
+    }
+    public List<int> GetEquips()
+    {
+        List<int> equips = new List<int>();
+        equips.Add((int)spellItemE);
+        equips.Add((int)spellItemQ);
+        return equips;
     }
 
     //deltaloop
