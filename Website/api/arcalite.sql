@@ -3,13 +3,14 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Feb 27. 09:34
+-- Létrehozás ideje: 2025. Már 11. 09:30
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.0.30
 
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -28,8 +29,6 @@ USE `arcalite`;
 --
 -- Tábla szerkezet ehhez a táblához `achdesc`
 --
--- Létrehozva: 2025. Feb 07. 12:26
---
 
 DROP TABLE IF EXISTS `achdesc`;
 CREATE TABLE `achdesc` (
@@ -44,21 +43,23 @@ CREATE TABLE `achdesc` (
 --
 -- Tábla szerkezet ehhez a táblához `achievement`
 --
--- Létrehozva: 2025. Feb 07. 12:26
---
 
 DROP TABLE IF EXISTS `achievement`;
 CREATE TABLE `achievement` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- A tábla adatainak kiíratása `achievement`
+--
+
+REPLACE INTO `achievement` (`id`) VALUES
+(1);
+
 -- --------------------------------------------------------
 
 --
 -- Tábla szerkezet ehhez a táblához `avatar`
---
--- Létrehozva: 2025. Feb 07. 12:26
--- Utolsó frissítés: 2025. Feb 27. 09:01
 --
 
 DROP TABLE IF EXISTS `avatar`;
@@ -80,8 +81,6 @@ REPLACE INTO `avatar` (`id`, `image`) VALUES
 
 --
 -- Tábla szerkezet ehhez a táblához `avatardesc`
---
--- Létrehozva: 2025. Feb 07. 12:26
 --
 
 DROP TABLE IF EXISTS `avatardesc`;
@@ -108,9 +107,6 @@ REPLACE INTO `avatardesc` (`avatarid`, `languageid`, `name`, `description`) VALU
 
 --
 -- Tábla szerkezet ehhez a táblához `enemplay`
---
--- Létrehozva: 2025. Feb 07. 12:26
--- Utolsó frissítés: 2025. Feb 27. 09:18
 --
 
 DROP TABLE IF EXISTS `enemplay`;
@@ -144,8 +140,6 @@ REPLACE INTO `enemplay` (`enemyid`, `playerid`) VALUES
 --
 -- Tábla szerkezet ehhez a táblához `enemy`
 --
--- Létrehozva: 2025. Feb 07. 12:26
---
 
 DROP TABLE IF EXISTS `enemy`;
 CREATE TABLE `enemy` (
@@ -174,8 +168,6 @@ REPLACE INTO `enemy` (`id`, `hp`, `image`) VALUES
 --
 -- Tábla szerkezet ehhez a táblához `enemydesc`
 --
--- Létrehozva: 2025. Feb 07. 12:26
---
 
 DROP TABLE IF EXISTS `enemydesc`;
 CREATE TABLE `enemydesc` (
@@ -190,7 +182,7 @@ CREATE TABLE `enemydesc` (
 --
 
 REPLACE INTO `enemydesc` (`enemyid`, `languageid`, `name`, `description`) VALUES
-(1, 1, 'Zombi', 'Alapszintű közelharci szörny.'),
+(1, 1, 'Zombi', 'Alapszintű közelharci szörny. Közel jön, megüt.'),
 (2, 1, 'Csontváz', 'Alapszintű mágus.'),
 (3, 1, 'Troll gólem', 'Alapszintű elit közelharci szörny. Odajön, megüt. Alapképessége az átlagnál nagyobb erejű ütése, illetve különleges képessége a föld megrengetése a földre ütéssel, mely megnehezíti ellenfeleit a mozgásban.'),
 (4, 1, 'Lich', 'Alapszintű elit mágus. Alaptámadásai erősebbek az átlagnál, különleges képessége, hogy segítségére csontvázakat képes teremteni.'),
@@ -204,9 +196,6 @@ REPLACE INTO `enemydesc` (`enemyid`, `languageid`, `name`, `description`) VALUES
 
 --
 -- Tábla szerkezet ehhez a táblához `item`
---
--- Létrehozva: 2025. Feb 07. 12:26
--- Utolsó frissítés: 2025. Feb 27. 09:28
 --
 
 DROP TABLE IF EXISTS `item`;
@@ -227,9 +216,6 @@ REPLACE INTO `item` (`id`, `image`) VALUES
 
 --
 -- Tábla szerkezet ehhez a táblához `itemdesc`
---
--- Létrehozva: 2025. Feb 07. 12:26
--- Utolsó frissítés: 2025. Feb 27. 09:31
 --
 
 DROP TABLE IF EXISTS `itemdesc`;
@@ -253,9 +239,6 @@ REPLACE INTO `itemdesc` (`itemid`, `languageid`, `name`, `description`) VALUES
 --
 -- Tábla szerkezet ehhez a táblához `itemplay`
 --
--- Létrehozva: 2025. Feb 07. 12:26
--- Utolsó frissítés: 2025. Feb 27. 09:32
---
 
 DROP TABLE IF EXISTS `itemplay`;
 CREATE TABLE `itemplay` (
@@ -278,8 +261,6 @@ REPLACE INTO `itemplay` (`itemid`, `playerid`) VALUES
 --
 -- Tábla szerkezet ehhez a táblához `lang`
 --
--- Létrehozva: 2025. Feb 07. 12:26
---
 
 DROP TABLE IF EXISTS `lang`;
 CREATE TABLE `lang` (
@@ -299,8 +280,6 @@ REPLACE INTO `lang` (`id`, `name`) VALUES
 
 --
 -- Tábla szerkezet ehhez a táblához `level`
---
--- Létrehozva: 2025. Feb 07. 12:26
 --
 
 DROP TABLE IF EXISTS `level`;
@@ -323,8 +302,6 @@ REPLACE INTO `level` (`id`, `image`) VALUES
 --
 -- Tábla szerkezet ehhez a táblához `leveldesc`
 --
--- Létrehozva: 2025. Feb 07. 12:26
---
 
 DROP TABLE IF EXISTS `leveldesc`;
 CREATE TABLE `leveldesc` (
@@ -338,9 +315,6 @@ CREATE TABLE `leveldesc` (
 
 --
 -- Tábla szerkezet ehhez a táblához `player`
---
--- Létrehozva: 2025. Feb 07. 12:26
--- Utolsó frissítés: 2025. Feb 27. 09:02
 --
 
 DROP TABLE IF EXISTS `player`;
@@ -369,8 +343,6 @@ REPLACE INTO `player` (`id`, `name`, `hp`, `profileid`, `avatarid`, `levelid`, `
 --
 -- Tábla szerkezet ehhez a táblához `proach`
 --
--- Létrehozva: 2025. Feb 07. 12:26
---
 
 DROP TABLE IF EXISTS `proach`;
 CREATE TABLE `proach` (
@@ -378,12 +350,17 @@ CREATE TABLE `proach` (
   `achievementid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- A tábla adatainak kiíratása `proach`
+--
+
+REPLACE INTO `proach` (`profileid`, `achievementid`) VALUES
+(3, 1);
+
 -- --------------------------------------------------------
 
 --
 -- Tábla szerkezet ehhez a táblához `profile`
---
--- Létrehozva: 2025. Feb 07. 12:26
 --
 
 DROP TABLE IF EXISTS `profile`;
@@ -392,19 +369,20 @@ CREATE TABLE `profile` (
   `username` varchar(64) DEFAULT NULL,
   `password` varchar(128) DEFAULT NULL,
   `played` time DEFAULT '00:00:00',
-  `email` varchar(128) DEFAULT NULL
+  `email` varchar(128) DEFAULT NULL,
+  `deletedAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- A tábla adatainak kiíratása `profile`
 --
 
-REPLACE INTO `profile` (`id`, `username`, `password`, `played`, `email`) VALUES
-(1, 'haro', '*B70449F7A45FD795790A34AB04C111FADA2ABA77', '00:00:00', 'haro@gmail.com'),
-(2, 'feri', '*AC41464BE9A0402F6C67C07B317D773A5087E366', '00:00:00', 'ferenc001_@gmail.com'),
-(3, 'laci', '*A7395F5F1F5F50654D965778F1FA7C6702350C97', '05:19:00', 'zeczi.laszlo@gmail.com'),
-(4, 'zoli', '*F2DE9CCD4C692570BBEB3218207B889F3204635C', '01:22:00', 'zoli@gmail.com'),
-(5, 'leheldani', '*C2B970DB815A941E8CA127C0CF4C83BDC82DA9B6', '00:24:00', 'ramszi@gmail.com');
+REPLACE INTO `profile` (`id`, `username`, `password`, `played`, `email`, `deletedAt`) VALUES
+(1, 'haro', '*B70449F7A45FD795790A34AB04C111FADA2ABA77', '00:00:00', 'haro@gmail.com', NULL),
+(2, 'feri', '*AC41464BE9A0402F6C67C07B317D773A5087E366', '00:00:00', 'ferenc001_@gmail.com', NULL),
+(3, 'Laci', '*A7395F5F1F5F50654D965778F1FA7C6702350C97', '05:19:00', 'zeczi.laszlo@gmail.com', NULL),
+(4, 'zoli', '*F2DE9CCD4C692570BBEB3218207B889F3204635C', '01:22:00', 'zoli@gmail.com', NULL),
+(5, 'leheldani', '*C2B970DB815A941E8CA127C0CF4C83BDC82DA9B6', '00:24:00', 'ramszi@gmail.com', NULL);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -525,7 +503,7 @@ ALTER TABLE `profile`
 -- AUTO_INCREMENT a táblához `achievement`
 --
 ALTER TABLE `achievement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT a táblához `avatar`
@@ -567,7 +545,7 @@ ALTER TABLE `player`
 -- AUTO_INCREMENT a táblához `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Megkötések a kiírt táblákhoz

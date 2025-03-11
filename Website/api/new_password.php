@@ -10,7 +10,7 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 
 
-$sql = "UPDATE `profile` SET `password` = PASSWORD('$password') WHERE `email` = '$email';";
+$sql = "UPDATE `profile` SET `password` = PASSWORD('$password') WHERE `email` = '$email' AND `deletedAt` IS NULL;";
 $result = $db->query($sql);
 
 
