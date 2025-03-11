@@ -171,7 +171,7 @@ $(document).ready(() => {
 });
 
 function FillTabs(data) {
-    $("#h3_username").text(getCookie("username"));
+    $("#h2_username").text(getCookie("username"));
     
     $("#characterTabs").html("");
     $("#characterContents").html("");
@@ -190,7 +190,9 @@ function FillTabs(data) {
             </div>
             <div class="profile-details">
                 <p>Életpont: ${data[i].hp}</p>
-                <p>Mana: </p>
+            </div>
+            <div class="profile-details">
+                <p>Játszott idő: ${data[i].playtime}</p>
             </div>
         </div>`);
 
