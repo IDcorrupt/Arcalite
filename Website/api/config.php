@@ -1,13 +1,10 @@
 <?php
-function ReturnMessage($code = 500, $message = "") {
-    header("Content-Type: application/json; charset=utf-8");    
+function ReturnMessage($code = 500, $message = "") {   
     $return = array(
         "code" => $code,
         "message" => $message
     );
-    echo json_encode($return);
-    http_response_code($code);
-    die();
+    ReturnResult($return, $code);
 }
 
 function ReturnResult($result_array, $code = 200) {

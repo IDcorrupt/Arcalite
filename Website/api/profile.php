@@ -10,11 +10,10 @@ $langid = $_GET["langid"];
 $sql = "SELECT player.id AS id, player.name AS name, player.hp AS hp, player.levelid AS level, player.playtime AS playtime, avatar.image AS image
         FROM 
             player 
-            INNER JOIN profile ON player.profileid = profile.id
             INNER JOIN avatar ON player.avatarid = avatar.id
             INNER JOIN avatardesc ON avatar.id = avatardesc.avatarid
         WHERE 
             avatardesc.languageid = $langid AND 
-            profile.id = $userid";
+            profileid = $userid";
 
 ReturnQuery($sql);
