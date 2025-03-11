@@ -57,9 +57,9 @@ public partial class ConfigFileHandler : Node
         config.SetValue("controls", "move_dash-alt", "");
         config.SetValue("controls", "spell_oracle", "Space");
         config.SetValue("controls", "spell_oracle-alt", "");
-        config.SetValue("controls", "spell_slot1", "Q");
+        config.SetValue("controls", "spell_slot1", "E");
         config.SetValue("controls", "spell_slot1-alt", "");
-        config.SetValue("controls", "spell_slot2", "E");
+        config.SetValue("controls", "spell_slot2", "Q");
         config.SetValue("controls", "spell_slot2-alt", "");
         config.SetValue("controls", "attack_normal", "MouseLeft");
         config.SetValue("controls", "attack_normal-alt", "");

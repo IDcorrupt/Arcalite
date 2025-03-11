@@ -38,11 +38,13 @@ public partial class Player : CharacterBody2D
     private float CACharge = 0f;        //used to track charge progress
     private int chargeLevel = 0;
     private float speedmodifier = 1;
+    private int BADispersion = 0;
 
     //EQ abilities
     private Enums.itemType spellItemE = Enums.itemType.empty;
     private Enums.itemType spellItemQ = Enums.itemType.empty;
-    
+    private bool rapidFire;
+    private bool shielded;
 
     //other
     private bool isHurt = false;
@@ -69,18 +71,23 @@ public partial class Player : CharacterBody2D
     private Timer hurtTimer;
     private Timer dashCooldown;
     //attackcooldowns
+    private float BACooldownStatic; //needed because rapidfire changes waittime
     private Timer BACooldown;
     private Timer CACooldown;
     private Timer SOCooldown;
     private Timer SECooldown;
     private Timer SQCooldown;
+    private Timer spellETimer;
+    private Timer spellQTimer;
 
     private GpuParticles2D FX;
     //signals
     [Signal] public delegate void DashedEventHandler(float cooldown);
     [Signal] public delegate void ChargeAttackedEventHandler(float cooldown);
-    [Signal] public delegate void SpellECastEventHandler(float cooldown);   
-    [Signal] public delegate void SpellQCastEventHandler(float cooldown);
+    [Signal] public delegate void RapidFireCastEventHandler(float activeTime);   
+    [Signal] public delegate void ShieldCastEventHandler(float activeTime);
+    [Signal] public delegate void SpellEOverEventHandler(float cooldown);
+    [Signal] public delegate void SpellQOverEventHandler(float cooldown);
     [Signal] public delegate void ItemsModifiedEventHandler();
     public override void _Ready()
     {
@@ -95,9 +102,12 @@ public partial class Player : CharacterBody2D
         SOCooldown = GetNode("OracleCooldown") as Timer;
         SECooldown = GetNode("SpellECooldown") as Timer;
         SQCooldown = GetNode("SpellQCooldown") as Timer;
+        spellETimer = GetNode("SpellETimer") as Timer;
+        spellQTimer = GetNode("SpellQTimer") as Timer;
+
 
         //basic attack cooldown doesn't change with "levels"
-        BACooldown.WaitTime = 0.2f;
+        BACooldownStatic = 0.2f;
 
         FX = GetNode("FX") as GpuParticles2D;
 
@@ -241,6 +251,11 @@ public partial class Player : CharacterBody2D
             projectile.Position = GlobalPosition;
             Vector2 direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
             projectile.Rotation = direction.Angle();
+            if (BADispersion > 0)
+            {
+                Random disp = new Random();
+                projectile.Rotation += disp.Next(-BADispersion, BADispersion + 1);
+            }
             projectile.direction = direction;
             projectile.damagePayload = damage;
         }
@@ -262,7 +277,7 @@ public partial class Player : CharacterBody2D
             EmitSignal(SignalName.ChargeAttacked, CACooldown.WaitTime);
         }
     }
-    public void OracleSpell()
+    public void SpellOracle()
     {
         Node2D node = (Node2D)spellOracle.Instantiate();
         GetParent().AddChild(node);
@@ -274,53 +289,107 @@ public partial class Player : CharacterBody2D
     }
     public void SpellE()
     {
-        if(SECooldown.TimeLeft == 0)
+        switch (spellItemE)
         {
-            switch (spellItemE)
-            {
-                case Enums.itemType.necklace:
-                    SpamAbility();
-                    break;
-                case Enums.itemType.shield:
-                    ShieldAbility();
-                    break;
-                default: 
-                    break;
-            }
-            EmitSignal(SignalName.SpellECast, SECooldown.WaitTime);
+            case Enums.itemType.necklace:
+                RapidFireAbility("E");
+                break;
+            case Enums.itemType.shield:
+                ShieldAbility("E");
+                break;
+            default: 
+                break;
         }
     }
     public void SpellQ()
     {
-        if (SQCooldown.TimeLeft == 0)
+        switch (spellItemQ)
         {
-            switch (spellItemQ)
-            {
-                case Enums.itemType.necklace:
-                    SpamAbility();
-                    break;
-                case Enums.itemType.shield:
-                    ShieldAbility();
-                    break;
-                default: break;
-            }
-            EmitSignal(SignalName.SpellQCast, SQCooldown.WaitTime);
-
+            case Enums.itemType.necklace:
+                RapidFireAbility("Q");
+                break;
+            case Enums.itemType.shield:
+                ShieldAbility("Q");
+                break;
+            default: break;
         }
     }
+    
 
-    private void SpamAbility()
+    private void RapidFireAbility(string slot)
     {
         //necklace item ability: reduced attack cooldown, increased dispersion
-        
+        rapidFire = true;
+        switch (slot)
+        {
+            case "E":
+                spellETimer.WaitTime = 5;
+                EmitSignal(SignalName.RapidFireCast, spellETimer.WaitTime);
+                spellETimer.Start();
+                break;
+            case "Q":
+                spellQTimer.WaitTime = 5;
+                EmitSignal(SignalName.RapidFireCast, spellQTimer.WaitTime);
+                spellQTimer.Start();
+                break;
+            default : break;
+        }
     }
-    private void ShieldAbility()
+    private void ShieldAbility(string slot)
     {
         //attack immunity for 2 sec (time not final)
+        shielded = true;
+        switch (slot)
+        {
+            case "E":
+                spellETimer.WaitTime = 2;
+                EmitSignal(SignalName.ShieldCast, spellETimer.WaitTime);
+                spellETimer.Start();
+                break;
+            case "Q":
+                spellQTimer.WaitTime = 2;
+                EmitSignal(SignalName.ShieldCast, spellQTimer.WaitTime);
+                spellQTimer.Start();
+                break;
+            default: break;
+        }
+
+    }
+    public void SpellETimerTimeout()
+    {
+        EmitSignal(SignalName.SpellEOver, SECooldown.WaitTime);
+        switch (spellItemE)
+        {
+
+            case Enums.itemType.necklace:
+                rapidFire = false;
+                break;
+            case Enums.itemType.shield:
+                shielded = false;
+                break;
+            default:
+                break;
+        }
+        SECooldown.Start();
+    }
+    public void SpellQTimerTimeout()
+    {
+        EmitSignal(SignalName.SpellQOver, SQCooldown.WaitTime);
+        switch (spellItemQ)
+        {
+            case Enums.itemType.necklace:
+                rapidFire = false;
+                break;
+            case Enums.itemType.shield:
+                shielded = false;
+                break;
+            default:
+                break;
+        }
+        SQCooldown.Start();
     }
     public void PickupItem(Enums.itemType itemtype, float cooldown)
     {
-        GD.Print("pickup called");
         switch (itemtype)
         {
             case Enums.itemType.necklace:
@@ -337,16 +406,13 @@ public partial class Player : CharacterBody2D
                 }
                 break;
             case Enums.itemType.shield:
-                GD.Print("shield detected");
                 if (spellItemE is Enums.itemType.empty && spellItemQ != Enums.itemType.shield)
                 {
-                    GD.Print("E slot populated");
                     spellItemE = Enums.itemType.shield;
                     SECooldown.WaitTime = cooldown;
                 }
                 else if (spellItemQ is Enums.itemType.empty && spellItemE != Enums.itemType.shield)
                 {
-                    GD.Print("Q slot populated");
                     spellItemQ = Enums.itemType.shield;
                     SQCooldown.WaitTime = cooldown;
                 }
@@ -361,7 +427,7 @@ public partial class Player : CharacterBody2D
     //damage functions
     public void Hit(float damage, Vector2 hitVector)
     {
-        if (!isHurt)
+        if (!isHurt && !shielded)
         {
             currentHP -= damage;
             //reset dash speed to avoid dash buffering
@@ -406,10 +472,11 @@ public partial class Player : CharacterBody2D
             SOCooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[2]);
             SECooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[3]);
             SQCooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[4]);
+
+            //items
             string[] items = Globals.currentSave[9].Split(";");
             spellItemE = (Enums.itemType)Convert.ToInt32(items[0]);
             spellItemQ = (Enums.itemType)Convert.ToInt32(items[1]);
-
         }
         else
         {
@@ -438,6 +505,9 @@ public partial class Player : CharacterBody2D
         isDashing = false;
         isCrouching = false;
         GlobalPosition = Globals.spawnPoint.Position;
+
+        //call ui update just in case
+        EmitSignal(SignalName.ItemsModified);
     }
 
     //signal functions
@@ -503,13 +573,17 @@ public partial class Player : CharacterBody2D
         if (!isDead)
         {
             //attacks
-            if ((Input.IsActionPressed("attack_normal") || Input.IsActionPressed("attack_normal-alt")) && BACooldown.TimeLeft == 0 && !CAisCharging)
+            //BA
+            if ((Input.IsActionPressed("attack_normal") || Input.IsActionPressed("attack_normal-alt")) && 
+                BACooldown.TimeLeft == 0 && 
+                !CAisCharging)
             {
                 BasicAttack();
                 BACooldown.Start();
             }
             //CA charge sequence control
-            if ((Input.IsActionPressed("attack_charge") || Input.IsActionPressed("attack_charge-alt")) && CACooldown.TimeLeft == 0)
+            if ((Input.IsActionPressed("attack_charge") || Input.IsActionPressed("attack_charge-alt")) && 
+                CACooldown.TimeLeft == 0)
             {
                 CAisCharging = true;
                 FX.Emitting = true;
@@ -540,9 +614,9 @@ public partial class Player : CharacterBody2D
                     speedmodifier = 0.8f;
                 }
             }
+            //shoot CA
             if (Input.IsActionJustReleased("attack_charge") || Input.IsActionJustReleased("attack_charge-alt"))
             {
-                //shoot CA
                 CAisCharging = false;
                 if (CACharge > 40)
                 {
@@ -556,14 +630,46 @@ public partial class Player : CharacterBody2D
                 dashed = false;
                 dashVector = Vector2.Zero;
             }
-
-
             //oracle
-            if ((Input.IsActionJustPressed("spell_oracle") || Input.IsActionJustPressed("spell_oracle-alt")) && SOCooldown.TimeLeft == 0)
+            if ((Input.IsActionJustPressed("spell_oracle") || Input.IsActionJustPressed("spell_oracle-alt")) && 
+                SOCooldown.TimeLeft == 0)
             {
-                OracleSpell();
+                SpellOracle();
                 SOCooldown.Start();
             }
+            //spell E
+            if ((Input.IsActionJustPressed("spell_slot1") || Input.IsActionJustPressed("spell_slot1-alt")) && 
+                SECooldown.TimeLeft == 0 &&     //cooldown is good
+                spellETimer.TimeLeft == 0)      //spell isn't currently active
+            {
+                SpellE();
+            }
+            if ((Input.IsActionJustPressed("spell_slot2") || Input.IsActionJustPressed("spell_slot2-alt")) &&
+                SQCooldown.TimeLeft == 0 &&     //cooldown is good
+                spellQTimer.TimeLeft == 0)      //spell isn't currently active
+            {
+                SpellQ();
+            }
+            //spell effects
+            if (rapidFire)
+            {
+                BACooldown.WaitTime = BACooldownStatic/4;
+                BADispersion = 4;
+            }
+            else
+            {
+                BACooldown.WaitTime = BACooldownStatic;
+                BADispersion = 0;
+            }
+            //shield actual effect added in Hit() function
+            if (shielded)
+            {
+                //add visuals for it here
+            }else
+            {
+                //remove visuals
+            }
+
 
             //hit knockback management
             if (hurtTimer.TimeLeft > 0.5)
@@ -618,6 +724,7 @@ public partial class Player : CharacterBody2D
     //deltaloop
     public override void _PhysicsProcess(double delta)
     {
+
         if (Globals.playerControl)
         {
             Update(delta);

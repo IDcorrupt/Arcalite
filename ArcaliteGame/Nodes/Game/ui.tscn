@@ -1,13 +1,15 @@
-[gd_scene load_steps=17 format=3 uid="uid://d4mg7kpomu4je"]
+[gd_scene load_steps=19 format=3 uid="uid://d4mg7kpomu4je"]
 
 [ext_resource type="Script" uid="uid://bw81mk3jt7fwe" path="res://Scripts/Mechanics/Ui.cs" id="1_f025f"]
 [ext_resource type="Texture2D" uid="uid://de8mwe0cmbyrt" path="res://Assets/Icons/Dash/dash_Cooldown.png" id="2_13e54"]
 [ext_resource type="Texture2D" uid="uid://cyp8gf66hrhdi" path="res://Assets/Icons/ChargeAttack/ca_Cooldown.png" id="2_qqwp7"]
 [ext_resource type="Texture2D" uid="uid://bqucfy8ub1eny" path="res://Assets/Icons/ChargeAttack/ca_Ready.png" id="3_2gkhm"]
 [ext_resource type="Texture2D" uid="uid://cy8hqhi3lph21" path="res://Assets/Icons/Dash/dash_Ready.png" id="3_2w15c"]
+[ext_resource type="Texture2D" uid="uid://oflebjcxwd6s" path="res://Assets/Icons/Necklace/necklace_Active.png" id="6_mqexw"]
 [ext_resource type="Texture2D" uid="uid://ss724n1rhqwn" path="res://Assets/Icons/Necklace/necklace_Cooldown.png" id="6_nffpf"]
 [ext_resource type="Texture2D" uid="uid://c25u34ai4e5ib" path="res://Assets/Icons/Necklace/necklace_Ready.png" id="7_8ix5p"]
 [ext_resource type="Texture2D" uid="uid://byqmmeu2l110b" path="res://Assets/Icons/Shield/shield_Cooldown.png" id="8_mqexw"]
+[ext_resource type="Texture2D" uid="uid://cgeeap23ik47n" path="res://Assets/Icons/Shield/shield_Active.png" id="9_24col"]
 [ext_resource type="Texture2D" uid="uid://lq70xbogwtpy" path="res://Assets/Icons/Shield/shield_Ready.png" id="9_gb0wl"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ubv0j"]
@@ -56,6 +58,14 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("6_mqexw")
+}],
+"loop": true,
+"name": &"necklace_Active",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("6_nffpf")
 }],
 "loop": true,
@@ -68,6 +78,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"necklace_Ready",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_24col")
+}],
+"loop": true,
+"name": &"shield_Active",
 "speed": 5.0
 }, {
 "frames": [{

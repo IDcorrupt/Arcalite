@@ -69,15 +69,25 @@ public partial class Ui : Control
         CACooldownBar.Hide();
         CAIcon.Play("Ready");
     }
-    private void Player_SpellECast(float cooldown)
+
+
+
+    private void Player_RapidFireCast(float activeTime)
+    {
+        if (spellE == Enums.itemType.necklace)
+            SpellEIcon.Play(spellE.ToString() + "_Active");
+        else if (spellQ == Enums.itemType.necklace)
+            SpellQIcon.Play(spellQ.ToString() + "_Active");
+    }
+    private void Player_SpellEOver(float cooldown)
     {
         if (spellE != Enums.itemType.empty)
         {
             SpellECooldownBar.Show();
             SpellECooldownBar.Scale = new Vector2(0, SpellECooldownBar.Scale.Y);
-            var spellECooldown = GetTree().CreateTween();
-            spellECooldown.Finished += SpellECooldown_Finished;
-            spellECooldown.TweenProperty(SpellECooldownBar, "scale", new Vector2(32.0f, SpellECooldownBar.Scale.Y), cooldown);
+            var cooldownTween = GetTree().CreateTween();
+            cooldownTween.Finished += SpellECooldown_Finished;
+            cooldownTween.TweenProperty(SpellECooldownBar, "scale", new Vector2(32.0f, SpellECooldownBar.Scale.Y), cooldown);
             SpellEIcon.Play(spellE.ToString()+"_Cooldown");
         }
     }
@@ -86,15 +96,22 @@ public partial class Ui : Control
         SpellECooldownBar.Hide();
         SpellEIcon.Play(spellE.ToString()+"_Ready");
     }
-    private void Player_SpellQCast(float cooldown)
+    private void Player_ShieldCast(float activeTime)
+    {
+        if (spellE == Enums.itemType.shield)
+            SpellEIcon.Play(spellE.ToString() + "_Active");
+        else if(spellQ == Enums.itemType.shield) 
+            SpellQIcon.Play(spellQ.ToString() + "_Active");
+    }
+    private void Player_SpellQOver(float cooldown)
     {
         if (spellQ != Enums.itemType.empty)
         {
             SpellQCooldownBar.Show();
             SpellQCooldownBar.Scale = new Vector2(0, SpellQCooldownBar.Scale.Y);
-            var spellQCooldown = GetTree().CreateTween();
-            spellQCooldown.Finished += SpellQCooldown_Finished;
-            spellQCooldown.TweenProperty(SpellQCooldownBar, "scale", new Vector2(32.0f, SpellQCooldownBar.Scale.Y), cooldown);
+            var cooldownTween = GetTree().CreateTween();
+            cooldownTween.Finished += SpellQCooldown_Finished;
+            cooldownTween.TweenProperty(SpellQCooldownBar, "scale", new Vector2(32.0f, SpellQCooldownBar.Scale.Y), cooldown);
             SpellQIcon.Play(spellQ.ToString()+"_Cooldown");
         }
     }
@@ -151,14 +168,18 @@ public partial class Ui : Control
             player = Globals.player;
             player.Dashed += Player_Dashed;
             player.ChargeAttacked += Player_ChargeAttacked;
-            player.SpellECast += Player_SpellECast;
-            player.SpellQCast += Player_SpellQCast;
+            player.RapidFireCast += Player_RapidFireCast;
+            player.ShieldCast += Player_ShieldCast;
+            player.SpellEOver += Player_SpellEOver;
+            player.SpellQOver += Player_SpellQOver;
             player.ItemsModified += Player_ItemsModified;
             UpdateItems(player.GetEquips());
         }
         HPnum.Text = "HP: " + Mathf.Round(Globals.player.GetCurrentHP()); 
         MPnum.Text = "MP: " + Mathf.Round(Globals.player.GetCurrentMP()); 
     }
+
+
 
     private void Player_ItemsModified() { UpdateItems(player.GetEquips()); }
 }

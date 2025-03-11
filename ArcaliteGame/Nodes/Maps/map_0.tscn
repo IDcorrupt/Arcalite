@@ -110,6 +110,12 @@ position = Vector2(13, 97)
 [node name="Item" parent="Items" instance=ExtResource("7_oigd3")]
 position = Vector2(428, 263)
 type = 1
+itemCooldown = 15.0
+
+[node name="Item2" parent="Items" instance=ExtResource("7_oigd3")]
+position = Vector2(492, 261)
+type = 2
+itemCooldown = 10.0
 
 [node name="FX" type="Node" parent="."]
 

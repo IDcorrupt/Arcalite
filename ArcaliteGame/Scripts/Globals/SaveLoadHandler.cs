@@ -29,7 +29,7 @@ public partial class SaveLoadHandler : Node
         //player cooldowns
         file.StoreLine(String.Join("; ", cooldowns));
         //items
-        file.StoreString(String.Join(", ", equippedItems));
+        file.StoreString(String.Join("; ", equippedItems));
         file.Close();
     }
 

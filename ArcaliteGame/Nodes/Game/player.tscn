@@ -401,8 +401,18 @@ wait_time = 10.0
 one_shot = true
 
 [node name="SpellQCooldown" type="Timer" parent="."]
+one_shot = true
 
 [node name="SpellECooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="SpellETimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SpellQTimer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnSpriteAnimationFinished"]
 [connection signal="timeout" from="HurtTimer" to="." method="OnHurtTimerTimeout"]
+[connection signal="timeout" from="SpellETimer" to="." method="SpellETimerTimeout"]
+[connection signal="timeout" from="SpellQTimer" to="." method="SpellQTimerTimeout"]
