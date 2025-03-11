@@ -56,59 +56,63 @@
         <div class="profile profiletab">
             
 
-            <div class="wrapprofilediv">
+            <div>
                 <div class="profileheader">
-                <h3 id="h3_username">Felhasználónév</h3>
-            <h4>Profilműveletek</h4>
-            <div id="profileFunctions">
-                <div>
-                    <button type="button" class="btn btn-primary" id="newName" onclick="changeName()">Név megváltoztatása</button>
-                    <button type="button" class="btn btn-primary" id="newEmail" onclick="changeEmail()">E-mail cím megváltoztatása</button>
-                    <button type="button" class="btn btn-primary" id="newPassword" onclick="changePassword()">Jelszó megváltoztatása</button>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-danger" id="logout" onclick="askLogout()">Kijelentkezés</button>
-                    <button type="button" class="btn btn-danger" id="delete" onclick="">Profil törlése</button>
-                </div>
-            </div>
+                    <h3 id="h3_username">Felhasználónév</h3>
+                    <h4>Profilműveletek</h4>
+                    <div id="profileFunctions">
+                        <div>
+                            <button type="button" class="btn btn-primary" id="newName" onclick="changeName()">Név megváltoztatása</button>
+                            <button type="button" class="btn btn-primary" id="newEmail" onclick="changeEmail()">E-mail cím megváltoztatása</button>
+                            <button type="button" class="btn btn-primary" id="newPassword" onclick="changePassword()">Jelszó megváltoztatása</button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-danger" id="logout" onclick="askLogout()">Kijelentkezés</button>
+                            <button type="button" class="btn btn-danger" id="delete" onclick="">Profil törlése</button>
+                        </div>
+                    </div>
+                    
+                    <h4>Karakterek</h4>
 
-            <div class="tab">
-                <button class="tablinks" id="defaultOpen" onclick="openRank(event, 'Character1')">Character1</button>
-                <button class="tablinks" onclick="openRank(event, 'Character2')">Character2</button>
-            </div>
+                    <div class="tab">
+                        <button class="tablinks" id="defaultOpen" onclick="openRank(event, 'Character1')">Character1</button>
+                        <button class="tablinks" onclick="openRank(event, 'Character2')">Character2</button>
+                    </div>
             
-            <!-- Tab content -->
-            <div id="Character1" class="profile tabcontent">
-                <div class="profile-details">
-                    <img class="profile-img" src="./img/index.png">
-                </div>
-                <div class="profile-details" id="profile-mid">
-                    <p>Szoba: </p>
-                </div>
-                <div class="profile-details">
-                    <p>Életpont: </p>
-                    <p>Mana: </p>
-                </div>
-            <h4>Karakterek</h4>
+                    <!-- Tab content -->
+                    <div id="Character1" class="profile tabcontent">
+                        <div class="profile-details">
+                            <img class="profile-img" src="./img/index.png">
+                        </div>
+                        <div class="profile-details" id="profile-mid">
+                            <p>Szoba: </p>
+                        </div>
+                        <div class="profile-details">
+                            <p>Életpont: </p>
+                            <p>Mana: </p>
+                        </div>
+                    </div>
 
-            <div id="characterTabs" class="tab">
+                    <!-- <div id="characterTabs" class="tab">
+                    </div> -->
+                    
+                    <div id="Character2" class="profile tabcontent">
+                        <div class="profile-details">
+                            <img class="profile-img" src="./img/index.png">
+                        </div>
+                        <div class="profile-details" id="profile-mid">
+                            <p>Szoba: </p>
+                        </div>
+                        <div class="profile-details">
+                            <p>Életpont: </p>
+                            <p>Mana: aaa a a a a a a a a a </p>
+                        </div>
+                    </div>
+                    <!-- Tab content -->
+                    <div id="characterContents">
+                    </div>
+                </div>
             </div>
-            
-            <div id="Character2" class="profile tabcontent">
-                <div class="profile-details">
-                    <img class="profile-img" src="./img/index.png">
-                </div>
-                <div class="profile-details" id="profile-mid">
-                    <p>Szoba: </p>
-                </div>
-                <div class="profile-details">
-                    <p>Életpont: </p>
-                    <p>Mana: aaa a a a a a a a a a </p>
-                </div>
-            <!-- Tab content -->
-            <div id="characterContents">
-            </div>
-            
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

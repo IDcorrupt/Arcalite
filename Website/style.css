@@ -37,6 +37,7 @@
     --menu: var(--c_dark2);
     --menu_active: var(--c_dark2_shadow);
     --card-type-1: url("./img/dark_card.png");
+    --card-type-2: url("./img/dark_controlcard.png");
 }
 [data-bs-theme="light"] { 
     --font: #1A0225;
@@ -48,6 +49,7 @@
     --menu: var(--c_light2);
     --menu_active: var(--c_light2_shadow);
     --card-type-1: url("./img/light_card.png");
+    --card-type-2: url("./img/light_controlcard.png");
 }
 
 html{
@@ -59,10 +61,6 @@ html{
 ::-webkit-scrollbar {
     width: 0;  /* Remove scrollbar width */
     height: 0; /* Remove scrollbar height */
-}
-
-.profilepage{
-    overflow:hidden;
 }
 
 /*--------------------KEYBOARD KEYS--------------------*/
@@ -422,6 +420,10 @@ h5{
     height: 445px;
 }
 
+.control-card{
+    background-image: var(--card-type-2);
+}
+
 .control-img{
     aspect-ratio: unset !important;
 }
@@ -524,15 +526,7 @@ d{
 }
 
 .profilemain{
-    height: calc(100vh - 68px);
-}
-
-.wrapprofilediv{
-    position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    min-height: calc(100vh - 45px);
 }
 
 form{
