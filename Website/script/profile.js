@@ -122,6 +122,31 @@ function logout() {
     document.cookie = "username=; path=/; expires="+ new Date(1970, 1, 1);
 }
 
+//DELETE
+
+function deleteProfile() {
+    if (confirm("Biztosan törölni szeretné a profilját?") && confirm("Ez a lépés nem visszafordítható. Biztosan törölni szeretné a profilt?")) {
+        let payload = {
+            userid: getCookie("userid")
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "api/delete_profile.php",
+            data: payload,
+            global: false,
+            success: (data) => {
+                alert(data.message);
+                logout();
+                window.open("index.html", "_self");
+            },
+            error: (data) => {
+                alert(data.message);
+            }
+        });
+    }
+}
+
 /* ---------- FILLING UP CHARACTER TABS ---------- */
 
 $(document).ready(() => {

@@ -11,13 +11,14 @@ switch ($_GET["type"]) {
         $sql = "WITH
                 achs AS (
                     SELECT profileid AS id, COUNT(achievementid) AS count
-                    FROM proach
+                    FROM proach INNER JOIN profile ON proach.profileid = profile.id
+                    WHERE profile.deletedAt IS NULL
                     GROUP BY profileid
                 ),
                 games AS (
                     SELECT profile.id AS id, COUNT(*) AS count
                     FROM profile LEFT JOIN player ON profile.id = player.profileid
-                    WHERE player.levelid = (SELECT MAX(id) FROM level)
+                    WHERE player.levelid = (SELECT MAX(id) FROM level) AND profile.deletedAt IS NULL
                     GROUP BY profile.id
                 )
                 
@@ -29,7 +30,9 @@ switch ($_GET["type"]) {
                 FROM 
                     profile 
                     LEFT JOIN achs ON profile.id = achs.id
-                    LEFT JOIN games ON profile.id = games.id;";
+                    LEFT JOIN games ON profile.id = games.id
+                WHERE
+                    profile.deletedAt IS NULL;";
         break;
     case "GameThrough":
         $sql = "WITH 
@@ -60,7 +63,7 @@ switch ($_GET["type"]) {
                     INNER JOIN avatar ON player.avatarid = avatar.id
                     INNER JOIN avatardesc ON avatardesc.avatarid = avatar.id
                     INNER JOIN lang ON avatardesc.languageid = lang.id
-                WHERE lang.id = $langid
+                WHERE lang.id = $langid AND profile.deletedAt IS NULL
                 GROUP BY player.id;";
         break;
     default:

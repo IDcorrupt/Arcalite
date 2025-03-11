@@ -10,7 +10,6 @@ function ReturnMessage($code = 500, $message = "") {
     die();
 }
 
-
 function ReturnResult($result_array, $code = 200) {
     header("Content-Type: application/json");    
     echo json_encode($result_array);

@@ -11,7 +11,7 @@ $password = $_POST['password'];
 $email = $_POST['email'];
 
 
-$query = "SELECT COUNT(*) AS `db` FROM `profile` WHERE `email` = '$email'";
+$query = "SELECT COUNT(*) AS `db` FROM `profile` WHERE `email` = '$email' AND `deletedAt` IS NULL";
 $result = $db->query($query);
 $num_of_users = intval($result->fetch_assoc()['db']);
 
@@ -20,7 +20,7 @@ if ($num_of_users > 0) {
 }
 
 
-$query = "SELECT COUNT(*) AS `db` FROM `profile` WHERE `username` = '$username'";
+$query = "SELECT COUNT(*) AS `db` FROM `profile` WHERE `username` = '$username' AND `deletedAt` IS NULL";
 $result = $db->query(query: $query);
 $num_of_users = intval($result->fetch_assoc()['db']);
 
