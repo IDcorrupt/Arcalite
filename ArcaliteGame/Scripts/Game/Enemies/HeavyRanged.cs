@@ -14,6 +14,7 @@ public partial class HeavyRanged : Enemy
         damage = 25;
         atkCooldown.WaitTime = 2f;
         jumpStrength = 400;
+        shardDropRate = 100;
     }
 
     protected override void Attack()

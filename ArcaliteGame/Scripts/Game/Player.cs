@@ -49,6 +49,8 @@ public partial class Player : CharacterBody2D
     //other
     private bool isHurt = false;
     private bool isDead = false;
+    private bool resting = false;
+    private float HPRechargeAmount = 0;
 
 //stats
     private float MaxHP = 100;
@@ -79,6 +81,7 @@ public partial class Player : CharacterBody2D
     private Timer SQCooldown;
     private Timer spellETimer;
     private Timer spellQTimer;
+    private Timer statRecharge;
 
     private GpuParticles2D FX;
     //signals
@@ -89,21 +92,24 @@ public partial class Player : CharacterBody2D
     [Signal] public delegate void SpellEOverEventHandler(float cooldown);
     [Signal] public delegate void SpellQOverEventHandler(float cooldown);
     [Signal] public delegate void ItemsModifiedEventHandler();
+    [Signal] public delegate void EnteredRestAreaEventHandler();
+    [Signal] public delegate void ExitedRestAreaEventHandler();
     public override void _Ready()
     {
         Globals.player = this;
         //Get nodes
         HitBox = GetNode("HitBox") as CollisionShape2D;
         Sprite = GetNode("AnimatedSprite2D") as AnimatedSprite2D;
-        hurtTimer = GetNode("HurtTimer") as Timer;
-        dashCooldown = GetNode("DashCooldown") as Timer;
-        BACooldown = GetNode("BasicAttackCooldown") as Timer;
-        CACooldown = GetNode("ChargeAttackCooldown") as Timer;
-        SOCooldown = GetNode("OracleCooldown") as Timer;
-        SECooldown = GetNode("SpellECooldown") as Timer;
-        SQCooldown = GetNode("SpellQCooldown") as Timer;
-        spellETimer = GetNode("SpellETimer") as Timer;
-        spellQTimer = GetNode("SpellQTimer") as Timer;
+        hurtTimer = GetNode("Timers/HurtTimer") as Timer;
+        dashCooldown = GetNode("Timers/DashCooldown") as Timer;
+        BACooldown = GetNode("Timers/BasicAttackCooldown") as Timer;
+        CACooldown = GetNode("Timers/ChargeAttackCooldown") as Timer;
+        SOCooldown = GetNode("Timers/OracleCooldown") as Timer;
+        SECooldown = GetNode("Timers/SpellECooldown") as Timer;
+        SQCooldown = GetNode("Timers/SpellQCooldown") as Timer;
+        spellETimer = GetNode("Timers/SpellETimer") as Timer;
+        spellQTimer = GetNode("Timers/SpellQTimer") as Timer;
+        statRecharge = GetNode("Timers/StatRecharge") as Timer;
 
 
         //basic attack cooldown doesn't change with "levels"
@@ -314,47 +320,6 @@ public partial class Player : CharacterBody2D
             default: break;
         }
     }
-    
-
-    private void RapidFireAbility(string slot)
-    {
-        //necklace item ability: reduced attack cooldown, increased dispersion
-        rapidFire = true;
-        switch (slot)
-        {
-            case "E":
-                spellETimer.WaitTime = 5;
-                EmitSignal(SignalName.RapidFireCast, spellETimer.WaitTime);
-                spellETimer.Start();
-                break;
-            case "Q":
-                spellQTimer.WaitTime = 5;
-                EmitSignal(SignalName.RapidFireCast, spellQTimer.WaitTime);
-                spellQTimer.Start();
-                break;
-            default : break;
-        }
-    }
-    private void ShieldAbility(string slot)
-    {
-        //attack immunity for 2 sec (time not final)
-        shielded = true;
-        switch (slot)
-        {
-            case "E":
-                spellETimer.WaitTime = 2;
-                EmitSignal(SignalName.ShieldCast, spellETimer.WaitTime);
-                spellETimer.Start();
-                break;
-            case "Q":
-                spellQTimer.WaitTime = 2;
-                EmitSignal(SignalName.ShieldCast, spellQTimer.WaitTime);
-                spellQTimer.Start();
-                break;
-            default: break;
-        }
-
-    }
     public void SpellETimerTimeout()
     {
         EmitSignal(SignalName.SpellEOver, SECooldown.WaitTime);
@@ -388,6 +353,49 @@ public partial class Player : CharacterBody2D
         }
         SQCooldown.Start();
     }
+
+    //item functions
+    private void RapidFireAbility(string slot)
+    {
+        //necklace item ability: reduced attack cooldown, increased dispersion
+        rapidFire = true;
+        currentMP -= 40;
+        switch (slot)
+        {
+            case "E":
+                spellETimer.WaitTime = 5;
+                EmitSignal(SignalName.RapidFireCast, spellETimer.WaitTime);
+                spellETimer.Start();
+                break;
+            case "Q":
+                spellQTimer.WaitTime = 5;
+                EmitSignal(SignalName.RapidFireCast, spellQTimer.WaitTime);
+                spellQTimer.Start();
+                break;
+            default : break;
+        }
+    }
+    private void ShieldAbility(string slot)
+    {
+        //attack immunity for 2 sec (time not final)
+        shielded = true;
+        currentMP -= 20;
+        switch (slot)
+        {
+            case "E":
+                spellETimer.WaitTime = 2;
+                EmitSignal(SignalName.ShieldCast, spellETimer.WaitTime);
+                spellETimer.Start();
+                break;
+            case "Q":
+                spellQTimer.WaitTime = 2;
+                EmitSignal(SignalName.ShieldCast, spellQTimer.WaitTime);
+                spellQTimer.Start();
+                break;
+            default: break;
+        }
+
+    }   
     public void PickupItem(Enums.itemType itemtype, float cooldown)
     {
         switch (itemtype)
@@ -415,6 +423,25 @@ public partial class Player : CharacterBody2D
                 {
                     spellItemQ = Enums.itemType.shield;
                     SQCooldown.WaitTime = cooldown;
+                }
+                break;
+            case Enums.itemType.shard:
+                Random random = new Random();
+                switch (random.Next(0,3))
+                {
+                    case 0:
+                        MaxHP += 10;
+                        currentHP += 10;
+                        break;
+                    case 1:
+                        MaxMP += 10;
+                        currentMP += 10;
+                        break;
+                    case 2:
+                        damage += 5;
+                        break;
+                    default:
+                        break;
                 }
                 break;
             default:
@@ -451,8 +478,90 @@ public partial class Player : CharacterBody2D
 
         }
     }
+    public void OnHurtTimerTimeout() { isHurt = false; }
+
 
     //other functions
+    private void Animate()
+    {
+        //jump & fall
+        if (!IsOnFloor() && Velocity.Y < 0)
+        {
+            Sprite.Play("jump");
+        }
+        else if (!IsOnFloor() && Velocity.Y > 0)
+        {
+            Sprite.Play("fall");
+        }
+        else if (IsOnFloor())
+        {
+            //crouch
+            RectangleShape2D HBShape = (RectangleShape2D)HitBox.Shape;
+            if (isCrouching && Sprite.Animation != "crouch")
+            {
+                crouchDown = true;
+                Sprite.Play("crouch");
+            }
+            else if (!isCrouching && Sprite.Animation == "crouch" && crouchUp == false)
+            {
+                crouchUp = true;
+                crouchDown = false;
+                Sprite.Play("crouch", -1, true);
+            }
+            if (Sprite.Animation == "crouch" && crouchUp && Sprite.Frame == 0)
+            {
+                crouchUp = false;
+            }
+
+            //walk
+            if (!crouchDown && !crouchUp)
+            {
+                if (Velocity.X != 0 && Sprite.Animation != "walk") Sprite.Play("walk");
+                if (Velocity.X == 0 && Sprite.Animation != "idle")
+                {
+                    Sprite.Play("idle");
+                }
+            }
+            else
+            {
+                //crouch walk anims here
+            }
+        }
+    }
+    public void Rest(bool state, float amount = 0)
+    {
+        if (state)
+        {
+            resting = true;
+            HPRechargeAmount = amount;
+        }else
+            resting = false;
+    }
+    private void Cooldowns()
+    {
+        bool statTimer = false;
+        //mana always recharges (1/sec)
+        if (statRecharge.TimeLeft == 0 && currentMP < MaxMP)
+        {
+            currentMP++;
+            statTimer = true;
+        }
+        if (statRecharge.TimeLeft == 0 && currentHP < MaxHP && HPRechargeAmount > 0)
+        {
+            currentHP++;
+            HPRechargeAmount--;
+            statTimer = true;
+        }
+
+        //hp recharges in rest zone + tick rate is 20/sec
+        if (resting)  //when in rest zone
+            statRecharge.WaitTime = 0.05f;
+        else 
+            statRecharge.WaitTime = 1f;
+
+        if (statTimer)
+            statRecharge.Start();
+    }
     public void SetStats()
     {
         if (Globals.hasSavefile)
@@ -508,65 +617,6 @@ public partial class Player : CharacterBody2D
 
         //call ui update just in case
         EmitSignal(SignalName.ItemsModified);
-    }
-
-    //signal functions
-    public void OnSpriteAnimationFinished()
-    {
-        if(Sprite.Animation == "die")
-        { 
-            //////////////////////////
-        }
-    }
-    public void OnHurtTimerTimeout() { isHurt = false; }
-
-
-    //other functions
-    private void Animate()
-    {
-        //jump & fall
-        if (!IsOnFloor() && Velocity.Y < 0)
-        {
-            Sprite.Play("jump");
-        }
-        else if (!IsOnFloor() && Velocity.Y > 0)
-        {
-            Sprite.Play("fall");
-        }
-        else if (IsOnFloor())
-        {
-            //crouch
-            RectangleShape2D HBShape = (RectangleShape2D)HitBox.Shape;
-            if (isCrouching && Sprite.Animation != "crouch")
-            {
-                crouchDown = true;
-                Sprite.Play("crouch");
-            }
-            else if (!isCrouching && Sprite.Animation == "crouch" && crouchUp == false)
-            {
-                crouchUp = true;
-                crouchDown = false;
-                Sprite.Play("crouch", -1, true);
-            }
-            if (Sprite.Animation == "crouch" && crouchUp && Sprite.Frame == 0)
-            {
-                crouchUp = false;
-            }
-
-            //walk
-            if (!crouchDown && !crouchUp)
-            {
-                if (Velocity.X != 0 && Sprite.Animation != "walk") Sprite.Play("walk");
-                if (Velocity.X == 0 && Sprite.Animation != "idle")
-                {
-                    Sprite.Play("idle");
-                }
-            }
-            else
-            {
-                //crouch walk anims here
-            }
-        }
     }
     private void Update(double delta)
     {

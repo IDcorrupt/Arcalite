@@ -18,13 +18,8 @@ public partial class Checkpoint : Node2D
         sprite = GetNode("AnimatedSprite2D") as AnimatedSprite2D;
         map = GetParent().GetParent() as Map;
         sprite.Play("idle");
-        TreeExiting += Checkpoint_TreeExiting;
     }
 
-    private void Checkpoint_TreeExiting()
-    {
-        GD.Print($"{this.Name} exiting tree");
-    }
 
     public void TriggerAreaBodyEntered(Node2D body)
     {
@@ -45,6 +40,7 @@ public partial class Checkpoint : Node2D
                 Globals.player.GetCooldowns(), 
                 Globals.player.GetEquips()
                 );
+        Player_ExitedRestArea();
     }
     public void OnAnimationFinished()
     {
@@ -55,6 +51,7 @@ public partial class Checkpoint : Node2D
     private void TriggerCheckpoint()
     {
         Globals.spawnPoint.QueueFree();
+        Player_EnteredRestArea();
         Globals.spawnPoint = this;
         sprite.Play("triggered");
         SaveLoadHandler.Save(
@@ -67,6 +64,7 @@ public partial class Checkpoint : Node2D
             Globals.player.GetCooldowns(), 
             Globals.player.GetEquips()
             );
+        triggered = true;
     }
 
     public void Empty()
@@ -74,5 +72,28 @@ public partial class Checkpoint : Node2D
         triggered = true;
         sprite.Play("empty");
 
+    }
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        //connect rest state recharge 
+        if(Globals.player is not null)
+        {
+            Globals.player.EnteredRestArea += Player_EnteredRestArea;
+            Globals.player.ExitedRestArea += Player_ExitedRestArea;
+        }
+    }
+
+    private void Player_ExitedRestArea()
+    {
+        Globals.player.Rest(false);
+    }
+
+    private void Player_EnteredRestArea()
+    {
+
+        if (!triggered)
+            Globals.player.Rest(true, 20);
+        else Globals.player.Rest(true);
     }
 }

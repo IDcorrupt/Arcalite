@@ -95,16 +95,18 @@ position = Vector2(960, 180)
 
 [node name="EnemySpawnPoint1" parent="Controllers/EnemyControl1" instance=ExtResource("5_kbhp1")]
 position = Vector2(216, 76)
+EnemyClass = 1
 
 [node name="EnemyControl2" parent="Controllers" groups=["Controllers"] instance=ExtResource("4_38mkx")]
 position = Vector2(1600, 180)
 
 [node name="EnemySpawnPoint1" parent="Controllers/EnemyControl2" instance=ExtResource("5_kbhp1")]
-position = Vector2(214, 96)
-EnemyClass = 1
+position = Vector2(261, 93)
+EnemyClass = 3
 
 [node name="EnemySpawnPoint2" parent="Controllers/EnemyControl2" instance=ExtResource("5_kbhp1")]
-position = Vector2(13, 97)
+position = Vector2(110, 91)
+EnemyClass = 2
 
 [node name="Items" type="Node2D" parent="."]
 

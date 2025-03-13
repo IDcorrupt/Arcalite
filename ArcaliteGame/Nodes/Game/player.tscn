@@ -383,36 +383,40 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "9d6240360366c3ebf3e1ab834a8f3984"
 
-[node name="HurtTimer" type="Timer" parent="."]
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="HurtTimer" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="DashCooldown" type="Timer" parent="."]
+[node name="DashCooldown" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="BasicAttackCooldown" type="Timer" parent="."]
+[node name="BasicAttackCooldown" type="Timer" parent="Timers"]
 wait_time = 0.2
 one_shot = true
 
-[node name="ChargeAttackCooldown" type="Timer" parent="."]
+[node name="ChargeAttackCooldown" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="OracleCooldown" type="Timer" parent="."]
+[node name="OracleCooldown" type="Timer" parent="Timers"]
 wait_time = 10.0
 one_shot = true
 
-[node name="SpellQCooldown" type="Timer" parent="."]
+[node name="SpellQCooldown" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="SpellECooldown" type="Timer" parent="."]
+[node name="SpellECooldown" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="SpellETimer" type="Timer" parent="."]
+[node name="SpellETimer" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="SpellQTimer" type="Timer" parent="."]
+[node name="SpellQTimer" type="Timer" parent="Timers"]
 one_shot = true
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnSpriteAnimationFinished"]
-[connection signal="timeout" from="HurtTimer" to="." method="OnHurtTimerTimeout"]
-[connection signal="timeout" from="SpellETimer" to="." method="SpellETimerTimeout"]
-[connection signal="timeout" from="SpellQTimer" to="." method="SpellQTimerTimeout"]
+[node name="StatRecharge" type="Timer" parent="Timers"]
+one_shot = true
+
+[connection signal="timeout" from="Timers/HurtTimer" to="." method="OnHurtTimerTimeout"]
+[connection signal="timeout" from="Timers/SpellETimer" to="." method="SpellETimerTimeout"]
+[connection signal="timeout" from="Timers/SpellQTimer" to="." method="SpellQTimerTimeout"]

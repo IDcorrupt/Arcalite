@@ -45,6 +45,7 @@ public partial class Item : CharacterBody2D
         Vector2 throwDir = new Vector2(-150, 0);
         throwDir = throwDir.Rotated(0.5f + (float)dirRandom.NextDouble() * (Mathf.Pi - 1.0f));
         Velocity = throwDir;
+
     }
 
     private Vector2 Float(double delta)
@@ -87,6 +88,7 @@ public partial class Item : CharacterBody2D
         if(body is Player player)
         {
             //send pickup notif to player here (func)
+
             Globals.player.PickupItem(type, itemCooldown);
             QueueFree();
         }

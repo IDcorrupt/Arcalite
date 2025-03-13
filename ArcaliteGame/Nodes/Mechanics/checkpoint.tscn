@@ -203,6 +203,7 @@ animations = [{
 script = ExtResource("1_lhg5q")
 
 [node name="TriggerArea" type="Area2D" parent="."]
+collision_layer = 2048
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
 shape = SubResource("RectangleShape2D_271on")
