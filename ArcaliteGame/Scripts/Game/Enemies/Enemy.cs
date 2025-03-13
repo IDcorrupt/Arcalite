@@ -13,7 +13,6 @@ public partial class Enemy : CharacterBody2D
     protected int shardDropRate;
 
     //external
-    //[Export] protected int namenum;
     [Export] public bool isSlowed = false;
     [Export] public float slowFactor = 1;
 
@@ -57,6 +56,8 @@ public partial class Enemy : CharacterBody2D
     protected Player player;
     protected EnemyControl parent;
     private Node2D itemContainer;
+
+    private PackedScene itemScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/item.tscn");
 
 
     public override void _Ready()
@@ -233,13 +234,15 @@ public partial class Enemy : CharacterBody2D
                 Velocity = new Vector2(dir * 200, 0);
 
 
-                hurtTimer.WaitTime = 1;
+                hurtTimer.WaitTime = 0.5f;
+                hurtTimer.Start();
             }
             else
             {
-                hurtTimer.WaitTime = 0.2f;
+                //no invincibility if no knockback (for basic attack & rapidfire)
+                isHurt = false;
             }
-            hurtTimer.Start();
+            GD.Print("enemy hit, current hp: " + currentHP);
         }
     }
     private void OnHurtTimerTimeout() { isHurt = false; }
@@ -290,25 +293,41 @@ public partial class Enemy : CharacterBody2D
             atkCooldown.Start();
         }
         else if (sprite.Animation == "die")
+        {
+            sprite.Stop();
             Die();
+        }
     }
 
     //die logic
     private void DropItems(Enums.itemType itemtype = Enums.itemType.shard, int customDropRate = 0)
     {
-        Item item;
+        Item item = null;
         if (itemtype == Enums.itemType.shard && Math.RNG(shardDropRate))
-            item = new Item(itemtype);
-        else if(Math.RNG(customDropRate))
-            item = new Item(itemtype);
-
+        {
+            GD.Print("dropping shard");
+            item = itemScene.Instantiate() as Item;
+            item.type = itemtype;
+        }
+        else if (Math.RNG(customDropRate))
+        {
+            GD.Print("dropping special");
+            item = itemScene.Instantiate() as Item;
+            item.type = itemtype;
+        }
+        if (item is not null)
+        {
+            item.GlobalPosition = GlobalPosition;
+            itemContainer.AddChild(item);
+        }
     }
     private void Die()
     {
         parent.enemyAmount--;
         //empty item func call -> shard drop
         DropItems();
-        QueueFree();    
+        QueueFree();
+
     }
 
     public virtual void Update(double delta)
@@ -347,8 +366,11 @@ public partial class Enemy : CharacterBody2D
             //fall and only die on floor
             if (IsOnFloor())
             {
-                Velocity = Vector2.Zero;
-                sprite.Play("die");
+                if(sprite.Animation != "die")
+                {
+                    Velocity = Vector2.Zero;
+                    sprite.Play("die");
+                }
             }else
             {
                 Velocity = new Vector2(Velocity.X - 200 * (float)delta, Velocity.Y);

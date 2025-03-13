@@ -12,25 +12,9 @@ public partial class Item : CharacterBody2D
     private bool groundHit;
 
     //item properties
-    [Export] private Enums.itemType type;
+    [Export] public Enums.itemType type;
     [Export] private float itemCooldown = 5;
-    //[DEBUG] constructor for manual spawning (from scene editor)
-    public Item()
-    {
-        Random dirRandom  = new Random();
-        Vector2 throwDir = new Vector2(-150, 0);
-        throwDir = throwDir.Rotated(0.5f + (float)dirRandom.NextDouble() * (Mathf.Pi - 1.0f));
-        Velocity = throwDir;
-    }
-    //constructor
-    public Item(Enums.itemType type)
-    {
-        this.type = type;
-        Random dirRandom = new Random();
-        Vector2 throwDir = new Vector2(-150, 0);
-        throwDir = throwDir.Rotated(0.5f + (float)dirRandom.NextDouble() * (Mathf.Pi - 1.0f));
-        Velocity = throwDir;
-    }
+
     public override void _Ready()
     {
         base._Ready();
@@ -55,6 +39,12 @@ public partial class Item : CharacterBody2D
             default:
                 break;
         }
+
+        //set throw velocity and angle
+        Random dirRandom = new Random();
+        Vector2 throwDir = new Vector2(-150, 0);
+        throwDir = throwDir.Rotated(0.5f + (float)dirRandom.NextDouble() * (Mathf.Pi - 1.0f));
+        Velocity = throwDir;
     }
 
     private Vector2 Float(double delta)
@@ -105,7 +95,7 @@ public partial class Item : CharacterBody2D
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-
+        GD.Print("itemtype: " + type);
         if (floatTrigger.IsColliding() && !groundHit)
         {
             groundHit = true;

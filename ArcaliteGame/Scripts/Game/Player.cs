@@ -250,12 +250,12 @@ public partial class Player : CharacterBody2D
         {
             projectile.Position = GlobalPosition;
             Vector2 direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
-            projectile.Rotation = direction.Angle();
             if (BADispersion > 0)
             {
                 Random disp = new Random();
-                projectile.Rotation += disp.Next(-BADispersion, BADispersion + 1);
+                direction = direction.Rotated(((float)disp.NextDouble()-0.5f)/2);
             }
+            projectile.Rotation = direction.Angle();
             projectile.direction = direction;
             projectile.damagePayload = damage;
         }
@@ -654,7 +654,7 @@ public partial class Player : CharacterBody2D
             if (rapidFire)
             {
                 BACooldown.WaitTime = BACooldownStatic/4;
-                BADispersion = 4;
+                BADispersion = 1;
             }
             else
             {
