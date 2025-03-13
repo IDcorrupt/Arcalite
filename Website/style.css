@@ -38,6 +38,7 @@
     --menu_active: var(--c_dark2_shadow);
     --card-type-1: url("./img/dark_card.png");
     --card-type-2: url("./img/dark_controlcard.png");
+    --offcanvas: url("./img/dark_offcanvas.png");
 }
 [data-bs-theme="light"] { 
     --font: #1A0225;
@@ -50,6 +51,7 @@
     --menu_active: var(--c_light2_shadow);
     --card-type-1: url("./img/light_card.png");
     --card-type-2: url("./img/light_controlcard.png");
+    --offcanvas: url("./img/dark_offcanvas.png");
 }
 
 html{
@@ -444,25 +446,15 @@ d{
     align-self: normal;
 }
 
+.offcanvas{
+    background-image: var(--offcanvas);
+    background-size: 100% auto;
+}
 
 /*--------------------LOGIN & REGISTER--------------------*/
 
 #login-main{
     flex-direction: column;
-}
-
-.login{
-    height: fit-content; /*ideiglenes*/
-    width: 30vw; /*for profile change*/
-    min-width: 350px;
-    min-height: 500px;
-    background-color: bisque;
-    border: 1px solid black;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-
 }
 
 #login{
@@ -471,6 +463,11 @@ d{
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    width: 100%;
+}
+
+#register_verification{
+    width: 18vw;
 }
 
 
@@ -485,7 +482,6 @@ d{
 }
 
 .profile{
-    padding: 30px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -500,14 +496,14 @@ d{
 }
 
 .profile-img{
-    aspect-ratio: 3/4;
+    aspect-ratio: 1/1;
     margin: auto;
     width: 100%;
 }
 
 .profile-details{
     height: 100%;
-    width: 32%;
+    width: 25%;
     text-align: center;
     padding: 4%;
 }
@@ -532,6 +528,29 @@ d{
 
 .profilemain{
     min-height: calc(100vh - 45px);
+}
+
+.loginmain{
+    min-height: 100vh;
+}
+
+.logina{
+    text-align: center;
+    width: 98%;
+    display: block;
+    margin: 1%;
+    
+}
+
+#logindiv h2{
+    text-align: center;
+}
+
+.login{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn{
@@ -781,6 +800,9 @@ th{
         width: 80%;
     }
     
+    .btn{
+        margin: 10px;
+    }
 
     /*----------NAVBAR----------*/
 
@@ -802,6 +824,13 @@ th{
 
     /*----------CARDS----------*/
 
+    .offcanvas.offcanvas-end{
+        top: unset !important;
+        width: 100%;
+        height: fit-content;
+        min-height: 25vh;
+        max-height: 40vh;
+    }
 
     /*----------FOOTER----------*/
 
