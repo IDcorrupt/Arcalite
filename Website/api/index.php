@@ -2,7 +2,7 @@
 
 require_once "config.php";
 
-checkValidity("GET", "type", "langid");
+checkValidity("GET", "langid");
 
 $langid = $_GET['langid'];
 

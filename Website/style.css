@@ -32,26 +32,26 @@
     --font2: #cbc5ce;
     --bg-color: var(--c_dark1);
     --bg-gradient: #3A1F47;
-    --bg: url("./img/dark.png");
-    --bg-element: url("./img/dark_layer.png");
+    --bg: url("./img/Backgrounds/dark.png");
+    --bg-element: url("./img/Backgrounds/dark_layer.png");
     --menu: var(--c_dark2);
     --menu_active: var(--c_dark2_shadow);
-    --card-type-1: url("./img/dark_card.png");
-    --card-type-2: url("./img/dark_controlcard.png");
-    --offcanvas: url("./img/dark_offcanvas.png");
+    --card-type-1: url("./img/Backgrounds/dark_card.png");
+    --card-type-2: url("./img/Backgrounds/dark_controlcard.png");
+    --offcanvas: url("./img/Backgrounds/dark_offcanvas.png");
 }
 [data-bs-theme="light"] { 
     --font: #1A0225;
     --font2: #17061f;
     --bg-color: var(--c_light1);
     --bg-gradient:#492469;
-    --bg: url("./img/light.png");
-    --bg-element: url("./img/light_layer.png");;
+    --bg: url("./img/Backgrounds/light.png");
+    --bg-element: url("./img/Backgrounds/light_layer.png");;
     --menu: var(--c_light2);
     --menu_active: var(--c_light2_shadow);
-    --card-type-1: url("./img/light_card.png");
-    --card-type-2: url("./img/light_controlcard.png");
-    --offcanvas: url("./img/dark_offcanvas.png");
+    --card-type-1: url("./img/Backgrounds/light_card.png");
+    --card-type-2: url("./img/Backgrounds/light_controlcard.png");
+    --offcanvas: url("./img/Backgrounds/light_offcanvas.png");
 }
 
 html{
@@ -417,6 +417,16 @@ h5{
 
 }
 
+.no-pointer{
+    cursor: unset;
+    transition: all .25s ease-out;
+}
+
+.no-pointer:hover{
+    box-shadow: 0 0 25px 5px var(--acc1);
+    transform: scale(1.05);
+}
+
 .empty{
     background-color: #000;
     height: 445px;
@@ -464,6 +474,10 @@ d{
     justify-content: center;
     flex-wrap: wrap;
     width: 100%;
+}
+
+#login_base{
+   
 }
 
 #register_verification{
@@ -566,7 +580,7 @@ d{
 }
 
 form{
-    width: 18vw;
+    width: 25vw;
     height: 60vh;
     min-height: 400px;
     min-width: 225px;
@@ -576,15 +590,21 @@ form{
 
 input{
     width: 100%;
-    margin: 3% 0;
     line-height: 35px;
     font-size: 20px;
-    height: 7%
+    height: 7%;
+    padding: 20px;
+    border: none;
+    box-sizing: border-box;
 }
 
 input[type="submit"]{
     height: 60px;
     /*width: 100px;*/
+}
+
+#login_btn{
+    margin-top: 15vh;
 }
 
 label{

@@ -183,7 +183,7 @@ function FillTabs(data) {
         $("#characterContents").append(`
         <div id="Player_${data[i].id}" class="profile tabcontent">
             <div class="profile-details">
-                <img class="profile-img" src="./img/${data[i].image}.png" alt="${data[i].image}">
+                <img class="profile-img" src="./img/Avatars/${data[i].image}" alt="${data[i].image}">
             </div>
             <div class="profile-details" id="profile-mid">
                 <p>Szoba: ${data[i].level}</p>

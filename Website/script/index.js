@@ -1,7 +1,6 @@
 $(document).ready(() => {
     let payload = {
-        langid: getCookie("langid"),
-        request_type: type
+        langid: getCookie("langid")
     }
 
     $.ajax({
@@ -28,7 +27,7 @@ function showCharacters(data) {
                 <div class="card-body">
                     <h3 class="card-title">${data[i].name}</h3>
                 </div>
-                <img src="img/avatars/${data[i].image}" class="card-img-bottom" alt="${data[i].name}">
+                <img src="img/Avatars/${data[i].image}" class="card-img-bottom" alt="${data[i].name}">
             </div>
 
             <div class="offcanvas offcanvas-end" tabindex="-1" id="${offcanvasId}">
