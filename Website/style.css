@@ -1,30 +1,55 @@
 @font-face {
     font-family: 'Title';
-    src: url('RevolverBlackletter-Regular.otf') format('opentype');
-    
+    src: url('./fonts/FontsFree-Net-RajjahFamillia-Medium.ttf') format('truetype');
+}
+
+@font-face{
+    font-family: 'SimpleTitle';
+    src: url('./fonts/Enchanted\ Land.otf') format('opentype');
+}
+
+:root{
+    --green: #47a159;
+    --orange: #b37d47;
+    --red: #9c2828;
+    --blue: #407899;
+    --brand: #8447A1;
+    --purple_light: #c08fd6;
+    --purple_dark: #471060;
+    --grey_light: #8f8295;
+    --grey_dark: #35233e;
+    /*cloud colors*/
+    --c_dark1: #5c3882;
+    --c_light1: #763cb5;
+    --c_dark2: #432e5d;
+    --c_light2: #805ca2;
+    --c_light2_shadow:#624580;
+    --c_dark2_shadow:#25173B;
 }
 
 [data-bs-theme="dark"]{
-    --font: rgb(21, 21, 21);
-    --font2: #6a6a7a;
-    --font3:#CEB992;
-    --bg: url("./img/light.png");
-    --bg-element: ;
-    --acc1: #9D91A3 ;
-    --acc2: #ad91a3b8;
-    --menu: #6a6a7a;
-    --menu-gradient: #858585;
+    --font: #f5e8fb;
+    --font2: #cbc5ce;
+    --bg-color: var(--c_dark1);
+    --bg-gradient: #3A1F47;
+    --bg: url("./img/dark.png");
+    --bg-element: url("./img/dark_layer.png");
+    --menu: var(--c_dark2);
+    --menu_active: var(--c_dark2_shadow);
+    --card-type-1: url("./img/dark_card.png");
+    --card-type-2: url("./img/dark_controlcard.png");
 }
 [data-bs-theme="light"] { 
-    --font: rgb(184, 184, 184);
-    --font2: #c5c5dd;
-    --font3:#CEB992;
-    --bg: url("./img/dark.png");
-    --bg-element: ;
-    --acc1:#514663 ;
-    --acc2: ;
-    --menu: #858585;
-    --menu-gradient: #c5c5dd;
+    --font: #1A0225;
+    --font2: #17061f;
+    --bg-color: var(--c_light1);
+    --bg-gradient:#492469;
+    --bg: url("./img/light.png");
+    --bg-element: url("./img/light_layer.png");;
+    --menu: var(--c_light2);
+    --menu_active: var(--c_light2_shadow);
+    --card-type-1: url("./img/light_card.png");
+    --card-type-2: url("./img/light_controlcard.png");
 }
 
 html{
@@ -38,8 +63,10 @@ html{
     height: 0; /* Remove scrollbar height */
 }
 
+/*--------------------KEYBOARD KEYS--------------------*/
+
 /* From Uiverse.io by dylanharriscameron */ 
-.delete-button {
+.key-button {
     background-color: #000;
     color: #fff;
     font-size: 44px;
@@ -63,9 +90,9 @@ html{
       0px 2px 1px rgba(0, 0, 0, 0.3),
       0px 2px 1px rgba(255, 255, 255, 0.1);
     transform: perspective(70px) rotateX(5deg) rotateY(0deg);
-  }
-  
-  .delete-button::after {
+}
+
+.key-button::after {
     content: '';
     position: absolute;
     top: 0;
@@ -76,11 +103,11 @@ html{
     z-index: -1;
     border-radius: 15px;
     box-shadow: inset 4px 0px 0px rgba(255, 255, 255, 0.1),
-      inset 4px -8px 0px rgba(0, 0, 0, 0.3);
+        inset 4px -8px 0px rgba(0, 0, 0, 0.3);
     transition: all .1s ease-in-out 0s;
-  }
-  
-  .delete-button::before {
+}
+
+.key-button::before {
     content: '';
     position: absolute;
     top: 0;
@@ -88,32 +115,32 @@ html{
     left: 0;
     right: 0;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
     background-position: bottom right, bottom right;
     background-size: 100% 100%, 100% 100%;
     background-repeat: no-repeat;
     z-index: -1;
     border-radius: 15px;
     transition: all .1s ease-in-out 0s;
-  }
-  
-  .delete-button:active {
+}
+
+.key-button:active {
     will-change: transform;
     transform: perspective(80px) rotateX(5deg) rotateY(1deg) translateY(3px) scale(0.96);
     height: 64px;
     border: 0.25px solid rgba(0, 0, 0, 0.2);
     box-shadow: inset -4px -8px 0px rgba(255, 255, 255, 0.2),
-      inset -4px -6px 0px rgba(0, 0, 0, 0.8),
-      0px 1px 0px rgba(0, 0, 0, 0.9),
-      0px 1px 0px rgba(255, 255, 255, 0.2);
+        inset -4px -6px 0px rgba(0, 0, 0, 0.8),
+        0px 1px 0px rgba(0, 0, 0, 0.9),
+        0px 1px 0px rgba(255, 255, 255, 0.2);
     transition: all .1s ease-in-out 0s;
-  }
-  
-  .delete-button::after:active {
+}
+
+.key-button::after:active {
     background-image: linear-gradient(to bottom,rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2));
-  }
-  
-  .delete-button:active::before {
+}
+
+.key-button:active::before {
     content: "";
     display: block;
     position: absolute;
@@ -124,40 +151,38 @@ html{
     background-color: rgba(255, 255, 255, 0.1);
     animation: overlay 0.1s ease-in-out 0s;
     pointer-events: none;
-  }
-  
-  @keyframes overlay {
+}
+
+@keyframes overlay {
     from {
-      opacity: 0;
+        opacity: 0;
     }
-  
+
     to {
-      opacity: 1;
+        opacity: 1;
     }
-  }
-  
-  .delete-button:focus {
+}
+
+.key-button:focus {
     outline: none;
-  }
+}
+
+
+/*--------------------GENERIC--------------------*/
+
 body{
     width: 100vw;
     margin: 0;
-    font-size: 1.2rem ;
-    /* background-color: var(--bg-color) !important; */
-    color: var(--font) ;
-    background-image: var(--bg); /* Replace with your image path */
-    background-size: cover; /* Makes sure the image covers the whole area */
-    background-attachment: fixed; /* Keeps the background fixed during scroll */
-    background-position: center; /* Centers the background image */
+    font-size: min(20px) ;
+    color: var(--font2);
+/* Centers the background image */
     height: 100%; 
-}
-
-a{
-    font-size: 1.2rem;
+    background-color: var(--bg-color);
 }
 
 p{
-    
+    font-size: smaller;
+    color: var(--font2)
 }
 
 .fa-lg{
@@ -168,18 +193,11 @@ p{
 main{
     height:fit-content;
     flex-wrap: wrap;
+    background-image: linear-gradient(var(--bg-color), var(--bg-gradient));
 }
-header{
-    height: calc(100vh - 45px);
-    width: 100vw;
-    min-height: 320px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
+
+
+/*--------------------NAVBAR--------------------*/
 
 .navbar{
     position: sticky; /* This makes the navbar sticky */
@@ -187,7 +205,17 @@ header{
     width: 100%;
     z-index: 1000; /* Ensure it stays on top of other content */
     border-radius: 0;
-    background: linear-gradient(to bottom, var(--font2) 40%, var(--menu-gradient));
+    background-color: var(--menu);
+    padding: 10px;
+}
+
+.nav-item{
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand{
+    margin: 0;
 }
 
 .dropdown {
@@ -230,17 +258,28 @@ header{
     padding-left: none ;
 }
 .form-check-input {
-    border: none ;
-
+    border: var(--bs-border-width) solid var(--font);
     background-color: var(--acc1) ;
 }
 
 .form-check-input:checked {
     background-color: var(--acc1) ;
+    border-color: var(--font);
+}
+
+.form-check-input:focus{
+    border-color: unset;
+    outline: unset;
+    box-shadow: unset;
 }
 
 .navbar-nav{
     width: 768px;
+    user-select: none;
+}
+
+.navbar-brand{
+
 }
 
 li{
@@ -251,60 +290,105 @@ ul{
     justify-content: space-evenly;
 }
 
-#video{
-    display: flex;
-    width: 40%;
-    
-        display: flex;
-        justify-content: center; /* Center horizontally */
-        align-items: center; /* Center vertically if needed */
-    margin: 25px;
+
+/*--------------------HEADERS--------------------*/
+
+header{
+    height: 40vh;
+    position: relative;
+    width: 100%;
+    min-height: 320px;
+    background-image: var(--bg); /* Replace with your image path */
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    background-size: auto 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.parallax-image{
+    position: absolute;
+    width: 200vw; /* The image will be doubled, allowing the duplicated section */
+    height: 40vh;
+    animation: move 10s ease-in-out infinite; /* Smooth animation */
+    background-image: var(--bg-element);
+    background-size: cover;
+    background-repeat: repeat-x;
+
+}
+
+@keyframes move {
+    0% { 
+      transform: translateX(0); /* Starting position: Left edge */
+    }
+    100% { 
+      transform: translateX(100%); /* Image moves to the middle (half of the image's width) */
+    }
+  }
+
+#layer2{
+    z-index: 0;
 }
 
 h1{
+    font-size: min(20vw, 200px);
     margin: 0;
-    font-size: 320px;
-    color: var(--font2) ;
+    color: var(--font) ;
     font-family: 'Title';
-    margin-top: -100px;
+    z-index: 1;
+}
+
+header.index-header, .parallax-image{
+    height: calc(100vh - 45px);
+}
+
+header.index-header h1 {
+    font-size: min(20vw, 250px);
 }
 
 h2{
     text-align: center;
     align-self: baseline;
-    font-size: 2rem ;
-    color: var(--font2);
+    font-size: min(8vw, 70px);
+    color: var(--font);
+    width: 100%;
+    font-family: 'SimpleTitle';
 }
 
 h3{
-    font-size: 1.5rem ;
-    color: var(--font3);
+    font-size: 2rem ;
+    line-height: 30px;
+    color: var(--font2) !important;
+    font-family: "SimpleTitle";
 }
 
-h1, h2{
-    text-shadow: 
-        -1px -1px 0 #858585,  
-        1px -1px 0 #858585,
-        -1px 1px 0 #858585,
-        1px 1px 0 #858585; /* Shadow color (border) */
+h4 {
+    color: var(--font2);
+    margin-top: 20px;
 }
 
-.control{
-    width: 500px;
-    height: fit-content;
-    margin: 15px;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: 50px repeat(2, 100px);
-    align-items: center;
+h5{
+    color: var(--font2);
 }
+
+
+
+/*--------------------CARDS--------------------*/
 
 .card{
     text-align: center;
-    width: 18rem;
     padding: 10px;
-    background-color: #585563;
+    background-image: var(--card-type-1);
+    background-size: 100% 100%; /* This makes the background image cover the entire div */
+    background-position: center;
+    margin: 30px;
+    width: 18rem;
+    aspect-ratio: 3/4;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    perspective: 1000px; /* Adds perspective for 3D effect */
 }
+
 
 .card .btn{
     width: 50px;
@@ -312,20 +396,36 @@ h1, h2{
 }
 
 
-.control p{
-    text-align: center;
-    margin: 0;
-    width: 100%;
-    grid-column: 2;
-    grid-row: 1;
+.character .card{
+    cursor: pointer;
 }
 
-.control img{
-    height: 60px;
-    width: 60px;
-    grid-column: 2;
-    grid-row: 2;
-    justify-self: center;
+.card img{
+    aspect-ratio: 3/4;
+}
+
+*[class$="-card"] {
+    cursor: pointer;
+    transition: all .25s ease-out;
+}
+
+*[class$="-card"]:hover {
+    box-shadow: 0 0 25px 5px var(--acc1);
+    transform: scale(1.05);
+
+}
+
+.empty{
+    background-color: #000;
+    height: 445px;
+}
+
+.control-card{
+    background-image: var(--card-type-2);
+}
+
+.control-img{
+    aspect-ratio: unset !important;
 }
 
 d{
@@ -335,6 +435,7 @@ d{
     width: 100%;
     text-align: center;
 }
+
 #gif{
     height: 150px;
     width: 100%;
@@ -343,12 +444,25 @@ d{
     align-self: normal;
 }
 
-#controlid{
 
+/*--------------------LOGIN & REGISTER--------------------*/
+
+#login-main{
+    flex-direction: column;
 }
 
-#controls{
-    flex-wrap: wrap;
+.login{
+    height: fit-content; /*ideiglenes*/
+    width: 30vw; /*for profile change*/
+    min-width: 350px;
+    min-height: 500px;
+    background-color: bisque;
+    border: 1px solid black;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
 }
 
 #login{
@@ -359,22 +473,60 @@ d{
     flex-wrap: wrap;
 }
 
-#login h2{
-    align-self: baseline;
-    margin-left: 6vw;
+
+/*--------------------PROFILE, LOGIN, REGISTER--------------------*/
+
+.flex-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 50px;
 }
 
-.login{
-    height: 75vh;
-    width: 30vw;
-    min-width: 350px;
-    min-height: 500px;
-    background-color: bisque;
-    border: 1px solid black;
-    justify-content: center;
-    align-items: center;
+.profile{
+    padding: 30px;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.profiletab{
+    display: block;
+    width: 90%;
+    height: 100%;
+    position: relative;
+}
+
+.profile-img{
+    aspect-ratio: 3/4;
+    margin: auto;
+    width: 100%;
+}
+
+.profile-details{
+    height: 100%;
+    width: 32%;
+    text-align: center;
+}
+
+#profile-mid{
+    margin: 2%;
+}
+
+.profileheader{
+    /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between elements */
+    align-items: center;
+}
+
+.profile h2{
+    font-size: max(2vw, 16px);
+}
+
+.profilemain{
+    min-height: calc(100vh - 45px);
 }
 
 form{
@@ -385,6 +537,7 @@ form{
     display:flex;
     flex-wrap: wrap;
 }
+
 input{
     width: 100%;
     margin: 3% 0;
@@ -405,76 +558,96 @@ label{
     align-self: last baseline;
 }
 
-.flex-container{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    padding: 50px;
+#profileFunctions {
+    margin-bottom: 10px;
+    padding: 5px;
+}
+#profileFunctions div {
+    padding: 5px;
+}
+
+
+/*--------------------VIDEO ON HOMEPAGE--------------------*/
+
+#video{  /* video id does not exist anymore. I dont know why it works, and I dont want to*/
+    width: 40%;
+    justify-content: center;
+    margin: 25px;
 }
 
 .video{
     padding: 50px;
 }
 
-.characters{
-    padding: 0px;
+iframe{
+    width: 50%;
+    aspect-ratio: 16/9;
 }
 
-.character{
-    height: fit-content;
-    width: auto;
-    margin: 0px 30px;
-    flex-direction: column;
-}
 
-.character img{
-    height: 50vh;
-    width: auto;
-}
+/*--------------------FOOTER--------------------*/
 
 footer{
-    height: 45vh;
-    padding: 0px ;
+    height: fit-content;
+    padding: 0px !important;
+    flex-wrap: nowrap !important;
+    background-color: var(--bg-gradient);
+    align-items: baseline !important;
 }
 
-#devs{
+.devs{
     width: 66.67vw;
     height: 100%;
 }
+/* 
+.devs .card{
+    --bs-card-spacer-y: 0;
+} */
 
-#dev{
-    height: 100%;
-}
-
-#link{
+.link{
     width: 33.32vw;
     height: 100%;
 }
 
-#devs img{
-    height: 50px;
-    width: 50px;
-}
-
-#devs h2{
-    position: absolute;
-    left: 33.32%;
+.link-content{
+    padding-left: 5px;
+    padding-right: 5px;
     text-align: center;
-    transform: translate(-50%, 5%);
 }
 
+.link-content p{
+    width: 100%;
+}
 
+a{
+    color: var(--font2) !important;
+}
+
+/* .devs h2{
+    text-align: center;
+    width: 100%;
+}
+*/
+#dev{
+    padding: 0;
+    flex-wrap: nowrap !important;
+} 
+
+/*--------------------TABCONTENT--------------------*/
 
 /* Style the tab */
 .tab {
     overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-  }
+    border: 1px solid var(--purple_light);
+    background-color: var(--menu);
+}
+
+tr:first-child{
+    background-color: var(--bg-gradient);
+}
   
-  /* Style the buttons that are used to open the tab content */
-  .tab button {
+/* Style the buttons that are used to open the tab content */
+.tab button {
     background-color: inherit;
     float: left;
     border: none;
@@ -482,43 +655,123 @@ footer{
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
-  }
-  
-  /* Change background color of buttons on hover */
-  .tab button:hover {
-    background-color: #ddd;
-  }
-  
-  /* Create an active/current tablink class */
-  .tab button.active {
-    background-color: #ccc;
-  }
-  
-  /* Style the tab content */
-  .tabcontent {
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: var(--menu_active);
+}
+
+/* Create an active/current tablink class */
+.tab button:active, .tab button:focused{
+    background-color: var(--menu_active);
+}
+
+/* Style the tab content */
+.tabcontent {
     border: 1px solid #ccc;
     border-top: none;
-  }
+}
+
+
+/*--------------------TABLES--------------------*/
 
 table{
     width: 100%;
+    background-color: var(--acc1);
+    user-select: none;
+    table-layout: auto;
+    scrollbar-width: 5px;
+}
 
+th, td {
+    border: 1px solid var(--purple_light);
 }
 
 th{
-    border: 1px solid black;
-    font-weight: unset;
+    background-color: var(--acc2);
+    text-align: center;
+    cursor: pointer;
+    padding: 13px 0;
+}
+
+.userrow {
+    background-color: var(--brand);
 }
 
 
+/*--------------------RESPONSIVITY--------------------*/
 
-tr:first-child{
-    font-weight: 700;
+
+@media (max-width: 840px) {    
+    /*----------TABLES----------*/
+
+    table {
+        display: block;
+        overflow-x: scroll;
+        scrollbar-width: thin;
+    }
 }
 
+@media (max-width: 1080px){
+
+    footer{
+        height: fit-content;
+        flex-direction: column;
+    }
+
+    .devs{
+        width: 100vw;
+    }
+
+
+
+    .link{
+        width: 100vw;
+        height: fit-content;
+    }
+
+    .devs h2{
+        left: 0;
+        transform: translate(0,0);
+        width: 100%;
+    }
+
+}
 
 @media (max-width: 768px) { /* medium screen */
+
+    /*----------GENERIC----------*/
+
+    header{
+        height: 40vh !important;
+    }
+
+    body{
+        text-align: center;
+    }
     
+    .devs .card{
+        width: 15rem;
+    }
+
+    #dev{
+        flex-wrap: wrap !important;
+    }
+
+    /*----------VIDEO ON HOMEPAGE----------*/
+
+    iframe{
+        width: 80%;
+    }
+    
+
+    /*----------NAVBAR----------*/
+
+    .nav-item{
+        margin: auto;
+    }
+
     .navbar-expand-lg .navbar-nav {
         display: none; 
     }
@@ -529,52 +782,38 @@ tr:first-child{
     .navbar-nav{
         width: 100%;
     }
-    .character img{
-        height: 30vh;
-    }
 
-    footer{
-        height: 30vh;
-    }
 
-    #devs{
-        width: 100vw;
-    }
+    /*----------CARDS----------*/
 
-    #link{
-        width: 100vw;
+
+    /*----------FOOTER----------*/
+
+    
+
+    .profile{
+        flex-direction: column;
+        width: 100%;
         height: fit-content;
     }
 
-    #devs h2{
-        left: 0;
-        transform: translate(0,0);
+    .profile:last-child{
         width: 100%;
     }
 
-    table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    .control{
-        width: 70vw;
-        height: fit-content;
-        margin: 10px;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-    }
     
-    .control p{
 
+    /*----------TABLES----------*/
+
+    td:not(.text-center) {
+        text-align: left;
     }
-    
-    .control img{
-        margin: 15px;
 
+    /*----------PROFLE, LOGIN, REGISTER----------*/
+
+    .profile{
+        flex-direction: column;
+        width: 100%;
     }
     
     d{
@@ -585,11 +824,40 @@ tr:first-child{
         width: 100%;
         height: auto;
     }
+   
+    
+    /*----------HEADER----------*/
 
     header{
         height: 30vh;
     }
-    h1{
-        font-size: 15rem;
+}
+
+@media (min-width: 1400px){
+    body{
+        font-size: min(1.5vw, 40px);
+    }
+
+    iframe{
+        width: 40%;
+    }
+
+    .card{
+        width: 20rem;
+    }
+
+    .devs .card{
+        width: 20rem;
+    }
+
+}
+
+@media (max-width: 576px){
+    .flex-container{
+        padding: 0;
+    }
+
+    .devs .card{
+        width: 18rem;
     }
 }

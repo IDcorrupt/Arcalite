@@ -7,3 +7,36 @@ function getCookie(cookieName) {
     }
     return null;
 }
+
+function logout() {
+    if (confirm("Biztosan ki szeretne jelentkezni?")) {
+        document.cookie = "  userid=; path=/; expires="+ new Date(1970, 1, 1);
+        document.cookie = "username=; path=/; expires="+ new Date(1970, 1, 1);
+        window.open("login.html", "_self");
+    }
+}
+
+$(document).ready(() => {
+    //magyar nyelv alapbeállítása
+    if (getCookie("langid") == null) { document.cookie = `langid=1; path=/; secure; SameSite=Strict`; }
+    
+    //világos téma alapbeállítása
+    if (getCookie("theme") == null) { document.cookie = `theme=light; path=/; secure; SameSite=Strict`; }
+    setTheme()
+
+    if (getCookie("userid") == null) {
+        $("#nav_profil").hide();
+        $("#nav_login").show();
+        if (!$("#nav_wiki").hasClass("disabled")) { 
+            $("#nav_wiki").addClass("disabled");
+            document.querySelector(".nav-item:has(a#nav_wiki)").title = "Jelentkezzen be a lexikon eléréséhez"; 
+        }
+    } else {
+        $("#nav_profil").show();
+        $("#nav_login").hide();
+        if ($("#nav_wiki").hasClass("disabled")) { 
+            $("#nav_wiki").removeClass("disabled");
+            document.querySelector(".nav-item:has(a#nav_wiki)").title = "";
+        }
+    }
+});

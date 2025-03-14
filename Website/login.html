@@ -4,53 +4,64 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil</title>
+    <title>Bejelentkezés</title>
     <link rel="stylesheet" href="style.css">
 
     <script src="script/jquery-3.7.1.min.js"></script>
     <script src="script/login.js"></script>
 </head>
-<body>    
-    <main id="login">
-        <!-- <a>Vissza a főoldalra</a> -->
-        <div class="login">
+<body>
+    <main class="flex-container">
+        <a href="./index.html">Vissza  a főoldalra</a>        
+        <div class="login profile" id="registerdiv" style="display: none;">
             <h2>Regisztráció</h2>
-            <form id="registerform">
-                <label for="reg_username">Felhasználónév: </label>
-                <input type="text" id="reg_username" required>
-                <label for="reg_email">E-mail:</label>
-                <input type="email" id="reg_email" required>
-                <label for="reg_password">Jelszó: </label>
-                <input type="password" id="reg_password" required>
-                <label for="reg_passwordagain">Jelszó újra: </label>
-                <input type="password" id="reg_passwordagain" required>
-                <p id="pwdagain_error" hidden>Nem egyezik a fentebb megadott jelszóval!</p>
-                <input type="submit" id="register_btn" value="Regisztrál">
-                <p id="register_error"></p>
-            </form>
+            <div id="register_base">
+                <form id="registerform">
+                    <label for="reg_username">Felhasználónév: </label>
+                    <input type="text" id="reg_username" required>
+                    <label for="reg_email">E-mail:</label>
+                    <input type="email" id="reg_email" required>
+                    <label for="reg_password">Jelszó: </label>
+                    <input type="password" id="reg_password" required>
+                    <label for="reg_passwordagain">Jelszó újra: </label>
+                    <input type="password" id="reg_passwordagain" required>
+                    <p id="pwdagain_error" hidden>Nem egyezik a fentebb megadott jelszóval!</p>
+                    <input type="submit" id="register_btn" value="Regisztrál">
+                    <p id="register_error"></p>
+                </form>
+            </div>
+            <div id="register_verification" hidden>
+                <label for="register_code">Adja meg az e-mailben kapott kódot:</label>
+                <input type="text" id="register_code">
+                <input type="submit" id="register_verify" value="Kód ellenőrzése">
+            </div>
+            <p>Már van fiókja? <a href="#" onclick="switchToLogin()">Jelentkezzen be</a></p>
         </div>
-        <div class="login">
+        <div class="login profile" id="logindiv">
             <h2>Bejelentkezés</h2>
             <form id="loginform">
-                <label for="login_email">E-mail:</label>
-                <input type="email" id="login_email" required>
-                <label for="login_password">Jelszó: </label>
-                <input type="password" id="login_password" required>
-                <input type="submit" id="login_btn" value="Bejelentkezés">
-                <input type="button" id="forgotpwd" value="Elfelejtett jelszó">
+                <div id="login_base">
+                    <label for="login_email">E-mail:</label>
+                    <input type="email" id="login_email" required>
+                    <label for="login_password">Jelszó: </label>
+                    <input type="password" id="login_password" required>
+                    <a id="forgotpwd" href="#">Elfelejtett jelszó </a>
+                    <input type="submit" id="login_btn" value="Bejelentkezés">
+                </div>
                 <div id="newpwd_authcode_container" hidden>
                     <label for="newpwd_authcode">Az e-mailben küldött kód:</label>
                     <input type="text" id="newpwd_authcode">
-                    <input type="button" id="newpwd_verify" value="Kód ellenőrzése">
+                    <input type="submit" id="newpwd_verify" value="Kód ellenőrzése">
                 </div>
                 <div id="newpwd_newpwd_container" hidden>
                     <label for="newpwd_newpwd">Az új jelszó:</label>
                     <input type="password" id="newpwd_newpwd">
                     <label for="newpwd_again">Jelszó újra:</label>
                     <input type="password" id="newpwd_again">
-                    <input type="button" id="newpwd_set" value="Új jelszó beállítása">
+                    <input type="submit" id="newpwd_set" value="Új jelszó beállítása">
                 </div>
                 <p id="login_error"></p>
+                <p>Még nincs fiókja? <a href="#" onclick="switchToRegister()">Regisztráljon</a></p>
             </form>
         </div>
     </main>

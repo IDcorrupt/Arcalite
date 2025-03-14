@@ -2,21 +2,20 @@
 
 require_once "config.php";
 
-if ($_SERVER["REQUEST_METHOD"] != "GET") {
-    ReturnError(405, "Hiba az API-hívásban.");
-}
-
-checkProperFields("GET", "email");
-
+checkValidity("GET", "email");
 
 require_once "connection.php";
 
 $email = $_GET['email'];
 
-$sql = "SELECT * FROM `profile` WHERE email = '$email';";
+$sql = "SELECT username, email FROM `profile` WHERE email = '$email' AND `deletedAt` IS NULL;";
 $result = $db->query($sql);
+$data = $result->fetch_assoc();
 
-
-$return = array("exists" => $result->num_rows > 0);
+$return = array(
+    "exists" => $result->num_rows > 0,
+    "username" => $data["username"] ?? null,
+    "email" => $data["email"] ?? null
+);
 
 ReturnResult($return);

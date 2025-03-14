@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html lang="hu"  data-bs-theme="dark">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arcalite</title>
-
      <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- jQuery and Bootstrap JS -->
-    <script src="https://kit.fontawesome.com/45a1f7d16e.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/f20510af0d.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link id="base" rel="stylesheet" href="style.css">
+
+    <script src="script/common.js"></script>
 </head>
 <body data-bs-theme="light">
     <nav class="navbar navbar-expand-md sticky-top">
@@ -24,115 +25,140 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
-                <li class="nav-item mr-auto"><a class="navbar-brand" href="#">
+                <li class="nav-item"><a class="navbar-brand" href="">
+                    <img src="./img/icon_round.png">
                     </a></li>
                 <li class="nav-item active"><a class="nav-link" href="./index.html">Kezdőlap</a></li>
-                <li class="nav-item"><a class="nav-link" href="./wiki.php">Lexikon</a></li>
+                <li class="nav-item"><a class="nav-link" href="./wiki.html" id="nav_wiki">Lexikon</a></li>
                 <li class="nav-item"><a class="nav-link" href="./ranking.html">Ranglista</a></li>
-                <li class="nav-item"><div class="dropdown">
-                    <button class="nav-link">Profil</button>
-                    <div class="dropdown-content">
-                        <a class="nav-link" href="./profile.html">Bejelentkezés</a>
-                    </div>
-                </div></li>
-                <li class="nav-item"><div class="form-check form-switch mx-4">
+                <li class="nav-item">
+                    <a id="nav_profil" class="nav-link" href="./profile.html">Profil</a>
+                    <a id="nav_login" class="nav-link" href="./login.html">Bejelentkezés</a>
+                </li>
+                <li class="nav-item"><div class="form-check form-switch">
                     <input
-                      class="form-check-input p-2"
+                      class="form-check-input"
                       type="checkbox"
                       role="switch"
                       id="flexSwitchCheckChecked"
                       checked
-                      onclick="myFunction()"
+                      onclick="themeChange()"
                     />
                 </li>
-                
-                <li class="nav-item ml-auto"><a class="nav-link" href="./profile.html">Letöltés</a></li>
-                
-                
             </ul>
         </div>
     </nav>
 
-    <script>
-        function myFunction() {
-        var element = document.body;
-        element.dataset.bsTheme =
-          element.dataset.bsTheme == "light" ? "dark" : "light";
-      }
-    </script>
-    
-    <header class="flex-container">
+    <header class="flex-container index-header">
         <h1>Arcalite</h1>
+        <!--<div class="parallax-image"></div>-->
     </header>
 
     <main>
         <div class="flex-container video">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/ePcOvfnIZHk?si=mZFdWE-8NQiAPlKG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/ePcOvfnIZHk?si=mZFdWE-8NQiAPlKG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <h2 id="controlid">Irányítás</h2>
-        <div class="flex-container" id="controls">
-            <div class="card">
-                <img src="./img/index.png" class="card-img-top" alt="...">
+        <div class="flex-container">
+            <div class="card control-card">
+                <img src="./img/index.png" class="card-img-top control-img" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">Képesség</h5>
-                  <p class="card-text">Leírás</p>
-                  <button class="delete-button"><i class="fa-solid fa-square-caret-up fa-lg"></i></button>
+                  <h5>Képesség</h5>
+                  <p>Leírás</p>
+                  <button class="key-button"><i class="fa-solid fa-square-caret-up fa-lg"></i></button>
                 </div>
               </div>
-              <div class="card">
-                <img src="./img/index.png" class="card-img-top" alt="...">
+              <div class="card control-card">
+                <img src="./img/index.png" class="card-img-top control-img" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">Képesség</h5>
-                  <p class="card-text">Leírás</p>
-                  <button class="delete-button"><i class="fa-solid fa-square-caret-up fa-lg"></i></button>
+                  <h5>Képesség</h5>
+                  <p>Leírás</p>
+                  <button class="key-button"><i class="fa-solid fa-square-caret-up fa-lg"></i></button>
                 </div>
               </div>
-              <div class="card">
-                <img src="./img/index.png" class="card-img-top" alt="...">
+              <div class="card control-card">
+                <img src="./img/index.png" class="card-img-top control-img" alt="...">
                 <div class="card-body">
-                  <h3 class="card-title">Képesség</h5>
-                  <p class="card-text">Leírás</p>
-                  <button class="delete-button"><i class="fa-solid fa-square-caret-up fa-lg"></i></button>
+                  <h5>Képesség</h5>
+                  <p>Leírás</p>
+                  <button class="key-button"><i class="fa-solid fa-square-caret-up fa-lg"></i></button>
                 </div>
               </div>
-    
         </div>
-        <h2 id="characterid">Karakterek</h2>
-        <div class="flex-container" id="characters">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Karakter</h3>
+            <h2 id="characterid">Karakterek</h2>
+            <div class="flex-container character">
+                <div class="card character-card" data-character="Character 1">
+                    <div class="card-body">
+                        <h3 class="card-title">Karakter 1</h3>
+                    </div>
+                    <img src="./img/character.png" class="card-img-bottom" alt="Character 1">
                 </div>
-                <img src="./img/index.png" class="card-img-top " alt="...">
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Karakter</h3>
+        
+                <div class="card character-card" data-character="Character 2">
+                    <div class="card-body">
+                        <h3 class="card-title">Karakter 2</h3>
+                    </div>
+                    <img src="./img/character.png" class="card-img-bottom" alt="Character 2">
                 </div>
-                <img src="./img/index.png" class="card-img-bottom" alt="...">
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Karakter</h3>
+        
+                <div class="card character-card" data-character="Character 3">
+                    <div class="card-body">
+                        <h3 class="card-title">Karakter 3</h3>
+                    </div>
+                    <img src="./img/character.png" class="card-img-bottom" alt="Character 3">
                 </div>
-                <img src="./img/index.png" class="card-img-bottom" alt="...">
             </div>
-            
-        </div>
+        
+            <!-- Offcanvas -->
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="characterOffcanvas">
+                <div class="offcanvas-header">
+                    <h5 id="offcanvasTitle">Character Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p id="offcanvasContent">Character information will be shown here.</p>
+                </div>
+            </div>
+              
     </main>
     <footer class="flex-container">
-        <div id="devs">
+        <div class="devs">
         <h2>Készítők</h2>
             <div class="flex-container" id="dev">
-                <img src="./img/index.png">
-                <img src="./img/index.png">
-                <img src="./img/index.png">
+                <div class="card character-card">
+                    <div class="card-body">
+                        <h3 class="card-title">Bakó Borka</h3>
+                    </div>
+                    <img src="./Arcalite_files/character.png" class="card-img-top">
+                </div>
+                <div class="card character-card">
+                    <div class="card-body">
+                        <h3 class="card-title">Bali István</h3>
+                    </div>
+                    <img src="./Arcalite_files/character.png" class="card-img-top">
+                </div>
+                <div class="card character-card">
+                    <div class="card-body">
+                        <h3 class="card-title">Katona Bálint</h3>
+                    </div>
+                    <img src="./Arcalite_files/character.png" class="card-img-top">
+                </div>
             </div>
         </div>
-        <div id="link">
-
+        <div class="link">
+        <h2>Kapcsolatok</h2>
+            <div class="flex-container link-content">
+                <p>E-mail: arcalitethegame@gmail.com</p>
+                <div class="contacts">
+                    <a href="https://github.com/IDcorrupt/Arcalite" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github fa-2xl"></i></a>
+                    <a href="https://github.com/IDcorrupt/Arcalite" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram fa-2xl"></i></a>
+                    <i class="fa-brands fa-discord fa-2xl"></i>
+                </div>
+                
+            </div>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script/styleScript.js"></script>
 </body>
 </html>

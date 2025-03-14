@@ -6,7 +6,8 @@ CREATE TABLE profile (
   username VARCHAR(64),
   password VARCHAR(128),
   played TIME DEFAULT 0,
-  email VARCHAR(128)
+  email VARCHAR(128),
+  deletedAt DATETIME DEFAULT NULL
 );
 
 CREATE TABLE achievement (
@@ -118,6 +119,7 @@ CREATE TABLE enemydesc (
 CREATE TABLE leveldesc (
   levelid INT,
   languageid INT,
+  name VARCHAR(255),
   description TEXT,
   CONSTRAINT pk_leveldesc PRIMARY KEY (levelid, languageid),
   CONSTRAINT fk_leveldesc_level FOREIGN KEY (levelid) REFERENCES level(id),
