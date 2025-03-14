@@ -65,6 +65,7 @@ REPLACE INTO `achievement` (`id`) VALUES
 DROP TABLE IF EXISTS `avatar`;
 CREATE TABLE `avatar` (
   `id` int(11) NOT NULL,
+  `splash` varchar(128) DEFAULT NULL,
   `image` varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -72,10 +73,10 @@ CREATE TABLE `avatar` (
 -- A tábla adatainak kiíratása `avatar`
 --
 
-REPLACE INTO `avatar` (`id`, `image`) VALUES
-(1, 'kep1.png'),
-(2, 'kep02.png'),
-(3, 'forg.png');
+REPLACE INTO `avatar` (`id`, `splash`, `image`) VALUES
+(1, 'splash1.png', 'kep1.png'),
+(2, 'splash2.png', 'kep02.png'),
+(3, 'forg_splash.png', 'forg.png');
 
 -- --------------------------------------------------------
 

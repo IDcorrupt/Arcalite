@@ -24,6 +24,7 @@ CREATE TABLE proach (
 
 CREATE TABLE avatar (
   id INT PRIMARY KEY AUTO_INCREMENT,
+  splash VARCHAR(128),
   image VARCHAR(128)
 );
 
