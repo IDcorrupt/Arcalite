@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d4mg7kpomu4je"]
+[gd_scene load_steps=21 format=3 uid="uid://d4mg7kpomu4je"]
 
 [ext_resource type="Script" uid="uid://bw81mk3jt7fwe" path="res://Scripts/Mechanics/Ui.cs" id="1_f025f"]
 [ext_resource type="Texture2D" uid="uid://de8mwe0cmbyrt" path="res://Assets/Icons/Dash/dash_Cooldown.png" id="2_13e54"]
@@ -109,6 +109,12 @@ animations = [{
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_j1f8t"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mqexw"]
+bg_color = Color(0.55, 0, 0.0366666, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gb0wl"]
+bg_color = Color(0, 0.367333, 0.58, 1)
+
 [node name="UI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -190,3 +196,17 @@ centered = false
 [node name="Icon" type="AnimatedSprite2D" parent="Icons/SpellQ"]
 sprite_frames = SubResource("SpriteFrames_qoyub")
 animation = &"shield_Ready"
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 25.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mqexw")
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 250.0
+offset_bottom = 55.0
+scale = Vector2(0.75, 0.75)
+theme_override_styles/panel = SubResource("StyleBoxFlat_gb0wl")

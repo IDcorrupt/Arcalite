@@ -18,14 +18,7 @@ public partial class SubmenuStart : Control
         NewGame.Pressed += NewGamePressed;
         Back.Pressed += BackPressed;
         Parent = GetParent();
-        if (Globals.hasSavefile)
-        {
-            //regular button appearance
-        }
-        else
-        {
-            //special appearance for disabled button
-        }
+
         Globals.hasSavefile = SaveLoadHandler.CheckSave();
         if(Globals.hasSavefile) 
             Continue.Disabled = false;
