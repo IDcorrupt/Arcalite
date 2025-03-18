@@ -56,19 +56,19 @@ public partial class ChargeProjectile : CharacterBody2D
             {
                 case 1:
                     Scale = new Vector2(1, 1);
-                    damagePayload *= 1;
+                    damagePayload *= 2;
                     break;
                 case 2:
                     Scale = new Vector2((float)1.3, (float)1.3);
-                    damagePayload *= 1.3f;
+                    damagePayload *= 4f;
                     break;
                 case 3:
                     Scale = new Vector2((float)1.6, (float)1.6);
-                    damagePayload *= 1.6f;
+                    damagePayload *= 6f;
                     break;
                 case 4: 
                     Scale = new Vector2(2, 2);
-                    damagePayload *= 2;
+                    damagePayload *= 8;
                     break;
                 default:
                     break;

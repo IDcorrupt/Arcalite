@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dmcjsoh4jx60g"]
+[gd_scene load_steps=33 format=3 uid="uid://dmcjsoh4jx60g"]
 
 [ext_resource type="Script" uid="uid://dbs6nh4vnvgel" path="res://Scripts/Game/Enemies/LightMeele.cs" id="1_yaydj"]
 [ext_resource type="Texture2D" uid="uid://v4gnk750ktm1" path="res://Assets/10count.png" id="2_31yna"]
@@ -206,9 +206,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kps44"]
 size = Vector2(9, 21)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2gd46"]
-size = Vector2(5, 5)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c8qfr"]
 size = Vector2(22, 21)
 
@@ -243,10 +240,6 @@ one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kps44")
-
-[node name="indicator" type="Sprite2D" parent="."]
-position = Vector2(6, -16)
-texture = SubResource("PlaceholderTexture2D_2gd46")
 
 [node name="AttackRange" type="Area2D" parent="."]
 collision_layer = 0

@@ -23,7 +23,8 @@ public partial class Checkpoint : Node2D
 
     public void TriggerAreaBodyEntered(Node2D body)
     {
-        if(!triggered && sprite.Animation == "idle")
+        Player_EnteredRestArea();
+        if (!triggered && sprite.Animation == "idle")
             TriggerCheckpoint();
     }
     public void TriggerAreaBodyExited(Node2D body)
@@ -51,7 +52,6 @@ public partial class Checkpoint : Node2D
     private void TriggerCheckpoint()
     {
         Globals.spawnPoint.QueueFree();
-        Player_EnteredRestArea();
         Globals.spawnPoint = this;
         sprite.Play("triggered");
         SaveLoadHandler.Save(

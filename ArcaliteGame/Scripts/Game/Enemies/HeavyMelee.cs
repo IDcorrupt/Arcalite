@@ -11,7 +11,7 @@ public partial class HeavyMelee : Enemy
         damage = 15;
         atkCooldown.WaitTime = 1;
         jumpStrength = 500;
-        shardDropRate = 100;
+        shardDropRate = 50;
     }
     protected override void Animate()
     {

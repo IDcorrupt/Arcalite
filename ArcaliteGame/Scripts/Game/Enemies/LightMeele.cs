@@ -16,7 +16,7 @@ public partial class LightMeele : Enemy
         damage = 5;
         atkCooldown.WaitTime = 1;
         jumpStrength = 400;
-        shardDropRate = 100;
+        shardDropRate = 30;
     }
 
     protected override void Attack()

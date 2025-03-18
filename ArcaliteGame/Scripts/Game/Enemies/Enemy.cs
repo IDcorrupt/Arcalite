@@ -43,7 +43,6 @@ public partial class Enemy : CharacterBody2D
     protected Timer atkCooldown;
     protected Timer hurtTimer;
     protected Timer chaseBuffer;
-    private Sprite2D indicator;
     private Area2D attackRange;
     private Area2D obstacleDetect;
     private CollisionPolygon2D obstacleDetectLeft;
@@ -82,14 +81,7 @@ public partial class Enemy : CharacterBody2D
         jumpTrigger = GetNode<Area2D>("JumpTrigger");
 
         lineOfSight = GetNode("LineOfSight") as RayCast2D;
-
-        //debug
-        indicator = GetNode<Sprite2D>("indicator");
     }
-
-
-
-
 
     //movement
     public void Move(double delta)
@@ -118,7 +110,6 @@ public partial class Enemy : CharacterBody2D
             {
                 RoamCooldown.Paused = false;
             }
-            indicator.Modulate = Color.Color8(30,30,30,30);
             if (Direction.X != 0)
             {
                 if (speed < roamSpeed) speed += (float)delta * 70;
@@ -146,8 +137,6 @@ public partial class Enemy : CharacterBody2D
             dirTimer.Paused = true;
             RoamCooldown.Paused = true;
 
-            //debug indicator and direction calculation
-            indicator.Modulate = Color.Color8(0,0, 255);
             Direction = GlobalPosition.DirectionTo(player.GlobalPosition);
 
             //regulate acceleration/deceleration
@@ -255,7 +244,6 @@ public partial class Enemy : CharacterBody2D
         {
             //right
             sprite.FlipH = true;
-            indicator.Position = new Vector2(-6, -16);
             attackRange.RotationDegrees = 180;
             jumpTrigger.RotationDegrees = 180;
             obstacleDetectRight.Disabled = true;
@@ -265,7 +253,6 @@ public partial class Enemy : CharacterBody2D
         else
         {
             sprite.FlipH = false;
-            indicator.Position = new Vector2(6, -16);
             attackRange.RotationDegrees = 0;
             jumpTrigger.RotationDegrees = 0;
             obstacleDetectRight.Disabled = false;
@@ -284,7 +271,7 @@ public partial class Enemy : CharacterBody2D
                 sprite.Play("idle");
         }
     }
-    public void OnSpriteAnimationFinished()
+    public virtual void OnSpriteAnimationFinished()
     {
         if (sprite.Animation == "attack")
         {
@@ -300,7 +287,7 @@ public partial class Enemy : CharacterBody2D
     }
 
     //die logic
-    private void DropItems(Enums.itemType itemtype = Enums.itemType.shard, int customDropRate = 0)
+    protected void DropItems(Enums.itemType itemtype = Enums.itemType.shard, int customDropRate = 0)
     {
         Item item = null;
         if (itemtype == Enums.itemType.shard && Math.RNG(shardDropRate))
@@ -321,11 +308,14 @@ public partial class Enemy : CharacterBody2D
             itemContainer.AddChild(item);
         }
     }
-    private void Die()
+    protected virtual void Die(int shardamount = 1)
     {
         parent.enemyAmount--;
         //empty item func call -> shard drop
-        DropItems();
+        for (int i = 0; i < shardamount; i++)
+        {
+            DropItems();
+        }
         QueueFree();
 
     }
@@ -341,11 +331,6 @@ public partial class Enemy : CharacterBody2D
                 Velocity = new Vector2(Velocity.X > 0 ? Velocity.X - (float)delta * 700 : Velocity.X + (float)delta * 700, Velocity.Y);
             if (isAttacking || atkCooldown.TimeLeft > 0)
             {
-                //for debug indicator and movement stop
-                if (isAttacking)
-                    indicator.Modulate = Color.Color8(255, 0, 255, 255);
-                else
-                    indicator.Modulate = Color.Color8(255, 255, 0, 255);
                 //stop moving after attacking
                 Velocity = new Vector2(0, Velocity.Y);
             }

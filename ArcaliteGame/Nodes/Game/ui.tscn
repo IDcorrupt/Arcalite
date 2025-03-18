@@ -1,6 +1,7 @@
-[gd_scene load_steps=21 format=3 uid="uid://d4mg7kpomu4je"]
+[gd_scene load_steps=22 format=3 uid="uid://d4mg7kpomu4je"]
 
 [ext_resource type="Script" uid="uid://bw81mk3jt7fwe" path="res://Scripts/Mechanics/Ui.cs" id="1_f025f"]
+[ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_gb0wl"]
 [ext_resource type="Texture2D" uid="uid://de8mwe0cmbyrt" path="res://Assets/Icons/Dash/dash_Cooldown.png" id="2_13e54"]
 [ext_resource type="Texture2D" uid="uid://cyp8gf66hrhdi" path="res://Assets/Icons/ChargeAttack/ca_Cooldown.png" id="2_qqwp7"]
 [ext_resource type="Texture2D" uid="uid://bqucfy8ub1eny" path="res://Assets/Icons/ChargeAttack/ca_Ready.png" id="3_2gkhm"]
@@ -11,6 +12,12 @@
 [ext_resource type="Texture2D" uid="uid://byqmmeu2l110b" path="res://Assets/Icons/Shield/shield_Cooldown.png" id="8_mqexw"]
 [ext_resource type="Texture2D" uid="uid://cgeeap23ik47n" path="res://Assets/Icons/Shield/shield_Active.png" id="9_24col"]
 [ext_resource type="Texture2D" uid="uid://lq70xbogwtpy" path="res://Assets/Icons/Shield/shield_Ready.png" id="9_gb0wl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mqexw"]
+bg_color = Color(0.55, 0, 0.0366666, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gb0wl"]
+bg_color = Color(0, 0.367333, 0.58, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ubv0j"]
 
@@ -109,12 +116,6 @@ animations = [{
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_j1f8t"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mqexw"]
-bg_color = Color(0.55, 0, 0.0366666, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gb0wl"]
-bg_color = Color(0, 0.367333, 0.58, 1)
-
 [node name="UI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -122,12 +123,32 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_gb0wl")
 script = ExtResource("1_f025f")
+
+[node name="HPBar" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 255.0
+offset_bottom = 30.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mqexw")
+
+[node name="MPBar" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 35.0
+offset_right = 255.0
+offset_bottom = 60.0
+scale = Vector2(0.75, 0.75)
+theme_override_styles/panel = SubResource("StyleBoxFlat_gb0wl")
 
 [node name="HPNumDisplay" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 6.0
+offset_top = 8.0
+offset_right = 73.0
+offset_bottom = 48.0
 text = "HP: asd"
 fit_content = true
 scroll_active = false
@@ -135,9 +156,10 @@ autowrap_mode = 0
 
 [node name="MPNumDisplay" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_top = 22.795
-offset_right = 40.0
-offset_bottom = 62.795
+offset_left = 6.0
+offset_top = 36.0
+offset_right = 75.0
+offset_bottom = 76.0
 text = "MP: asd"
 fit_content = true
 scroll_active = false
@@ -196,17 +218,3 @@ centered = false
 [node name="Icon" type="AnimatedSprite2D" parent="Icons/SpellQ"]
 sprite_frames = SubResource("SpriteFrames_qoyub")
 animation = &"shield_Ready"
-
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 0
-offset_right = 250.0
-offset_bottom = 25.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_mqexw")
-
-[node name="Panel2" type="Panel" parent="."]
-layout_mode = 0
-offset_top = 30.0
-offset_right = 250.0
-offset_bottom = 55.0
-scale = Vector2(0.75, 0.75)
-theme_override_styles/panel = SubResource("StyleBoxFlat_gb0wl")

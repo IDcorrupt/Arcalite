@@ -97,7 +97,6 @@ public partial class Item : CharacterBody2D
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-        GD.Print("itemtype: " + type);
         if (floatTrigger.IsColliding() && !groundHit)
         {
             groundHit = true;

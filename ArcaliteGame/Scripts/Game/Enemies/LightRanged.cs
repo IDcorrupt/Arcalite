@@ -14,7 +14,7 @@ public partial class LightRanged : Enemy
         damage = 10;
         atkCooldown.WaitTime = 1.5f;
         jumpStrength = 400;
-        shardDropRate = 100;
+        shardDropRate = 30;
     }
     
     protected override void Attack()

@@ -27,9 +27,7 @@ public partial class SpellOracle : Node2D
     {
         if(sprite.Animation == "cast")
         {
-            sprite.Position = new Vector2(2.245f, 1.275f);
-            sprite.Scale = new Vector2(1.775f, 1.775f);
-            sprite.Play("sustained_start");
+            sprite.Play("loop");
             slowing = true;
             switch (level)
             {
@@ -50,11 +48,8 @@ public partial class SpellOracle : Node2D
             }
             durationTimer.Start();
         }
-        else if(sprite.Animation == "sustained_start")
-        {
-            sprite.Play("sustained_middle");
-        }
-        else if(sprite.Animation == "sustained_end")
+        
+        else if(sprite.Animation == "end")
         {
             TreeExit();
         }
@@ -63,7 +58,7 @@ public partial class SpellOracle : Node2D
     public void OnDurationTimeout()
     {
         slowing = false;
-        sprite.Play("sustained_end");
+        sprite.Play("end");
     }
     public void OnBodyEntered(Node2D body)
     {

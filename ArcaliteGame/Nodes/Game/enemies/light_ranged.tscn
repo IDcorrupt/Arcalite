@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://sp0xoa4003y1"]
+[gd_scene load_steps=37 format=3 uid="uid://sp0xoa4003y1"]
 
 [ext_resource type="Texture2D" uid="uid://b1kcycve1n2tl" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/shark.png" id="1_ie5ln"]
 [ext_resource type="Script" uid="uid://dpqm2lht0dqnl" path="res://Scripts/Game/Enemies/LightRanged.cs" id="1_qxpks"]
@@ -227,9 +227,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vekda"]
 size = Vector2(44, 24)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wqdoi"]
-size = Vector2(5, 5)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_q227e"]
 radius = 175.0
 
@@ -266,10 +263,6 @@ one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_vekda")
-
-[node name="indicator" type="Sprite2D" parent="."]
-position = Vector2(19, -9)
-texture = SubResource("PlaceholderTexture2D_wqdoi")
 
 [node name="AttackRange" type="Area2D" parent="."]
 visible = false

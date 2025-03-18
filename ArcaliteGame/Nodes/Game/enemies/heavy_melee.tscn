@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://ctrs8f1p3hiil"]
+[gd_scene load_steps=47 format=3 uid="uid://ctrs8f1p3hiil"]
 
 [ext_resource type="Script" uid="uid://c75dg41hv5caf" path="res://Scripts/Game/Enemies/HeavyMelee.cs" id="1_ok2i2"]
 [ext_resource type="Texture2D" uid="uid://pb5r0yxaalr1" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/slime_red.png" id="1_sihy3"]
@@ -297,9 +297,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m1jxv"]
 size = Vector2(48, 33)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_j6u8p"]
-size = Vector2(10, 10)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s47iu"]
 size = Vector2(71, 33)
 
@@ -316,7 +313,7 @@ script = ExtResource("1_ok2i2")
 position = Vector2(0, -7.5)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_l32ot")
-animation = &"attack"
+animation = &"idle"
 
 [node name="DirectionTimer" type="Timer" parent="."]
 one_shot = true
@@ -337,10 +334,6 @@ one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_m1jxv")
-
-[node name="indicator" type="Sprite2D" parent="."]
-position = Vector2(29, -27)
-texture = SubResource("PlaceholderTexture2D_j6u8p")
 
 [node name="AttackRange" type="Area2D" parent="."]
 collision_layer = 0

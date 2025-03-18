@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cmv8crqt0wbob" path="res://Assets/empty.png" id="4_h0tbo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_271on"]
+size = Vector2(100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4cvh"]
 atlas = ExtResource("2_h40ay")

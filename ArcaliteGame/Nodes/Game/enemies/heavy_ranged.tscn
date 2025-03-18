@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://dtwxqo8wyx1pw"]
+[gd_scene load_steps=43 format=3 uid="uid://dtwxqo8wyx1pw"]
 
 [ext_resource type="Texture2D" uid="uid://ccmt4ma2jpt0u" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/penguin.png" id="1_cl5ob"]
 [ext_resource type="Script" uid="uid://bthb332j357tx" path="res://Scripts/Game/Enemies/HeavyRanged.cs" id="1_l1duq"]
@@ -269,9 +269,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ynrc"]
 size = Vector2(18, 15)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_23gdt"]
-size = Vector2(5, 5)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_uveyp"]
 radius = 250.0
 
@@ -307,10 +304,6 @@ one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0ynrc")
-
-[node name="indicator" type="Sprite2D" parent="."]
-position = Vector2(11, -11)
-texture = SubResource("PlaceholderTexture2D_23gdt")
 
 [node name="AttackRange" type="Area2D" parent="."]
 collision_layer = 0

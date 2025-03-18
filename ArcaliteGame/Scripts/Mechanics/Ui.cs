@@ -7,6 +7,11 @@ public partial class Ui : Control
     //components
     RichTextLabel HPnum;
     RichTextLabel MPnum;
+    Panel HPBar;
+    Panel MPBar;
+    float HPBarLength;
+    float MPBarLength;
+
     AnimatedSprite2D dashIcon;
     Sprite2D dashCooldownBar;
     AnimatedSprite2D CAIcon;
@@ -25,6 +30,9 @@ public partial class Ui : Control
     {
         HPnum = GetNode("HPNumDisplay") as RichTextLabel;
         MPnum = GetNode("MPNumDisplay") as RichTextLabel;
+        HPBar = GetNode("HPBar") as Panel;
+        MPBar = GetNode("MPBar") as Panel;
+
         //cooldown components
         dashIcon = GetNode("Icons/Dash/Icon") as AnimatedSprite2D;
         dashCooldownBar = GetNode("Icons/Dash/CooldownBar") as Sprite2D;
@@ -39,6 +47,8 @@ public partial class Ui : Control
         dashCooldownBar.Hide();
         SpellECooldownBar.Hide();
         SpellQCooldownBar.Hide();
+        HPBarLength = HPBar.Scale.X;
+        MPBarLength = MPBar.Scale.X;
     }
 
     private void Player_Dashed(float cooldown)
@@ -175,8 +185,14 @@ public partial class Ui : Control
             player.ItemsModified += Player_ItemsModified;
             UpdateItems(player.GetEquips());
         }
-        HPnum.Text = "HP: " + Mathf.Round(Globals.player.GetCurrentHP()); 
-        MPnum.Text = "MP: " + Mathf.Round(Globals.player.GetCurrentMP()); 
+        float maxHP = Globals.player.GetMaxHP();
+        float maxMP = Globals.player.GetMaxMP();
+        float currentHP = Mathf.Round(Globals.player.GetCurrentHP());
+        float currentMP = Mathf.Round(Globals.player.GetCurrentMP());
+        HPnum.Text = "HP: " + currentHP; 
+        MPnum.Text = "MP: " + currentMP; 
+        HPBar.Scale = new Vector2(currentHP/maxHP*HPBarLength, HPBar.Scale.Y);
+        MPBar.Scale = new Vector2(currentMP/maxMP*MPBarLength, MPBar.Scale.Y);
     }
 
 

@@ -438,7 +438,7 @@ public partial class Player : CharacterBody2D
                         currentMP += 10;
                         break;
                     case 2:
-                        damage += 5;
+                        damage += 2;
                         break;
                     default:
                         break;
@@ -532,10 +532,15 @@ public partial class Player : CharacterBody2D
     {
         if (state)
         {
+            GD.Print("resting, hp recharge "+ amount);
             resting = true;
-            HPRechargeAmount = amount;
+            if(amount > 0) 
+                HPRechargeAmount = amount;
         }else
+        {
+            GD.Print("not resting");
             resting = false;
+        }
     }
     private void Cooldowns()
     {
@@ -600,10 +605,10 @@ public partial class Player : CharacterBody2D
 
             //cooldowns
             dashCooldown.WaitTime = 2f;
-            CACooldown.WaitTime = 1f;
+            CACooldown.WaitTime = 5f;
             SOCooldown.WaitTime = 10f;
-            SECooldown.WaitTime = 5f;
-            SQCooldown.WaitTime = 5f;
+            SECooldown.WaitTime = 10f;
+            SQCooldown.WaitTime = 10f;
         }
         //reset state
         vel = 0;
@@ -736,6 +741,7 @@ public partial class Player : CharacterBody2D
                 Movement(delta);
             }
             Animate();
+            Cooldowns();
             MoveAndSlide();
 
         }
