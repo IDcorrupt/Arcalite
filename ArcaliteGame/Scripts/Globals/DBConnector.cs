@@ -1,7 +1,5 @@
 using Godot;
 using System;
-using MySql.Data.MySqlClient;
-using System.Collections.Generic;
 
 public struct CharacterData 
 {
@@ -96,6 +94,11 @@ public static class DBConnector
             SELECT id, username 
             FROM profile 
             WHERE deletedAt IS NULL AND email = '{email}' AND password = PASSWORD('{password}')";
+
+        using ()
+        {
+
+        }
 
         int profileid = 1;  //ezt majd a query-bõl
         //itt majd visszatérés, ha nincs ilyen fiók, n stuff
