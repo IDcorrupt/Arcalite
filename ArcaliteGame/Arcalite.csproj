@@ -6,4 +6,9 @@
   <ItemGroup>
     <Folder Include="Scripts\Game\Enemies\Projectiles\" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>C:\Users\3116TAN-11\Downloads\MySql.Data.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
