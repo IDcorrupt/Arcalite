@@ -83,7 +83,8 @@ public partial class Player : CharacterBody2D
     private Timer spellQTimer;
     private Timer statRecharge;
 
-    private GpuParticles2D FX;
+    private GpuParticles2D FX_Charge;
+    private AnimatedSprite2D FX_Rapid;
     //signals
     [Signal] public delegate void DashedEventHandler(float cooldown);
     [Signal] public delegate void ChargeAttackedEventHandler(float cooldown);
@@ -115,7 +116,8 @@ public partial class Player : CharacterBody2D
         //basic attack cooldown doesn't change with "levels"
         BACooldownStatic = 0.2f;
 
-        FX = GetNode("FX") as GpuParticles2D;
+        FX_Charge = GetNode("FX/Charge") as GpuParticles2D;
+        FX_Rapid = GetNode("FX/Rapid") as AnimatedSprite2D;
 
         basicProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/basic_projectile.tscn");
         chargeProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/charge_projectile.tscn");
@@ -359,6 +361,7 @@ public partial class Player : CharacterBody2D
     {
         //necklace item ability: reduced attack cooldown, increased dispersion
         rapidFire = true;
+        FX_Rapid.Play("default");
         currentMP -= 40;
         switch (slot)
         {
@@ -641,31 +644,31 @@ public partial class Player : CharacterBody2D
                 CACooldown.TimeLeft == 0)
             {
                 CAisCharging = true;
-                FX.Emitting = true;
+                FX_Charge.Emitting = true;
                 //charging to appropriate level
                 CACharge += Mathf.Round((float)delta * 50);
                 if (CACharge >= 100)
                 {
                     chargeLevel = 4;
-                    FX.AmountRatio = 1f;
+                    FX_Charge.AmountRatio = 1f;
                     speedmodifier = 0.2f;
                 }
                 else if (CACharge >= 80)
                 {
                     chargeLevel = 3;
-                    FX.AmountRatio = 0.8f;
+                    FX_Charge.AmountRatio = 0.8f;
                     speedmodifier = 0.4f;
                 }
                 else if (CACharge >= 60)
                 {
                     chargeLevel = 2;
-                    FX.AmountRatio = 0.6f;
+                    FX_Charge.AmountRatio = 0.6f;
                     speedmodifier = 0.6f;
                 }
                 else if (CACharge >= 40)
                 {
                     chargeLevel = 1;
-                    FX.AmountRatio = 0.4f;
+                    FX_Charge.AmountRatio = 0.4f;
                     speedmodifier = 0.8f;
                 }
             }
@@ -679,8 +682,8 @@ public partial class Player : CharacterBody2D
                     CACooldown.Start();
                 }
                 CACharge = 0;
-                FX.Emitting = false;
-                FX.AmountRatio = 0.2f;
+                FX_Charge.Emitting = false;
+                FX_Charge.AmountRatio = 0.2f;
                 speedmodifier = 1;
                 dashed = false;
                 dashVector = Vector2.Zero;

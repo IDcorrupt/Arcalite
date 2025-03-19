@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cy8hqhi3lph21"
-path="res://.godot/imported/dash_Ready.png-63f07a3a35e6b718e72524b9cdaaff1d.ctex"
+uid="uid://ctn1lh8rewvsb"
+path="res://.godot/imported/healthbar.png-cbacd4e2f6d2794ab458bf1de295034f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Icons/Dash/dash_Ready.png"
-dest_files=["res://.godot/imported/dash_Ready.png-63f07a3a35e6b718e72524b9cdaaff1d.ctex"]
+source_file="res://Assets/UI/Bars/healthbar.png"
+dest_files=["res://.godot/imported/healthbar.png-cbacd4e2f6d2794ab458bf1de295034f.ctex"]
 
 [params]
 

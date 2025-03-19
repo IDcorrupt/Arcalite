@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ss724n1rhqwn"
-path="res://.godot/imported/necklace_Cooldown.png-28f1b9b57f57fd6912dad3dd7b87838c.ctex"
+uid="uid://dxn5nh8g87mms"
+path="res://.godot/imported/health_bar_left.png-8423b82575690b61b33466a270b4643c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Icons/Necklace/necklace_Cooldown.png"
-dest_files=["res://.godot/imported/necklace_Cooldown.png-28f1b9b57f57fd6912dad3dd7b87838c.ctex"]
+source_file="res://Assets/UI/Bars/health_bar_left.png"
+dest_files=["res://.godot/imported/health_bar_left.png-8423b82575690b61b33466a270b4643c.ctex"]
 
 [params]
 

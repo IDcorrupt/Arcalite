@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgeeap23ik47n"
-path="res://.godot/imported/shield_Active.png-a724ef422c877b3d4ddb69185e56ed42.ctex"
+uid="uid://dd4frqxaqqr84"
+path="res://.godot/imported/health_border_decor.png-06ea1befb7308a78a78bf6b1734e9292.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Icons/Shield/shield_Active.png"
-dest_files=["res://.godot/imported/shield_Active.png-a724ef422c877b3d4ddb69185e56ed42.ctex"]
+source_file="res://Assets/UI/Bars/health_border_decor.png"
+dest_files=["res://.godot/imported/health_border_decor.png-06ea1befb7308a78a78bf6b1734e9292.ctex"]
 
 [params]
 

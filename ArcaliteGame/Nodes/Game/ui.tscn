@@ -1,23 +1,22 @@
-[gd_scene load_steps=22 format=3 uid="uid://d4mg7kpomu4je"]
+[gd_scene load_steps=25 format=3 uid="uid://d4mg7kpomu4je"]
 
 [ext_resource type="Script" uid="uid://bw81mk3jt7fwe" path="res://Scripts/Mechanics/Ui.cs" id="1_f025f"]
 [ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_gb0wl"]
-[ext_resource type="Texture2D" uid="uid://de8mwe0cmbyrt" path="res://Assets/Icons/Dash/dash_Cooldown.png" id="2_13e54"]
-[ext_resource type="Texture2D" uid="uid://cyp8gf66hrhdi" path="res://Assets/Icons/ChargeAttack/ca_Cooldown.png" id="2_qqwp7"]
-[ext_resource type="Texture2D" uid="uid://bqucfy8ub1eny" path="res://Assets/Icons/ChargeAttack/ca_Ready.png" id="3_2gkhm"]
-[ext_resource type="Texture2D" uid="uid://cy8hqhi3lph21" path="res://Assets/Icons/Dash/dash_Ready.png" id="3_2w15c"]
-[ext_resource type="Texture2D" uid="uid://oflebjcxwd6s" path="res://Assets/Icons/Necklace/necklace_Active.png" id="6_mqexw"]
-[ext_resource type="Texture2D" uid="uid://ss724n1rhqwn" path="res://Assets/Icons/Necklace/necklace_Cooldown.png" id="6_nffpf"]
-[ext_resource type="Texture2D" uid="uid://c25u34ai4e5ib" path="res://Assets/Icons/Necklace/necklace_Ready.png" id="7_8ix5p"]
-[ext_resource type="Texture2D" uid="uid://byqmmeu2l110b" path="res://Assets/Icons/Shield/shield_Cooldown.png" id="8_mqexw"]
-[ext_resource type="Texture2D" uid="uid://cgeeap23ik47n" path="res://Assets/Icons/Shield/shield_Active.png" id="9_24col"]
-[ext_resource type="Texture2D" uid="uid://lq70xbogwtpy" path="res://Assets/Icons/Shield/shield_Ready.png" id="9_gb0wl"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mqexw"]
-bg_color = Color(0.55, 0, 0.0366666, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gb0wl"]
-bg_color = Color(0, 0.367333, 0.58, 1)
+[ext_resource type="Texture2D" uid="uid://de8mwe0cmbyrt" path="res://Assets/UI/Icons/Dash/dash_Cooldown.png" id="3_mv3ti"]
+[ext_resource type="Texture2D" uid="uid://cy8hqhi3lph21" path="res://Assets/UI/Icons/Dash/dash_Ready.png" id="4_ks7op"]
+[ext_resource type="Texture2D" uid="uid://cyp8gf66hrhdi" path="res://Assets/UI/Icons/ChargeAttack/ca_Cooldown.png" id="5_numjr"]
+[ext_resource type="Texture2D" uid="uid://bqucfy8ub1eny" path="res://Assets/UI/Icons/ChargeAttack/ca_Ready.png" id="6_1cjww"]
+[ext_resource type="Texture2D" uid="uid://oflebjcxwd6s" path="res://Assets/UI/Icons/Necklace/necklace_Active.png" id="7_ffavq"]
+[ext_resource type="Texture2D" uid="uid://ss724n1rhqwn" path="res://Assets/UI/Icons/Necklace/necklace_Cooldown.png" id="8_1pvpa"]
+[ext_resource type="Texture2D" uid="uid://c25u34ai4e5ib" path="res://Assets/UI/Icons/Necklace/necklace_Ready.png" id="9_8ix2l"]
+[ext_resource type="Texture2D" uid="uid://cgeeap23ik47n" path="res://Assets/UI/Icons/Shield/shield_Active.png" id="10_ama4t"]
+[ext_resource type="Texture2D" uid="uid://byqmmeu2l110b" path="res://Assets/UI/Icons/Shield/shield_Cooldown.png" id="11_6y8v3"]
+[ext_resource type="Texture2D" uid="uid://lq70xbogwtpy" path="res://Assets/UI/Icons/Shield/shield_Ready.png" id="12_rwe5w"]
+[ext_resource type="Texture2D" uid="uid://noxh1xko13it" path="res://Assets/UI/Bars/health_border.png" id="13_mv3ti"]
+[ext_resource type="Texture2D" uid="uid://dxn5nh8g87mms" path="res://Assets/UI/Bars/health_bar_left.png" id="14_ks7op"]
+[ext_resource type="Texture2D" uid="uid://bdk5apntw5gqd" path="res://Assets/UI/Bars/health_bar_middle.png" id="15_numjr"]
+[ext_resource type="Texture2D" uid="uid://c0ou2baq2iswf" path="res://Assets/UI/Bars/health_bar_right.png" id="16_1cjww"]
+[ext_resource type="Texture2D" uid="uid://dd4frqxaqqr84" path="res://Assets/UI/Bars/health_border_decor.png" id="17_mv3ti"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ubv0j"]
 
@@ -25,7 +24,7 @@ bg_color = Color(0, 0.367333, 0.58, 1)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_13e54")
+"texture": ExtResource("3_mv3ti")
 }],
 "loop": false,
 "name": &"Cooldown",
@@ -33,7 +32,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_2w15c")
+"texture": ExtResource("4_ks7op")
 }],
 "loop": false,
 "name": &"Ready",
@@ -46,7 +45,7 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_qqwp7")
+"texture": ExtResource("5_numjr")
 }],
 "loop": false,
 "name": &"Cooldown",
@@ -54,7 +53,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_2gkhm")
+"texture": ExtResource("6_1cjww")
 }],
 "loop": false,
 "name": &"Ready",
@@ -65,7 +64,7 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_mqexw")
+"texture": ExtResource("7_ffavq")
 }],
 "loop": true,
 "name": &"necklace_Active",
@@ -73,7 +72,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_nffpf")
+"texture": ExtResource("8_1pvpa")
 }],
 "loop": true,
 "name": &"necklace_Cooldown",
@@ -81,7 +80,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_8ix5p")
+"texture": ExtResource("9_8ix2l")
 }],
 "loop": true,
 "name": &"necklace_Ready",
@@ -89,7 +88,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("9_24col")
+"texture": ExtResource("10_ama4t")
 }],
 "loop": true,
 "name": &"shield_Active",
@@ -97,7 +96,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_mqexw")
+"texture": ExtResource("11_6y8v3")
 }],
 "loop": true,
 "name": &"shield_Cooldown",
@@ -105,7 +104,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("9_gb0wl")
+"texture": ExtResource("12_rwe5w")
 }],
 "loop": true,
 "name": &"shield_Ready",
@@ -126,28 +125,11 @@ grow_vertical = 2
 theme = ExtResource("1_gb0wl")
 script = ExtResource("1_f025f")
 
-[node name="HPBar" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = 255.0
-offset_bottom = 30.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_mqexw")
-
-[node name="MPBar" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 35.0
-offset_right = 255.0
-offset_bottom = 60.0
-scale = Vector2(0.75, 0.75)
-theme_override_styles/panel = SubResource("StyleBoxFlat_gb0wl")
-
 [node name="HPNumDisplay" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 6.0
+offset_left = 260.0
 offset_top = 8.0
-offset_right = 73.0
+offset_right = 327.0
 offset_bottom = 48.0
 text = "HP: asd"
 fit_content = true
@@ -156,9 +138,9 @@ autowrap_mode = 0
 
 [node name="MPNumDisplay" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 6.0
+offset_left = 202.0
 offset_top = 36.0
-offset_right = 75.0
+offset_right = 271.0
 offset_bottom = 76.0
 text = "MP: asd"
 fit_content = true
@@ -178,7 +160,7 @@ centered = false
 
 [node name="Icon" type="AnimatedSprite2D" parent="Icons/Dash"]
 sprite_frames = SubResource("SpriteFrames_1r34d")
-animation = &"Ready"
+animation = &"Cooldown"
 
 [node name="ChargeAttack" type="Node2D" parent="Icons"]
 position = Vector2(570, 20)
@@ -191,14 +173,14 @@ centered = false
 
 [node name="Icon" type="AnimatedSprite2D" parent="Icons/ChargeAttack"]
 sprite_frames = SubResource("SpriteFrames_0dtax")
-animation = &"Ready"
+animation = &"Cooldown"
 
 [node name="SpellE" type="Node2D" parent="Icons"]
 position = Vector2(530, 20)
 
 [node name="Icon" type="AnimatedSprite2D" parent="Icons/SpellE"]
 sprite_frames = SubResource("SpriteFrames_qoyub")
-animation = &"necklace_Ready"
+animation = &"shield_Ready"
 
 [node name="CooldownBar" type="Sprite2D" parent="Icons/SpellE"]
 position = Vector2(-16, 15)
@@ -218,3 +200,66 @@ centered = false
 [node name="Icon" type="AnimatedSprite2D" parent="Icons/SpellQ"]
 sprite_frames = SubResource("SpriteFrames_qoyub")
 animation = &"shield_Ready"
+
+[node name="HPBar" type="Node2D" parent="."]
+
+[node name="Border" type="Sprite2D" parent="HPBar"]
+position = Vector2(5, 5)
+texture = ExtResource("13_mv3ti")
+centered = false
+
+[node name="LeftCorner" type="Sprite2D" parent="HPBar"]
+position = Vector2(5, 5)
+texture = ExtResource("14_ks7op")
+centered = false
+
+[node name="Middle" type="Sprite2D" parent="HPBar"]
+position = Vector2(48, 8)
+texture = ExtResource("15_numjr")
+centered = false
+offset = Vector2(-43, -3)
+
+[node name="RightCorner" type="Sprite2D" parent="HPBar"]
+position = Vector2(217, 8)
+texture = ExtResource("16_1cjww")
+centered = false
+offset = Vector2(-212, -3)
+
+[node name="BorderDecor" type="Sprite2D" parent="HPBar"]
+position = Vector2(5, 5)
+texture = ExtResource("17_mv3ti")
+centered = false
+
+[node name="MPBar" type="Node2D" parent="."]
+position = Vector2(0, 30)
+scale = Vector2(0.75, 0.75)
+
+[node name="Border" type="Sprite2D" parent="MPBar"]
+position = Vector2(5, 5)
+texture = ExtResource("13_mv3ti")
+centered = false
+
+[node name="LeftCorner" type="Sprite2D" parent="MPBar"]
+modulate = Color(0, 0.698039, 1, 1)
+position = Vector2(5, 5)
+texture = ExtResource("14_ks7op")
+centered = false
+
+[node name="Middle" type="Sprite2D" parent="MPBar"]
+modulate = Color(0, 0.7, 1, 1)
+position = Vector2(48, 8)
+texture = ExtResource("15_numjr")
+centered = false
+offset = Vector2(-43, -3)
+
+[node name="RightCorner" type="Sprite2D" parent="MPBar"]
+modulate = Color(0, 0.698039, 1, 1)
+position = Vector2(217, 8)
+texture = ExtResource("16_1cjww")
+centered = false
+offset = Vector2(-212, -3)
+
+[node name="BorderDecor" type="Sprite2D" parent="MPBar"]
+position = Vector2(5, 5)
+texture = ExtResource("17_mv3ti")
+centered = false

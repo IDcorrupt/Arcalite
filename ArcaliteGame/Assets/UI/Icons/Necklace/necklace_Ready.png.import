@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://de8mwe0cmbyrt"
-path="res://.godot/imported/dash_Cooldown.png-84d11b5dafb0f99881f64bd5e8afdf68.ctex"
+uid="uid://c25u34ai4e5ib"
+path="res://.godot/imported/necklace_Ready.png-316a9d3754b720a1fd062eebaab201ea.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Icons/Dash/dash_Cooldown.png"
-dest_files=["res://.godot/imported/dash_Cooldown.png-84d11b5dafb0f99881f64bd5e8afdf68.ctex"]
+source_file="res://Assets/UI/Icons/Necklace/necklace_Ready.png"
+dest_files=["res://.godot/imported/necklace_Ready.png-316a9d3754b720a1fd062eebaab201ea.ctex"]
 
 [params]
 

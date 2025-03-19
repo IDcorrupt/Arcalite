@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://rra3jq10ihxr"]
+[gd_scene load_steps=36 format=3 uid="uid://rra3jq10ihxr"]
 
 [ext_resource type="Script" uid="uid://br6vjgmcnetjm" path="res://Scripts/Mechanics/Checkpoint.cs" id="1_lhg5q"]
 [ext_resource type="Texture2D" uid="uid://b2evnikiat5gu" path="res://Assets/Placeholder assets/500 Bullet 24x24 Free/Bullet 24x24 Free Part 4B.png" id="2_h40ay"]
@@ -200,6 +200,34 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="Image" id="Image_h40ay"]
+data = {
+"data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255),
+"format": "RGBA8",
+"height": 5,
+"mipmaps": false,
+"width": 5
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_271on"]
+image = SubResource("Image_h40ay")
+
+[sub_resource type="Gradient" id="Gradient_h0tbo"]
+colors = PackedColorArray(0.0166667, 1, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_i4cvh"]
+gradient = SubResource("Gradient_h0tbo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_673b8"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(50, 50, 0)
+spread = 0.0
+gravity = Vector3(0, -4, 0)
+scale_min = 0.5
+scale_max = 0.5
+color_ramp = SubResource("GradientTexture1D_i4cvh")
+
 [node name="Checkpoint" type="Node2D"]
 script = ExtResource("1_lhg5q")
 
@@ -214,6 +242,12 @@ sprite_frames = SubResource("SpriteFrames_co8ip")
 animation = &"idle"
 frame = 3
 frame_progress = 0.696011
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 30
+texture = SubResource("ImageTexture_271on")
+lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_673b8")
 
 [connection signal="body_entered" from="TriggerArea" to="." method="TriggerAreaBodyEntered"]
 [connection signal="body_exited" from="TriggerArea" to="." method="TriggerAreaBodyExited"]
