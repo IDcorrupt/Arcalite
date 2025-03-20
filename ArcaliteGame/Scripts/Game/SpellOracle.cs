@@ -10,16 +10,16 @@ public partial class SpellOracle : Node2D
     [Export] public float slowFactor;
 
     private bool slowing = false;
-    private float slowDuration = 10;
     private List<Node> affectedEntities = new List<Node>();
 
-
+    Timer durationTimer;
     AnimatedSprite2D sprite;
     Area2D area;
     public override void _Ready()
     {
         sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         area = GetNode<Area2D>("Area2D");
+        durationTimer = GetNode("Duration") as Timer;
         sprite.Play("cast");   
     }
 
@@ -27,85 +27,83 @@ public partial class SpellOracle : Node2D
     {
         if(sprite.Animation == "cast")
         {
-            sprite.Position = new Vector2(2.245f, 1.275f);
-            sprite.Scale = new Vector2(1.775f, 1.775f);
-            sprite.Play("sustained_start");
+            sprite.Play("loop");
             slowing = true;
             switch (level)
             {
                 case 1:
-                    slowDuration = 10;
+                    durationTimer.WaitTime = 5;
                     break;
                 case 2:
-                    slowDuration = 20;
+                    durationTimer.WaitTime = 10;
                     break;
                 case 3:
-                    slowDuration = 30;
+                    durationTimer.WaitTime = 15;
                     break;
                 case 4:
-                    slowDuration = 40;
+                    durationTimer.WaitTime = 20;
                     break;
                 default:
                     break;
             }
-
+            durationTimer.Start();
         }
-        else if(sprite.Animation == "sustained_start")
+        
+        else if(sprite.Animation == "end")
         {
-            sprite.Play("sustained_middle");
-        }
-        else if(sprite.Animation == "sustained_end")
-        {
-            QueueFree();
+            TreeExit();
         }
     }
-    public void OnAnimationLooped()
+
+    public void OnDurationTimeout()
     {
-        if (slowing)
-        {
-            slowDuration -= 1;
-        }
+        slowing = false;
+        sprite.Play("end");
     }
-
     public void OnBodyEntered(Node2D body)
     {
-        GD.PrintErr(body.Name+" entered");
-        if(body is Enemy enemy)
+        if (body is Enemy enemy)
             affectedEntities.Add(enemy);
         else if(body is CasterProjectile proj)
             affectedEntities.Add(proj);
     }
     public void OnBodyExited(Node2D body)
     {
-        GD.PrintErr(body.Name+" exited");
         if (body is Enemy enemy)
+        {
+            enemy.isSlowed = false;
+            enemy.slowFactor = 1;
             GD.Print("enemy removed? " + affectedEntities.Remove((Enemy)enemy));
+        }
         else if (body is CasterProjectile proj)
+        {
+            proj.isSlowed = false;
+            proj.slowFactor = 1;
             GD.Print("projectile removed? " + affectedEntities.Remove((CasterProjectile)proj));
+        }
     }
 
-    public void OnTreeExit()
+    private void TreeExit()
     {
         foreach (Node obj in affectedEntities)
         {
-            if (obj is Enemy enemy) 
+            if (obj is Enemy enemy)
+            {
                 enemy.isSlowed = false;
-            else if(obj is CasterProjectile castproj)
+                enemy.slowFactor = 1;
+            }
+            else if (obj is CasterProjectile castproj)
+            {
                 castproj.isSlowed = false;
+                castproj.slowFactor = 1;
+            }
         }
+        QueueFree();
     }
     public override void _Process(double delta)
     {
+        if(Globals.player.GetIsDead()) OnDurationTimeout();
         GlobalPosition = targetPosition;
-        foreach (Node obj in affectedEntities)
-            GD.Print(obj.Name);
-
-
-        if (slowDuration == 0)
-        {
-            slowing = false;
-            sprite.Play("sustained_end");
-        }
         if (slowing)
         {
             switch (level)

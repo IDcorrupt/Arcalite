@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://dbay08psod1qd"]
+[gd_scene load_steps=9 format=3 uid="uid://dbay08psod1qd"]
 
-[ext_resource type="Script" path="res://Scripts/Mechanics/CameraController.cs" id="1_bkkum"]
+[ext_resource type="Script" uid="uid://c6qtds30nkfwb" path="res://Scripts/Mechanics/CameraController.cs" id="1_bkkum"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fjovn"]
 size = Vector2(1360, 20)
@@ -8,23 +8,17 @@ size = Vector2(1360, 20)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nkfhg"]
 size = Vector2(20, 760)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qlh17"]
-size = Vector2(10, 360)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_msxgn"]
-size = Vector2(640, 10)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a060w"]
-size = Vector2(1920, 15)
+size = Vector2(1920, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6s2h8"]
-size = Vector2(640, 15)
+size = Vector2(640, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_66mbn"]
-size = Vector2(15, 1080)
+size = Vector2(10, 1080)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7x231"]
-size = Vector2(15, 360)
+size = Vector2(10, 360)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_djvr2"]
 radius = 2.0
@@ -56,45 +50,6 @@ texture = SubResource("PlaceholderTexture2D_fjovn")
 modulate = Color(0.926886, 0, 0.203749, 0.505882)
 position = Vector2(320, 180)
 texture = SubResource("PlaceholderTexture2D_nkfhg")
-
-[node name="CamTriggers" type="Node2D" parent="Camera"]
-position = Vector2(-320, -180)
-
-[node name="LeftTrigger" type="Area2D" parent="Camera/CamTriggers"]
-process_mode = 4
-visible = false
-position = Vector2(0, 180)
-collision_layer = 64
-
-[node name="Collision" type="CollisionShape2D" parent="Camera/CamTriggers/LeftTrigger"]
-shape = SubResource("RectangleShape2D_qlh17")
-
-[node name="RightTrigger" type="Area2D" parent="Camera/CamTriggers"]
-process_mode = 4
-visible = false
-position = Vector2(640, 180)
-collision_layer = 64
-
-[node name="Collision" type="CollisionShape2D" parent="Camera/CamTriggers/RightTrigger"]
-shape = SubResource("RectangleShape2D_qlh17")
-
-[node name="TopTrigger" type="Area2D" parent="Camera/CamTriggers"]
-process_mode = 4
-visible = false
-position = Vector2(320, 0)
-collision_layer = 64
-
-[node name="Collision" type="CollisionShape2D" parent="Camera/CamTriggers/TopTrigger"]
-shape = SubResource("RectangleShape2D_msxgn")
-
-[node name="BotTrigger" type="Area2D" parent="Camera/CamTriggers"]
-process_mode = 4
-visible = false
-position = Vector2(320, 360)
-collision_layer = 64
-
-[node name="Collision" type="CollisionShape2D" parent="Camera/CamTriggers/BotTrigger"]
-shape = SubResource("RectangleShape2D_msxgn")
 
 [node name="edgeCollisions" type="StaticBody2D" parent="Camera"]
 collision_layer = 128
@@ -151,12 +106,4 @@ shape = SubResource("CircleShape2D_djvr2")
 wait_time = 0.2
 one_shot = true
 
-[connection signal="body_entered" from="Camera/CamTriggers/LeftTrigger" to="." method="LeftTriggerEntered"]
-[connection signal="body_exited" from="Camera/CamTriggers/LeftTrigger" to="." method="LeftTriggerExited"]
-[connection signal="body_entered" from="Camera/CamTriggers/RightTrigger" to="." method="RightTriggerEntered"]
-[connection signal="body_exited" from="Camera/CamTriggers/RightTrigger" to="." method="RightTriggerExited"]
-[connection signal="body_entered" from="Camera/CamTriggers/TopTrigger" to="." method="TopTriggerEntered"]
-[connection signal="body_exited" from="Camera/CamTriggers/TopTrigger" to="." method="TopTriggerExited"]
-[connection signal="body_entered" from="Camera/CamTriggers/BotTrigger" to="." method="BotTriggerEntered"]
-[connection signal="body_exited" from="Camera/CamTriggers/BotTrigger" to="." method="BotTriggerExited"]
 [connection signal="timeout" from="CooldownTimer" to="." method="CooldownTimerTimeout"]

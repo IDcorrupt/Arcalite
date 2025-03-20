@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d3thwbk86iidg"]
 
-[ext_resource type="Script" path="res://Scripts/Menus/HotkeyRebindButton.cs" id="1_dyan1"]
+[ext_resource type="Script" uid="uid://0wk1fhguntta" path="res://Scripts/Menus/HotkeyRebindButton.cs" id="1_dyan1"]
 
 [node name="hotkeyRebindButton" type="Control" groups=["hotkeyButton"]]
 custom_minimum_size = Vector2(0, 34)

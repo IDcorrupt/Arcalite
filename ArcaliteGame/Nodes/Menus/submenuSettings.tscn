@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cq6v83jpmn4qv"]
 
-[ext_resource type="Script" path="res://Scripts/Menus/SubmenuSettings.cs" id="1_dt0n4"]
+[ext_resource type="Script" uid="uid://c2cdwjh4y3kim" path="res://Scripts/Menus/SubmenuSettings.cs" id="1_dt0n4"]
 [ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_ikgue"]
 [ext_resource type="PackedScene" uid="uid://d3thwbk86iidg" path="res://Nodes/Menus/hotkeyRebindButton.tscn" id="3_jecdu"]
 
@@ -154,6 +154,7 @@ alignment = 1
 fit_to_longest_item = false
 item_count = 3
 popup/item_0/text = "Windowed"
+popup/item_0/id = 0
 popup/item_1/text = "Borderless"
 popup/item_1/id = 1
 popup/item_2/text = "Exclusive"
@@ -183,6 +184,7 @@ alignment = 1
 fit_to_longest_item = false
 item_count = 5
 popup/item_0/text = "3840 x 2160"
+popup/item_0/id = 0
 popup/item_1/text = "2560 x 1440"
 popup/item_1/id = 1
 popup/item_2/text = "1920 x 1080"

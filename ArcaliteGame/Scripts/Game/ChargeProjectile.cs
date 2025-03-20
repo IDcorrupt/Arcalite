@@ -34,13 +34,7 @@ public partial class ChargeProjectile : CharacterBody2D
     public void HitEnemy(Enemy enemy)
     {
         //damage stuff
-        int dir = 0;
-        if ((enemy.GlobalPosition - GlobalPosition).Normalized().X > 0)
-            dir = 1;
-        else if ((enemy.GlobalPosition - GlobalPosition).Normalized().X < 0)
-            dir = -1;
-        Vector2 hitVector = new Vector2(dir * 200, 0);
-        enemy.Hit(damagePayload, hitVector);
+        enemy.Hit(damagePayload, this);
 
         //animation
         animatedSprite.Position = new Vector2(0, 0);
@@ -62,19 +56,19 @@ public partial class ChargeProjectile : CharacterBody2D
             {
                 case 1:
                     Scale = new Vector2(1, 1);
-                    damagePayload *= 1;
+                    damagePayload *= 2;
                     break;
                 case 2:
                     Scale = new Vector2((float)1.3, (float)1.3);
-                    damagePayload *= 1.3f;
+                    damagePayload *= 4f;
                     break;
                 case 3:
                     Scale = new Vector2((float)1.6, (float)1.6);
-                    damagePayload *= 1.6f;
+                    damagePayload *= 6f;
                     break;
                 case 4: 
                     Scale = new Vector2(2, 2);
-                    damagePayload *= 2;
+                    damagePayload *= 8;
                     break;
                 default:
                     break;
@@ -87,7 +81,7 @@ public partial class ChargeProjectile : CharacterBody2D
 
             var collision = MoveAndCollide(vel);
 
-            if (collision != null && collision.GetCollider() is StaticBody2D)
+            if (collision != null && (collision.GetCollider() is StaticBody2D || collision.GetCollider() is TileMapLayer))
             {
                 targetHit = true;
                 Vector2 collisionNormal = collision.GetNormal();
