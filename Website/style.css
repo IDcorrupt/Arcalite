@@ -189,7 +189,11 @@ p{
 
 .fa-lg{
     vertical-align: 0 !important;
-    /* color: rgb(67, 66, 66); */
+    color: rgb(67, 66, 66);
+}
+
+.fa-non-button{
+    color: rgb(164, 162, 162);
 }
 
 main{
