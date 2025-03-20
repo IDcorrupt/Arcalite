@@ -1,13 +1,12 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 11. 09:30
--- Kiszolgáló verziója: 10.4.32-MariaDB
--- PHP verzió: 8.0.30
+-- Létrehozás ideje: 2025. Már 20. 02:58
+-- Kiszolgáló verziója: 10.4.27-MariaDB
+-- PHP verzió: 8.2.0
 
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -322,6 +321,7 @@ CREATE TABLE `player` (
   `id` int(11) NOT NULL,
   `name` varchar(64) DEFAULT NULL,
   `hp` int(11) DEFAULT NULL,
+  `mp` int(11) DEFAULT NULL,
   `profileid` int(11) DEFAULT NULL,
   `avatarid` int(11) DEFAULT NULL,
   `levelid` int(11) DEFAULT NULL,
@@ -332,11 +332,11 @@ CREATE TABLE `player` (
 -- A tábla adatainak kiíratása `player`
 --
 
-REPLACE INTO `player` (`id`, `name`, `hp`, `profileid`, `avatarid`, `levelid`, `playtime`) VALUES
-(1, 'Haró', 100, 1, 1, 1, '00:00:00'),
-(2, 'Harcos', 94, 3, 1, 1, '00:00:00'),
-(3, 'Toldi Miklós', 100, 3, 2, 1, '01:33:00'),
-(4, 'Ferg', 126, 3, 3, 3, '03:46:00');
+REPLACE INTO `player` (`id`, `name`, `hp`, `mp`, `profileid`, `avatarid`, `levelid`, `playtime`) VALUES
+(1, 'Haró', 100, 0, 1, 1, 1, '00:00:00'),
+(2, 'Harcos', 94, 0, 3, 1, 1, '00:00:00'),
+(3, 'Toldi Miklós', 100, 0, 3, 2, 1, '01:33:00'),
+(4, 'Ferg', 126, 0, 3, 3, 3, '03:46:00');
 
 -- --------------------------------------------------------
 
@@ -383,6 +383,19 @@ REPLACE INTO `profile` (`id`, `username`, `password`, `played`, `email`, `delete
 (3, 'Laci', '*A7395F5F1F5F50654D965778F1FA7C6702350C97', '05:19:00', 'zeczi.laszlo@gmail.com', NULL),
 (4, 'zoli', '*F2DE9CCD4C692570BBEB3218207B889F3204635C', '01:22:00', 'zoli@gmail.com', NULL),
 (5, 'leheldani', '*C2B970DB815A941E8CA127C0CF4C83BDC82DA9B6', '00:24:00', 'ramszi@gmail.com', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `saves`
+--
+
+DROP TABLE IF EXISTS `saves`;
+CREATE TABLE `saves` (
+  `playerid` int(11) NOT NULL,
+  `time` datetime NOT NULL,
+  `save` longblob DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Indexek a kiírt táblákhoz
@@ -494,6 +507,12 @@ ALTER TABLE `proach`
 --
 ALTER TABLE `profile`
   ADD PRIMARY KEY (`id`);
+
+--
+-- A tábla indexei `saves`
+--
+ALTER TABLE `saves`
+  ADD PRIMARY KEY (`playerid`,`time`);
 
 --
 -- A kiírt táblák AUTO_INCREMENT értéke
@@ -614,7 +633,12 @@ ALTER TABLE `player`
 ALTER TABLE `proach`
   ADD CONSTRAINT `fk_proach_achievement` FOREIGN KEY (`achievementid`) REFERENCES `achievement` (`id`),
   ADD CONSTRAINT `fk_proach_profile` FOREIGN KEY (`profileid`) REFERENCES `profile` (`id`);
-SET FOREIGN_KEY_CHECKS=1;
+
+--
+-- Megkötések a táblához `saves`
+--
+ALTER TABLE `saves`
+  ADD CONSTRAINT `fk_saves_player` FOREIGN KEY (`playerid`) REFERENCES `player` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

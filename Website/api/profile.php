@@ -7,7 +7,7 @@ checkValidity("GET", "userid", "langid");
 $userid = $_GET["userid"];
 $langid = $_GET["langid"];
 
-$sql = "SELECT player.id AS id, player.name AS name, player.hp AS hp, player.levelid AS level, player.playtime AS playtime, avatar.image AS image
+$sql = "SELECT player.id AS id, player.name AS name, player.hp AS hp, player.mp AS mp, player.levelid AS level, player.playtime AS playtime, avatar.image AS image
         FROM 
             player 
             INNER JOIN profile ON player.profileid = profile.id
