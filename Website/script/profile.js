@@ -190,6 +190,7 @@ function FillTabs(data) {
             </div>
             <div class="profile-details">
                 <p>Életpont: ${data[i].hp}</p>
+                <p>Manapont: ${data[i].mp}</p>
             </div>
             <div class="profile-details">
                 <p>Játszott idő: ${data[i].playtime}</p>
