@@ -30,7 +30,7 @@ public partial class SaveLoadHandler : Node
         file.StoreString(String.Join("; ", equippedItems));
         file.Close();
 
-        //TODO: Ide valahol majd el kell tárolni a jelenlegi playerid-t, és az elsõ argumentumnak megadni.
+        //TODO: Ide valahol majd el kell tarolni a jelenlegi playerid-t, es az elso argumentumnak megadni.
         //DBConnector.UploadSave(, savepath);
     }
 
