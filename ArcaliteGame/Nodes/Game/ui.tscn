@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://d4mg7kpomu4je"]
+[gd_scene load_steps=28 format=3 uid="uid://d4mg7kpomu4je"]
 
 [ext_resource type="Script" uid="uid://bw81mk3jt7fwe" path="res://Scripts/Mechanics/Ui.cs" id="1_f025f"]
 [ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_gb0wl"]
@@ -13,10 +13,11 @@
 [ext_resource type="Texture2D" uid="uid://byqmmeu2l110b" path="res://Assets/UI/Icons/Shield/shield_Cooldown.png" id="11_6y8v3"]
 [ext_resource type="Texture2D" uid="uid://lq70xbogwtpy" path="res://Assets/UI/Icons/Shield/shield_Ready.png" id="12_rwe5w"]
 [ext_resource type="Texture2D" uid="uid://noxh1xko13it" path="res://Assets/UI/Bars/health_border.png" id="13_mv3ti"]
-[ext_resource type="Texture2D" uid="uid://dxn5nh8g87mms" path="res://Assets/UI/Bars/health_bar_left.png" id="14_ks7op"]
-[ext_resource type="Texture2D" uid="uid://bdk5apntw5gqd" path="res://Assets/UI/Bars/health_bar_middle.png" id="15_numjr"]
-[ext_resource type="Texture2D" uid="uid://c0ou2baq2iswf" path="res://Assets/UI/Bars/health_bar_right.png" id="16_1cjww"]
+[ext_resource type="Texture2D" uid="uid://brrpy2xca714l" path="res://Assets/UI/Bars/health_bar.png" id="14_ks7op"]
+[ext_resource type="Texture2D" uid="uid://dyj08fvu188jb" path="res://Assets/UI/Bars/mana_border.png" id="16_numjr"]
+[ext_resource type="Texture2D" uid="uid://gnjx42iqts73" path="res://Assets/UI/Bars/mana_bar.png" id="17_1cjww"]
 [ext_resource type="Texture2D" uid="uid://dd4frqxaqqr84" path="res://Assets/UI/Bars/health_border_decor.png" id="17_mv3ti"]
+[ext_resource type="Texture2D" uid="uid://cnsfs6ptrjnor" path="res://Assets/UI/Bars/mana_border_decor.png" id="18_ffavq"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ubv0j"]
 
@@ -115,6 +116,12 @@ animations = [{
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_j1f8t"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1pvpa"]
+size = Vector2(200, 20)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8ix2l"]
+size = Vector2(200, 20)
+
 [node name="UI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -124,28 +131,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_gb0wl")
 script = ExtResource("1_f025f")
-
-[node name="HPNumDisplay" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 260.0
-offset_top = 8.0
-offset_right = 327.0
-offset_bottom = 48.0
-text = "HP: asd"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-
-[node name="MPNumDisplay" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 202.0
-offset_top = 36.0
-offset_right = 271.0
-offset_bottom = 76.0
-text = "MP: asd"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
 
 [node name="Icons" type="Node2D" parent="."]
 
@@ -160,7 +145,7 @@ centered = false
 
 [node name="Icon" type="AnimatedSprite2D" parent="Icons/Dash"]
 sprite_frames = SubResource("SpriteFrames_1r34d")
-animation = &"Cooldown"
+animation = &"Ready"
 
 [node name="ChargeAttack" type="Node2D" parent="Icons"]
 position = Vector2(570, 20)
@@ -173,7 +158,7 @@ centered = false
 
 [node name="Icon" type="AnimatedSprite2D" parent="Icons/ChargeAttack"]
 sprite_frames = SubResource("SpriteFrames_0dtax")
-animation = &"Cooldown"
+animation = &"Ready"
 
 [node name="SpellE" type="Node2D" parent="Icons"]
 position = Vector2(530, 20)
@@ -208,22 +193,16 @@ position = Vector2(5, 5)
 texture = ExtResource("13_mv3ti")
 centered = false
 
-[node name="LeftCorner" type="Sprite2D" parent="HPBar"]
-position = Vector2(5, 5)
+[node name="HPBarMask" type="Sprite2D" parent="HPBar"]
+clip_children = 1
+position = Vector2(32, 7)
+texture = SubResource("PlaceholderTexture2D_1pvpa")
+centered = false
+
+[node name="Bar" type="Sprite2D" parent="HPBar/HPBarMask"]
+position = Vector2(-27, -2)
 texture = ExtResource("14_ks7op")
 centered = false
-
-[node name="Middle" type="Sprite2D" parent="HPBar"]
-position = Vector2(48, 8)
-texture = ExtResource("15_numjr")
-centered = false
-offset = Vector2(-43, -3)
-
-[node name="RightCorner" type="Sprite2D" parent="HPBar"]
-position = Vector2(217, 8)
-texture = ExtResource("16_1cjww")
-centered = false
-offset = Vector2(-212, -3)
 
 [node name="BorderDecor" type="Sprite2D" parent="HPBar"]
 position = Vector2(5, 5)
@@ -236,30 +215,21 @@ scale = Vector2(0.75, 0.75)
 
 [node name="Border" type="Sprite2D" parent="MPBar"]
 position = Vector2(5, 5)
-texture = ExtResource("13_mv3ti")
+texture = ExtResource("16_numjr")
 centered = false
 
-[node name="LeftCorner" type="Sprite2D" parent="MPBar"]
-modulate = Color(0, 0.698039, 1, 1)
-position = Vector2(5, 5)
-texture = ExtResource("14_ks7op")
+[node name="MPBarMask" type="Sprite2D" parent="MPBar"]
+clip_children = 1
+position = Vector2(32, 6.66667)
+texture = SubResource("PlaceholderTexture2D_8ix2l")
 centered = false
 
-[node name="Middle" type="Sprite2D" parent="MPBar"]
-modulate = Color(0, 0.7, 1, 1)
-position = Vector2(48, 8)
-texture = ExtResource("15_numjr")
+[node name="Bar" type="Sprite2D" parent="MPBar/MPBarMask"]
+position = Vector2(-27, -2)
+texture = ExtResource("17_1cjww")
 centered = false
-offset = Vector2(-43, -3)
-
-[node name="RightCorner" type="Sprite2D" parent="MPBar"]
-modulate = Color(0, 0.698039, 1, 1)
-position = Vector2(217, 8)
-texture = ExtResource("16_1cjww")
-centered = false
-offset = Vector2(-212, -3)
 
 [node name="BorderDecor" type="Sprite2D" parent="MPBar"]
 position = Vector2(5, 5)
-texture = ExtResource("17_mv3ti")
+texture = ExtResource("18_ffavq")
 centered = false

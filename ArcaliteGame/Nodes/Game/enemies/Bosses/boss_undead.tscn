@@ -533,7 +533,6 @@ animation = &"idle"
 position = Vector2(0, 19)
 
 [node name="Left" type="AnimatedSprite2D" parent="SpecAttackAnim"]
-visible = false
 position = Vector2(-45, 0)
 rotation = 1.5708
 scale = Vector2(0.5, 1.5)
@@ -541,13 +540,11 @@ sprite_frames = SubResource("SpriteFrames_mnv83")
 animation = &"attack"
 
 [node name="Right" type="AnimatedSprite2D" parent="SpecAttackAnim"]
-visible = false
 position = Vector2(45, 0)
 rotation = -1.5708
 scale = Vector2(0.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_mnv83")
 animation = &"attack"
-frame = 7
 flip_h = true
 
 [node name="DirectionTimer" type="Timer" parent="."]

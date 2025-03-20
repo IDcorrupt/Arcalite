@@ -1,9 +1,10 @@
-[gd_scene load_steps=36 format=3 uid="uid://rra3jq10ihxr"]
+[gd_scene load_steps=35 format=3 uid="uid://rra3jq10ihxr"]
 
 [ext_resource type="Script" uid="uid://br6vjgmcnetjm" path="res://Scripts/Mechanics/Checkpoint.cs" id="1_lhg5q"]
 [ext_resource type="Texture2D" uid="uid://b2evnikiat5gu" path="res://Assets/Placeholder assets/500 Bullet 24x24 Free/Bullet 24x24 Free Part 4B.png" id="2_h40ay"]
 [ext_resource type="Texture2D" uid="uid://bbko2bq46g3hk" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 14/652.png" id="3_271on"]
 [ext_resource type="Texture2D" uid="uid://cmv8crqt0wbob" path="res://Assets/empty.png" id="4_h0tbo"]
+[ext_resource type="Texture2D" uid="uid://dfc0jehc53iw5" path="res://Assets/Sprites/Particles/particle2.png" id="5_271on"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_271on"]
 size = Vector2(100, 100)
@@ -200,18 +201,6 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="Image" id="Image_h40ay"]
-data = {
-"data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255),
-"format": "RGBA8",
-"height": 5,
-"mipmaps": false,
-"width": 5
-}
-
-[sub_resource type="ImageTexture" id="ImageTexture_271on"]
-image = SubResource("Image_h40ay")
-
 [sub_resource type="Gradient" id="Gradient_h0tbo"]
 colors = PackedColorArray(0.0166667, 1, 0, 1, 1, 1, 1, 0)
 
@@ -223,15 +212,14 @@ particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(50, 50, 0)
 spread = 0.0
-gravity = Vector3(0, -4, 0)
-scale_min = 0.5
-scale_max = 0.5
+gravity = Vector3(0, -6, 0)
 color_ramp = SubResource("GradientTexture1D_i4cvh")
 
 [node name="Checkpoint" type="Node2D"]
 script = ExtResource("1_lhg5q")
 
 [node name="TriggerArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 2048
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
@@ -239,14 +227,16 @@ shape = SubResource("RectangleShape2D_271on")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_co8ip")
-animation = &"idle"
-frame = 3
-frame_progress = 0.696011
+animation = &"triggered"
+frame = 16
+frame_progress = 1.0
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
 amount = 30
-texture = SubResource("ImageTexture_271on")
+texture = ExtResource("5_271on")
 lifetime = 2.0
+fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_673b8")
 
 [connection signal="body_entered" from="TriggerArea" to="." method="TriggerAreaBodyEntered"]

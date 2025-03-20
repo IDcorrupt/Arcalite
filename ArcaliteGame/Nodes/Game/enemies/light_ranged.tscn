@@ -242,7 +242,7 @@ script = ExtResource("1_qxpks")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(-3, -3)
 sprite_frames = SubResource("SpriteFrames_h8iru")
-animation = &"attack"
+animation = &"idle"
 
 [node name="DirectionTimer" type="Timer" parent="."]
 one_shot = true

@@ -315,7 +315,7 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="Image" id="Image_yis2i"]
+[sub_resource type="Image" id="Image_krt1g"]
 data = {
 "data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255),
 "format": "RGBA8",
@@ -325,7 +325,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_l30sx"]
-image = SubResource("Image_yis2i")
+image = SubResource("Image_krt1g")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j4qxm"]
 spread = 180.0

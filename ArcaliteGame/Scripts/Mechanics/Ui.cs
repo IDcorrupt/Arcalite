@@ -6,14 +6,8 @@ public partial class Ui : Control
 {
     //components
     //HP & MP
-    RichTextLabel HPnum;
-    RichTextLabel MPnum;
     Sprite2D HPBar;
-    Sprite2D HPBarCorner;
     Sprite2D MPBar;
-    Sprite2D MPBarCorner;
-    float HPBarLength;
-    float MPBarLength;
 
     AnimatedSprite2D dashIcon;
     Sprite2D dashCooldownBar;
@@ -31,12 +25,8 @@ public partial class Ui : Control
     Player player;
     public override void _Ready()
     {
-        HPnum = GetNode("HPNumDisplay") as RichTextLabel;
-        MPnum = GetNode("MPNumDisplay") as RichTextLabel;
-        HPBar = GetNode("HPBar/Middle") as Sprite2D;
-        HPBarCorner = GetNode("HPBar/RightCorner") as Sprite2D;
-        MPBar = GetNode("MPBar/Middle") as Sprite2D;
-        MPBarCorner = GetNode("MPBar/RightCorner") as Sprite2D;
+        HPBar = GetNode("HPBar/HPBarMask") as Sprite2D;
+        MPBar = GetNode("MPBar/MPBarMask") as Sprite2D;
 
 
         //cooldown components
@@ -53,8 +43,6 @@ public partial class Ui : Control
         dashCooldownBar.Hide();
         SpellECooldownBar.Hide();
         SpellQCooldownBar.Hide();
-        HPBarLength = 250;
-        MPBarLength = 250;
     }
 
     private void Player_Dashed(float cooldown)
@@ -179,18 +167,12 @@ public partial class Ui : Control
 
     private void UpdateStatBars()
     {
-        float currentHP = Mathf.Round(Globals.player.GetCurrentHP());
-        float currentMP = Mathf.Round(Globals.player.GetCurrentMP());
-        float HPRatio = currentHP / Globals.player.GetMaxHP();
-        float MPRatio = currentMP / Globals.player.GetMaxMP();
-        HPnum.Text = "HP: " + currentHP;
-        MPnum.Text = "MP: " + currentMP;
-        GD.Print("mp ratio: " + MPRatio);
-        GD.Print("mpbar scale X: " + MPBar.Scale.X);
-        HPBar.Scale = new Vector2(HPRatio, HPBar.Scale.Y);
-        HPBarCorner.Position = new Vector2(HPBar.Position.X + 169 * HPRatio, HPBarCorner.Position.Y);
-        MPBar.Scale = new Vector2(MPRatio, MPBar.Scale.Y);
-        MPBarCorner.Position = new Vector2(MPBar.Position.X + 169 * MPRatio, MPBarCorner.Position.Y);
+        float HPRatio = Mathf.Round(Globals.player.GetCurrentHP()) / Globals.player.GetMaxHP();
+        float MPRatio = Mathf.Round(Globals.player.GetCurrentMP()) / Globals.player.GetMaxMP();
+        if (HPBar.Texture is PlaceholderTexture2D HPtexture)
+            HPtexture.Size = new Vector2(HPRatio * 200, HPtexture.Size.Y);
+        if(MPBar.Texture is PlaceholderTexture2D MPtexture)
+            MPtexture.Size = new Vector2(MPRatio * 200, MPtexture.Size.Y);
     }
 
     public override void _Process(double delta)

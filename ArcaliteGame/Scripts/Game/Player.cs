@@ -582,16 +582,8 @@ public partial class Player : CharacterBody2D
             currentMP = (float)Convert.ToDecimal(Globals.currentSave[6]);
             damage = (float)Convert.ToDecimal(Globals.currentSave[7]);
 
-            //cooldowns
-            string[] cooldownstrings = Globals.currentSave[8].Split(";");
-            dashCooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[0]);
-            CACooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[1]);
-            SOCooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[2]);
-            SECooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[3]);
-            SQCooldown.WaitTime = (float)Convert.ToDecimal(cooldownstrings[4]);
-
             //items
-            string[] items = Globals.currentSave[9].Split(";");
+            string[] items = Globals.currentSave[8].Split(";");
             spellItemE = (Enums.itemType)Convert.ToInt32(items[0]);
             spellItemQ = (Enums.itemType)Convert.ToInt32(items[1]);
         }
@@ -606,13 +598,15 @@ public partial class Player : CharacterBody2D
             damage = 5;
             oracleLevel = 2;
 
-            //cooldowns
-            dashCooldown.WaitTime = 2f;
-            CACooldown.WaitTime = 5f;
-            SOCooldown.WaitTime = 10f;
-            SECooldown.WaitTime = 10f;
-            SQCooldown.WaitTime = 10f;
         }
+
+        //cooldowns
+        dashCooldown.WaitTime = 2f;
+        CACooldown.WaitTime = 5f;
+        SOCooldown.WaitTime = 20f;
+        SECooldown.WaitTime = 10f;
+        SQCooldown.WaitTime = 10f;
+
         //reset state
         vel = 0;
         prevDir = 0;
@@ -762,16 +756,6 @@ public partial class Player : CharacterBody2D
     public float GetCurrentHP() { return currentHP; }
     public float GetCurrentMP() { return currentMP; }
     public float GetAttackDamage() { return damage; }
-    public List<float> GetCooldowns()
-    {
-        List<float> cooldowns = new List<float>();
-        cooldowns.Add((float)dashCooldown.WaitTime);
-        cooldowns.Add((float)CACooldown.WaitTime);
-        cooldowns.Add((float)SOCooldown.WaitTime);
-        cooldowns.Add((float)SECooldown.WaitTime);
-        cooldowns.Add((float)SQCooldown.WaitTime);
-        return cooldowns;
-    }
     public List<int> GetEquips()
     {
         List<int> equips = new List<int>();

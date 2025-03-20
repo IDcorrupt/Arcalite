@@ -218,7 +218,7 @@ metadata/Type = "Enemy"
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3p25d")
-animation = &"attack"
+animation = &"walk"
 
 [node name="DirectionTimer" type="Timer" parent="."]
 one_shot = true

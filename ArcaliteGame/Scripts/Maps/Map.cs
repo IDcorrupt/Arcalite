@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 public partial class Map : Node2D
@@ -10,7 +11,6 @@ public partial class Map : Node2D
     GameScene parent;
     Player player;
     GpuParticles2D rain;
-
     CameraController camera;
 
     Node2D checkpointContainer;
@@ -53,7 +53,7 @@ public partial class Map : Node2D
 
         //fx
         rain = GetNode("FX/Rain") as GpuParticles2D;
-        rain.Emitting = true;
+        rain.Emitting = false;
 
         //player
         player = playerScene.Instantiate() as Player;

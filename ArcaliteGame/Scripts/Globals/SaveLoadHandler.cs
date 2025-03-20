@@ -7,7 +7,7 @@ public partial class SaveLoadHandler : Node
     static string savepath = "user://savefile.txt";
 
 
-    public static void Save(List<bool> roomsCleared, float MaxHP, float MaxMP, float currentHP, float currentMP, float attackDamage, List<float> cooldowns, List<int> equippedItems)
+    public static void Save(List<bool> roomsCleared, float MaxHP, float MaxMP, float currentHP, float currentMP, float attackDamage, List<int> equippedItems)
     {
         var file = FileAccess.Open(savepath, FileAccess.ModeFlags.Write);
         //map
@@ -26,8 +26,6 @@ public partial class SaveLoadHandler : Node
         file.StoreLine(currentMP.ToString());
         //player attack damage
         file.StoreLine(attackDamage.ToString());
-        //player cooldowns
-        file.StoreLine(String.Join("; ", cooldowns));
         //items
         file.StoreString(String.Join("; ", equippedItems));
         file.Close();

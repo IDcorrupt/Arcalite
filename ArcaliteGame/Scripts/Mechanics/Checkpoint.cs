@@ -9,6 +9,7 @@ public partial class Checkpoint : Node2D
     private Area2D triggerArea;
     private AnimatedSprite2D sprite;
     private Map map;
+    GpuParticles2D particles;
     public bool triggered;
 
     public override void _Ready()
@@ -16,6 +17,7 @@ public partial class Checkpoint : Node2D
         base._Ready();
         triggerArea = GetNode("TriggerArea") as Area2D;
         sprite = GetNode("AnimatedSprite2D") as AnimatedSprite2D;
+        particles = GetNode("GPUParticles2D") as GpuParticles2D;
         map = GetParent().GetParent() as Map;
         sprite.Play("idle");
     }
@@ -38,7 +40,6 @@ public partial class Checkpoint : Node2D
                 Globals.player.GetCurrentHP(), 
                 Globals.player.GetCurrentMP(), 
                 Globals.player.GetAttackDamage(), 
-                Globals.player.GetCooldowns(), 
                 Globals.player.GetEquips()
                 );
         Player_ExitedRestArea();
@@ -46,7 +47,10 @@ public partial class Checkpoint : Node2D
     public void OnAnimationFinished()
     {
         if (sprite.Animation == "triggered")
-            sprite.Play("empty");
+        {
+            GD.Print("finised");
+            Empty();
+        }
     }
 
     private void TriggerCheckpoint()
@@ -61,7 +65,6 @@ public partial class Checkpoint : Node2D
             Globals.player.GetCurrentHP(), 
             Globals.player.GetCurrentMP(), 
             Globals.player.GetAttackDamage(), 
-            Globals.player.GetCooldowns(), 
             Globals.player.GetEquips()
             );
         triggered = true;
@@ -69,8 +72,10 @@ public partial class Checkpoint : Node2D
 
     public void Empty()
     {
+
         triggered = true;
         sprite.Play("empty");
+        particles.Emitting = true;
 
     }
     public override void _Process(double delta)
