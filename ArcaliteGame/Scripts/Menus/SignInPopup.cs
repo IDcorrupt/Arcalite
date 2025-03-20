@@ -33,7 +33,11 @@ public partial class SignInPopup : Control
     {
         string emailtext = email.Text;
         string passwordtext = password.Text;
-        //do login shit
+
+        UserData userdata = DBConnector.GetUserData(emailtext, passwordtext);
+
+        //TODO: innentõl kéne actually betölteni az adatokat
+
         parent.submenuOpen = false;
         QueueFree();
     }
