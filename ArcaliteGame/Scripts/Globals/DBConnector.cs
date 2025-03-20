@@ -1,5 +1,8 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using MySql.Data.MySqlClient;
+using System.Collections;
 
 public struct CharacterData 
 {
@@ -88,26 +91,47 @@ public static class DBConnector
     {
         //user->id, name, characters
         //character->id, name, hp, level, avatar
+        
+        UserData userdata = new UserData();
+
+        //checking if profile exists
+        string query = @$"
+            SELECT id 
+            FROM profile 
+            WHERE deletedAt IS NULL AND email = '{email}'";
+
+        using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
+        {
+            if (!reader.HasRows) throw new Exception("Nincs aktív fiók ehhez az e-mail címhez regisztrálva!");
+        }
 
         //fetching user data
-        string query = @$"
+        query = @$"
             SELECT id, username 
             FROM profile 
             WHERE deletedAt IS NULL AND email = '{email}' AND password = PASSWORD('{password}')";
 
-        using ()
+        using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
         {
+            if (!reader.HasRows) { throw new Exception("Hibás jelszó!"); }
 
+            reader.Read();
+            userdata.Id = reader.GetInt32("id");
+            userdata.Username = reader.GetString("name");
         }
 
-        int profileid = 1;  //ezt majd a query-bõl
-        //itt majd visszatérés, ha nincs ilyen fiók, n stuff
+        //NEED TO IMPLEMENT FETCHING THE SAVES
 
         //fetching character data
         query = $@"
-            SELECT player.id, player.name, player.hp, player.levelid, avatar.image
+            SELECT player.id AS id, player.name AS name, player.hp AS hp, player.mp AS mp, player.levelid AS level, avatar.image AS image
             FROM player INNER JOIN avatar ON avatar.id = player.avatarid
-            WHERE player.profileid = {profileid}";
+            WHERE player.profileid = {userdata.Id}";
+
+        using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
+        {
+
+        }
 
         //összerakni struct-listába, majd a user structot visszaküldeni
     }
