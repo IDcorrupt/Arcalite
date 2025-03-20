@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://8c218to3jbgh"]
+[gd_scene load_steps=5 format=3 uid="uid://8c218to3jbgh"]
 
-[ext_resource type="Script" path="res://Scripts/Menus/Popup.cs" id="1_wmrel"]
+[ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_wgxoh"]
+[ext_resource type="Script" uid="uid://btvrk5kfoyjt6" path="res://Scripts/Menus/Popup.cs" id="1_wmrel"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rkbmw"]
 bg_color = Color(0, 0, 0, 0.313726)
@@ -12,6 +13,7 @@ bg_color = Color(0, 0, 0, 1)
 z_index = 10
 layout_mode = 3
 anchors_preset = 0
+theme = ExtResource("1_wgxoh")
 script = ExtResource("1_wmrel")
 
 [node name="BackGround" type="PanelContainer" parent="."]

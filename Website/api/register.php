@@ -36,10 +36,4 @@ if (!$result) {
     ReturnMessage(500, "Hiba az adatok feltöltése közben.");
 }
 
-
-$response = array(
-    "code" => 201,
-    "message" => "Sikeres regisztráció!"
-);
-
-ReturnResult($response, 201);
+ReturnMessage(201, "Sikeres regisztráció!");

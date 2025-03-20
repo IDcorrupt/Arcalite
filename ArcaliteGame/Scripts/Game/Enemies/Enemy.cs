@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Runtime.CompilerServices;
+using System.Transactions;
 
 public partial class Enemy : CharacterBody2D
 {
@@ -7,136 +9,162 @@ public partial class Enemy : CharacterBody2D
     protected float maxHP;
     protected float currentHP;
     protected float damage;
+    //item drop chance
+    protected int shardDropRate;
 
     //external
-    [Export] protected int namenum;
     [Export] public bool isSlowed = false;
     [Export] public float slowFactor = 1;
 
     //values
+    private bool jumped = false;
+
     protected bool isDead = false;
     protected bool playerInAtkRange = false;
     protected bool isAttacking = false;
-    protected bool isDamaged = false;
-
+    protected bool isHurt = false;
+    protected bool lostVision = false;
+    protected bool bufferRan = true;
+    
     public bool isChasing;
     public bool isRoaming = true;
     public Vector2 Direction;
-    public float roamSpeed = 30f;
-    public float chaseSpeed = 120f;
-    public float speed = 0f;
+    protected float roamSpeed = 30f;
+    protected float chaseSpeed = 120f;
+    protected float speed = 0f;
+    protected float jumpStrength;
     
     protected float prevDir = 0;
+    protected Vector2 hitVector;
 
     //components
     protected Timer dirTimer;
     protected Timer RoamCooldown;
     protected Timer atkCooldown;
-    private Sprite2D indicator;
+    protected Timer hurtTimer;
+    protected Timer chaseBuffer;
     private Area2D attackRange;
-    private AnimatedSprite2D sprite;
+    private Area2D obstacleDetect;
+    private CollisionPolygon2D obstacleDetectLeft;
+    private CollisionPolygon2D obstacleDetectRight;
+    private Area2D jumpTrigger;
+    protected AnimatedSprite2D sprite;
+
+    private RayCast2D lineOfSight;
 
     protected Player player;
     protected EnemyControl parent;
+    private Node2D itemContainer;
+
+    private PackedScene itemScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/item.tscn");
+
 
     public override void _Ready()
     {
         parent = (EnemyControl)GetParent();
+        itemContainer = parent.GetParent().GetParent().GetNode("Items") as Node2D;
         sprite = GetNode<AnimatedSprite2D>("Sprite");
-        player = Globals.Player;
+        player = Globals.player;
 
         dirTimer = GetNode<Timer>("DirectionTimer");
         RoamCooldown = GetNode<Timer>("RoamCooldown");
         atkCooldown = GetNode<Timer>("AttackCooldown");
+        hurtTimer = GetNode<Timer>("HurtTimer");
+        chaseBuffer = GetNode<Timer>("ChaseBuffer");
+
+        chaseBuffer.WaitTime = 3f;
         
         attackRange = GetNode<Area2D>("AttackRange");
-        
-        //debug
-        indicator = GetNode<Sprite2D>("indicator");
-    }
+        obstacleDetect = GetNode<Area2D>("ObstacleDetect");
+        obstacleDetectLeft = GetNode<CollisionPolygon2D>("ObstacleDetect/left");
+        obstacleDetectRight = GetNode<CollisionPolygon2D>("ObstacleDetect/right");
+        jumpTrigger = GetNode<Area2D>("JumpTrigger");
 
+        lineOfSight = GetNode("LineOfSight") as RayCast2D;
+    }
 
     //movement
-
     public void Move(double delta)
     {
-        if (!isDead)
+        //jump
+        if(jumpTrigger.GetOverlappingBodies().Count == 0 && obstacleDetect.GetOverlappingBodies().Count >0 &&   //collisions
+            !jumped &&          //can jump
+            (Velocity.X > 0 || Velocity.X <0) &&     //is moving
+            IsOnFloor())        //on ground
         {
-            if (!isChasing)
+            Velocity = new Vector2(Velocity.X, Velocity.Y -(jumpStrength * slowFactor));
+            jumped = true;
+        }
+        //moving
+        if (!isChasing)
+        {
+            //idle
+            if (dirTimer.Paused)
             {
-                if (dirTimer.Paused)
-                    dirTimer.Paused = false;
-                if (RoamCooldown.Paused)
-                    RoamCooldown.Paused = false;
-                indicator.Modulate = Color.Color8(255, 0, 0, 255);
-                if (Direction.X != 0)
-                {
-                    if (speed < roamSpeed) speed += (float)delta * 70;
-                    Velocity = Direction * speed;
-                    prevDir = Direction.X;
-                }
-                else if (Direction.X == 0)
-                {
-                    if (speed > 0)
-                    {
-                        speed -= (float)delta * 100;
-                    }
-                    else
-                    {
-                        speed = 0;
-                        prevDir = 0;
-                    }
-                    Velocity = new Vector2(prevDir, Velocity.Y);
-
-
-                }
-                isRoaming = true;
+                dirTimer.Paused = false;
+                OnDirectionTimerTimeout();
+                dirTimer.Start();
+                Velocity = Vector2.Zero; //adding this here so it only runs once on disengage
             }
-            else if (isChasing && !isDamaged)
+            if (RoamCooldown.Paused)
             {
-                dirTimer.Paused = true;
-                RoamCooldown.Paused = true;
-                if (isAttacking)
-                {
-                    indicator.Modulate = Color.Color8(255, 0, 255, 255);
-                    Velocity = new Vector2(0, Velocity.Y);
-                    //attack
-                    //[TBD] WILL BE BASED ON ANIM END, CURRENTLY JUST THE COOLDOWN TIMER EXTENDED
-                }
+                RoamCooldown.Paused = false;
+            }
+            if (Direction.X != 0)
+            {
+                if (speed < roamSpeed) speed += (float)delta * 70;
+                else if (speed > roamSpeed+20) speed -= (float)delta * 70;
+                Velocity = new Vector2(Direction.X * speed * slowFactor, Velocity.Y);
+                prevDir = Direction.X;
+            }
+            else if (Direction.X == 0)
+            {
+                if (speed > 0)
+                    speed -= (float)delta * 100;
                 else
                 {
-                    indicator.Modulate = Color.Color8(0, 0, 255, 255);
-                    Direction = GlobalPosition.DirectionTo(player.GlobalPosition);
-                    if (Direction.X < 0)
-                        Flip(true);
-                    else Flip(false);
-                    if (speed < chaseSpeed) speed += (float)delta * 200;
-                    Velocity = Direction * speed;
-                    //nullify vertical velocity for chase vel
-                    Velocity = new Vector2(Velocity.X, 0);
+                    speed = 0;
+                    prevDir = 0;
                 }
+                Velocity = new Vector2(prevDir * speed, Velocity.Y);
             }
+            isRoaming = true;
         }
-        else Velocity = new Vector2(0, Velocity.Y);
-    }
+        else if (isChasing)
+        {
+            //chasing
+            //pause idle timers
+            dirTimer.Paused = true;
+            RoamCooldown.Paused = true;
 
+            Direction = GlobalPosition.DirectionTo(player.GlobalPosition);
+
+            //regulate acceleration/deceleration
+            if (speed < chaseSpeed) speed += (float)delta * 200;
+            else if (speed > chaseSpeed) speed -= (float)delta * 200;
+
+            //slowfactor added here
+            Velocity = new Vector2(Direction.X*speed*slowFactor, Velocity.Y);
+        }
+    }
+    private void Fall(double delta)
+    {
+        if (!IsOnFloor())
+            Velocity = new Vector2(Velocity.X, Velocity.Y + (float)(Globals.GRAVITY * delta * slowFactor));
+        else
+            jumped = false;    //reset jump bool if on ground
+    }
     //idle logic
     public void OnDirectionTimerTimeout()
     {
         double rand = new Random().Next(1, 8);
         dirTimer.WaitTime = rand / 2;
-        if (!isChasing)
-        {
-            Direction = new Vector2(0, Velocity.Y);
-            RoamCooldown.Start();
-        }
+        Direction = new Vector2(0, Velocity.Y);
+        RoamCooldown.Start();
     }
     public void OnRoamCoolDownTimeout()
     {
         Direction = new Vector2(dirChoose(), Velocity.Y);
-        if (Direction.X < 0)
-            Flip(true);
-        else Flip(false);
         Velocity = new Vector2(0, Velocity.Y);
         dirTimer.Start();
     }
@@ -151,26 +179,16 @@ public partial class Enemy : CharacterBody2D
     //attack logic
     private void AtkCooldownTimeout()
     {
-        if (playerInAtkRange)
-        {
-            atkCooldown.Start();
-        }
+        if (playerInAtkRange && !player.GetIsDead())
+            Attack();
         else
-        {
             isAttacking = false;
-        }
-
     }
     public void AttackRangeBodyEntered(Node2D body)
     {
         if (body is Player)
         {
             playerInAtkRange = true;
-            if (!isDamaged && !isAttacking)
-            {
-                atkCooldown.Start();
-                isAttacking = true;
-            }
         }
     }
     public void AttackRangeBodyExited(Node2D body)
@@ -180,6 +198,44 @@ public partial class Enemy : CharacterBody2D
             playerInAtkRange = false;
         }
     }
+    protected virtual void Attack() 
+    {
+        //shell func, attack is different for each type
+        isAttacking = true;
+        sprite.Play("attack");
+        Velocity = Vector2.Zero;
+        speed = 0;
+    }
+    public virtual void Hit(float damage, Node2D attacker)
+    {
+        if (!isDead && !isHurt)
+        {
+            isHurt = true;
+            currentHP -= damage;
+            if(attacker != null)
+            {
+                //knockback
+                int dir = 0;
+                if ((GlobalPosition - attacker.GlobalPosition).Normalized().X > 0)
+                    dir = 1;
+                else if ((GlobalPosition - attacker.GlobalPosition).Normalized().X < 0)
+                    dir = -1;
+                Velocity = new Vector2(dir * 200, 0);
+
+
+                hurtTimer.WaitTime = 0.5f;
+                hurtTimer.Start();
+            }
+            else
+            {
+                //no invincibility if no knockback (for basic attack & rapidfire)
+                isHurt = false;
+            }
+            GD.Print("enemy hit, current hp: " + currentHP);
+        }
+    }
+    private void OnHurtTimerTimeout() { isHurt = false; }
+    public void OnChaseBufferTimeout() { isChasing = false; }
 
     //appearance
     private void Flip(bool dir)
@@ -188,19 +244,148 @@ public partial class Enemy : CharacterBody2D
         {
             //right
             sprite.FlipH = true;
-            indicator.Position = new Vector2(-6, -16);
             attackRange.RotationDegrees = 180;
+            jumpTrigger.RotationDegrees = 180;
+            obstacleDetectRight.Disabled = true;
+            obstacleDetectLeft.Disabled = false;
+
         }
         else
         {
             sprite.FlipH = false;
-            indicator.Position = new Vector2(6, -16);
             attackRange.RotationDegrees = 0;
+            jumpTrigger.RotationDegrees = 0;
+            obstacleDetectRight.Disabled = false;
+            obstacleDetectLeft.Disabled = true;
+        }
+    }
+    protected virtual void Animate()
+    {
+        if (!isAttacking)
+        {
+            if (atkCooldown.TimeLeft > 0)
+                sprite.Play("idle");
+            else if((IsOnFloor() && Velocity.X > 1) && !isDead)
+                sprite.Play("walk");
+            else if(Velocity.X == 0 && !isDead)
+                sprite.Play("idle");
+        }
+    }
+    public virtual void OnSpriteAnimationFinished()
+    {
+        if (sprite.Animation == "attack")
+        {
+            isAttacking = false;
+            sprite.Play("idle");
+            atkCooldown.Start();
+        }
+        else if (sprite.Animation == "die")
+        {
+            sprite.Stop();
+            Die();
         }
     }
 
+    //die logic
+    protected void DropItems(Enums.itemType itemtype = Enums.itemType.shard, int customDropRate = 0)
+    {
+        Item item = null;
+        if (itemtype == Enums.itemType.shard && Math.RNG(shardDropRate))
+        {
+            GD.Print("dropping shard");
+            item = itemScene.Instantiate() as Item;
+            item.type = itemtype;
+        }
+        else if (Math.RNG(customDropRate))
+        {
+            GD.Print("dropping special");
+            item = itemScene.Instantiate() as Item;
+            item.type = itemtype;
+        }
+        if (item is not null)
+        {
+            item.GlobalPosition = GlobalPosition;
+            itemContainer.AddChild(item);
+        }
+    }
+    protected virtual void Die(int shardamount = 1)
+    {
+        parent.enemyAmount--;
+        //empty item func call -> shard drop
+        for (int i = 0; i < shardamount; i++)
+        {
+            DropItems();
+        }
+        QueueFree();
 
-    
+    }
+
+    public virtual void Update(double delta)
+    {
+        Fall(delta);
+        if (currentHP <=0)
+            isDead = true;
+        if (!isDead)
+        {
+            if (isHurt)
+                Velocity = new Vector2(Velocity.X > 0 ? Velocity.X - (float)delta * 700 : Velocity.X + (float)delta * 700, Velocity.Y);
+            if (isAttacking || atkCooldown.TimeLeft > 0)
+            {
+                //stop moving after attacking
+                Velocity = new Vector2(0, Velocity.Y);
+            }
+            else if (!isAttacking)
+            {
+                //if not attacking & being attacked -> move, attack if in attack range
+                Move(delta);
+                if (playerInAtkRange && isChasing)
+                    Attack();
+            }
+            if (Direction.X < 0)
+                Flip(true);
+            else if(Direction.X > 0)
+                Flip(false);
+        }
+        else
+        {
+            //fall and only die on floor
+            if (IsOnFloor())
+            {
+                if(sprite.Animation != "die")
+                {
+                    Velocity = Vector2.Zero;
+                    sprite.Play("die");
+                }
+            }else
+            {
+                Velocity = new Vector2(Velocity.X - 200 * (float)delta, Velocity.Y);
+            }
+        }
+
+        //strict disengage if player is dead
+        if(player.GetIsDead())
+            isChasing = false;
+        else
+        {
+            //update line of sight
+            lineOfSight.TargetPosition = player.GlobalPosition - GlobalPosition;
+            if (lineOfSight.IsColliding() && lineOfSight.GetCollider() is Player)
+            {
+                bufferRan = false;
+                isChasing = true;
+            }
+            else
+                lostVision = true;
+            if (lostVision && !bufferRan)
+            {
+                bufferRan = true;
+                chaseBuffer.Start();
+            }
+        }
+        
+    }
+
+
     public override void _PhysicsProcess(double delta)
     {
         //modifier for oracle functionality
@@ -209,25 +394,8 @@ public partial class Enemy : CharacterBody2D
             slowFactor = 1;
         }
 
-        if (!IsOnFloor())
-        {
-            Velocity = new Vector2(0, Velocity.Y + (float)(Globals.GRAVITY * delta));
-        }
-        else if (IsOnFloor())
-        {
-            Velocity = new Vector2(Velocity.X, 0);
-            Move(delta);
-        }
-
-        //debug
-        //debug
-
-
-        //apply slow
-        Velocity *= slowFactor;
+        Update(delta);
         MoveAndSlide();
+        Animate();
     }
-
-
-
 }

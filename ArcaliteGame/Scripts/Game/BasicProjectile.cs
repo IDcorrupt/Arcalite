@@ -30,11 +30,15 @@ public partial class BasicProjectile : CharacterBody2D
         Rotation = hitAngle;
 
 		//play explosion
-		animatedSprite.Position = new Vector2(0, 0);
+		animatedSprite.Position = new Vector2(0, -5);
         animatedSprite.Play("terrain_hit");
 	}
-	public void HitEnemy()
+	public void HitEnemy(Enemy enemy)
 	{
+		//damage
+		enemy.Hit(damagePayload, null);
+		
+        //animation
         animatedSprite.Position = new Vector2(0, 0);
         animatedSprite.Play("enemy_hit");
     }
@@ -57,18 +61,10 @@ public partial class BasicProjectile : CharacterBody2D
 				Vector2 collisionNormal = collision.GetNormal();
 
 				HitTerrain(collisionNormal);
-			}else if (collision != null && collision.GetCollider() is CharacterBody2D)
+			}else if (collision != null && collision.GetCollider() is Enemy)
 			{
-				Node collider = collision.GetCollider() as Node;
-				if (collider.HasMeta("Type"))
-				{
-					if ((string)collider.GetMeta("Type") == "Enemy")
-					{
-						targetHit = true;
-						HitEnemy();
-					}
-				}
-
+				targetHit = true;
+				HitEnemy(collision.GetCollider() as Enemy);
 			}
             
         }

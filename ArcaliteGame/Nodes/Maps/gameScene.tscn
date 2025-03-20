@@ -1,8 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://cledaea6itp81"]
 
-[ext_resource type="Script" path="res://Scripts/Mechanics/GameScene.cs" id="1_i5mp0"]
+[ext_resource type="Script" uid="uid://de5v6tq20kbxu" path="res://Scripts/Mechanics/GameScene.cs" id="1_i5mp0"]
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_i5mp0")
 
 [node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="DeathTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="DeathTimer" to="." method="DeathTimer_Timeout"]

@@ -7,14 +7,12 @@ public partial class CameraController : Node2D
     //debug
     private bool freecamToggle = false;
     //debug
-
+    
+    
+    [Signal] public delegate void CameraMovedEventHandler(string dir);
 
     private Camera2D camera;
-    private Area2D topTrigger;
-    private Area2D botTrigger;
-    private Area2D leftTrigger;
-    private Area2D rightTrigger;
-
+    private StaticBody2D hitBox;
     private Area2D enemyTrigger;
 
     Timer cooldownTimer;
@@ -22,10 +20,7 @@ public partial class CameraController : Node2D
     public override void _Ready()
     {
         camera = GetNode<Camera2D>("Camera");
-        topTrigger = GetNode<Area2D>("Camera/CamTriggers/TopTrigger");
-        botTrigger = GetNode<Area2D>("Camera/CamTriggers/BotTrigger");
-        leftTrigger = GetNode<Area2D>("Camera/CamTriggers/LeftTrigger");
-        rightTrigger = GetNode<Area2D>("Camera/CamTriggers/RightTrigger");
+        hitBox = GetNode("Camera/edgeCollisions") as StaticBody2D;
 
         enemyTrigger = GetNode<Area2D>("Camera/EnemyTrigger");
 
@@ -33,35 +28,44 @@ public partial class CameraController : Node2D
     }
 
 
+    public void RespawnMove()
+    {
+        camera.PositionSmoothingEnabled = false;
+        cooldownTimer.Start();
+        LockPlayer(false);
+    }
+
+    public void LockPlayer(bool value)
+    {
+        hitBox.SetCollisionLayerValue(3, value);
+    }
 
     //camera movement
     public void MoveCamera(string direction)
     {
-        if (!cooling)
+
+        switch (direction)
         {
-            cooldownTimer.Start();
-            cooling = true; 
-            GD.Print("moving: " + direction);
-            switch (direction)
-            {
-                case "top":
-                    camera.Position = new Vector2(camera.Position.X, camera.Position.Y - 360);
-                    break;
-                case "right":
-                    camera.Position = new Vector2(camera.Position.X + 640, camera.Position.Y);
-                    break;
-                case "bot":
-                    camera.Position = new Vector2(camera.Position.X, camera.Position.Y + 360);
-                    break;
-                case "left":
-                    camera.Position = new Vector2(camera.Position.X - 640, camera.Position.Y);
-                    break;
-                default:
-                    break;
-            }
+            case "top":
+                camera.Position = new Vector2(camera.Position.X, camera.Position.Y - 360);
+                break;
+            case "right":
+                camera.Position = new Vector2(camera.Position.X + 640, camera.Position.Y);
+                break;
+            case "bot":
+                camera.Position = new Vector2(camera.Position.X, camera.Position.Y + 360);
+                break;
+            case "left":
+                camera.Position = new Vector2(camera.Position.X - 640, camera.Position.Y);
+                break;
+            default:
+                break;
         }
+        EmitSignal(SignalName.CameraMoved, direction);
     }
 
+
+    //MIGHT BE DEPRECATED CUZ OF NEW THING
     public void LeftTriggerEntered(Node2D body)
     {
         if(body is Player)
@@ -122,9 +126,23 @@ public partial class CameraController : Node2D
     public void CooldownTimerTimeout()
     {
         cooling = false;
+        camera.PositionSmoothingEnabled = true;
     }
     public override void _Process(double delta)
     {
+        //room correction / new room switcher
+
+        if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X > 330)
+            MoveCamera("left");
+        else if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X < -330)
+            MoveCamera("right");
+
+        //VECTICAL CURRENTLY REMOVED
+        if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y > 190)
+            MoveCamera("top");
+        else if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y < -190)
+            MoveCamera("bot");
+
         //debug freecam
         if (Input.IsActionJustPressed("freecam_toggle"))
         {

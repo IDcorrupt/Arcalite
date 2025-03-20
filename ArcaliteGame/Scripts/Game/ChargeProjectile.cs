@@ -31,8 +31,12 @@ public partial class ChargeProjectile : CharacterBody2D
         animatedSprite.Position = new Vector2(-16, 0);
         animatedSprite.Play("terrain_hit");
     }
-    public void HitEnemy()
+    public void HitEnemy(Enemy enemy)
     {
+        //damage stuff
+        enemy.Hit(damagePayload, this);
+
+        //animation
         animatedSprite.Position = new Vector2(0, 0);
         animatedSprite.Play("enemy_hit");
     }
@@ -52,15 +56,19 @@ public partial class ChargeProjectile : CharacterBody2D
             {
                 case 1:
                     Scale = new Vector2(1, 1);
+                    damagePayload *= 2;
                     break;
                 case 2:
                     Scale = new Vector2((float)1.3, (float)1.3);
+                    damagePayload *= 4f;
                     break;
                 case 3:
                     Scale = new Vector2((float)1.6, (float)1.6);
+                    damagePayload *= 6f;
                     break;
                 case 4: 
                     Scale = new Vector2(2, 2);
+                    damagePayload *= 8;
                     break;
                 default:
                     break;
@@ -73,25 +81,17 @@ public partial class ChargeProjectile : CharacterBody2D
 
             var collision = MoveAndCollide(vel);
 
-            if (collision != null && collision.GetCollider() is StaticBody2D)
+            if (collision != null && (collision.GetCollider() is StaticBody2D || collision.GetCollider() is TileMapLayer))
             {
                 targetHit = true;
                 Vector2 collisionNormal = collision.GetNormal();
 
                 HitTerrain(collisionNormal);
             }
-            else if (collision != null && collision.GetCollider() is CharacterBody2D)
+            else if (collision != null && collision.GetCollider() is Enemy)
             {
-                Node collider = collision.GetCollider() as Node;
-                if (collider.HasMeta("Type"))
-                {
-                    if ((string)collider.GetMeta("Type") == "Enemy")
-                    {
-                        targetHit = true;
-                        HitEnemy();
-                    }
-                }
-
+                targetHit = true;
+                HitEnemy(collision.GetCollider() as Enemy);
             }
 
         }

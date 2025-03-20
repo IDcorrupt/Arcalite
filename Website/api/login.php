@@ -27,6 +27,4 @@ else if ($result->num_rows > 1) {
     ReturnMessage(401, "Több fiók bejelentkezési adatai egyeznek!");
 }
 
-$return = $result->fetch_assoc();
-
-ReturnResult($return);
+ReturnResult($result->fetch_assoc());
