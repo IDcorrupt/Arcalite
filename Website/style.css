@@ -32,24 +32,26 @@
     --font2: #cbc5ce;
     --bg-color: var(--c_dark1);
     --bg-gradient: #3A1F47;
-    --bg: url("./img/dark.png");
-    --bg-element: url("./img/dark_layer.png");
+    --bg: url("./img/Backgrounds/dark.png");
+    --bg-element: url("./img/Backgrounds/dark_layer.png");
     --menu: var(--c_dark2);
     --menu_active: var(--c_dark2_shadow);
-    --card-type-1: url("./img/dark_card.png");
-    --card-type-2: url("./img/dark_controlcard.png");
+    --card-type-1: url("./img/Backgrounds/dark_card.png");
+    --card-type-2: url("./img/Backgrounds/dark_controlcard.png");
+    --offcanvas: url("./img/Backgrounds/dark_offcanvas.png");
 }
 [data-bs-theme="light"] { 
     --font: #1A0225;
     --font2: #17061f;
     --bg-color: var(--c_light1);
     --bg-gradient:#492469;
-    --bg: url("./img/light.png");
-    --bg-element: url("./img/light_layer.png");;
+    --bg: url("./img/Backgrounds/light.png");
+    --bg-element: url("./img/Backgrounds/light_layer.png");;
     --menu: var(--c_light2);
     --menu_active: var(--c_light2_shadow);
-    --card-type-1: url("./img/light_card.png");
-    --card-type-2: url("./img/light_controlcard.png");
+    --card-type-1: url("./img/Backgrounds/light_card.png");
+    --card-type-2: url("./img/Backgrounds/light_controlcard.png");
+    --offcanvas: url("./img/Backgrounds/light_offcanvas.png");
 }
 
 html{
@@ -188,6 +190,10 @@ p{
 .fa-lg{
     vertical-align: 0 !important;
     color: rgb(67, 66, 66);
+}
+
+.fa-non-button{
+    color: rgb(164, 162, 162);
 }
 
 main{
@@ -415,6 +421,16 @@ h5{
 
 }
 
+.no-pointer{
+    cursor: unset;
+    transition: all .25s ease-out;
+}
+
+.no-pointer:hover{
+    box-shadow: 0 0 25px 5px var(--acc1);
+    transform: scale(1.05);
+}
+
 .empty{
     background-color: #000;
     height: 445px;
@@ -444,25 +460,15 @@ d{
     align-self: normal;
 }
 
+.offcanvas{
+    background-image: var(--offcanvas);
+    background-size: 100% auto;
+}
 
 /*--------------------LOGIN & REGISTER--------------------*/
 
 #login-main{
     flex-direction: column;
-}
-
-.login{
-    height: fit-content; /*ideiglenes*/
-    width: 30vw; /*for profile change*/
-    min-width: 350px;
-    min-height: 500px;
-    background-color: bisque;
-    border: 1px solid black;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-
 }
 
 #login{
@@ -471,6 +477,15 @@ d{
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    width: 100%;
+}
+
+#login_base{
+   
+}
+
+#register_verification{
+    width: 18vw;
 }
 
 
@@ -485,7 +500,6 @@ d{
 }
 
 .profile{
-    padding: 30px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -500,19 +514,16 @@ d{
 }
 
 .profile-img{
-    aspect-ratio: 3/4;
+    aspect-ratio: 1/1;
     margin: auto;
     width: 100%;
 }
 
 .profile-details{
     height: 100%;
-    width: 32%;
+    width: 25%;
     text-align: center;
-}
-
-#profile-mid{
-    margin: 2%;
+    padding: 4%;
 }
 
 .profileheader{
@@ -522,15 +533,58 @@ d{
 }
 
 .profile h2{
-    font-size: max(2vw, 16px);
+    text-align: unset;
+}
+
+.profile h2, .profile h3{
+    padding: 14px 16px;
+}
+
+.profile h3{
+    font-size: 2.5rem;
 }
 
 .profilemain{
     min-height: calc(100vh - 45px);
 }
 
+.loginmain{
+    min-height: 100vh;
+}
+
+.logina{
+    text-align: center;
+    width: 98%;
+    display: block;
+    margin: 1%;
+    
+}
+
+#logindiv h2{
+    text-align: center;
+}
+
+.login{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn{
+    border: unset;
+}
+
+.btn-primary{
+    background-color: var(--blue);
+}
+
+.btn-danger{
+    background-color: var(--red);
+}
+
 form{
-    width: 18vw;
+    width: 25vw;
     height: 60vh;
     min-height: 400px;
     min-width: 225px;
@@ -540,15 +594,21 @@ form{
 
 input{
     width: 100%;
-    margin: 3% 0;
     line-height: 35px;
     font-size: 20px;
-    height: 7%
+    height: 7%;
+    padding: 20px;
+    border: none;
+    box-sizing: border-box;
 }
 
 input[type="submit"]{
     height: 60px;
     /*width: 100px;*/
+}
+
+#login_btn{
+    margin-top: 15vh;
 }
 
 label{
@@ -559,7 +619,6 @@ label{
 }
 
 #profileFunctions {
-    margin-bottom: 10px;
     padding: 5px;
 }
 #profileFunctions div {
@@ -765,6 +824,9 @@ th{
         width: 80%;
     }
     
+    .btn{
+        margin: 10px;
+    }
 
     /*----------NAVBAR----------*/
 
@@ -786,6 +848,13 @@ th{
 
     /*----------CARDS----------*/
 
+    .offcanvas.offcanvas-end{
+        top: unset !important;
+        width: 100%;
+        height: fit-content;
+        min-height: 25vh;
+        max-height: 40vh;
+    }
 
     /*----------FOOTER----------*/
 

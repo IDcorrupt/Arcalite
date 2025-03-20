@@ -10,11 +10,11 @@
     <script src="script/jquery-3.7.1.min.js"></script>
     <script src="script/login.js"></script>
 </head>
-<body>
-    <main class="flex-container">
-        <a href="./index.html">Vissza  a főoldalra</a>        
-        <div class="login profile" id="registerdiv" style="display: none;">
-            <h2>Regisztráció</h2>
+<body data-bs-theme="light">
+    <main class="loginmain">
+        <a class="logina" href="./index.html">Vissza  a főoldalra</a>        
+        <div class="login" id="registerdiv" style="display: none;">
+            <h2 class="logina">Regisztráció</h2>
             <div id="register_base">
                 <form id="registerform">
                     <label for="reg_username">Felhasználónév: </label>
@@ -28,6 +28,7 @@
                     <p id="pwdagain_error" hidden>Nem egyezik a fentebb megadott jelszóval!</p>
                     <input type="submit" id="register_btn" value="Regisztrál">
                     <p id="register_error"></p>
+                    <p>Már van fiókja? <a href="#" onclick="switchToLogin()">Jelentkezzen be</a></p>
                 </form>
             </div>
             <div id="register_verification" hidden>
@@ -35,10 +36,10 @@
                 <input type="text" id="register_code">
                 <input type="submit" id="register_verify" value="Kód ellenőrzése">
             </div>
-            <p>Már van fiókja? <a href="#" onclick="switchToLogin()">Jelentkezzen be</a></p>
+            
         </div>
-        <div class="login profile" id="logindiv">
-            <h2>Bejelentkezés</h2>
+        <div class="login" id="logindiv">
+            <h2 class="logina">Bejelentkezés</h2>
             <form id="loginform">
                 <div id="login_base">
                     <label for="login_email">E-mail:</label>
