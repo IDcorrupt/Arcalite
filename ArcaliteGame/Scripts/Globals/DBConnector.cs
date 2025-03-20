@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using MySql.Data.MySqlClient;
+using System.Security.Cryptography;
+using MySqlConnector;
 
 public struct CharacterData 
 {
@@ -17,6 +18,7 @@ public struct UserData
 
     public UserData()
     {
+        Id = -1;
         Characters = new List<CharacterData>();
     }
 };
@@ -88,6 +90,14 @@ public static class DBConnector
 
     #region METHODS
 
+    public static void ClearUserData()
+    {
+        if (Globals.user.Id > 0)
+        {
+            Globals.user = new UserData();
+        }
+    }
+
     public static UserData GetUserData(string email, string password)
     {
         UserData userdata = new UserData();
@@ -101,7 +111,12 @@ public static class DBConnector
 
         using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
         {
-            if (!reader.HasRows) throw new Exception("Nincs aktív fiók ehhez az e-mail címhez regisztrálva!");
+            if (!reader.HasRows)
+            {
+                conn.Close();
+                throw new Exception("Account doesn't exist");
+            }
+
         }
 
         //fetching user data
@@ -112,11 +127,15 @@ public static class DBConnector
 
         using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
         {
-            if (!reader.HasRows) { throw new Exception("Hibás jelszó!"); }
+            if (!reader.HasRows) 
+            { 
+                conn.Close();
+                throw new Exception("Incorrect password"); 
+            }
 
             reader.Read();
             userdata.Id = reader.GetInt32("id");
-            userdata.Username = reader.GetString("name");
+            userdata.Username = reader.GetString("username");
         }
 
         //fetching character data

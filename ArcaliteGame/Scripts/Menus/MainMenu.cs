@@ -7,6 +7,8 @@ public partial class MainMenu : Control
     private Button Settings;
     private Button Website;
     private Button Quit;
+    private Panel Account;
+    private Label AccountName;
 
     private Button signIn;
     private Button Register;
@@ -27,6 +29,8 @@ public partial class MainMenu : Control
         Quit = GetNode<Button>("Quit");
         signIn = GetNode("Account/Sign In") as Button;
         Register = GetNode("Account/Register") as Button;
+        Account = GetNode("Account") as Panel;
+        AccountName = GetNode("Account/Name") as Label;
         Start.Pressed += StartPressed;
         Settings.Pressed += SettingsPressed;
         Website.Pressed += WebsitePressed;
@@ -46,9 +50,31 @@ public partial class MainMenu : Control
 
     private void SignIn_Pressed()
     {
-        Control signInPopup = signInPopupScene.Instantiate() as Control;
-        AddChild(signInPopup);
-        submenuOpen = true;
+        if(Globals.user.Id > 0)
+        {
+            DBConnector.ClearUserData();
+            AccountName.Text = "Guest";
+            //CLEAR SAVE
+        }
+        else
+        {
+            SignInPopup signInPopup = signInPopupScene.Instantiate() as SignInPopup;
+            AddChild(signInPopup);
+            signInPopup.Login += SignInPopup_Login;
+            submenuOpen = true;
+
+        }
+    }
+
+    private void SignInPopup_Login()
+    {
+        if (Globals.user.Id > 0)
+        {
+            AccountName.Text = Globals.user.Username;
+            //LOAD SAVE
+        }
+        else
+            AccountName.Text = "Guest";
     }
 
     public void StartPressed()
@@ -65,7 +91,7 @@ public partial class MainMenu : Control
     }
     public void WebsitePressed()
     {
-        OS.ShellOpen("http://localhost/school/Website/");       //REDO LINK FOR FINAL (file structure will probably change)
+        OS.ShellOpen("http://localhost/school/Arcalite/.index.html");       //REDO LINK FOR FINAL (file structure will probably change)
     }
     public void QuitPressed()
     {
@@ -77,17 +103,23 @@ public partial class MainMenu : Control
             background.TileSet = TilesetLoader.LoadedTileset;
         if (submenuOpen)
         {
-            Start.Visible = false;
-            Settings.Visible = false;
-            Website.Visible = false;
-            Quit.Visible = false;
+            Start.Hide();
+            Settings.Hide();
+            Website.Hide();
+            Quit.Hide();
+            Account.Hide();
         }
         else
         {
-            Start.Visible = true;
-            Settings.Visible = true;
-            Website.Visible = true;
-            Quit.Visible = true;
+            Start.Show();
+            Settings.Show();
+            Website.Show();
+            Quit.Show();
+            Account.Show();
         }
-        }
+        if (Globals.user.Id > 0)
+            signIn.Text = "Sign out";
+        else
+            signIn.Text = "Sign in";
+    }
 }

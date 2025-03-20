@@ -46,4 +46,11 @@ public partial class SubmenuStart : Control
         }
     }
 
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        if (Input.IsActionJustPressed("ui_cancel"))
+            BackPressed();
+    }
+
 }

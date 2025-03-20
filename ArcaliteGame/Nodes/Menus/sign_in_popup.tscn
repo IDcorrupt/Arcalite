@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bivwlkpqajirr"]
+[gd_scene load_steps=4 format=3 uid="uid://bivwlkpqajirr"]
 
 [ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_5nfva"]
 [ext_resource type="Script" uid="uid://clrco78l5b5ed" path="res://Scripts/Menus/SignInPopup.cs" id="1_hvjws"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5nfva"]
+font_size = 15
 
 [node name="SignInPopup" type="Control"]
 layout_mode = 3
@@ -14,7 +17,7 @@ layout_mode = 0
 offset_left = -150.0
 offset_top = -75.0
 offset_right = 150.0
-offset_bottom = 75.0
+offset_bottom = 103.0
 
 [node name="EmailLabel" type="Label" parent="Panel"]
 layout_mode = 0
@@ -23,6 +26,17 @@ offset_top = 30.0
 offset_right = 119.0
 offset_bottom = 53.0
 text = "Email: "
+
+[node name="Errors" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 12.5
+offset_top = 104.0
+offset_right = 287.5
+offset_bottom = 124.0
+pivot_offset = Vector2(137, 10)
+label_settings = SubResource("LabelSettings_5nfva")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PasswordLabel" type="Label" parent="Panel"]
 layout_mode = 0
@@ -53,17 +67,31 @@ secret = true
 secret_character = "*"
 
 [node name="SignIn" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 181.0
-offset_top = 105.0
-offset_right = 241.0
-offset_bottom = 136.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = 46.0
+offset_right = 100.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "Sign in"
 
 [node name="Cancel" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 60.0
-offset_top = 105.0
-offset_right = 120.0
-offset_bottom = 136.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 46.0
+offset_right = -20.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "Cancel"

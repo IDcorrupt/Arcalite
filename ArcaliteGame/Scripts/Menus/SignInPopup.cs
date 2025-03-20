@@ -8,7 +8,10 @@ public partial class SignInPopup : Control
     Button cancel;
     LineEdit email;
     LineEdit password;
+    Label errors;
 
+    [Signal] public delegate void LoginEventHandler();
+    
 
     public override void _Ready()
     {
@@ -18,6 +21,7 @@ public partial class SignInPopup : Control
         cancel = GetNode("Panel/Cancel") as Button;
         email = GetNode("Panel/Email") as LineEdit;
         password = GetNode("Panel/Password") as LineEdit;
+        errors = GetNode("Panel/Errors") as Label;
 
         signIn.Pressed += SignIn_Pressed;
         cancel.Pressed += Cancel_Pressed;
@@ -26,6 +30,7 @@ public partial class SignInPopup : Control
     private void Cancel_Pressed()
     {
         parent.submenuOpen = false;
+        EmitSignal(SignalName.Login);
         QueueFree();
     }
 
@@ -34,11 +39,24 @@ public partial class SignInPopup : Control
         string emailtext = email.Text;
         string passwordtext = password.Text;
 
-        UserData userdata = DBConnector.GetUserData(emailtext, passwordtext);
+        try
+        {
+            Globals.user = DBConnector.GetUserData(emailtext, passwordtext);
+            parent.submenuOpen = false;
+            EmitSignal(SignalName.Login);
+            QueueFree();
+        }
+        catch (Exception ex)
+        {
+            errors.Text = ex.Message;
+            GD.PrintErr(ex.Message);
+        }
+    }
 
-        //TODO: innentõl kéne actually betölteni az adatokat
-
-        parent.submenuOpen = false;
-        QueueFree();
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        if(Input.IsActionJustPressed("ui_cancel"))
+            Cancel_Pressed();
     }
 }
