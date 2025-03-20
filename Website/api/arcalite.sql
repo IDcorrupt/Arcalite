@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 20. 02:58
--- Kiszolgáló verziója: 10.4.27-MariaDB
--- PHP verzió: 8.2.0
+-- Létrehozás ideje: 2025. Már 20. 11:04
+-- Kiszolgáló verziója: 10.4.32-MariaDB
+-- PHP verzió: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,6 +37,24 @@ CREATE TABLE `achdesc` (
   `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- A tábla adatainak kiíratása `achdesc`
+--
+
+REPLACE INTO `achdesc` (`achievementid`, `languageid`, `name`, `description`) VALUES
+(1, 1, 'Valahol el kell kezdeni', 'Öld meg az első szörnyed.'),
+(1, 2, 'You gotta start somewhere', 'Kill your first monster.'),
+(2, 1, 'Na ez mi?', 'Vedd fel az első tárgyad.'),
+(2, 2, 'What\'s this now?', 'Pick up your first item.'),
+(3, 1, 'Halhatatlan', 'Érj el N életpontot.'),
+(3, 2, 'Immortal', 'Reach N healthpoints.'),
+(4, 1, 'Varázspuska', 'Érj el N manapontot.'),
+(4, 2, 'Magic Minigun', 'Reach N manapoints.'),
+(5, 1, 'AU!', 'Érj el N sebzést egy ütésből.'),
+(5, 2, 'OW!', 'Reach N attack damage.'),
+(6, 1, 'Vége lesz valaha?', 'Vidd végig az első futamodat.'),
+(6, 2, 'Will it ever end?', 'Finish your first run.');
+
 -- --------------------------------------------------------
 
 --
@@ -53,7 +71,12 @@ CREATE TABLE `achievement` (
 --
 
 REPLACE INTO `achievement` (`id`) VALUES
-(1);
+(1),
+(2),
+(3),
+(4),
+(5),
+(6);
 
 -- --------------------------------------------------------
 
@@ -64,17 +87,16 @@ REPLACE INTO `achievement` (`id`) VALUES
 DROP TABLE IF EXISTS `avatar`;
 CREATE TABLE `avatar` (
   `id` int(11) NOT NULL,
-  `image` varchar(128) DEFAULT NULL
+  `image` varchar(128) DEFAULT NULL,
+  `splash` varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- A tábla adatainak kiíratása `avatar`
 --
 
-REPLACE INTO `avatar` (`id`, `image`) VALUES
-(1, 'kep1.png'),
-(2, 'kep02.png'),
-(3, 'forg.png');
+REPLACE INTO `avatar` (`id`, `image`, `splash`) VALUES
+(1, 'maleros.png', 'maleros_portrait.png');
 
 -- --------------------------------------------------------
 
@@ -95,12 +117,8 @@ CREATE TABLE `avatardesc` (
 --
 
 REPLACE INTO `avatardesc` (`avatarid`, `languageid`, `name`, `description`) VALUES
-(1, 1, 'Első avatár', 'Alapértelmezett avatár'),
-(1, 2, 'First avatar', 'Default avatar'),
-(2, 1, 'Második avatár', 'Alapértelmezett avatár'),
-(2, 2, 'Second avatar', 'Default avatar'),
-(3, 1, 'Béak', 'Brek-brek'),
-(3, 2, 'Forg', 'Ribbit-ribbit');
+(1, 1, 'Maleros', 'Maleros egy tiefling mágus, aki képes a kézmozdulataival varázsolni.  '),
+(1, 2, 'Maleros', 'Maleros is a tiefling sorcerer, able to emit magic from their hands. ');
 
 -- --------------------------------------------------------
 
@@ -119,20 +137,15 @@ CREATE TABLE `enemplay` (
 --
 
 REPLACE INTO `enemplay` (`enemyid`, `playerid`) VALUES
-(1, 1),
-(1, 3),
 (1, 4),
-(2, 1),
+(1, 5),
+(1, 6),
 (2, 4),
-(3, 1),
+(2, 5),
+(2, 6),
 (3, 4),
-(4, 1),
-(4, 4),
-(5, 4),
-(6, 4),
-(7, 4),
-(8, 4),
-(9, 4);
+(3, 5),
+(4, 4);
 
 -- --------------------------------------------------------
 
@@ -152,15 +165,11 @@ CREATE TABLE `enemy` (
 --
 
 REPLACE INTO `enemy` (`id`, `hp`, `image`) VALUES
-(1, 100, 'zombie.png'),
-(2, 75, 'skeleton.png'),
-(3, 150, 'troll.png'),
-(4, 100, 'lich.png'),
-(5, 100, 'robot.png'),
-(6, 150, 'axerobot.png'),
-(7, 75, 'photonrobot.png'),
-(8, 150, 'knight.png'),
-(9, 100, 'photonturret.png');
+(1, NULL, 'skeleton.png'),
+(2, NULL, 'witch.png'),
+(3, NULL, 'cyclops.png'),
+(4, NULL, 'lich.png'),
+(5, NULL, 'undead_boss.png');
 
 -- --------------------------------------------------------
 
@@ -181,15 +190,16 @@ CREATE TABLE `enemydesc` (
 --
 
 REPLACE INTO `enemydesc` (`enemyid`, `languageid`, `name`, `description`) VALUES
-(1, 1, 'Zombi', 'Alapszintű közelharci szörny. Közel jön, megüt.'),
-(2, 1, 'Csontváz', 'Alapszintű mágus.'),
-(3, 1, 'Troll gólem', 'Alapszintű elit közelharci szörny. Odajön, megüt. Alapképessége az átlagnál nagyobb erejű ütése, illetve különleges képessége a föld megrengetése a földre ütéssel, mely megnehezíti ellenfeleit a mozgásban.'),
-(4, 1, 'Lich', 'Alapszintű elit mágus. Alaptámadásai erősebbek az átlagnál, különleges képessége, hogy segítségére csontvázakat képes teremteni.'),
-(5, 1, 'Robot', 'A mechanikus világ alapszörnye. Képességei nincsenek, egyszerű közelharci ellenfél.'),
-(6, 1, 'Baltás robot', 'Különleges, harcra hatékony robot. Kezei helyén balta van, mellyel egyszerűen győzi le ellenfeleit.'),
-(7, 1, 'Fényágyús robot', 'A mechanikus világ mágusa. Fényágyúja nagy sebességgel szór ellenfeleire fotonokat, melyek együttesen égetik porrá a céljukat.'),
-(8, 1, 'Lovag', 'Pengeéles kardjával és villámgyors lovával komoly kihívást képes teremteni ellenfeleinek. Különleges képessége a kiszemelt ellenfelére való ráfutás, mely sebességével alig lehet felvenni a versenyt.'),
-(9, 1, 'Lövőtorony', 'Ez a szerkezet is a fotonokkal égetés technikáját használja, ám egy új fejlesztésű technológia által sokkal hatékonyabb, fájdalmasabb minden lövése, és minderre fel képes követőlövedékeket is kilőni, melyek biztosítják a teli találatot.');
+(1, 1, 'Csontváz harcos', 'Alapszintű közelharci szörny. Közel jön, megüt.'),
+(1, 2, 'Skeleton Warrior', 'Basic melee monster. It hits when it gets close to the player.'),
+(2, 1, 'Boszorkány', 'Alapszintű mágus.'),
+(2, 2, 'Witch', 'Basic caster.'),
+(3, 1, 'Küklopsz', 'Elit közelharci szörny. Az átlagnál nagyobbat üt.'),
+(3, 2, 'Cyclops', 'Elite melee monster. It hits harder than the average. '),
+(4, 1, 'Holt mágus', 'Elit mágus. '),
+(4, 2, 'Lich', 'Elite caster.'),
+(5, 1, 'Élőhalott főellenség', '???'),
+(5, 2, 'Undead boss', '???');
 
 -- --------------------------------------------------------
 
@@ -208,8 +218,8 @@ CREATE TABLE `item` (
 --
 
 REPLACE INTO `item` (`id`, `image`) VALUES
-(1, 'bot.png'),
-(2, 'fakard.png');
+(1, 'necklace.png'),
+(2, 'orichalcum_core.png');
 
 -- --------------------------------------------------------
 
@@ -230,8 +240,10 @@ CREATE TABLE `itemdesc` (
 --
 
 REPLACE INTO `itemdesc` (`itemid`, `languageid`, `name`, `description`) VALUES
-(1, 1, 'Bot', 'Egy bot, amit az felvettél az út széléről, mert nagyon megtetszett az alakja. Mondjuk azóta is jól bírja a csatározást.'),
-(2, 1, 'Fakard', 'Egy fából faragott kard. Úgy gondoltad a botod nem lesz elég, ezért jobb híján egy fatuskóból álltál neki kifaragni az első kardodat.');
+(1, 1, 'Nyaklánc', 'Csökkenti a támadási sebesség töltési idejét, de kevésbé pontos.'),
+(1, 2, 'Necklace', 'Reduces basic attack speed cooldown, but also makes it less accurate.'),
+(2, 1, 'Orichalcum mag', 'Sebezhetetlenné teszi a játékost két másodpercig.'),
+(2, 2, 'Orichalcum core', 'Makes the player invulnerable for two seconds.');
 
 -- --------------------------------------------------------
 
@@ -250,9 +262,8 @@ CREATE TABLE `itemplay` (
 --
 
 REPLACE INTO `itemplay` (`itemid`, `playerid`) VALUES
-(1, 1),
-(1, 2),
 (1, 4),
+(1, 5),
 (2, 4);
 
 -- --------------------------------------------------------
@@ -292,9 +303,9 @@ CREATE TABLE `level` (
 --
 
 REPLACE INTO `level` (`id`, `image`) VALUES
-(1, 'Kep1.png'),
-(2, 'Kep2.png'),
-(3, 'Kep3.png');
+(1, '1'),
+(2, '2'),
+(3, '3');
 
 -- --------------------------------------------------------
 
@@ -333,10 +344,9 @@ CREATE TABLE `player` (
 --
 
 REPLACE INTO `player` (`id`, `name`, `hp`, `mp`, `profileid`, `avatarid`, `levelid`, `playtime`) VALUES
-(1, 'Haró', 100, 0, 1, 1, 1, '00:00:00'),
-(2, 'Harcos', 94, 0, 3, 1, 1, '00:00:00'),
-(3, 'Toldi Miklós', 100, 0, 3, 2, 1, '01:33:00'),
-(4, 'Ferg', 126, 0, 3, 3, 3, '03:46:00');
+(4, 'DinoHunter', 100, 100, 3, 1, 3, '00:19:44'),
+(5, 'DinoHuntingXx', 100, 100, 3, 1, 2, '00:05:02'),
+(6, 'Kálmán', 100, 100, 1, 1, 3, '00:19:14');
 
 -- --------------------------------------------------------
 
@@ -355,6 +365,9 @@ CREATE TABLE `proach` (
 --
 
 REPLACE INTO `proach` (`profileid`, `achievementid`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
 (3, 1);
 
 -- --------------------------------------------------------
@@ -378,11 +391,10 @@ CREATE TABLE `profile` (
 --
 
 REPLACE INTO `profile` (`id`, `username`, `password`, `played`, `email`, `deletedAt`) VALUES
-(1, 'haro', '*B70449F7A45FD795790A34AB04C111FADA2ABA77', '00:00:00', 'haro@gmail.com', NULL),
-(2, 'feri', '*AC41464BE9A0402F6C67C07B317D773A5087E366', '00:00:00', 'ferenc001_@gmail.com', NULL),
-(3, 'Laci', '*A7395F5F1F5F50654D965778F1FA7C6702350C97', '05:19:00', 'zeczi.laszlo@gmail.com', NULL),
-(4, 'zoli', '*F2DE9CCD4C692570BBEB3218207B889F3204635C', '01:22:00', 'zoli@gmail.com', NULL),
-(5, 'leheldani', '*C2B970DB815A941E8CA127C0CF4C83BDC82DA9B6', '00:24:00', 'ramszi@gmail.com', NULL);
+(1, 'Zoli26', '*F2DE9CCD4C692570BBEB3218207B889F3204635C', '00:26:42', 'zoli26@gmail.com', NULL),
+(2, 'kovi_', '*D7284B946F7994DE4F5FFE45288F5D1E9157EB68', '00:00:00', 'kovacs.norbi.2004@gmail.com', NULL),
+(3, 'DinoHunter2004', '*011CFB74686EDAFBF89D738975DB0FACF2D7D105', '00:19:14', 'nagy.geza@gmail.com', NULL),
+(4, 'JancsikT', '*0FBE4427EC561BFB315AA4AC89CEFD52D4AC34A6', '00:00:00', 'jani.t@gmail.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -393,7 +405,7 @@ REPLACE INTO `profile` (`id`, `username`, `password`, `played`, `email`, `delete
 DROP TABLE IF EXISTS `saves`;
 CREATE TABLE `saves` (
   `playerid` int(11) NOT NULL,
-  `time` datetime NOT NULL,
+  `time` datetime NOT NULL DEFAULT current_timestamp(),
   `save` longblob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -522,19 +534,19 @@ ALTER TABLE `saves`
 -- AUTO_INCREMENT a táblához `achievement`
 --
 ALTER TABLE `achievement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT a táblához `avatar`
 --
 ALTER TABLE `avatar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT a táblához `enemy`
 --
 ALTER TABLE `enemy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT a táblához `item`
@@ -558,13 +570,13 @@ ALTER TABLE `level`
 -- AUTO_INCREMENT a táblához `player`
 --
 ALTER TABLE `player`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT a táblához `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Megkötések a kiírt táblákhoz
