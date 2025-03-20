@@ -129,7 +129,7 @@ CREATE TABLE leveldesc (
 
 CREATE TABLE saves (
   playerid INT,
-  time DATETIME,
+  time DATETIME DEFAULT CURRENT_TIMESTAMP,
   save LONGBLOB,
   CONSTRAINT pk_saves PRIMARY KEY (playerid, time),
   CONSTRAINT fk_saves_player FOREIGN KEY (playerid) REFERENCES player(id)
