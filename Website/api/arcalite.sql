@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 20. 11:04
+-- Létrehozás ideje: 2025. Már 21. 10:12
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.0.30
 
@@ -310,20 +310,6 @@ REPLACE INTO `level` (`id`, `image`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `leveldesc`
---
-
-DROP TABLE IF EXISTS `leveldesc`;
-CREATE TABLE `leveldesc` (
-  `levelid` int(11) NOT NULL,
-  `languageid` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Tábla szerkezet ehhez a táblához `player`
 --
 
@@ -492,13 +478,6 @@ ALTER TABLE `level`
   ADD PRIMARY KEY (`id`);
 
 --
--- A tábla indexei `leveldesc`
---
-ALTER TABLE `leveldesc`
-  ADD PRIMARY KEY (`levelid`,`languageid`),
-  ADD KEY `fk_leveldesc_languages` (`languageid`);
-
---
 -- A tábla indexei `player`
 --
 ALTER TABLE `player`
@@ -623,13 +602,6 @@ ALTER TABLE `itemdesc`
 ALTER TABLE `itemplay`
   ADD CONSTRAINT `fk_itemplay_item` FOREIGN KEY (`itemid`) REFERENCES `item` (`id`),
   ADD CONSTRAINT `fk_itemplay_player` FOREIGN KEY (`playerid`) REFERENCES `player` (`id`);
-
---
--- Megkötések a táblához `leveldesc`
---
-ALTER TABLE `leveldesc`
-  ADD CONSTRAINT `fk_leveldesc_languages` FOREIGN KEY (`languageid`) REFERENCES `lang` (`id`),
-  ADD CONSTRAINT `fk_leveldesc_level` FOREIGN KEY (`levelid`) REFERENCES `level` (`id`);
 
 --
 -- Megkötések a táblához `player`
