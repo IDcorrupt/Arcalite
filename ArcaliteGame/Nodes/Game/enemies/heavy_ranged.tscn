@@ -1,7 +1,7 @@
-[gd_scene load_steps=46 format=3 uid="uid://dtwxqo8wyx1pw"]
+[gd_scene load_steps=43 format=3 uid="uid://dtwxqo8wyx1pw"]
 
 [ext_resource type="Texture2D" uid="uid://ccmt4ma2jpt0u" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/penguin.png" id="1_cl5ob"]
-[ext_resource type="Script" path="res://Scripts/Game/Enemies/HeavyRanged.cs" id="1_l1duq"]
+[ext_resource type="Script" uid="uid://bthb332j357tx" path="res://Scripts/Game/Enemies/HeavyRanged.cs" id="1_l1duq"]
 [ext_resource type="Texture2D" uid="uid://v4gnk750ktm1" path="res://Assets/10count.png" id="1_yvi18"]
 [ext_resource type="Texture2D" uid="uid://ci61jnj31yis8" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 15/723.png" id="3_jm67h"]
 
@@ -93,10 +93,6 @@ region = Rect2(768, 448, 64, 64)
 atlas = ExtResource("3_jm67h")
 region = Rect2(704, 448, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_744df"]
-atlas = ExtResource("3_jm67h")
-region = Rect2(640, 448, 64, 64)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_442it"]
 atlas = ExtResource("3_jm67h")
 region = Rect2(576, 448, 64, 64)
@@ -180,7 +176,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -220,9 +216,6 @@ animations = [{
 "texture": SubResource("AtlasTexture_utpi7")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_744df")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_442it")
 }, {
 "duration": 1.0,
@@ -245,7 +238,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die",
-"speed": 25.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -270,23 +263,17 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 10.0
+"speed": 15.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ynrc"]
 size = Vector2(18, 15)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_23gdt"]
-size = Vector2(5, 5)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_uveyp"]
 radius = 250.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_irin3"]
-size = Vector2(35, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ubeio"]
-size = Vector2(16, 16)
+size = Vector2(15, 16)
 
 [node name="HeavyRanged" type="CharacterBody2D"]
 collision_layer = 2
@@ -294,11 +281,9 @@ collision_mask = 132
 script = ExtResource("1_l1duq")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(2, -8.5)
+position = Vector2(1, -8.5)
 sprite_frames = SubResource("SpriteFrames_jovaw")
-animation = &"walk"
-frame = 2
-frame_progress = 0.29256
+animation = &"idle"
 
 [node name="DirectionTimer" type="Timer" parent="."]
 one_shot = true
@@ -320,10 +305,6 @@ one_shot = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0ynrc")
 
-[node name="indicator" type="Sprite2D" parent="."]
-position = Vector2(11, -11)
-texture = SubResource("PlaceholderTexture2D_23gdt")
-
 [node name="AttackRange" type="Area2D" parent="."]
 collision_layer = 0
 
@@ -342,7 +323,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpTrigger"]
-position = Vector2(7.5, 0)
+position = Vector2(15.5, 0)
 shape = SubResource("RectangleShape2D_irin3")
 debug_color = Color(0.615686, 0.356863, 1, 0.419608)
 
@@ -351,10 +332,15 @@ position = Vector2(0, -0.5)
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleDetect"]
-position = Vector2(17, 0)
-shape = SubResource("RectangleShape2D_ubeio")
-debug_color = Color(0.615686, 0.356863, 1, 0.419608)
+[node name="right" type="CollisionPolygon2D" parent="ObstacleDetect"]
+modulate = Color(0, 0.14902, 1, 1)
+position = Vector2(9, 0)
+polygon = PackedVector2Array(0, -7, 0, 8, 7, -7)
+
+[node name="left" type="CollisionPolygon2D" parent="ObstacleDetect"]
+modulate = Color(0, 0.14902, 1, 1)
+position = Vector2(-9, 0)
+polygon = PackedVector2Array(0, -7, 0, 8, -7, -7)
 
 [node name="LineOfSight" type="RayCast2D" parent="."]
 collision_mask = 133
@@ -364,5 +350,6 @@ collision_mask = 133
 [connection signal="timeout" from="RoamCooldown" to="." method="OnRoamCoolDownTimeout"]
 [connection signal="timeout" from="AttackCooldown" to="." method="AtkCooldownTimeout"]
 [connection signal="timeout" from="HurtTimer" to="." method="OnHurtTimerTimeout"]
+[connection signal="timeout" from="ChaseBuffer" to="." method="OnChaseBufferTimeout"]
 [connection signal="body_entered" from="AttackRange" to="." method="AttackRangeBodyEntered"]
 [connection signal="body_exited" from="AttackRange" to="." method="AttackRangeBodyExited"]

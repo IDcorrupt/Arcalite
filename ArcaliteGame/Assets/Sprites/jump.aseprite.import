@@ -1,7 +1,7 @@
 [remap]
 
-importer="aseprite_wizard.plugin"
-type="SpriteFrames"
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
 uid="uid://cc5tk6h8p0sw4"
 path="res://.godot/imported/jump.aseprite-0b04b254b1612a56b3ce6181539a8f15.res"
 
@@ -12,7 +12,3 @@ dest_files=["res://.godot/imported/jump.aseprite-0b04b254b1612a56b3ce6181539a8f1
 
 [params]
 
-split_layers=false
-exclude_layers_pattern=""
-only_visible_layers=false
-sheet_type="Packed"

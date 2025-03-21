@@ -171,7 +171,7 @@ $(document).ready(() => {
 });
 
 function FillTabs(data) {
-    $("#h3_username").text(getCookie("username"));
+    $("#h2_username").text(getCookie("username"));
     
     $("#characterTabs").html("");
     $("#characterContents").html("");
@@ -183,14 +183,17 @@ function FillTabs(data) {
         $("#characterContents").append(`
         <div id="Player_${data[i].id}" class="profile tabcontent">
             <div class="profile-details">
-                <img class="profile-img" src="./img/${data[i].image}.png" alt="${data[i].image}">
+                <img class="profile-img" src="./img/Avatars/${data[i].image}" alt="${data[i].image}">
             </div>
             <div class="profile-details" id="profile-mid">
                 <p>Szoba: ${data[i].level}</p>
             </div>
             <div class="profile-details">
                 <p>Életpont: ${data[i].hp}</p>
-                <p>Mana: </p>
+                <p>Manapont: ${data[i].mp}</p>
+            </div>
+            <div class="profile-details">
+                <p>Játszott idő: ${data[i].playtime}</p>
             </div>
         </div>`);
 

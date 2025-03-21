@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 public partial class ConfigFileHandler : Node
 {
     static ConfigFile config = new ConfigFile();
-    const string SETTINGS_FILE_PATH = "res://settings.ini";
+    const string SETTINGS_FILE_PATH = "user://settings.ini";
     public static Dictionary<string, Dictionary<string, Variant>> settingChanges = new Dictionary<string, Dictionary<string, Variant>>();
 
     static int[] resXvalues = { 3840, 2560, 1920, 1280, 640 };
@@ -57,9 +57,9 @@ public partial class ConfigFileHandler : Node
         config.SetValue("controls", "move_dash-alt", "");
         config.SetValue("controls", "spell_oracle", "Space");
         config.SetValue("controls", "spell_oracle-alt", "");
-        config.SetValue("controls", "spell_slot1", "Q");
+        config.SetValue("controls", "spell_slot1", "E");
         config.SetValue("controls", "spell_slot1-alt", "");
-        config.SetValue("controls", "spell_slot2", "E");
+        config.SetValue("controls", "spell_slot2", "Q");
         config.SetValue("controls", "spell_slot2-alt", "");
         config.SetValue("controls", "attack_normal", "MouseLeft");
         config.SetValue("controls", "attack_normal-alt", "");

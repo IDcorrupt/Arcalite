@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=4 uid="uid://ltckn21h2yjp"]
 
-[ext_resource type="Script" path="res://Scripts/Maps/Map.cs" id="1_5ga0h"]
+[ext_resource type="Script" uid="uid://uoonx2bghxay" path="res://Scripts/Maps/Map.cs" id="1_5ga0h"]
 [ext_resource type="Texture2D" uid="uid://bm61jaa36wan2" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_forest.png" id="1_41e25"]
 [ext_resource type="Texture2D" uid="uid://b51u80tameory" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_snow.png" id="3_ey2y2"]
 [ext_resource type="PackedScene" uid="uid://dodk5iiiisuu4" path="res://Nodes/Game/enemies/enemy_control.tscn" id="4_krw5v"]

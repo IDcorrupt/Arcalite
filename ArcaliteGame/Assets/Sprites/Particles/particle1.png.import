@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://nwucowdfmg6"
+path="res://.godot/imported/particle1.png-4ea7f9efd7a2528c6eb7617642c1b800.image"
+
+[deps]
+
+source_file="res://Assets/Sprites/Particles/particle1.png"
+dest_files=["res://.godot/imported/particle1.png-4ea7f9efd7a2528c6eb7617642c1b800.image"]
+
+[params]
+

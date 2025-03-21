@@ -7,14 +7,12 @@ public partial class CameraController : Node2D
     //debug
     private bool freecamToggle = false;
     //debug
-
+    
+    
+    [Signal] public delegate void CameraMovedEventHandler(string dir);
 
     private Camera2D camera;
-    private Area2D topTrigger;
-    private Area2D botTrigger;
-    private Area2D leftTrigger;
-    private Area2D rightTrigger;
-
+    private StaticBody2D hitBox;
     private Area2D enemyTrigger;
 
     Timer cooldownTimer;
@@ -22,10 +20,7 @@ public partial class CameraController : Node2D
     public override void _Ready()
     {
         camera = GetNode<Camera2D>("Camera");
-        topTrigger = GetNode<Area2D>("Camera/CamTriggers/TopTrigger");
-        botTrigger = GetNode<Area2D>("Camera/CamTriggers/BotTrigger");
-        leftTrigger = GetNode<Area2D>("Camera/CamTriggers/LeftTrigger");
-        rightTrigger = GetNode<Area2D>("Camera/CamTriggers/RightTrigger");
+        hitBox = GetNode("Camera/edgeCollisions") as StaticBody2D;
 
         enemyTrigger = GetNode<Area2D>("Camera/EnemyTrigger");
 
@@ -37,14 +32,18 @@ public partial class CameraController : Node2D
     {
         camera.PositionSmoothingEnabled = false;
         cooldownTimer.Start();
+        LockPlayer(false);
     }
 
+    public void LockPlayer(bool value)
+    {
+        hitBox.SetCollisionLayerValue(3, value);
+    }
 
     //camera movement
     public void MoveCamera(string direction)
     {
 
-        GD.Print("moving: " + direction);
         switch (direction)
         {
             case "top":
@@ -62,7 +61,7 @@ public partial class CameraController : Node2D
             default:
                 break;
         }
-        
+        EmitSignal(SignalName.CameraMoved, direction);
     }
 
 

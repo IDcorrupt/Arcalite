@@ -53,8 +53,6 @@ public partial class CasterProjectile : CharacterBody2D
                 vel *= slowFactor;
             }else
                 slowFactor = 0;
-            GD.Print("proj vel: " + vel);
-            GD.Print("slowfactor: " + slowFactor);
             var collision = MoveAndCollide(vel);
 
             if (collision != null && (collision.GetCollider() is StaticBody2D || collision.GetCollider() is TileMapLayer))

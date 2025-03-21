@@ -1,7 +1,7 @@
 [remap]
 
-importer="aseprite_wizard.plugin"
-type="SpriteFrames"
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
 uid="uid://sovmoh6fg201"
 path="res://.godot/imported/straightdash.aseprite-1ee445626172c318ec59441afd995a13.res"
 
@@ -12,7 +12,3 @@ dest_files=["res://.godot/imported/straightdash.aseprite-1ee445626172c318ec59441
 
 [params]
 
-split_layers=false
-exclude_layers_pattern=""
-only_visible_layers=false
-sheet_type="Packed"

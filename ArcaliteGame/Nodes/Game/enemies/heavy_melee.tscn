@@ -1,6 +1,6 @@
-[gd_scene load_steps=49 format=3 uid="uid://ctrs8f1p3hiil"]
+[gd_scene load_steps=47 format=3 uid="uid://ctrs8f1p3hiil"]
 
-[ext_resource type="Script" path="res://Scripts/Game/Enemies/HeavyMelee.cs" id="1_ok2i2"]
+[ext_resource type="Script" uid="uid://c75dg41hv5caf" path="res://Scripts/Game/Enemies/HeavyMelee.cs" id="1_ok2i2"]
 [ext_resource type="Texture2D" uid="uid://pb5r0yxaalr1" path="res://Assets/Placeholder assets/Rocky Roads/Enemies/slime_red.png" id="1_sihy3"]
 [ext_resource type="Texture2D" uid="uid://v4gnk750ktm1" path="res://Assets/10count.png" id="2_b1r0o"]
 [ext_resource type="Texture2D" uid="uid://dlav7k5wcamcd" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 12/587.png" id="3_7nx6t"]
@@ -192,7 +192,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -236,7 +236,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die",
-"speed": 20.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -297,17 +297,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m1jxv"]
 size = Vector2(48, 33)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_j6u8p"]
-size = Vector2(10, 10)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s47iu"]
-size = Vector2(78, 33)
+size = Vector2(71, 33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_de3kb"]
-size = Vector2(88.5, 33)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mof2g"]
-size = Vector2(30.5, 34)
+size = Vector2(33, 33)
 
 [node name="HeavyMelee" type="CharacterBody2D"]
 collision_layer = 2
@@ -316,7 +310,7 @@ floor_max_angle = 0.802851
 script = ExtResource("1_ok2i2")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -8)
+position = Vector2(0, -7.5)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_l32ot")
 animation = &"idle"
@@ -339,41 +333,40 @@ one_shot = true
 one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_m1jxv")
 
-[node name="indicator" type="Sprite2D" parent="."]
-position = Vector2(29, -27)
-texture = SubResource("PlaceholderTexture2D_j6u8p")
-
 [node name="AttackRange" type="Area2D" parent="."]
-position = Vector2(0, -8)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
-position = Vector2(15, 7.5)
+position = Vector2(11.5, 0)
 shape = SubResource("RectangleShape2D_s47iu")
 debug_color = Color(0.993985, 0, 0.229261, 0.42)
 
 [node name="JumpTrigger" type="Area2D" parent="."]
-position = Vector2(0, -98)
+position = Vector2(0, -78)
 collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpTrigger"]
-position = Vector2(21, 0)
+position = Vector2(42, 0)
 shape = SubResource("RectangleShape2D_de3kb")
 debug_color = Color(0.615686, 0.356863, 1, 0.419608)
 
 [node name="ObstacleDetect" type="Area2D" parent="."]
-position = Vector2(0, -17)
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleDetect"]
-position = Vector2(39, 16)
-shape = SubResource("RectangleShape2D_mof2g")
-debug_color = Color(0.615686, 0.356863, 1, 0.419608)
+[node name="right" type="CollisionPolygon2D" parent="ObstacleDetect"]
+modulate = Color(0, 0.15, 1, 1)
+position = Vector2(32, -0.5)
+polygon = PackedVector2Array(-8, 17, -8, -16, 9, -16)
+
+[node name="left" type="CollisionPolygon2D" parent="ObstacleDetect"]
+modulate = Color(0, 0.15, 1, 1)
+position = Vector2(-15, -0.5)
+polygon = PackedVector2Array(-9, 17, -9, -16, -26, -16)
+disabled = true
 
 [node name="LineOfSight" type="RayCast2D" parent="."]
 target_position = Vector2(110, 0)
@@ -384,5 +377,6 @@ collision_mask = 133
 [connection signal="timeout" from="RoamCooldown" to="." method="OnRoamCoolDownTimeout"]
 [connection signal="timeout" from="AttackCooldown" to="." method="AtkCooldownTimeout"]
 [connection signal="timeout" from="HurtTimer" to="." method="OnHurtTimerTimeout"]
+[connection signal="timeout" from="ChaseBuffer" to="." method="OnChaseBufferTimeout"]
 [connection signal="body_entered" from="AttackRange" to="." method="AttackRangeBodyEntered"]
 [connection signal="body_exited" from="AttackRange" to="." method="AttackRangeBodyExited"]

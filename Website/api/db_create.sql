@@ -37,6 +37,7 @@ CREATE TABLE player (
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(64),
   hp INT,
+  mp INT,
   profileid INT,
   avatarid INT,
   levelid INT,
@@ -125,4 +126,12 @@ CREATE TABLE leveldesc (
   CONSTRAINT pk_leveldesc PRIMARY KEY (levelid, languageid),
   CONSTRAINT fk_leveldesc_level FOREIGN KEY (levelid) REFERENCES level(id),
   CONSTRAINT fk_leveldesc_languages FOREIGN KEY (languageid) REFERENCES lang(id)
+);
+
+CREATE TABLE saves (
+  playerid INT,
+  time DATETIME DEFAULT CURRENT_TIMESTAMP,
+  save LONGBLOB,
+  CONSTRAINT pk_saves PRIMARY KEY (playerid, time),
+  CONSTRAINT fk_saves_player FOREIGN KEY (playerid) REFERENCES player(id)
 );
