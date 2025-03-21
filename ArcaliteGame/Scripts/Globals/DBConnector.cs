@@ -121,21 +121,21 @@ public static class DBConnector
 
         //fetching character data
         query = $@"
-            WITH lastSave AS (
+            WITH lastSaves AS (
                 SELECT *
                 FROM saves
                 WHERE time = (SELECT MAX(time) FROM saves AS s WHERE s.playerid = saves.playerid)
             )
-            SELECT player.id AS id, player.name AS name, player.hp AS hp, player.mp AS mp, player.levelid AS level, avatar.image AS image, lastSave.save AS save
+            SELECT player.id AS id, player.name AS name, player.hp AS hp, player.mp AS mp, player.levelid AS level, avatar.image AS image, lastSaves.save AS save
             FROM player 
                 INNER JOIN avatar ON avatar.id = player.avatarid
-                LEFT JOIN lastSave ON player.id = lastSave.playerid
-            WHERE player.profileid = {userdata.Id}";
+                LEFT JOIN lastSaves ON player.id = lastSaves.playerid
+            WHERE player.profileid = {userdata.Id};";
 
         using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
         {
             while (reader.Read()) 
-            { 
+            {
                 CharacterData character = new CharacterData();
                 character.Id = reader.GetInt32("id");
                 character.Name = reader.GetString("name");
@@ -144,14 +144,20 @@ public static class DBConnector
                 character.Level = reader.GetInt32("level");
                 character.AvatarUrl = reader.GetString("image");
 
-                long length = reader.GetBytes(reader.GetOrdinal("save"), 0, null, 0, int.MaxValue);
-                byte[] data = new byte[length];
-                reader.GetBytes(reader.GetOrdinal("save"), 0, data, 0, (int)length);
-
-                character.Save = System.Text.Encoding.UTF8.GetString(data);
+                if (reader["save"] != DBNull.Value)
+                {
+                    long length = reader.GetBytes(reader.GetOrdinal("save"), 0, null, 0, int.MaxValue);
+                    byte[] data = new byte[length];
+                    reader.GetBytes(reader.GetOrdinal("save"), 0, data, 0, (int)length);
+                    character.Save = System.Text.Encoding.UTF8.GetString(data);
+                } 
+                else
+                {
+                    character.Save = null;
+                }
 
                 userdata.Characters.Add(character);
-            }
+            } 
         }
 
         conn.Close();
@@ -165,11 +171,11 @@ public static class DBConnector
         using (MySqlCommand cmd = new MySqlCommand(query, conn))
         {
             cmd.Parameters.AddWithValue("@playerid", playerId);
-            cmd.Parameters.AddWithValue("@save", File.ReadAllBytes("path"));
+            cmd.Parameters.AddWithValue("@save", File.ReadAllBytes(path));
 
             return cmd.ExecuteNonQuery() != 0;
         }
     }
 
     #endregion
-}
+} 
