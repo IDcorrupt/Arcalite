@@ -36,6 +36,13 @@ public partial class SignInPopup : Control
 
         UserData userdata = DBConnector.GetUserData(emailtext, passwordtext);
 
+        Console.WriteLine("bejelentkezve: {0}", userdata.Username);
+        Console.WriteLine("karakterek:");
+        foreach (CharacterData cd in userdata.Characters)
+        {
+            Console.WriteLine("\t{0};;;{1}", cd.Name, cd.Save);
+        }
+
         //TODO: innentõl kéne actually betölteni az adatokat
 
         parent.submenuOpen = false;
