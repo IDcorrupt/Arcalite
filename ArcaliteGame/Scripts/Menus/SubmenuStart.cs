@@ -81,6 +81,7 @@ public partial class SubmenuStart : Control
         AddChild(newGameLaunchNode);
     }
 
+    private void NewGameLaunchNode_Cancel()
     {
         ButtonControl(true);
     }
