@@ -95,8 +95,6 @@ public partial class SubmenuStart : Control
         }
     }
 
-<<<<<<< Updated upstream
-=======
     public override void _Process(double delta)
     {
         base._Process(delta);
@@ -104,5 +102,4 @@ public partial class SubmenuStart : Control
             BackPressed();
     }
 
->>>>>>> Stashed changes
 }

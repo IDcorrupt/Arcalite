@@ -1,13 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-<<<<<<< Updated upstream
-using MySql.Data.MySqlClient;
-=======
 using System.Security.Cryptography;
 using Godot;
 using MySqlConnector;
->>>>>>> Stashed changes
 
 public struct CharacterData
 {
@@ -24,6 +20,7 @@ public struct UserData
 
     public UserData()
     {
+        Id = -1;
         Characters = new List<CharacterData>();
     }
 };
@@ -97,8 +94,6 @@ public static class DBConnector
 
     #region METHODS
 
-<<<<<<< Updated upstream
-=======
     public static void ClearUserData()
     {
         if (Globals.user.Id >= 0)
@@ -107,7 +102,6 @@ public static class DBConnector
         }
     }
 
->>>>>>> Stashed changes
     public static UserData GetUserData(string email, string password)
     {
         UserData userdata = new UserData();
@@ -128,7 +122,11 @@ public static class DBConnector
 
         using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
         {
-            if (!reader.HasRows) throw new Exception("Nincs aktív fiók ehhez az e-mail címhez regisztrálva!");
+            if (!reader.HasRows)
+            {
+                conn.Close();
+                throw new Exception("Account not found");
+            }
         }
 
         //fetching user data
@@ -139,19 +137,15 @@ public static class DBConnector
 
         using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
         {
-<<<<<<< Updated upstream
-            if (!reader.HasRows) { throw new Exception("Hibás jelszó!"); }
-=======
             if (!reader.HasRows)
             {
                 conn.Close();
                 throw new Exception("Incorrect password");
             }
->>>>>>> Stashed changes
 
             reader.Read();
             userdata.Id = reader.GetInt32("id");
-            userdata.Username = reader.GetString("name");
+            userdata.Username = reader.GetString("username");
         }
 
         //fetching character data
@@ -161,11 +155,7 @@ public static class DBConnector
                 FROM saves
                 WHERE time = (SELECT MAX(time) FROM saves AS s WHERE s.playerid = saves.playerid)
             )
-<<<<<<< Updated upstream
-            SELECT player.id AS id, player.name AS name, player.hp AS hp, player.mp AS mp, player.levelid AS level, avatar.image AS image, lastSaves.save AS save
-=======
             SELECT player.id AS id, player.name AS name, player.levelid AS level, lastSaves.save AS save, player.playtime as time
->>>>>>> Stashed changes
             FROM player 
                 INNER JOIN avatar ON avatar.id = player.avatarid
                 LEFT JOIN lastSaves ON player.id = lastSaves.playerid
@@ -173,11 +163,7 @@ public static class DBConnector
 
         using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
         {
-<<<<<<< Updated upstream
-            while (reader.Read()) 
-=======
             while (reader.Read())
->>>>>>> Stashed changes
             {
                 CharacterData character = new CharacterData();
                 character.Id = reader.GetInt32("id");
@@ -191,11 +177,7 @@ public static class DBConnector
                     byte[] data = new byte[length];
                     reader.GetBytes(reader.GetOrdinal("save"), 0, data, 0, (int)length);
                     character.Save = System.Text.Encoding.UTF8.GetString(data);
-<<<<<<< Updated upstream
-                } 
-=======
                 }
->>>>>>> Stashed changes
                 else
                 {
                     character.Save = null;

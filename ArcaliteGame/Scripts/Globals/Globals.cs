@@ -36,12 +36,18 @@ public partial class Globals : Node
     //for controls - decides which button is being rebound
     public static int buttontoggle = 0;
 
-<<<<<<< Updated upstream
 
-=======
     //website connection stuff
     public static UserData user = new UserData();
->>>>>>> Stashed changes
 
+
+/*    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        bool login = user.Id >= 0 ? true : false;
+        GD.Print($"user logged in: {login}, user id is: {user.Id}");
+        if (login)
+            GD.Print("username. " + user.Username);
+    }*/
 
 }

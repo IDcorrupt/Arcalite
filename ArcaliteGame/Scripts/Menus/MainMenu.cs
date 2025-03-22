@@ -7,9 +7,11 @@ public partial class MainMenu : Control
     private Button Settings;
     private Button Website;
     private Button Quit;
+    private Panel AccountPanel;
 
     private Button signIn;
     private Button Register;
+    private Label AccountName;
 
     public bool submenuOpen = false;
 
@@ -25,8 +27,10 @@ public partial class MainMenu : Control
         Settings = GetNode<Button>("Settings");
         Website = GetNode<Button>("Website");
         Quit = GetNode<Button>("Quit");
+        AccountPanel = GetNode("Account") as Panel;
         signIn = GetNode("Account/Sign In") as Button;
         Register = GetNode("Account/Register") as Button;
+        AccountName = GetNode("Account/Name") as Label;
         Start.Pressed += StartPressed;
         Settings.Pressed += SettingsPressed;
         Website.Pressed += WebsitePressed;
@@ -36,7 +40,7 @@ public partial class MainMenu : Control
         
         background = GetNode("bg") as TileMapLayer;
         background.TileSet = TilesetLoader.LoadedTileset;
-        if(Globals.user.Id >=0)
+        if(Globals.user.Id >= 0)
         {
             AccountName.Text = Globals.user.Username;
             signIn.Text = "Sign out";
@@ -54,11 +58,6 @@ public partial class MainMenu : Control
 
     private void SignIn_Pressed()
     {
-<<<<<<< Updated upstream
-        Control signInPopup = signInPopupScene.Instantiate() as Control;
-        AddChild(signInPopup);
-        submenuOpen = true;
-=======
         if(Globals.user.Id >= 0)
         {
             DBConnector.ClearUserData();
@@ -88,7 +87,6 @@ public partial class MainMenu : Control
             signIn.Position = new Vector2(43, signIn.Position.Y);
             Register.Hide();
             Register.Disabled = true;
-            //LOAD SAVE
         }
         else
         {
@@ -98,7 +96,6 @@ public partial class MainMenu : Control
             Register.Show();
             Register.Disabled = false;
         }
->>>>>>> Stashed changes
     }
 
     public void StartPressed()
@@ -121,28 +118,35 @@ public partial class MainMenu : Control
     {
         GetTree().Quit();
     }
-    public override void _Process(double delta)
+
+    private void ButtonControls(bool state)
     {
-        if (TilesetLoader.LoadedTileset != null)
-            background.TileSet = TilesetLoader.LoadedTileset;
-        if (submenuOpen)
-        {
-            Start.Visible = false;
-            Settings.Visible = false;
-            Website.Visible = false;
-            Quit.Visible = false;
-        }
-        else
+        if (state)
         {
             Start.Visible = true;
             Settings.Visible = true;
             Website.Visible = true;
             Quit.Visible = true;
+            AccountPanel.Visible = true;
         }
+        else
+        {
+            Start.Visible = false;
+            Settings.Visible = false;
+            Website.Visible = false;
+            Quit.Visible = false;
+            AccountPanel.Visible = false;
         }
-<<<<<<< Updated upstream
-=======
+    }
+
+    public override void _Process(double delta)
+    {
+        if (TilesetLoader.LoadedTileset != null)
+            background.TileSet = TilesetLoader.LoadedTileset;
+        if (submenuOpen)
+            ButtonControls(false);
+        else
+            ButtonControls(true);
 
     }
->>>>>>> Stashed changes
 }

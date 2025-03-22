@@ -99,7 +99,7 @@ text = "Logged in as"
 label_settings = SubResource("LabelSettings_sjwym")
 horizontal_alignment = 1
 
-[node name="Guest" type="Label" parent="Account"]
+[node name="Name" type="Label" parent="Account"]
 layout_mode = 0
 offset_top = 30.0
 offset_right = 140.0

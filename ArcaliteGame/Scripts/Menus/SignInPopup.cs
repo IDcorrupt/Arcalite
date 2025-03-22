@@ -8,14 +8,12 @@ public partial class SignInPopup : Control
     Button cancel;
     LineEdit email;
     LineEdit password;
+    Label errorCodes;
 
-<<<<<<< Updated upstream
-=======
     Button tempUser;
 
     [Signal] public delegate void LoginEventHandler();
     
->>>>>>> Stashed changes
 
     public override void _Ready()
     {
@@ -25,6 +23,7 @@ public partial class SignInPopup : Control
         cancel = GetNode("Panel/Cancel") as Button;
         email = GetNode("Panel/Email") as LineEdit;
         password = GetNode("Panel/Password") as LineEdit;
+        errorCodes = GetNode("Panel/errors") as Label;
 
         signIn.Pressed += SignIn_Pressed;
         cancel.Pressed += Cancel_Pressed;
@@ -96,18 +95,19 @@ public partial class SignInPopup : Control
         string emailtext = email.Text;
         string passwordtext = password.Text;
 
-        UserData userdata = DBConnector.GetUserData(emailtext, passwordtext);
-
-        Console.WriteLine("bejelentkezve: {0}", userdata.Username);
-        Console.WriteLine("karakterek:");
-        foreach (CharacterData cd in userdata.Characters)
+        try
         {
-            Console.WriteLine("\t{0};;;{1}", cd.Name, cd.Save);
+            Globals.user = DBConnector.GetUserData(emailtext, passwordtext);
+            parent.submenuOpen = false;
+            EmitSignal(SignalName.Login);
+            QueueFree();
+        }
+        catch (Exception ex)
+        {
+            errorCodes.Text = ex.Message;
+            throw;
         }
 
-        //TODO: innentõl kéne actually betölteni az adatokat
 
-        parent.submenuOpen = false;
-        QueueFree();
     }
 }
