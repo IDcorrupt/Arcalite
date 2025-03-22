@@ -19,6 +19,9 @@ public partial class GameScene : Node2D
 	Control respawnScreen;
 	Map mapNode;
 
+
+
+
 	public override void _Ready()
 	{
 		//get special layer for UI
@@ -30,6 +33,7 @@ public partial class GameScene : Node2D
 		if (Globals.hasSavefile)
 		{
 			string mapname = Globals.currentSave[0];
+			Globals.runName = Globals.currentSave[10];
 			MapScene = ResourceLoader.Load($"res://Nodes/Maps/{mapname}.tscn") as PackedScene;
 		}
 		else
@@ -58,6 +62,8 @@ public partial class GameScene : Node2D
 
     public override void _Process(double delta)
 	{
+		if (Globals.gameActive && !Globals.player.GetIsDead())
+			Globals.playTime += (float)delta;
 
 		if (Globals.player.GetIsDead() && !deadtrigger)
 		{

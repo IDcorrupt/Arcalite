@@ -36,6 +36,14 @@ public partial class MainMenu : Control
         
         background = GetNode("bg") as TileMapLayer;
         background.TileSet = TilesetLoader.LoadedTileset;
+        if(Globals.user.Id >=0)
+        {
+            AccountName.Text = Globals.user.Username;
+            signIn.Text = "Sign out";
+            signIn.Position = new Vector2(43, signIn.Position.Y);
+            Register.Hide();
+            Register.Disabled = true;
+        }
     }
 
     private void Register_Pressed()
@@ -46,9 +54,51 @@ public partial class MainMenu : Control
 
     private void SignIn_Pressed()
     {
+<<<<<<< Updated upstream
         Control signInPopup = signInPopupScene.Instantiate() as Control;
         AddChild(signInPopup);
         submenuOpen = true;
+=======
+        if(Globals.user.Id >= 0)
+        {
+            DBConnector.ClearUserData();
+            AccountName.Text = "Guest";
+            signIn.Text = "Sign in";
+            signIn.Position = new Vector2(10, signIn.Position.Y);
+            Register.Show();
+            Register.Disabled = false;
+            //CLEAR SAVE
+        }
+        else
+        {
+            SignInPopup signInPopup = signInPopupScene.Instantiate() as SignInPopup;
+            AddChild(signInPopup);
+            signInPopup.Login += SignInPopup_Login;
+            submenuOpen = true;
+
+        }
+    }
+
+    private void SignInPopup_Login()
+    {
+        if (Globals.user.Id >= 0)
+        {
+            AccountName.Text = Globals.user.Username;
+            signIn.Text = "Sign out";
+            signIn.Position = new Vector2(43, signIn.Position.Y);
+            Register.Hide();
+            Register.Disabled = true;
+            //LOAD SAVE
+        }
+        else
+        {
+            AccountName.Text = "Guest";
+            signIn.Text = "Sign in";
+            signIn.Position = new Vector2(10, signIn.Position.Y);
+            Register.Show();
+            Register.Disabled = false;
+        }
+>>>>>>> Stashed changes
     }
 
     public void StartPressed()
@@ -90,4 +140,9 @@ public partial class MainMenu : Control
             Quit.Visible = true;
         }
         }
+<<<<<<< Updated upstream
+=======
+
+    }
+>>>>>>> Stashed changes
 }

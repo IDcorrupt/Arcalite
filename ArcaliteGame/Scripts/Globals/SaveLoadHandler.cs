@@ -27,7 +27,14 @@ public partial class SaveLoadHandler : Node
         //player attack damage
         file.StoreLine(attackDamage.ToString());
         //items
-        file.StoreString(String.Join("; ", equippedItems));
+        file.StoreLine(String.Join("; ", equippedItems));
+
+        //save id (i assume the database will need it)
+        file.StoreLine("-1");
+        //save name
+        file.StoreLine(Globals.runName);
+        //playtime
+        file.StoreString(Globals.playTime.ToString());
         file.Close();
 
         //TODO: Ide valahol majd el kell tarolni a jelenlegi playerid-t, es az elso argumentumnak megadni.
@@ -41,11 +48,17 @@ public partial class SaveLoadHandler : Node
             return true;
         else return false;
     }
-    public static void Load()
+    public static void Load(string save = "")
     {
         //delete save in memory
         Globals.currentSave = new List<string>();
-        //opne file
+        if (save.Length > 0)
+        {
+            string[] cloudsave = save.Split('\n');
+            foreach (string s in cloudsave)
+                Globals.currentSave.Add(s);
+        }
+        //open file
         var file = FileAccess.Open(savepath, FileAccess.ModeFlags.Read);
         string[] data = file.GetAsText().Split('\n');
         //load to memory

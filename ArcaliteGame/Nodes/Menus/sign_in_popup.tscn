@@ -67,3 +67,12 @@ offset_top = 105.0
 offset_right = 120.0
 offset_bottom = 136.0
 text = "Cancel"
+
+[node name="tempuser" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 198.0
+offset_right = 222.0
+offset_bottom = 226.0
+theme_override_font_sizes/font_size = 16
+text = "add temp user"

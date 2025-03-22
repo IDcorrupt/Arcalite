@@ -1,12 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+<<<<<<< Updated upstream
 using MySql.Data.MySqlClient;
+=======
+using System.Security.Cryptography;
+using Godot;
+using MySqlConnector;
+>>>>>>> Stashed changes
 
-public struct CharacterData 
+public struct CharacterData
 {
-    public int Id, Level, HP, MP;
-    public string Name, AvatarUrl, Save;
+    public int Id, Level;
+    public string Name, Save;
+    public TimeSpan Playtime;
 }
 
 public struct UserData
@@ -31,14 +38,16 @@ public static class DBConnector
     private static void setConnstr()
     {
         connstr = $"host={host};port={port};user={user};password={password};database={database}";
-        conn = new MySqlConnection(connstr) ;
+        conn = new MySqlConnection(connstr);
     }
 
     #region PROPERTIES
 
-    public static string Host { 
-        get => host; 
-        set {
+    public static string Host
+    {
+        get => host;
+        set
+        {
             host = value;
             setConnstr();
         }
@@ -88,10 +97,28 @@ public static class DBConnector
 
     #region METHODS
 
+<<<<<<< Updated upstream
+=======
+    public static void ClearUserData()
+    {
+        if (Globals.user.Id >= 0)
+        {
+            Globals.user = new UserData();
+        }
+    }
+
+>>>>>>> Stashed changes
     public static UserData GetUserData(string email, string password)
     {
         UserData userdata = new UserData();
-        conn.Open();
+        try
+        {
+            conn.Open();
+        }
+        catch (Exception)
+        {
+            throw new Exception("server not found");
+        }
 
         //checking if profile exists
         string query = @$"
@@ -112,7 +139,15 @@ public static class DBConnector
 
         using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
         {
+<<<<<<< Updated upstream
             if (!reader.HasRows) { throw new Exception("Hibás jelszó!"); }
+=======
+            if (!reader.HasRows)
+            {
+                conn.Close();
+                throw new Exception("Incorrect password");
+            }
+>>>>>>> Stashed changes
 
             reader.Read();
             userdata.Id = reader.GetInt32("id");
@@ -126,7 +161,11 @@ public static class DBConnector
                 FROM saves
                 WHERE time = (SELECT MAX(time) FROM saves AS s WHERE s.playerid = saves.playerid)
             )
+<<<<<<< Updated upstream
             SELECT player.id AS id, player.name AS name, player.hp AS hp, player.mp AS mp, player.levelid AS level, avatar.image AS image, lastSaves.save AS save
+=======
+            SELECT player.id AS id, player.name AS name, player.levelid AS level, lastSaves.save AS save, player.playtime as time
+>>>>>>> Stashed changes
             FROM player 
                 INNER JOIN avatar ON avatar.id = player.avatarid
                 LEFT JOIN lastSaves ON player.id = lastSaves.playerid
@@ -134,15 +173,17 @@ public static class DBConnector
 
         using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
         {
+<<<<<<< Updated upstream
             while (reader.Read()) 
+=======
+            while (reader.Read())
+>>>>>>> Stashed changes
             {
                 CharacterData character = new CharacterData();
                 character.Id = reader.GetInt32("id");
                 character.Name = reader.GetString("name");
-                character.HP = reader.GetInt32("hp");
-                character.MP = reader.GetInt32("mp");
+                character.Playtime = reader.GetTimeSpan("time");
                 character.Level = reader.GetInt32("level");
-                character.AvatarUrl = reader.GetString("image");
 
                 if (reader["save"] != DBNull.Value)
                 {
@@ -150,7 +191,11 @@ public static class DBConnector
                     byte[] data = new byte[length];
                     reader.GetBytes(reader.GetOrdinal("save"), 0, data, 0, (int)length);
                     character.Save = System.Text.Encoding.UTF8.GetString(data);
+<<<<<<< Updated upstream
                 } 
+=======
+                }
+>>>>>>> Stashed changes
                 else
                 {
                     character.Save = null;
