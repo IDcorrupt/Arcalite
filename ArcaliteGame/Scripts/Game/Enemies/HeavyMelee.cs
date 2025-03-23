@@ -10,22 +10,10 @@ public partial class HeavyMelee : Enemy
         currentHP = maxHP;
         damage = 15;
         atkCooldown.WaitTime = 1;
-        jumpStrength = 500;
+        jumpStrength = 450;
         shardDropRate = 50;
     }
-    protected override void Animate()
-    {
-        base.Animate();
-        if (isAttacking)
-        {
-            sprite.Scale = new Vector2(1, 1);
-        }
-        else if ((IsOnFloor() || Velocity.X > 0) && !isDead)
-        {
-            sprite.Scale = new Vector2(3, 3);
-            sprite.Play("walk");
-        }
-    }
+
     protected override void Attack()
     {
         base.Attack();

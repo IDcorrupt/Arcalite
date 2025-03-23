@@ -202,7 +202,8 @@ public partial class Enemy : CharacterBody2D
     {
         //shell func, attack is different for each type
         isAttacking = true;
-        sprite.Play("attack");
+        Random atkRand = new Random();
+        sprite.Play($"attack{atkRand.Next(1,3).ToString()}");
         Velocity = Vector2.Zero;
         speed = 0;
     }
@@ -212,7 +213,7 @@ public partial class Enemy : CharacterBody2D
         {
             isHurt = true;
             currentHP -= damage;
-            if(attacker != null)
+            if (attacker != null)
             {
                 //knockback
                 int dir = 0;
@@ -223,27 +224,24 @@ public partial class Enemy : CharacterBody2D
                 Velocity = new Vector2(dir * 200, 0);
 
 
+                sprite.Play("hurt");
                 hurtTimer.WaitTime = 0.5f;
                 hurtTimer.Start();
             }
             else
-            {
-                //no invincibility if no knockback (for basic attack & rapidfire)
                 isHurt = false;
-            }
-            GD.Print("enemy hit, current hp: " + currentHP);
         }
     }
     private void OnHurtTimerTimeout() { isHurt = false; }
     public void OnChaseBufferTimeout() { isChasing = false; }
 
     //appearance
-    private void Flip(bool dir)
+    protected virtual void Flip(bool dir)
     {
         if (dir)
         {
-            //right
-            sprite.FlipH = true;
+            //left
+            sprite.FlipH = false;
             attackRange.RotationDegrees = 180;
             jumpTrigger.RotationDegrees = 180;
             obstacleDetectRight.Disabled = true;
@@ -252,7 +250,8 @@ public partial class Enemy : CharacterBody2D
         }
         else
         {
-            sprite.FlipH = false;
+            //right
+            sprite.FlipH = true;
             attackRange.RotationDegrees = 0;
             jumpTrigger.RotationDegrees = 0;
             obstacleDetectRight.Disabled = false;
@@ -273,7 +272,11 @@ public partial class Enemy : CharacterBody2D
     }
     public virtual void OnSpriteAnimationFinished()
     {
-        if (sprite.Animation == "attack")
+        if (sprite.Animation == "hurt")
+        {
+            isHurt = false;
+        }
+        else if (sprite.Animation == "attack1" || sprite.Animation == "attack2")
         {
             isAttacking = false;
             sprite.Play("idle");

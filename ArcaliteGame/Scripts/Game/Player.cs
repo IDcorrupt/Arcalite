@@ -583,6 +583,7 @@ public partial class Player : CharacterBody2D
             damage = (float)Convert.ToDecimal(Globals.currentSave[7]);
 
             //items
+            oracleLevel = 1;
             string[] items = Globals.currentSave[8].Split(";");
             spellItemE = (Enums.itemType)Convert.ToInt32(items[0]);
             spellItemQ = (Enums.itemType)Convert.ToInt32(items[1]);
@@ -596,7 +597,7 @@ public partial class Player : CharacterBody2D
             currentHP = MaxHP;
             currentMP = MaxMP;
             damage = 5;
-            oracleLevel = 2;
+            oracleLevel = 1;
 
         }
 

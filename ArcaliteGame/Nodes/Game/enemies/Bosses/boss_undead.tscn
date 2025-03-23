@@ -527,7 +527,7 @@ script = ExtResource("1_4jsap")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_joyky")
-animation = &"idle"
+animation = &"spec_attack"
 
 [node name="SpecAttackAnim" type="Node2D" parent="."]
 position = Vector2(0, 19)
