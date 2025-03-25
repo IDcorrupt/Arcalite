@@ -6,12 +6,12 @@ public partial class HeavyMelee : Enemy
     public override void _Ready()
     {
         base._Ready();
-        maxHP = 75;
+        maxHP = 60 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
-        damage = 15;
+        damage = 10 * Globals.diffMultipliers[Globals.Difficulty];
         atkCooldown.WaitTime = 1;
         jumpStrength = 450;
-        shardDropRate = 50;
+        shardDropRate = 50 * Mathf.RoundToInt(Globals.diffMultipliers[Globals.Difficulty]);
     }
 
     protected override void Attack()

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqt3ubl3dhm57"
-path="res://.godot/imported/Lajos - Copy.png-9e772280704e6419eb94f65b7b9991e3.ctex"
+uid="uid://cslbijnmrct1s"
+path="res://.godot/imported/SLAM.png-212b8a855cd1adf164649a01745a5206.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Lajos - Copy.png"
-dest_files=["res://.godot/imported/Lajos - Copy.png-9e772280704e6419eb94f65b7b9991e3.ctex"]
+source_file="res://Assets/Sprites/enemies/Headless Horseman 2D Pixel Art/Sprites/outline/SLAM.png"
+dest_files=["res://.godot/imported/SLAM.png-212b8a855cd1adf164649a01745a5206.ctex"]
 
 [params]
 

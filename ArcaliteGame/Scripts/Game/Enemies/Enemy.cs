@@ -264,7 +264,7 @@ public partial class Enemy : CharacterBody2D
         {
             if (atkCooldown.TimeLeft > 0)
                 sprite.Play("idle");
-            else if((IsOnFloor() && Velocity.X > 1) && !isDead)
+            else if((IsOnFloor() && Velocity.X != 0) && !isDead)
                 sprite.Play("walk");
             else if(Velocity.X == 0 && !isDead)
                 sprite.Play("idle");
@@ -293,8 +293,36 @@ public partial class Enemy : CharacterBody2D
     protected void DropItems(Enums.itemType itemtype = Enums.itemType.shard, int customDropRate = 0)
     {
         Item item = null;
-        if (itemtype == Enums.itemType.shard && Math.RNG(shardDropRate))
+        
+        if (itemtype == Enums.itemType.shard)
         {
+            int dropamount = 0;
+            GD.Print("shardrate: " + shardDropRate);
+            if (shardDropRate > 100)
+            {
+                dropamount = Mathf.FloorToInt(shardDropRate / 100);
+                GD.Print("dropamount: " + dropamount);
+                for (int i = 0; i < dropamount; i++)
+                {
+                    item = itemScene.Instantiate() as Item;
+                    item.type = itemtype;
+                    if (item is not null)
+                    {
+                        item.GlobalPosition = GlobalPosition;
+                        itemContainer.AddChild(item);
+                        item = null;
+                    }
+                }
+            }
+            if (Math.RNG(shardDropRate - dropamount * 100))
+            {
+                item = itemScene.Instantiate() as Item;
+                item.type = itemtype;
+            }
+
+
+
+
             GD.Print("dropping shard");
             item = itemScene.Instantiate() as Item;
             item.type = itemtype;
@@ -311,14 +339,11 @@ public partial class Enemy : CharacterBody2D
             itemContainer.AddChild(item);
         }
     }
-    protected virtual void Die(int shardamount = 1)
+    protected virtual void Die()
     {
         parent.enemyAmount--;
         //empty item func call -> shard drop
-        for (int i = 0; i < shardamount; i++)
-        {
-            DropItems();
-        }
+        DropItems();
         QueueFree();
 
     }
@@ -330,6 +355,11 @@ public partial class Enemy : CharacterBody2D
             isDead = true;
         if (!isDead)
         {
+            if (isChasing)
+            {
+                //update direction outside move(), so it flips while attacking
+                Direction = GlobalPosition.DirectionTo(player.GlobalPosition);
+            }
             if (isHurt)
                 Velocity = new Vector2(Velocity.X > 0 ? Velocity.X - (float)delta * 700 : Velocity.X + (float)delta * 700, Velocity.Y);
             if (isAttacking || atkCooldown.TimeLeft > 0)

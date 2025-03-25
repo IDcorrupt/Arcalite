@@ -95,7 +95,7 @@ position = Vector2(960, 180)
 
 [node name="EnemySpawnPoint1" parent="Controllers/EnemyControl1" instance=ExtResource("5_kbhp1")]
 position = Vector2(216, 76)
-EnemyClass = 4
+EnemyClass = 1
 
 [node name="EnemyControl2" parent="Controllers" groups=["Controllers"] instance=ExtResource("4_38mkx")]
 position = Vector2(1600, 180)

@@ -13,12 +13,12 @@ public partial class LightRanged : Enemy
         base._Ready();
         targetingLine = GetNode("Targeting") as RayCast2D;
         launchLocation = GetNode("LaunchLocation") as Node2D;
-        maxHP = 20;
+        maxHP = 20 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
-        damage = 10;
+        damage = 10 * Globals.diffMultipliers[Globals.Difficulty];
         atkCooldown.WaitTime = 1.5f;
         jumpStrength = 400;
-        shardDropRate = 30;
+        shardDropRate = 30 * Mathf.RoundToInt(Globals.diffMultipliers[Globals.Difficulty]);
     }
 
     protected override void Flip(bool dir)
