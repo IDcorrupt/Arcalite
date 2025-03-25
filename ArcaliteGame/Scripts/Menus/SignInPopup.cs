@@ -11,7 +11,6 @@ public partial class SignInPopup : Control
     Label errorCodes;
 
     Button tempUser;
-
     [Signal] public delegate void LoginEventHandler();
     
 
@@ -87,6 +86,7 @@ public partial class SignInPopup : Control
     private void Cancel_Pressed()
     {
         parent.submenuOpen = false;
+        EmitSignal(SignalName.Login);
         QueueFree();
     }
 
@@ -107,7 +107,5 @@ public partial class SignInPopup : Control
             errorCodes.Text = ex.Message;
             throw;
         }
-
-
     }
 }

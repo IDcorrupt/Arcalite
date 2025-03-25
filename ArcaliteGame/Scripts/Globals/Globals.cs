@@ -38,6 +38,8 @@ public partial class Globals : Node
     //for controls - decides which button is being rebound
     public static int buttontoggle = 0;
 
+    //website connection stuff
+    public static UserData user;
 
     //website connection stuff
     public static UserData user = new UserData();
