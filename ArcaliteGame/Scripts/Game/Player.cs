@@ -755,6 +755,8 @@ public partial class Player : CharacterBody2D
     public float GetMaxHP() { return MaxHP; }
     public float GetMaxMP() { return MaxMP; }
     public float GetCurrentHP() { return currentHP; }
+    //needed because exiting right after checkpoint doesn't save the recharging hp
+    public float GetPotentialHP() { return currentHP + HPRechargeAmount; }
     public float GetCurrentMP() { return currentMP; }
     public float GetAttackDamage() { return damage; }
     public List<int> GetEquips()

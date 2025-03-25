@@ -65,7 +65,7 @@ public partial class SubmenuSettings : Control
     //updates values for setting options
     public void UpdateSelectors()
 	{
-		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/difficulty/Selector").Selected = ConfigFileHandler.LoadSetting("game")["difficulty"].AsInt32() - 1;
+		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/difficulty/Selector").Selected = ConfigFileHandler.LoadSetting("game")["difficulty"].AsInt32();
 		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/windowmode/Selector").Selected = ConfigFileHandler.LoadSetting("video")["windowmode"].AsInt32() - 1;
 		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/resolution/Selector").Selected = ConfigFileHandler.LoadSetting("video")["resolutionX"].AsInt32() - 1;
 		GetNode<BaseButton>("Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/vsync/CheckButton").ButtonPressed = ConfigFileHandler.LoadSetting("video")["vsync"].AsBool();
@@ -82,7 +82,7 @@ public partial class SubmenuSettings : Control
     //game
     public void DiffSelect(int index)
 	{
-		ConfigFileHandler.settingChanges["game"]["difficulty"] = index+1;
+		ConfigFileHandler.settingChanges["game"]["difficulty"] = index;
 		isSaved = false;
 	}
 	//video

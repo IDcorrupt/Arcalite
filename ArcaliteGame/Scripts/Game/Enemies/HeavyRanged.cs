@@ -13,12 +13,12 @@ public partial class HeavyRanged : Enemy
         base._Ready();
         targetingLine = GetNode("Targeting") as RayCast2D;
         launchLocation = GetNode("LaunchLocation") as Node2D;
-        maxHP = 40;
+        maxHP = 40 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
-        damage = 25;
+        damage = 25 * Globals.diffMultipliers[Globals.Difficulty];
         atkCooldown.WaitTime = 2f;
         jumpStrength = 400;
-        shardDropRate = 70;
+        shardDropRate = 60 * Mathf.RoundToInt(Globals.diffMultipliers[Globals.Difficulty]);
     }
 
     protected override void Flip(bool dir)

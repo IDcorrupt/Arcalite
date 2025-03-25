@@ -261,7 +261,7 @@ size = Vector2(27, 52)
 radius = 250.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_irin3"]
-size = Vector2(31, 52)
+size = Vector2(31, 36)
 
 [node name="HeavyRanged" type="CharacterBody2D"]
 collision_layer = 2
@@ -308,12 +308,12 @@ target_position = Vector2(250, 0)
 collision_mask = 5
 
 [node name="JumpTrigger" type="Area2D" parent="."]
-position = Vector2(0, -50)
+position = Vector2(0, -58)
 collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpTrigger"]
-position = Vector2(24.5, -16)
+position = Vector2(24.5, 0)
 shape = SubResource("RectangleShape2D_irin3")
 debug_color = Color(0.615686, 0.356863, 1, 0.419608)
 

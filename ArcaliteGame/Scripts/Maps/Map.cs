@@ -28,19 +28,14 @@ public partial class Map : Node2D
         if (Globals.hasSavefile)
         {
             //delete(free) all checkpoints before the current one (so they can't be activated -> no save cheesing
-            GD.Print("saveline 1: "+Globals.currentSave[1]);
-            GD.Print("marker : "+Globals.currentSave[1].Last());
             int marker = Convert.ToInt32(Globals.currentSave[1].Last()); //number at the end of checkpoint name
-            GD.Print("marker var: " + marker);
             int counter = 0;
             while (Convert.ToInt32(checkpointContainer.GetChildren()[counter].Name.ToString().Last()) < marker)
             {
-                GD.Print("checkpoint in question");
                 checkpointContainer.GetChildren()[counter].QueueFree();
                 counter++;
             }
             //set spawnpoint
-            GD.Print($"Current checkpoint path: CheckPoints/{Globals.currentSave[1]}");
             Globals.spawnPoint = GetNode($"CheckPoints/{Globals.currentSave[1]}") as Checkpoint;
             camera.RespawnMove();
         }
@@ -53,7 +48,7 @@ public partial class Map : Node2D
 
         //fx
         rain = GetNode("FX/Rain") as GpuParticles2D;
-        rain.Emitting = false;
+        rain.Emitting = true;
 
         //player
         player = playerScene.Instantiate() as Player;

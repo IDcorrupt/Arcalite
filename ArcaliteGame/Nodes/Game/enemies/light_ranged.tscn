@@ -319,7 +319,7 @@ size = Vector2(22, 37.5)
 radius = 175.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dkn2o"]
-size = Vector2(31, 37)
+size = Vector2(31, 27.5)
 
 [node name="LightRanged" type="CharacterBody2D"]
 collision_layer = 2
@@ -367,12 +367,12 @@ target_position = Vector2(175, 0)
 collision_mask = 5
 
 [node name="JumpTrigger" type="Area2D" parent="."]
-position = Vector2(0, -50)
+position = Vector2(0, -40)
 collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpTrigger"]
-position = Vector2(17.5, 9)
+position = Vector2(17.5, 0)
 shape = SubResource("RectangleShape2D_dkn2o")
 debug_color = Color(0.615686, 0.356863, 1, 0.419608)
 

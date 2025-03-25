@@ -254,7 +254,7 @@ animations = [{
 size = Vector2(68, 68)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_de3kb"]
-size = Vector2(67.5, 67.5)
+size = Vector2(52.75, 52.75)
 
 [node name="HeavyMelee" type="CharacterBody2D"]
 collision_layer = 2
@@ -296,12 +296,12 @@ collision_layer = 0
 polygon = PackedVector2Array(-34, -34, 34, -34, 34, -17, 50, -17, 63, -3, 63, 18, 50, 31, 34, 31, 34, 34, -34, 34)
 
 [node name="JumpTrigger" type="Area2D" parent="."]
-position = Vector2(0, -78)
+position = Vector2(0, -66)
 collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpTrigger"]
-position = Vector2(46, 5)
+position = Vector2(38.625, 0)
 shape = SubResource("RectangleShape2D_de3kb")
 debug_color = Color(0.615686, 0.356863, 1, 0.419608)
 
