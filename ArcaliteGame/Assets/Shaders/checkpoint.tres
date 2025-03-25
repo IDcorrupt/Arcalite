@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://cdi5mokhcdpf8"]
+
+[ext_resource type="Shader" uid="uid://c4tdseu04jaum" path="res://Assets/Shaders/checkpoint.gdshader" id="1_6wqpj"]
+[ext_resource type="Texture2D" uid="uid://bfqpgokokjjlb" path="res://Assets/Sprites/Palettes/Checkpoint palettte - original.png" id="2_jenrs"]
+[ext_resource type="Texture2D" uid="uid://cey06jk68ytwl" path="res://Assets/Sprites/Palettes/Checkpoint palettte - modified.png" id="3_umqtn"]
+
+[resource]
+shader = ExtResource("1_6wqpj")
+shader_parameter/palette_texture = ExtResource("3_umqtn")
+shader_parameter/lookup_texture = ExtResource("2_jenrs")

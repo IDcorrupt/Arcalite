@@ -9,36 +9,66 @@ public partial class SaveLoadHandler : Node
 
     public static void Save(List<bool> roomsCleared, float MaxHP, float MaxMP, float currentHP, float currentMP, float attackDamage, List<int> equippedItems)
     {
-        var file = FileAccess.Open(savepath, FileAccess.ModeFlags.Write);
-        //map
-        file.StoreLine(Globals.activeMap);
-        //checkpoint
-        file.StoreLine(Globals.spawnPoint.Name.ToString());
-        //rooms cleared
-        file.StoreLine(String.Join("; ", roomsCleared));
-        //player max hp
-        file.StoreLine(MaxHP.ToString());
-        //player max mp
-        file.StoreLine(MaxMP.ToString());
-        //player current hp
-        file.StoreLine(currentHP.ToString());
-        //player current mp
-        file.StoreLine(currentMP.ToString());
-        //player attack damage
-        file.StoreLine(attackDamage.ToString());
-        //items
-        file.StoreLine(String.Join("; ", equippedItems));
+        string save = "";
+        //0: map
+        save += Globals.activeMap+"\n";
+        //1: checkpoint
+        save += Globals.spawnPoint.Name.ToString()+"\n";
+        //2: rooms cleared
+        save += $"{String.Join("; ", roomsCleared)}\n";
+        //3: player max hp
+        save += MaxHP.ToString()+"\n";
+        //4: player max mp
+        save += MaxMP.ToString()+"\n";
+        //5: player current hp
+        save += currentHP.ToString()+"\n";
+        //6: player current mp
+        save += currentMP.ToString()+"\n";
+        //7: player attack damage
+        save += attackDamage.ToString()+"\n";
+        //8: items
+        save += $"{String.Join("; ", equippedItems)}\n";
+        //9: save id (i assume the database will need it)
+        save += Globals.runID.ToString()+"\n";
+        //10: save name
+        save += Globals.runName + "\n";
+        //11: playtime
+        save += Globals.playTime.ToString();
 
-        //save id (i assume the database will need it)
-        file.StoreLine("-1");
-        //save name
-        file.StoreLine(Globals.runName);
-        //playtime
-        file.StoreString(Globals.playTime.ToString());
+        bool newsave = false;
+        //cloud stuff
+        if (Globals.user.Id >= 0)
+        {
+            switch (DBConnector.PrepareSave(Globals.user.Id, save))
+            {
+                case Enums.SaveState.None:
+                    break;
+                case Enums.SaveState.Created:
+                    DBConnector.UploadSave(DBConnector.GetLastPlayerEntry(), save);
+                    newsave = true;
+                    break;
+                case Enums.SaveState.Existing:
+                    DBConnector.UploadSave(Globals.user.Id, save);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (newsave)
+        {
+            //if new save was created -> assign new run id
+            string[] data = save.Split('\n');
+            data[9] = DBConnector.GetLastPlayerEntry().ToString();
+            save = String.Join("\n", data);
+        }
+
+
+
+        var file = FileAccess.Open(savepath, FileAccess.ModeFlags.Write);
+        foreach (string line in save.Split('\n'))
+            file.StoreLine(line);
         file.Close();
 
-        //TODO: Ide valahol majd el kell tarolni a jelenlegi playerid-t, es az elso argumentumnak megadni.
-        //DBConnector.UploadSave(, savepath);
     }
 
     public static bool CheckSave()
@@ -52,17 +82,21 @@ public partial class SaveLoadHandler : Node
     {
         //delete save in memory
         Globals.currentSave = new List<string>();
+
         if (save.Length > 0)
         {
+            //if called from cloudsave
             string[] cloudsave = save.Split('\n');
             foreach (string s in cloudsave)
                 Globals.currentSave.Add(s);
         }
-        //open file
-        var file = FileAccess.Open(savepath, FileAccess.ModeFlags.Read);
-        string[] data = file.GetAsText().Split('\n');
-        //load to memory
-        foreach (string s in data)
-            Globals.currentSave.Add(s);
+        else
+        {
+            //if called from local save
+            var file = FileAccess.Open(savepath, FileAccess.ModeFlags.Read);
+            string[] data = file.GetAsText().Split('\n');
+            foreach (string s in data)
+                Globals.currentSave.Add(s);
+        }
     }
 }

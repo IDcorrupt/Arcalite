@@ -17,7 +17,7 @@ public partial class NewGameLaunch : Control
 
     private void Start_Pressed()
     {
-        Globals.runName = saveName.Text;
+        Globals.runName = saveName.Text.Length > 0 ? saveName.Text : "New save";
         Globals.playerControl = true;
         Globals.hasSavefile = false;
         GetTree().ChangeSceneToFile("res://Nodes/Maps/gameScene.tscn");

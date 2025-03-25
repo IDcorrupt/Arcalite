@@ -40,7 +40,7 @@ public partial class SignInPopup : Control
         temp.Username = "Lajos";
         CharacterData character = new CharacterData();
         character.Id = 0;
-        character.Level = 0;
+        character.Level = 1;
         character.Name = "anyad";
         character.Playtime = new TimeSpan(0, 0, 0);
         character.Save =
@@ -60,7 +60,7 @@ public partial class SignInPopup : Control
 
         CharacterData character2 = new CharacterData();
         character2.Id = 1;
-        character2.Level = 2;
+        character2.Level = 1;
         character2.Name = "char2";
         character2.Playtime = new TimeSpan(0, 4, 28);
         character2.Save = 
