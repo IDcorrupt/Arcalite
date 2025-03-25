@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
+using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 using Godot;
 using MySqlConnector;
@@ -149,7 +152,18 @@ public static class DBConnector
         }
 
         //fetching character data
-        query = $@"
+
+        userdata.Characters = GetCharacters(userdata.Id, true);
+        
+        conn.Close();
+        return userdata;
+    }
+    public static List<CharacterData> GetCharacters(int userId, bool connState = false)
+    {
+        if (!connState)
+            conn.Open();
+        List<CharacterData> characters = new List<CharacterData>();
+        string query = $@"
             WITH lastSaves AS (
                 SELECT *
                 FROM saves
@@ -159,7 +173,7 @@ public static class DBConnector
             FROM player 
                 INNER JOIN avatar ON avatar.id = player.avatarid
                 LEFT JOIN lastSaves ON player.id = lastSaves.playerid
-            WHERE player.profileid = {userdata.Id};";
+            WHERE player.profileid = {userId};";
 
         using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
         {
@@ -183,24 +197,89 @@ public static class DBConnector
                     character.Save = null;
                 }
 
-                userdata.Characters.Add(character);
-            } 
+                characters.Add(character);
+            }
         }
-
-        conn.Close();
-        return userdata;
+        if(!connState)
+            conn.Close();
+        return characters;
     }
 
-    public static bool UploadSave(int playerId, string path)
+    public static int GetLastPlayerEntry(bool connstate = false)
     {
-        string query = "INSERT INTO saves (playerid, save) VALUES (@playerid, @save)";
+        conn.Open();
+        string query = "SELECT MAX(id) FROM player;";
+        int newRunID = Convert.ToInt32(new MySqlCommand(query, conn).ExecuteScalar());
+        conn.Close();
+        return newRunID;
+    }
 
-        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+    public static Enums.SaveState PrepareSave(int playerId, string save)
+    {
+        try
         {
-            cmd.Parameters.AddWithValue("@playerid", playerId);
-            cmd.Parameters.AddWithValue("@save", File.ReadAllBytes(path));
+            conn.Open();
+            string query = $"SELECT id FROM player WHERE id = {playerId};";
+            using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
+            {
+                //if player exists
+                if (reader.HasRows)
+                {
+                    conn.Close();
+                    return Enums.SaveState.Existing;
+                }
+            }
 
-            return cmd.ExecuteNonQuery() != 0;
+            //if player entry doesn't exist
+            string[] savedata = save.Split('\n');
+            query = "INSERT INTO player (name, hp, mp, profileid, avatarid, levelid, playtime) " +
+                       "VALUES (@name, @hp, @mp, @profileid, @avatarid, @levelid, @playtime);";
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@name", savedata[10]);
+                cmd.Parameters.AddWithValue("@hp", savedata[3]);
+                cmd.Parameters.AddWithValue("@mp", savedata[4]);
+                cmd.Parameters.AddWithValue("@profileid", Globals.user.Id);
+                cmd.Parameters.AddWithValue("@avatarid", '1');
+                cmd.Parameters.AddWithValue("@levelid", '1');
+                cmd.Parameters.AddWithValue("@playtime", savedata[11]);
+
+                bool result = cmd.ExecuteNonQuery() != 0;
+                conn.Close();
+                if (result)
+                    return Enums.SaveState.Created;
+                else
+                    return Enums.SaveState.None;
+            }
+        }
+        catch (Exception)
+        {
+            conn.Close();
+            return Enums.SaveState.None;
+            throw;
+        }
+    }
+
+    public static bool UploadSave(int playerId, string save)
+    {
+        try
+        {
+            conn.Open();
+            string query = "INSERT INTO saves (playerid, save) VALUES (@playerid, @save)";
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@playerid", playerId);
+                cmd.Parameters.AddWithValue("@save", save);
+
+                bool result = cmd.ExecuteNonQuery() != 0;
+                conn.Close();
+                return result;
+            }
+        }
+        catch (Exception)
+        {
+            conn.Clone();
+            throw;
         }
     }
 

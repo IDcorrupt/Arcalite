@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_ohaqw"]
 [ext_resource type="Script" uid="uid://d1eiwpchwnqm8" path="res://Scripts/Menus/SubmenuContinue.cs" id="2_ufjia"]
 
+
 [node name="Continue" type="Control"]
 layout_mode = 3
 anchors_preset = 8

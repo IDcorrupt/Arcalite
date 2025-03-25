@@ -27,6 +27,17 @@ offset_right = 119.0
 offset_bottom = 53.0
 text = "Email: "
 
+[node name="Errors" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 12.5
+offset_top = 104.0
+offset_right = 287.5
+offset_bottom = 124.0
+pivot_offset = Vector2(137, 10)
+label_settings = SubResource("LabelSettings_5nfva")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="PasswordLabel" type="Label" parent="Panel"]
 layout_mode = 0
 offset_left = 26.0

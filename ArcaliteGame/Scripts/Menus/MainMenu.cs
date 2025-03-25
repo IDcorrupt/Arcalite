@@ -112,7 +112,7 @@ public partial class MainMenu : Control
     }
     public void WebsitePressed()
     {
-        OS.ShellOpen("http://localhost/school/Website/");       //REDO LINK FOR FINAL (file structure will probably change)
+        OS.ShellOpen("http://localhost/school/Arcalite/.index.html");       //REDO LINK FOR FINAL (file structure will probably change)
     }
     public void QuitPressed()
     {
