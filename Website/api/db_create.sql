@@ -24,6 +24,7 @@ CREATE TABLE proach (
 
 CREATE TABLE avatar (
   id INT PRIMARY KEY AUTO_INCREMENT,
+  splash VARCHAR(128),
   image VARCHAR(128)
 );
 
@@ -115,16 +116,6 @@ CREATE TABLE enemydesc (
   CONSTRAINT pk_enemydesc PRIMARY KEY (enemyid, languageid),
   CONSTRAINT fk_enemydesc_item FOREIGN KEY (enemyid) REFERENCES enemy(id),
   CONSTRAINT fk_enemydesc_languages FOREIGN KEY (languageid) REFERENCES lang(id)
-);
-
-CREATE TABLE leveldesc (
-  levelid INT,
-  languageid INT,
-  name VARCHAR(255),
-  description TEXT,
-  CONSTRAINT pk_leveldesc PRIMARY KEY (levelid, languageid),
-  CONSTRAINT fk_leveldesc_level FOREIGN KEY (levelid) REFERENCES level(id),
-  CONSTRAINT fk_leveldesc_languages FOREIGN KEY (languageid) REFERENCES lang(id)
 );
 
 CREATE TABLE saves (

@@ -12,10 +12,8 @@ border_width_bottom = 2
 border_color = Color(0.07, 0.07, 0.07, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_sjwym"]
-font_size = 12
 
 [sub_resource type="LabelSettings" id="LabelSettings_0idip"]
-font_size = 12
 font_color = Color(0.833333, 0.75, 1, 1)
 
 [node name="MainMenu" type="Control"]
@@ -37,12 +35,12 @@ tile_map_data = PackedByteArray("AADs//b/BQASAGAAAADs//f/BQASAGAAAADs//j/BQASAGA
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -101.0
+offset_left = -110.0
 offset_top = -150.0
-offset_right = 395.0
-offset_bottom = 50.0
+offset_right = 110.0
+offset_bottom = -86.0
 theme = ExtResource("2_rnbbc")
-theme_override_font_sizes/normal_font_size = 61
+theme_override_font_sizes/normal_font_size = 64
 text = "Arcalite"
 fit_content = true
 autowrap_mode = 0
@@ -89,6 +87,7 @@ offset_left = -310.0
 offset_top = -170.0
 offset_right = -170.0
 offset_bottom = -70.0
+pivot_offset = Vector2(70, 50)
 theme_override_styles/panel = SubResource("StyleBoxFlat_udo8j")
 
 [node name="Label" type="Label" parent="Account"]
@@ -100,7 +99,7 @@ text = "Logged in as"
 label_settings = SubResource("LabelSettings_sjwym")
 horizontal_alignment = 1
 
-[node name="Guest" type="Label" parent="Account"]
+[node name="Name" type="Label" parent="Account"]
 layout_mode = 0
 offset_top = 30.0
 offset_right = 140.0

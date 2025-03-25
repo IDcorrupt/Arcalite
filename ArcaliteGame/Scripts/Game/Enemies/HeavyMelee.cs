@@ -6,26 +6,14 @@ public partial class HeavyMelee : Enemy
     public override void _Ready()
     {
         base._Ready();
-        maxHP = 75;
+        maxHP = 60 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
-        damage = 15;
+        damage = 10 * Globals.diffMultipliers[Globals.Difficulty];
         atkCooldown.WaitTime = 1;
-        jumpStrength = 500;
-        shardDropRate = 50;
+        jumpStrength = 450;
+        shardDropRate = 50 * Mathf.RoundToInt(Globals.diffMultipliers[Globals.Difficulty]);
     }
-    protected override void Animate()
-    {
-        base.Animate();
-        if (isAttacking)
-        {
-            sprite.Scale = new Vector2(1, 1);
-        }
-        else if ((IsOnFloor() || Velocity.X > 0) && !isDead)
-        {
-            sprite.Scale = new Vector2(3, 3);
-            sprite.Play("walk");
-        }
-    }
+
     protected override void Attack()
     {
         base.Attack();

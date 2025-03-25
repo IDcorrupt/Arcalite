@@ -6,11 +6,12 @@ using System.Net.Quic;
 
 public partial class Checkpoint : Node2D
 {
+    private Map map;
     private Area2D triggerArea;
     private AnimatedSprite2D sprite;
-    private Map map;
     GpuParticles2D particles;
-    public bool triggered;
+    public bool playerEntered = false;
+    private bool playerExited = false;
 
     public override void _Ready()
     {
@@ -19,6 +20,8 @@ public partial class Checkpoint : Node2D
         sprite = GetNode("AnimatedSprite2D") as AnimatedSprite2D;
         particles = GetNode("GPUParticles2D") as GpuParticles2D;
         map = GetParent().GetParent() as Map;
+
+
         sprite.Play("idle");
     }
 
@@ -26,31 +29,32 @@ public partial class Checkpoint : Node2D
     public void TriggerAreaBodyEntered(Node2D body)
     {
         Player_EnteredRestArea();
-        if (!triggered && sprite.Animation == "idle")
+        if (!playerEntered && sprite.Animation == "idle")
             TriggerCheckpoint();
     }
     public void TriggerAreaBodyExited(Node2D body)
     {
         //scuffed solution for new game / map switch saving -> spawning on a checkpoint sets it to empty -> doesn't save
-        if(Name == "Checkpoint0")
-            SaveLoadHandler.Save(
-                map.roomStatus(), 
-                Globals.player.GetMaxHP(), 
-                Globals.player.GetMaxMP(), 
-                Globals.player.GetCurrentHP(), 
-                Globals.player.GetCurrentMP(), 
-                Globals.player.GetAttackDamage(), 
-                Globals.player.GetEquips()
-                );
+        if (!playerExited)
+        {
+            if(Name == "Checkpoint0")
+                SaveLoadHandler.Save(
+                    map.roomStatus(), 
+                    Globals.player.GetMaxHP(), 
+                    Globals.player.GetMaxMP(), 
+                    Globals.player.GetCurrentHP(), 
+                    Globals.player.GetCurrentMP(), 
+                    Globals.player.GetAttackDamage(), 
+                    Globals.player.GetEquips()
+                    );
+            playerExited = true;
+        }
         Player_ExitedRestArea();
     }
     public void OnAnimationFinished()
     {
         if (sprite.Animation == "triggered")
-        {
-            GD.Print("finised");
             Empty();
-        }
     }
 
     private void TriggerCheckpoint()
@@ -63,17 +67,18 @@ public partial class Checkpoint : Node2D
             Globals.player.GetMaxHP(), 
             Globals.player.GetMaxMP(), 
             Globals.player.GetCurrentHP(), 
-            Globals.player.GetCurrentMP(), 
+            Globals.player.GetPotentialHP(), 
             Globals.player.GetAttackDamage(), 
             Globals.player.GetEquips()
             );
-        triggered = true;
+        playerEntered = true;
+        //set this to true too so it doesn't save again on hitbox exit
+        playerExited = true;
     }
 
     public void Empty()
     {
-
-        triggered = true;
+        playerEntered = true;
         sprite.Play("empty");
         particles.Emitting = true;
 
@@ -97,7 +102,7 @@ public partial class Checkpoint : Node2D
     private void Player_EnteredRestArea()
     {
 
-        if (!triggered)
+        if (!playerEntered)
             Globals.player.Rest(true, 20);
         else Globals.player.Rest(true);
     }

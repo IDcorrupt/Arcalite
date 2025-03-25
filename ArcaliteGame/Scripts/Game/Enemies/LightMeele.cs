@@ -11,12 +11,12 @@ public partial class LightMeele : Enemy
     public override void _Ready()
     {
         base._Ready();
-        maxHP = 50;
+        maxHP = 40 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
-        damage = 5;
+        damage = 5 * Globals.diffMultipliers[Globals.Difficulty];
         atkCooldown.WaitTime = 1;
         jumpStrength = 400;
-        shardDropRate = 30;
+        shardDropRate = Mathf.RoundToInt(30 * Globals.diffMultipliers[Globals.Difficulty]);
     }
 
     protected override void Attack()

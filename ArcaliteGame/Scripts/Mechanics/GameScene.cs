@@ -19,6 +19,9 @@ public partial class GameScene : Node2D
 	Control respawnScreen;
 	Map mapNode;
 
+
+
+
 	public override void _Ready()
 	{
 		//get special layer for UI
@@ -29,16 +32,23 @@ public partial class GameScene : Node2D
 		//add map
 		if (Globals.hasSavefile)
 		{
+			//load runid, runname and map from save
 			string mapname = Globals.currentSave[0];
+			Globals.runName = Globals.currentSave[10];
+			Globals.runID = Convert.ToInt32(Globals.currentSave[9]);
 			MapScene = ResourceLoader.Load($"res://Nodes/Maps/{mapname}.tscn") as PackedScene;
 		}
 		else
 			MapScene = ResourceLoader.Load("res://Nodes/Maps/map_0.tscn") as PackedScene;
+
+
 		mapNode = MapScene.Instantiate() as Map;
-		//save original map name to globals (name changes next line for identification
+		//save original map name to globals (name changes next line for identification)
 		Globals.activeMap = mapNode.Name;
 		mapNode.Name = "Map";
 		AddChild(mapNode);
+
+
 		//add custom cursor
 		Input.SetCustomMouseCursor(cursor);
 		//respawn stuff
@@ -58,6 +68,8 @@ public partial class GameScene : Node2D
 
     public override void _Process(double delta)
 	{
+		if (Globals.gameActive && !Globals.player.GetIsDead())
+			Globals.playTime += (float)delta;
 
 		if (Globals.player.GetIsDead() && !deadtrigger)
 		{

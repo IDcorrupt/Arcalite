@@ -20,4 +20,11 @@ public partial class Enums : Node
         HeavyRanged,
         Elite
     }
+
+    public enum SaveState
+    {
+        Existing,
+        Created,
+        None
+    }
 }

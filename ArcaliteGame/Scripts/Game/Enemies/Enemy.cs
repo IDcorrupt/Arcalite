@@ -202,7 +202,8 @@ public partial class Enemy : CharacterBody2D
     {
         //shell func, attack is different for each type
         isAttacking = true;
-        sprite.Play("attack");
+        Random atkRand = new Random();
+        sprite.Play($"attack{atkRand.Next(1,3).ToString()}");
         Velocity = Vector2.Zero;
         speed = 0;
     }
@@ -212,7 +213,7 @@ public partial class Enemy : CharacterBody2D
         {
             isHurt = true;
             currentHP -= damage;
-            if(attacker != null)
+            if (attacker != null)
             {
                 //knockback
                 int dir = 0;
@@ -223,27 +224,24 @@ public partial class Enemy : CharacterBody2D
                 Velocity = new Vector2(dir * 200, 0);
 
 
+                sprite.Play("hurt");
                 hurtTimer.WaitTime = 0.5f;
                 hurtTimer.Start();
             }
             else
-            {
-                //no invincibility if no knockback (for basic attack & rapidfire)
                 isHurt = false;
-            }
-            GD.Print("enemy hit, current hp: " + currentHP);
         }
     }
     private void OnHurtTimerTimeout() { isHurt = false; }
     public void OnChaseBufferTimeout() { isChasing = false; }
 
     //appearance
-    private void Flip(bool dir)
+    protected virtual void Flip(bool dir)
     {
         if (dir)
         {
-            //right
-            sprite.FlipH = true;
+            //left
+            sprite.FlipH = false;
             attackRange.RotationDegrees = 180;
             jumpTrigger.RotationDegrees = 180;
             obstacleDetectRight.Disabled = true;
@@ -252,7 +250,8 @@ public partial class Enemy : CharacterBody2D
         }
         else
         {
-            sprite.FlipH = false;
+            //right
+            sprite.FlipH = true;
             attackRange.RotationDegrees = 0;
             jumpTrigger.RotationDegrees = 0;
             obstacleDetectRight.Disabled = false;
@@ -265,7 +264,7 @@ public partial class Enemy : CharacterBody2D
         {
             if (atkCooldown.TimeLeft > 0)
                 sprite.Play("idle");
-            else if((IsOnFloor() && Velocity.X > 1) && !isDead)
+            else if((IsOnFloor() && Velocity.X != 0) && !isDead)
                 sprite.Play("walk");
             else if(Velocity.X == 0 && !isDead)
                 sprite.Play("idle");
@@ -273,7 +272,11 @@ public partial class Enemy : CharacterBody2D
     }
     public virtual void OnSpriteAnimationFinished()
     {
-        if (sprite.Animation == "attack")
+        if (sprite.Animation == "hurt")
+        {
+            isHurt = false;
+        }
+        else if (sprite.Animation == "attack1" || sprite.Animation == "attack2")
         {
             isAttacking = false;
             sprite.Play("idle");
@@ -290,8 +293,36 @@ public partial class Enemy : CharacterBody2D
     protected void DropItems(Enums.itemType itemtype = Enums.itemType.shard, int customDropRate = 0)
     {
         Item item = null;
-        if (itemtype == Enums.itemType.shard && Math.RNG(shardDropRate))
+        
+        if (itemtype == Enums.itemType.shard)
         {
+            int dropamount = 0;
+            GD.Print("shardrate: " + shardDropRate);
+            if (shardDropRate > 100)
+            {
+                dropamount = Mathf.FloorToInt(shardDropRate / 100);
+                GD.Print("dropamount: " + dropamount);
+                for (int i = 0; i < dropamount; i++)
+                {
+                    item = itemScene.Instantiate() as Item;
+                    item.type = itemtype;
+                    if (item is not null)
+                    {
+                        item.GlobalPosition = GlobalPosition;
+                        itemContainer.AddChild(item);
+                        item = null;
+                    }
+                }
+            }
+            if (Math.RNG(shardDropRate - dropamount * 100))
+            {
+                item = itemScene.Instantiate() as Item;
+                item.type = itemtype;
+            }
+
+
+
+
             GD.Print("dropping shard");
             item = itemScene.Instantiate() as Item;
             item.type = itemtype;
@@ -308,14 +339,11 @@ public partial class Enemy : CharacterBody2D
             itemContainer.AddChild(item);
         }
     }
-    protected virtual void Die(int shardamount = 1)
+    protected virtual void Die()
     {
         parent.enemyAmount--;
         //empty item func call -> shard drop
-        for (int i = 0; i < shardamount; i++)
-        {
-            DropItems();
-        }
+        DropItems();
         QueueFree();
 
     }
@@ -327,6 +355,11 @@ public partial class Enemy : CharacterBody2D
             isDead = true;
         if (!isDead)
         {
+            if (isChasing)
+            {
+                //update direction outside move(), so it flips while attacking
+                Direction = GlobalPosition.DirectionTo(player.GlobalPosition);
+            }
             if (isHurt)
                 Velocity = new Vector2(Velocity.X > 0 ? Velocity.X - (float)delta * 700 : Velocity.X + (float)delta * 700, Velocity.Y);
             if (isAttacking || atkCooldown.TimeLeft > 0)
