@@ -17,13 +17,15 @@ public partial class BossUndead : Enemy
         specAttackAnimRight = GetNode("SpecAttackAnim/Right") as AnimatedSprite2D;
         specAttackAnimLeft.AnimationFinished += SpecAttackAnimLeft_AnimationFinished;
         specAttackAnimRight.AnimationFinished += SpecAttackAnimRight_AnimationFinished;
-        maxHP = 150;
+        specAttackAnimLeft.Hide();
+        specAttackAnimRight.Hide();
+        maxHP = 120 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
-        damage = 25;
+        damage = 25 * Globals.diffMultipliers[Globals.Difficulty];
         atkCooldown.WaitTime = 2f;
         specAtkCooldown.WaitTime = 10f;
         jumpStrength = 600f;
-        shardDropRate = 100;
+        shardDropRate = 300 * Mathf.RoundToInt(Globals.diffMultipliers[Globals.Difficulty]);
 
     }
 
@@ -50,10 +52,6 @@ public partial class BossUndead : Enemy
         //defaults
         isAttacking = true;
         sprite.Play("spec_attack");
-        specAttackAnimLeft.Show();
-        specAttackAnimRight.Show();
-        specAttackAnimRight.Play("attack");
-        specAttackAnimLeft.Play("attack");
         Velocity = Vector2.Zero;
         speed = 0;    
         //attack transmit happens in process due to special method
@@ -69,11 +67,11 @@ public partial class BossUndead : Enemy
             playerInSpecAttackRange = false;
     }
 
-    protected override void Die(int shardamount = 1)
+    protected override void Die()
     {
         //special drop
         DropItems(Enums.itemType.necklace, 100);
-        base.Die(5);
+        base.Die();
     }
 
     public override void OnSpriteAnimationFinished()
@@ -94,6 +92,13 @@ public partial class BossUndead : Enemy
         {
             SpecialAttack();
         }
+        if(isAttacking && sprite.Animation == "spec_attack" && sprite.Frame >= 17) 
+        {
+            specAttackAnimLeft.Show();
+            specAttackAnimRight.Show();
+            specAttackAnimRight.Play("attack");
+            specAttackAnimLeft.Play("attack");
+        }
 
         if (isAttacking && sprite.Animation == "spec_attack" && specAttackAnimLeft.Frame > 5 && specAttackAnimRight.Frame > 5 && playerInSpecAttackRange)
         {
@@ -103,7 +108,7 @@ public partial class BossUndead : Enemy
             else if ((player.GlobalPosition - GlobalPosition).Normalized().X < 0)
                 dir = -1;
             hitVector = new Vector2(700 * dir, -500);
-            player.Hit(damage, hitVector);
+            player.Hit(damage * 1.5f, hitVector);
         }
 
     }

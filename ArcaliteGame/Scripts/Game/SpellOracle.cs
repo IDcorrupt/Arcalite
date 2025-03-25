@@ -44,6 +44,7 @@ public partial class SpellOracle : Node2D
                     durationTimer.WaitTime = 20;
                     break;
                 default:
+                    durationTimer.WaitTime = 5;
                     break;
             }
             durationTimer.Start();

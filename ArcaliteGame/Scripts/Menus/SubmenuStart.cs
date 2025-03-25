@@ -5,6 +5,9 @@ using System.Runtime.CompilerServices;
 
 public partial class SubmenuStart : Control
 {
+    private PackedScene submenuContinueScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/submenuContinue.tscn");
+    private PackedScene newGameLaunchScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/newGame_launch.tscn");
+
     Node Parent;
     private Button Continue;
     private Button NewGame;
@@ -25,18 +28,64 @@ public partial class SubmenuStart : Control
         else Continue.Disabled = true;
     }
 
+    private void ButtonControl(bool state)
+    {
+        if (state)
+        {
+            Continue.Disabled = false;
+            Continue.Show();
+            NewGame.Disabled = false;
+            NewGame.Show();
+            Back.Disabled = false;
+            Back.Show();
+        }
+        else
+        {
+            Continue.Disabled = true;
+            Continue.Hide();
+            NewGame.Disabled = true;
+            NewGame.Hide();
+            Back.Disabled = true;
+            Back.Hide();
+        }
+    }
+
+    private void SubmenuContinueNode_MenuClosed()
+    {
+        ButtonControl(true);
+    }
     public void ContinuePressed()
     {
-        SaveLoadHandler.Load();
-        Globals.playerControl = true;
-        GetTree().ChangeSceneToFile("res://Nodes/Maps/gameScene.tscn");
+        if (Globals.user.Id >= 0)
+        {
+            SaveLoadHandler.Load();
+            SubmenuContinue submenuContinueNode = submenuContinueScene.Instantiate() as SubmenuContinue;
+            submenuContinueNode.MenuClosed += SubmenuContinueNode_MenuClosed;
+            ButtonControl(false);
+            AddSibling(submenuContinueNode);
+        }
+        else
+        {
+            SaveLoadHandler.Load();
+            Globals.playerControl = true;
+            GetTree().ChangeSceneToFile("res://Nodes/Maps/gameScene.tscn");
+        }
     }
+
+
     public void NewGamePressed()
     {
-        Globals.playerControl = true;
-        Globals.hasSavefile = false;
-        GetTree().ChangeSceneToFile("res://Nodes/Maps/gameScene.tscn");
+        NewGameLaunch newGameLaunchNode = newGameLaunchScene.Instantiate() as NewGameLaunch;
+        ButtonControl(false);
+        newGameLaunchNode.Cancel += NewGameLaunchNode_Cancel;
+        AddChild(newGameLaunchNode);
     }
+
+    private void NewGameLaunchNode_Cancel()
+    {
+        ButtonControl(true);
+    }
+
     public void BackPressed()
     {
         if (Parent is MainMenu parentscript)
@@ -49,7 +98,7 @@ public partial class SubmenuStart : Control
     public override void _Process(double delta)
     {
         base._Process(delta);
-        if (Input.IsActionJustPressed("ui_cancel"))
+        if (Input.IsActionJustPressed("ui_cancel") && Back.Visible) //added back.visible as condition so submenu escape keys don't trigger this one too
             BackPressed();
     }
 

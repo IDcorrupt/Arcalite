@@ -14,7 +14,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MysqlConnector" Version="2.4.0" />
-    <PackageReference Include="System.Security.Permissions" Version="9.0.3" />
+    <PackageReference Include="MySqlConnector" Version="2.4.0" />
   </ItemGroup>
 </Project>

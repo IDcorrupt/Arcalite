@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://ct5ut31hpqlw5"]
+[gd_scene load_steps=40 format=3 uid="uid://ct5ut31hpqlw5"]
 
 [ext_resource type="Script" uid="uid://d0nqslac1vfwb" path="res://Scripts/Game/SpellOracle.cs" id="1_tfgop"]
 [ext_resource type="Texture2D" uid="uid://b8rwor6gryocs" path="res://Assets/Sprites/Projectilies/Oracle/id1/frame0006.png" id="2_0mtue"]
@@ -15,23 +15,28 @@
 [ext_resource type="Texture2D" uid="uid://5lg8a30nrvnt" path="res://Assets/Sprites/Projectilies/Oracle/id1/frame0039.png" id="13_abf55"]
 [ext_resource type="Texture2D" uid="uid://c722n6xtrbabi" path="res://Assets/Sprites/Projectilies/Oracle/id1/frame0042.png" id="14_uswqh"]
 [ext_resource type="Texture2D" uid="uid://dw3s2efifwbka" path="res://Assets/Sprites/Projectilies/Oracle/id1/frame0045.png" id="15_iakcj"]
-[ext_resource type="Texture2D" uid="uid://dtp423wi5ah3b" path="res://Assets/Sprites/Projectilies/Oracle/id1/frame0048.png" id="16_kylku"]
 [ext_resource type="Texture2D" uid="uid://ipgb2ti6r61o" path="res://Assets/Sprites/Projectilies/Oracle/id1/frame0081.png" id="17_x7vo3"]
 [ext_resource type="Texture2D" uid="uid://n3gx5cyphka3" path="res://Assets/Sprites/Projectilies/Oracle/id1/frame0084.png" id="18_u65wo"]
 [ext_resource type="Texture2D" uid="uid://b222pr1eghafg" path="res://Assets/Sprites/Projectilies/Oracle/id1/frame0087.png" id="19_cdsxw"]
 [ext_resource type="Texture2D" uid="uid://3xtptpcj0phv" path="res://Assets/Sprites/Projectilies/Oracle/id1/frame0090.png" id="20_5jlk1"]
 [ext_resource type="Texture2D" uid="uid://cqy0oeejsxj4n" path="res://Assets/Sprites/Projectilies/Oracle/id1/frame0093.png" id="21_lx73v"]
+[ext_resource type="Texture2D" uid="uid://dnvrjqs6ypmtr" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0000.png" id="22_oigd4"]
 [ext_resource type="Texture2D" uid="uid://51yt2ia3kgwt" path="res://Assets/Sprites/Projectilies/Oracle/id1/frame0096.png" id="22_voicb"]
-[ext_resource type="Texture2D" uid="uid://b6tqn0eay7rjq" path="res://Assets/Sprites/Projectilies/Oracle/id2/frame0000.png" id="23_phygu"]
-[ext_resource type="Texture2D" uid="uid://dnq4no2lf6ggq" path="res://Assets/Sprites/Projectilies/Oracle/id2/frame0003.png" id="24_cw45w"]
-[ext_resource type="Texture2D" uid="uid://d17ujhieg8mtf" path="res://Assets/Sprites/Projectilies/Oracle/id2/frame0006.png" id="25_g33l5"]
-[ext_resource type="Texture2D" uid="uid://h8p6nkd8gspi" path="res://Assets/Sprites/Projectilies/Oracle/id2/frame0009.png" id="26_nfmct"]
-[ext_resource type="Texture2D" uid="uid://3g2t7dncr5kg" path="res://Assets/Sprites/Projectilies/Oracle/id2/frame0012.png" id="27_4kyok"]
-[ext_resource type="Texture2D" uid="uid://b7jqp4d72j131" path="res://Assets/Sprites/Projectilies/Oracle/id2/frame0015.png" id="28_vln1q"]
-[ext_resource type="Texture2D" uid="uid://cbb85i4edbsg0" path="res://Assets/Sprites/Projectilies/Oracle/id2/frame0018.png" id="29_n5say"]
-[ext_resource type="Texture2D" uid="uid://c6prhoa3rmcfj" path="res://Assets/Sprites/Projectilies/Oracle/id2/frame0021.png" id="30_uu5yo"]
-[ext_resource type="Texture2D" uid="uid://cfceb0l6ktv3m" path="res://Assets/Sprites/Projectilies/Oracle/id2/frame0024.png" id="31_nulhv"]
-[ext_resource type="Texture2D" uid="uid://c3wx7j3l8iamm" path="res://Assets/Sprites/Projectilies/Oracle/id2/frame0027.png" id="32_8ea5p"]
+[ext_resource type="Texture2D" uid="uid://c0r7rsbovg8vm" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0003.png" id="23_a5csl"]
+[ext_resource type="Texture2D" uid="uid://0pmse2jjg4kc" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0006.png" id="24_11bnc"]
+[ext_resource type="Texture2D" uid="uid://dljseluvc118n" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0009.png" id="25_05cld"]
+[ext_resource type="Texture2D" uid="uid://bdmq8ulvk3y1u" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0012.png" id="26_b564n"]
+[ext_resource type="Texture2D" uid="uid://bstse7wd2trs5" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0015.png" id="27_3vn85"]
+[ext_resource type="Texture2D" uid="uid://3ed30ggsoi7b" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0018.png" id="28_abf55"]
+[ext_resource type="Texture2D" uid="uid://bjyljmoyugpte" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0021.png" id="29_uswqh"]
+[ext_resource type="Texture2D" uid="uid://b62b1j3tanha" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0024.png" id="30_iakcj"]
+[ext_resource type="Texture2D" uid="uid://xa3eyat450v6" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0027.png" id="31_kylku"]
+[ext_resource type="Texture2D" uid="uid://thpltcu1n1b4" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0030.png" id="32_x7vo3"]
+[ext_resource type="Texture2D" uid="uid://b6a50gpwryck7" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0033.png" id="33_u65wo"]
+[ext_resource type="Texture2D" uid="uid://dtf7oey2rqqps" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0036.png" id="34_cdsxw"]
+[ext_resource type="Texture2D" uid="uid://buu5yqqnf11le" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0039.png" id="35_5jlk1"]
+[ext_resource type="Texture2D" uid="uid://usjoayqscgk7" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0042.png" id="36_lx73v"]
+[ext_resource type="Texture2D" uid="uid://c67yafs850rvw" path="res://Assets/Sprites/Projectilies/Oracle/id2better3/frame0045.png" id="37_voicb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cfljs"]
 animations = [{
@@ -77,9 +82,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("15_iakcj")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_kylku")
 }],
 "loop": false,
 "name": &"cast",
@@ -110,34 +112,52 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("23_phygu")
+"texture": ExtResource("22_oigd4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("24_cw45w")
+"texture": ExtResource("23_a5csl")
 }, {
 "duration": 1.0,
-"texture": ExtResource("25_g33l5")
+"texture": ExtResource("24_11bnc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("26_nfmct")
+"texture": ExtResource("25_05cld")
 }, {
 "duration": 1.0,
-"texture": ExtResource("27_4kyok")
+"texture": ExtResource("26_b564n")
 }, {
 "duration": 1.0,
-"texture": ExtResource("28_vln1q")
+"texture": ExtResource("27_3vn85")
 }, {
 "duration": 1.0,
-"texture": ExtResource("29_n5say")
+"texture": ExtResource("28_abf55")
 }, {
 "duration": 1.0,
-"texture": ExtResource("30_uu5yo")
+"texture": ExtResource("29_uswqh")
 }, {
 "duration": 1.0,
-"texture": ExtResource("31_nulhv")
+"texture": ExtResource("30_iakcj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("32_8ea5p")
+"texture": ExtResource("31_kylku")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_x7vo3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_u65wo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_cdsxw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_5jlk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_lx73v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_voicb")
 }],
 "loop": true,
 "name": &"loop",
@@ -162,6 +182,7 @@ collision_mask = 18
 shape = SubResource("CircleShape2D_2eidv")
 
 [node name="Duration" type="Timer" parent="."]
+wait_time = 5.0
 one_shot = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnAnimationFinished"]

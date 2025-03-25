@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqt3ubl3dhm57"
-path="res://.godot/imported/Lajos - Copy.png-9e772280704e6419eb94f65b7b9991e3.ctex"
+uid="uid://bcxejx154kdre"
+path="res://.godot/imported/frame0016.png-51b9d60f446528db439ec3a5cdaf3365.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Lajos - Copy.png"
-dest_files=["res://.godot/imported/Lajos - Copy.png-9e772280704e6419eb94f65b7b9991e3.ctex"]
+source_file="res://Assets/Sprites/Projectilies/Oracle/id2better/frame0016.png"
+dest_files=["res://.godot/imported/frame0016.png-51b9d60f446528db439ec3a5cdaf3365.ctex"]
 
 [params]
 

@@ -12,7 +12,6 @@ public partial class MainNode : Node2D
 	{
 		loadingScreen = loadingScreenScene.Instantiate() as Control;
 		AddChild(loadingScreen);
-
 		Input.SetCustomMouseCursor(null);
 	}
 	public void LoadingFinished()
