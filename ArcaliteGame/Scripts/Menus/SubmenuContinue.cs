@@ -19,7 +19,7 @@ public partial class SubmenuContinue : Control
 
         if (Globals.hasSavefile)
         {
-            //add local save with id = 0;
+            //add local save with id = -1;
             if (Globals.currentSave[9] == "-1")
             {
                 SaveItem saveItemNode = saveItemScene.Instantiate() as SaveItem;
@@ -28,6 +28,8 @@ public partial class SubmenuContinue : Control
 
             }
         }
+        GD.Print("save count: " + Globals.user.Characters.Count);
+        Globals.user.Characters = DBConnector.GetCharacters(Globals.user.Id);
         for (int i = 0; i < Globals.user.Characters.Count; i++)
         {
             //add saveitems from profile if there are

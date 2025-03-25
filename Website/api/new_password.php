@@ -2,12 +2,7 @@
 
 require_once "config.php";
 
-if ($_SERVER["REQUEST_METHOD"] != "POST") {
-    ReturnError(405, "Hiba az API-hívásban.");
-}
-
-checkProperFields("POST", "email", "password");
-
+checkValidity("POST", "email", "password");
 
 require_once "connection.php";
 
@@ -15,17 +10,11 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 
 
-$sql = "UPDATE `profile` SET `password` = PASSWORD('$password') WHERE `email` = '$email';";
+$sql = "UPDATE `profile` SET `password` = PASSWORD('$password') WHERE `email` = '$email' AND `deletedAt` IS NULL;";
 $result = $db->query($sql);
 
-
-$return = array();
 if ($result) {
-    $return["code"] = 201;
-    $return["message"] = "Új jelszó sikeresen beállítva!";
-} else {
-    $return["code"] = 500;
-    $return["message"] = "Hiba a frissítés közben! Az új jelszó nem került beállításra!";
+    ReturnMessage(200, "Új jelszó sikeresen beállítva!");
 }
 
-ReturnResult($return, $return['code']);
+ReturnMessage(500, "Hiba a frissítés közben! Az új jelszó nem került beállításra!");

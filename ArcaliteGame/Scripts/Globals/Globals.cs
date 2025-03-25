@@ -12,6 +12,7 @@ public partial class Globals : Node
     public static List<string> currentSave = new List<string>();
     //name of currently active game run
     public static string runName = "";
+    public static int runID = -1;
     //needed for pause menu
     public static bool gameActive = false;
     public const float GRAVITY = 1500f;
@@ -37,6 +38,8 @@ public partial class Globals : Node
     //for controls - decides which button is being rebound
     public static int buttontoggle = 0;
 
+    //website connection stuff
+    public static UserData user;
 
     //website connection stuff
     public static UserData user = new UserData();
