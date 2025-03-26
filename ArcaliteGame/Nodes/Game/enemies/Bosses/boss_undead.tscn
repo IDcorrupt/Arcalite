@@ -230,7 +230,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack1",
-"speed": 8.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -259,7 +259,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack2",
-"speed": 8.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -308,7 +308,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hurt",
-"speed": 8.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -538,7 +538,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 15.0
+"speed": 25.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eurj5"]
@@ -562,8 +562,9 @@ script = ExtResource("1_4jsap")
 position = Vector2(0, -18)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_joyky")
-animation = &"spec_attack"
-frame = 18
+animation = &"attack2"
+frame = 7
+frame_progress = 1.0
 flip_h = true
 
 [node name="SpecAttackAnim" type="Node2D" parent="."]
@@ -575,6 +576,8 @@ rotation = 1.5708
 scale = Vector2(0.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_mnv83")
 animation = &"attack"
+frame = 17
+frame_progress = 1.0
 
 [node name="Right" type="AnimatedSprite2D" parent="SpecAttackAnim"]
 position = Vector2(45, 0)
@@ -582,6 +585,8 @@ rotation = -1.5708
 scale = Vector2(0.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_mnv83")
 animation = &"attack"
+frame = 17
+frame_progress = 1.0
 flip_h = true
 
 [node name="DirectionTimer" type="Timer" parent="."]

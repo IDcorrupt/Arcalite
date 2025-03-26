@@ -9,14 +9,14 @@ public partial class HeavyMelee : Enemy
         maxHP = 60 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
         damage = 10 * Globals.diffMultipliers[Globals.Difficulty];
-        atkCooldown.WaitTime = 1;
+        atkCD = 1;
+        attackFrame = 2;
         jumpStrength = 450;
         shardDropRate = 50 * Mathf.RoundToInt(Globals.diffMultipliers[Globals.Difficulty]);
     }
 
     protected override void Attack()
     {
-        base.Attack();
         int dir = 0;
         if ((player.GlobalPosition - GlobalPosition).Normalized().X > 0)
             dir = 1;
