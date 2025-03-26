@@ -241,3 +241,4 @@ process_material = SubResource("ParticleProcessMaterial_673b8")
 
 [connection signal="body_entered" from="TriggerArea" to="." method="TriggerAreaBodyEntered"]
 [connection signal="body_exited" from="TriggerArea" to="." method="TriggerAreaBodyExited"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnAnimationFinished"]

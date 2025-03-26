@@ -42,7 +42,7 @@ public partial class Checkpoint : Node2D
                     map.roomStatus(), 
                     Globals.player.GetMaxHP(), 
                     Globals.player.GetMaxMP(), 
-                    Globals.player.GetCurrentHP(), 
+                    Globals.player.GetPotentialHP(), 
                     Globals.player.GetCurrentMP(), 
                     Globals.player.GetAttackDamage(), 
                     Globals.player.GetEquips()
@@ -66,8 +66,8 @@ public partial class Checkpoint : Node2D
             map.roomStatus(), 
             Globals.player.GetMaxHP(), 
             Globals.player.GetMaxMP(), 
-            Globals.player.GetCurrentHP(), 
             Globals.player.GetPotentialHP(), 
+            Globals.player.GetCurrentMP(), 
             Globals.player.GetAttackDamage(), 
             Globals.player.GetEquips()
             );
@@ -92,6 +92,8 @@ public partial class Checkpoint : Node2D
             Globals.player.EnteredRestArea += Player_EnteredRestArea;
             Globals.player.ExitedRestArea += Player_ExitedRestArea;
         }
+
+       // GD.Print($"{Name} particles? {particles.Emitting}");
     }
 
     private void Player_ExitedRestArea()
