@@ -41,8 +41,6 @@ public partial class Globals : Node
     //website connection stuff
     public static UserData user;
 
-    //website connection stuff
-    public static UserData user = new UserData();
 
 
 /*    public override void _Process(double delta)
