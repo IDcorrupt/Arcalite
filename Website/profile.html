@@ -18,10 +18,20 @@
     <link id="base" rel="stylesheet" href="style.css">
 
     <script src="script/jquery-3.7.1.min.js"></script>
-    <script src="script/common.js"></script>
+    <script src="script/common.js" defer></script>
     <script src="script/profile.js" defer></script>
 </head>
 <body data-bs-theme="light">
+    <div id="popup-div">
+        <p id="popup-title">Title</p>
+        <p id="popup-message">Message</p>
+        <input type="text" id="popup-textbox">
+        <p id="popup-error"></p>
+        <button class="popup-button" id="popup-cancel">Vissza</button>
+        <button class="popup-button" id="popup-send">Elküld</button>
+        <button class="popup-button" id="popup-ok">OK</button>
+    </div>
+
     <nav class="navbar navbar-expand-md sticky-top">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

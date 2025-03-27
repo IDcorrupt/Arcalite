@@ -1,3 +1,87 @@
+/* ---------- POPUP FUNCTIONALITIES ---------- */
+
+function showPopup() {
+    $("#popup-div").css("transform", "translateX(calc(50vw - 50%)) translateY(0%)");
+}
+
+function setupPopup(title, message, hasCancel) {
+    $("#popup-title").text(title);
+    $("#popup-message").text(message);
+    
+    if (hasCancel) {
+        $("#popup-cancel").show();
+    } else {
+        $("#popup-cancel").hide();
+    }
+
+    $("#popup-send").off("click");
+    $("#popup-ok").off("click");
+}
+
+function setAlert(title, message, hasCancel = false, callback = () => {}, okText = "OK") {
+    setupPopup(title, message, hasCancel);
+
+    $("#popup-ok").text(okText);
+    
+    $("#popup-ok").show();
+    $("#popup-send").hide();
+    $("#popup-textbox").hide();
+    $("#popup-error").hide();
+    
+    $("#popup-ok").click(() => {
+        callback();
+        closePopup();
+    });
+}
+
+function setPrompt(title, message, hasCancel = false, callback = () => {}, verify = () => { return $("#popup-textbox").val() != "";}, failMessage = "Töltse ki a mezőt!") {
+    setupPopup(title, message, hasCancel);
+    
+    $("#popup-textbox").val("");
+    $("#popup-textbox").css("border", "none");
+    $("#popup-error").text("");
+
+    $("#popup-ok").hide();
+    $("#popup-send").show();
+    $("#popup-textbox").show();
+    $("#popup-error").show();
+    
+    $("#popup-send").click(() => {
+        if (verify()) {
+            $("#popup-error").text("");
+            callback();
+            closePopup();
+        } else {
+            $("#popup-textbox").css("border", "2px solid red");
+            $("#popup-error").text(failMessage);
+        }
+    });
+}
+
+function closePopup() {
+    $("#popup-div").css("transform", "translateX(calc(50vw - 50%)) translateY(-100%)");
+}
+
+function Alert(title, message, hasCancel = false, callback = () => {}, okText = "OK") {
+    closePopup();
+    setTimeout(() => {
+        setAlert(title, message, hasCancel, callback, okText);
+        showPopup();
+    }, 500);
+}
+
+function Prompt(title, message, hasCancel = false, callback = () => {}, verify = () => { return $("#popup-textbox").val() != "";}, failMessage = "Töltse ki a mezőt!") {
+    closePopup();
+    setTimeout(() => {
+        setPrompt(title, message, hasCancel, callback, verify, failMessage);
+        showPopup();
+    }, 500);
+}
+
+$("#popup-cancel").click(closePopup);
+
+/* ---------- OTHER MISC FUNCTIONALITIES ---------- */
+
 function getCookie(cookieName) {
     let cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {

@@ -761,7 +761,6 @@ iframe{
     aspect-ratio: 16/9;
 }
 
-
 /*--------------------FOOTER--------------------*/
 
 footer{
@@ -873,6 +872,60 @@ th{
 
 .userrow {
     background-color: var(--brand);
+}
+
+/*--------------------POPUP WINDOW ON PROFILE--------------------*/
+
+#popup-div {
+    line-height: 1.5rem;
+    font-size: 1.25rem;
+    padding: 15px;
+
+    z-index: 1001;
+    background-color: var(--bg-color);
+    color: var(--font);
+    border: 5px solid var(--menu);
+    border-radius: 15px;
+    width: 100%;
+    max-width: 400px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(calc(50vw - 50%)) translateY(-100%);
+
+    transition: transform 0.5s ease-out;
+}
+
+#popup-title {
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.popup-button {
+    padding: 5px 15px;
+    margin-left:5px;
+    margin-top: 5px;
+    border-radius: 20px;
+    float: right;
+    font-size: smaller;
+}
+
+.popup-button:hover {
+    background-color: var(--menu);
+}
+
+#popup-textbox {
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+#popup-error {
+    color: red;
+    font-size: small;
+    margin-left: 15px;
+    line-height: 1rem;
 }
 
 

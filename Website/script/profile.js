@@ -6,22 +6,34 @@ var verification_code;
 //PASSWORD CHANGE
 
 function changePassword() {
-    if (confirm("A jelszavát kijelentkezés után az \"Elfelejtett jelszó\" funkcióval állíthatja át. Szeretne most kijelentkezni?")) {
-        logout();
-        window.open("login.html", "_self");
-    }
+    Alert(
+        "Jelszóváltoztatás",
+        "A jelszavát kijelentkezés után az \"Elfelejtett jelszó\" funkcióval állíthatja át. Szeretne most kijelentkezni?",
+        true,
+        () => {
+            logout();
+            window.open("login.html", "_self");
+        },
+        "Igen");
 }
 
 //NAME CHANGE
 
 function changeName() {
-    if (confirm("Biztosan meg szeretné változtatni a felhasználónevét?")) {
-        let newName = prompt("Adja meg az új felhasználónevet:", getCookie("username"));
-
-        if (newName == null || newName== "") { return; }
-
-        updateData(newName, "");
-    }
+    Alert(
+        "Névváltoztatás",
+        "Biztosan meg szeretné változtatni a felhasználónevét?",
+        true,
+        () => {
+            Prompt(
+                "Névváltoztatás",
+                "Adja meg az új felhasználónevet:",
+                true,
+                () => {
+                    updateData($("#popup-textbox").val(), "");
+                });
+        },
+        "Igen");
 }
 
 function updateData(newName, newEmail) {
@@ -36,13 +48,15 @@ function updateData(newName, newEmail) {
         url: "api/update.php",
         data: payload,
         global: false,
-        success: (data) => {
-            alert("Adatok sikeresen frissítve!");
+        success: (data) => {           
             document.cookie = `username=${data.username}; path=/; secure; SameSite=Strict`;
-            window.open("profile.html", "_self");
+            Alert("Üzenet", "Adatok sikeresen frissítve!", false, () => {
+                window.open("profile.html", "_self");
+            });
+ 
         },
         error: () => {
-            alert("Hiba történt! Az adatok nem kerültek frissítésre!");
+            Alert("Üzenet", "Hiba történt! Az adatok nem kerültek frissítésre!");
         }
     });
 }
@@ -50,6 +64,15 @@ function updateData(newName, newEmail) {
 //EMAIL CHANGE
 
 function changeEmail() {
+    Alert(
+        "E-mail cím változtatás",
+        "Biztosan meg szeretné változtatni a fiókhoz tartozó e-mail címet?",
+        true,
+        () => {
+            //aaaaaaa
+        },
+        "igen");
+    /*
     if (confirm("Biztosan meg szeretné változtatni a fiókhoz tartozó e-mail címet?")) {
         let newEmail;
         do {
@@ -70,6 +93,7 @@ function changeEmail() {
 
         updateData("", newEmail);
     }
+    */
 }
 
 function validEmail(email_input) {
