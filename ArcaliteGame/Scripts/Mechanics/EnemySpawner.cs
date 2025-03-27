@@ -1,11 +1,14 @@
 using Godot;
 using System;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 
 public partial class EnemySpawner : Node2D
 {
     
     [Export] Enums.EnemyClass EnemyClass;
+    [Export] bool BossSpawner = false;
+    [Export] Enums.BossClass BossClass;
 
 
     private PackedScene lightMeleeScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/light_meele.tscn");
@@ -15,9 +18,10 @@ public partial class EnemySpawner : Node2D
     
     
     private PackedScene BossUndeadScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/Bosses/boss_undead.tscn");
+    private PackedScene BossMechScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/Bosses/boss_mech.tscn");
 
-    private PackedScene ActiveEnemyType;
     private Enemy ActiveEnemy;
+    private BossMech ActiveBoss;        // if more bosses are added, they might have a core class like "Enemy", but currently this variable has the "BossMech" class directly
 
     private EnemyControl parent;
     public override void _Ready()
@@ -26,57 +30,92 @@ public partial class EnemySpawner : Node2D
     }
     public bool Spawn()
     {
-        switch (EnemyClass)
+        if (BossSpawner)
         {
-            case Enums.EnemyClass.LightMelee:
-                ActiveEnemy = lightMeleeScene.Instantiate() as Enemy;
-                ActiveEnemy.Name = "LightMelee" + this.Name.ToString()[Name.ToString().Length - 1];
-                ActiveEnemy.GlobalPosition = Position;
-                AddSibling(ActiveEnemy);
-                break;
-            case Enums.EnemyClass.HeavyMelee:
-                ActiveEnemy = HeavyMeleeScene.Instantiate() as Enemy;
-                ActiveEnemy.Name = "ActiveHeavyMelee" + this.Name.ToString()[Name.ToString().Length - 1];
-                ActiveEnemy.GlobalPosition = Position;
-                AddSibling(ActiveEnemy);
-                break;
-            case Enums.EnemyClass.LightRanged:
-                ActiveEnemy = LightRangedScene.Instantiate() as Enemy;
-                ActiveEnemy.Name = "LightRanged" + this.Name.ToString()[Name.ToString().Length - 1];
-                ActiveEnemy.GlobalPosition = Position;
-                AddSibling(ActiveEnemy);
-                break;
-            case Enums.EnemyClass.HeavyRanged:
-                ActiveEnemy = HeavyRangedScene.Instantiate() as Enemy;
-                ActiveEnemy.Name = "LightRanged" + this.Name.ToString()[Name.ToString().Length - 1];
-                ActiveEnemy.GlobalPosition = Position;
-                AddSibling(ActiveEnemy);
-                break;
-            case Enums.EnemyClass.Elite:
-                ActiveEnemy = BossUndeadScene.Instantiate() as Enemy;
-                ActiveEnemy.Name = "BossUndead" + this.Name.ToString()[Name.ToString().Length - 1];
-                ActiveEnemy.GlobalPosition = Position;
-                AddSibling(ActiveEnemy);
-                break;
-            default:
-                break;
-        }
-        if (ActiveEnemy != null) return true;
-        else return false;
-    }
-    public bool Despawn()
-    {
-        if (ActiveEnemy != null && IsInstanceValid(ActiveEnemy))
-        {
-            GD.Print("current enemy: " + ActiveEnemy);
-            ActiveEnemy.Free();
-            ActiveEnemy = null;
-            return true;
+            switch (BossClass)
+            {
+                case Enums.BossClass.Mech:
+                    ActiveBoss = BossMechScene.Instantiate() as BossMech;
+                    ActiveBoss.Name = "BossMech";
+                    ActiveBoss.GlobalPosition = Position;
+                    AddSibling(ActiveBoss);
+                    break;
+                default:
+                    break;
+            }
+            if (ActiveBoss != null) return true;
+            else return false;
         }
         else
         {
-            ActiveEnemy = null;
-            return false;
+            switch (EnemyClass)
+            {
+                case Enums.EnemyClass.LightMelee:
+                    ActiveEnemy = lightMeleeScene.Instantiate() as Enemy;
+                    ActiveEnemy.Name = "LightMelee" + this.Name.ToString()[Name.ToString().Length - 1];
+                    ActiveEnemy.GlobalPosition = Position;
+                    AddSibling(ActiveEnemy);
+                    break;
+                case Enums.EnemyClass.HeavyMelee:
+                    ActiveEnemy = HeavyMeleeScene.Instantiate() as Enemy;
+                    ActiveEnemy.Name = "ActiveHeavyMelee" + this.Name.ToString()[Name.ToString().Length - 1];
+                    ActiveEnemy.GlobalPosition = Position;
+                    AddSibling(ActiveEnemy);
+                    break;
+                case Enums.EnemyClass.LightRanged:
+                    ActiveEnemy = LightRangedScene.Instantiate() as Enemy;
+                    ActiveEnemy.Name = "LightRanged" + this.Name.ToString()[Name.ToString().Length - 1];
+                    ActiveEnemy.GlobalPosition = Position;
+                    AddSibling(ActiveEnemy);
+                    break;
+                case Enums.EnemyClass.HeavyRanged:
+                    ActiveEnemy = HeavyRangedScene.Instantiate() as Enemy;
+                    ActiveEnemy.Name = "LightRanged" + this.Name.ToString()[Name.ToString().Length - 1];
+                    ActiveEnemy.GlobalPosition = Position;
+                    AddSibling(ActiveEnemy);
+                    break;
+                case Enums.EnemyClass.Elite:
+                    ActiveEnemy = BossUndeadScene.Instantiate() as Enemy;
+                    ActiveEnemy.Name = "BossUndead" + this.Name.ToString()[Name.ToString().Length - 1];
+                    ActiveEnemy.GlobalPosition = Position;
+                    AddSibling(ActiveEnemy);
+                    break;
+                default:
+                    break;
+            }
+            if (ActiveEnemy != null) return true;
+            else return false;
+        }
+    }
+    public bool Despawn()
+    {
+        if (BossSpawner)
+        {
+            if (ActiveBoss != null && IsInstanceValid(ActiveBoss))
+            {
+                ActiveBoss.Free();
+                ActiveBoss = null;
+                return true;
+            }
+            else
+            {
+                ActiveBoss = null;
+                return false;
+            }
+        }
+        else
+        {
+            if (ActiveEnemy != null && IsInstanceValid(ActiveEnemy))
+            {
+                ActiveEnemy.Free();
+                ActiveEnemy = null;
+                return true;
+            }
+            else
+            {
+                ActiveEnemy = null;
+                return false;
+            }
         }
 
     }

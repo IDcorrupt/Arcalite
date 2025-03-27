@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://b21oarmp6vq7w"]
+
+[ext_resource type="Script" uid="uid://dnth7syhu0c4a" path="res://Scripts/Game/enemies/Bosses/BossMech.cs" id="1_jls1n"]
+[ext_resource type="Texture2D" uid="uid://3usmmqxmemtl" path="res://Assets/Sprites/Lajos.png" id="1_rb1g4"]
+[ext_resource type="PackedScene" uid="uid://6u32fol80lnr" path="res://Nodes/Game/enemies/Bosses/boss_mech_arm.tscn" id="3_gtnea"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0hp8d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_rb1g4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jls1n"]
+radius = 20.0
+
+[node name="bossMech" type="CharacterBody2D"]
+z_index = -1
+motion_mode = 1
+wall_min_slide_angle = 0.0
+platform_on_leave = 2
+script = ExtResource("1_jls1n")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 10)
+scale = Vector2(20, 20)
+sprite_frames = SubResource("SpriteFrames_0hp8d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jls1n")
+
+[node name="Arms" type="Node2D" parent="."]
+z_index = 1
+
+[node name="BossMechArmLeft" parent="Arms" instance=ExtResource("3_gtnea")]
+position = Vector2(-190, 5)
+
+[node name="BossMechArmRight" parent="Arms" instance=ExtResource("3_gtnea")]
+position = Vector2(205, 7)
+
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="SingleAttack" type="Timer" parent="Timers"]
+
+[node name="DoubleAttack" type="Timer" parent="Timers"]
+
+[node name="Laser" type="Timer" parent="Timers"]
+
+[node name="Vulnerability" type="Timer" parent="Timers"]

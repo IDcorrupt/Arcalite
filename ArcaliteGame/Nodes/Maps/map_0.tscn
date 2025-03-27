@@ -88,9 +88,6 @@ position = Vector2(2260, 282)
 [node name="Checkpoint2" parent="CheckPoints" instance=ExtResource("4_n6o25")]
 position = Vector2(3517, 286)
 
-[node name="Checkpoint3" parent="CheckPoints" instance=ExtResource("4_n6o25")]
-position = Vector2(4157, 269)
-
 [node name="Controllers" type="Node2D" parent="."]
 
 [node name="EnemyControl1" parent="Controllers" groups=["Controllers"] instance=ExtResource("4_38mkx")]
@@ -117,6 +114,13 @@ position = Vector2(2880, 180)
 [node name="EnemySpawnPoint1" parent="Controllers/EnemyControl3" instance=ExtResource("5_kbhp1")]
 position = Vector2(226, 87)
 EnemyClass = 5
+
+[node name="EnemyControl4" parent="Controllers" instance=ExtResource("4_38mkx")]
+position = Vector2(4160, 180)
+
+[node name="EnemySpawnPoint1" parent="Controllers/EnemyControl4" instance=ExtResource("5_kbhp1")]
+BossSpawner = true
+BossClass = 1
 
 [node name="Items" type="Node2D" parent="."]
 
@@ -150,7 +154,7 @@ shape = SubResource("RectangleShape2D_oigd3")
 disabled = true
 
 [node name="scaffolding lmao" type="StaticBody2D" parent="."]
-position = Vector2(2880, 180)
+position = Vector2(4800, 180)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="scaffolding lmao"]
