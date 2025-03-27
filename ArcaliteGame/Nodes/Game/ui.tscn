@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://d4mg7kpomu4je"]
+[gd_scene load_steps=30 format=3 uid="uid://d4mg7kpomu4je"]
 
 [ext_resource type="Script" uid="uid://bw81mk3jt7fwe" path="res://Scripts/Mechanics/Ui.cs" id="1_f025f"]
 [ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_gb0wl"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://lq70xbogwtpy" path="res://Assets/UI/Icons/Shield/shield_Ready.png" id="12_rwe5w"]
 [ext_resource type="Texture2D" uid="uid://noxh1xko13it" path="res://Assets/UI/Bars/health_border.png" id="13_mv3ti"]
 [ext_resource type="Texture2D" uid="uid://brrpy2xca714l" path="res://Assets/UI/Bars/health_bar.png" id="14_ks7op"]
+[ext_resource type="FontFile" uid="uid://0wk3iqgdcbuy" path="res://Assets/Resources/fonts/PressStart2P.ttf" id="15_numjr"]
 [ext_resource type="Texture2D" uid="uid://dyj08fvu188jb" path="res://Assets/UI/Bars/mana_border.png" id="16_numjr"]
 [ext_resource type="Texture2D" uid="uid://gnjx42iqts73" path="res://Assets/UI/Bars/mana_bar.png" id="17_1cjww"]
 [ext_resource type="Texture2D" uid="uid://dd4frqxaqqr84" path="res://Assets/UI/Bars/health_border_decor.png" id="17_mv3ti"]
@@ -119,6 +120,11 @@ animations = [{
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1pvpa"]
 size = Vector2(200, 20)
 
+[sub_resource type="LabelSettings" id="LabelSettings_ks7op"]
+font = ExtResource("15_numjr")
+font_size = 8
+font_color = Color(0.46, 0, 0, 1)
+
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8ix2l"]
 size = Vector2(200, 20)
 
@@ -203,6 +209,17 @@ centered = false
 position = Vector2(-27, -2)
 texture = ExtResource("14_ks7op")
 centered = false
+
+[node name="hpnum" type="Label" parent="HPBar"]
+offset_left = 77.0
+offset_top = 6.0
+offset_right = 146.0
+offset_bottom = 30.0
+theme = ExtResource("1_gb0wl")
+text = "100 100"
+label_settings = SubResource("LabelSettings_ks7op")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="BorderDecor" type="Sprite2D" parent="HPBar"]
 position = Vector2(5, 5)

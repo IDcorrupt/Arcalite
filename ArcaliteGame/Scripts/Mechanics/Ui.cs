@@ -8,6 +8,7 @@ public partial class Ui : Control
     //HP & MP
     Sprite2D HPBar;
     Sprite2D MPBar;
+    Label hpNum;
 
     AnimatedSprite2D dashIcon;
     Sprite2D dashCooldownBar;
@@ -27,6 +28,7 @@ public partial class Ui : Control
     {
         HPBar = GetNode("HPBar/HPBarMask") as Sprite2D;
         MPBar = GetNode("MPBar/MPBarMask") as Sprite2D;
+        hpNum = GetNode("HPBar/hpnum") as Label;
 
 
         //cooldown components
@@ -165,8 +167,10 @@ public partial class Ui : Control
         }
     }
 
-    private void UpdateStatBars()
+    private void UpdateStats()
     {
+        hpNum.Text = Mathf.Round(player.GetCurrentHP()) + "/" + Mathf.Round(player.GetMaxHP());
+
         float HPRatio = Mathf.Round(Globals.player.GetCurrentHP()) / Globals.player.GetMaxHP();
         float MPRatio = Mathf.Round(Globals.player.GetCurrentMP()) / Globals.player.GetMaxMP();
         if (HPBar.Texture is PlaceholderTexture2D HPtexture)
@@ -190,8 +194,7 @@ public partial class Ui : Control
             UpdateItems(player.GetEquips());
         }
 
-        UpdateStatBars();
-        
+        UpdateStats();
     }
 
 

@@ -331,7 +331,7 @@ script = ExtResource("1_qxpks")
 position = Vector2(0, -5)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_h8iru")
-animation = &"attack1"
+animation = &"idle"
 flip_h = true
 
 [node name="DirectionTimer" type="Timer" parent="."]
