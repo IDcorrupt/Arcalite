@@ -18,6 +18,7 @@ public partial class Enemy : CharacterBody2D
 
     //values
     private bool jumped = false;
+    private bool attacked = false;
 
     protected bool isDead = false;
     protected bool playerInAtkRange = false;
@@ -25,6 +26,8 @@ public partial class Enemy : CharacterBody2D
     protected bool isHurt = false;
     protected bool lostVision = false;
     protected bool bufferRan = true;
+    protected int attackFrame = 0;
+    protected float atkCD;
     
     public bool isChasing;
     public bool isRoaming = true;
@@ -180,7 +183,7 @@ public partial class Enemy : CharacterBody2D
     private void AtkCooldownTimeout()
     {
         if (playerInAtkRange && !player.GetIsDead())
-            Attack();
+            EngageAttack();
         else
             isAttacking = false;
     }
@@ -198,14 +201,18 @@ public partial class Enemy : CharacterBody2D
             playerInAtkRange = false;
         }
     }
-    protected virtual void Attack() 
+    protected virtual void EngageAttack() 
     {
-        //shell func, attack is different for each type
-        isAttacking = true;
         Random atkRand = new Random();
         sprite.Play($"attack{atkRand.Next(1,3).ToString()}");
+        isAttacking = true;
+        attacked = false;
         Velocity = Vector2.Zero;
         speed = 0;
+    }
+    protected virtual void Attack()
+    {
+        //shell func, attack is different for each type
     }
     public virtual void Hit(float damage, Node2D attacker)
     {
@@ -222,7 +229,6 @@ public partial class Enemy : CharacterBody2D
                 else if ((GlobalPosition - attacker.GlobalPosition).Normalized().X < 0)
                     dir = -1;
                 Velocity = new Vector2(dir * 200, 0);
-
 
                 sprite.Play("hurt");
                 hurtTimer.WaitTime = 0.5f;
@@ -260,7 +266,7 @@ public partial class Enemy : CharacterBody2D
     }
     protected virtual void Animate()
     {
-        if (!isAttacking)
+        if (!isAttacking && !(sprite.Animation == "hurt"))
         {
             if (atkCooldown.TimeLeft > 0)
                 sprite.Play("idle");
@@ -273,14 +279,12 @@ public partial class Enemy : CharacterBody2D
     public virtual void OnSpriteAnimationFinished()
     {
         if (sprite.Animation == "hurt")
-        {
-            isHurt = false;
-        }
-        else if (sprite.Animation == "attack1" || sprite.Animation == "attack2")
+            sprite.Play("idle");
+        if (sprite.Animation == "attack1" || sprite.Animation == "attack2")
         {
             isAttacking = false;
             sprite.Play("idle");
-            atkCooldown.Start();
+            atkCooldown.Start(atkCD);
         }
         else if (sprite.Animation == "die")
         {
@@ -362,7 +366,13 @@ public partial class Enemy : CharacterBody2D
             }
             if (isHurt)
                 Velocity = new Vector2(Velocity.X > 0 ? Velocity.X - (float)delta * 700 : Velocity.X + (float)delta * 700, Velocity.Y);
-            if (isAttacking || atkCooldown.TimeLeft > 0)
+            else if(isAttacking && !attacked && sprite.Frame >= attackFrame && playerInAtkRange)
+            {
+                //if engageAttack was called, but attack hasn't -> actual attacking if passed the specified frame
+                Attack();
+                attacked = true;
+            }
+            else if (isAttacking || atkCooldown.TimeLeft > 0)
             {
                 //stop moving after attacking
                 Velocity = new Vector2(0, Velocity.Y);
@@ -372,7 +382,7 @@ public partial class Enemy : CharacterBody2D
                 //if not attacking & being attacked -> move, attack if in attack range
                 Move(delta);
                 if (playerInAtkRange && isChasing)
-                    Attack();
+                    EngageAttack();
             }
             if (Direction.X < 0)
                 Flip(true);

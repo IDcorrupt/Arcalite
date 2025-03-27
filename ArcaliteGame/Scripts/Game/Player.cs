@@ -457,7 +457,7 @@ public partial class Player : CharacterBody2D
     //damage functions
     public void Hit(float damage, Vector2 hitVector)
     {
-        if (!isHurt && !shielded)
+        if (!isHurt && !shielded && !isDashing)
         {
             currentHP -= damage;
             //reset dash speed to avoid dash buffering

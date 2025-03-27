@@ -39,8 +39,7 @@ public partial class Globals : Node
     public static int buttontoggle = 0;
 
     //website connection stuff
-    public static UserData user;
-
+    public static UserData user = new UserData();
 
 
 /*    public override void _Process(double delta)

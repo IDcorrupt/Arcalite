@@ -14,14 +14,14 @@ public partial class LightMeele : Enemy
         maxHP = 40 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
         damage = 5 * Globals.diffMultipliers[Globals.Difficulty];
-        atkCooldown.WaitTime = 1;
+        atkCD = 1;
+        attackFrame = 2;
         jumpStrength = 400;
         shardDropRate = Mathf.RoundToInt(30 * Globals.diffMultipliers[Globals.Difficulty]);
     }
 
     protected override void Attack()
     {
-        base.Attack();
         int dir = 0;
         if ((player.GlobalPosition - GlobalPosition).Normalized().X > 0)
             dir = 1;

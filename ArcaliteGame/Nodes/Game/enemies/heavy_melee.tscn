@@ -265,8 +265,7 @@ script = ExtResource("1_ok2i2")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -12.5)
 sprite_frames = SubResource("SpriteFrames_l32ot")
-animation = &"idle"
-frame_progress = 0.52462
+animation = &"attack1"
 flip_h = true
 
 [node name="DirectionTimer" type="Timer" parent="."]

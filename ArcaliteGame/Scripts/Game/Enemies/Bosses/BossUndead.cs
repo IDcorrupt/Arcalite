@@ -4,8 +4,10 @@ using System;
 public partial class BossUndead : Enemy
 {
     //undead boss uses enemy base class because it's not a fullscreen boss
-
+    private int specAtkMoveCD;
     private bool playerInSpecAttackRange;
+    private bool specattackanimcast = false;
+    private bool specattacked = false;
     Timer specAtkCooldown;
     AnimatedSprite2D specAttackAnimLeft;
     AnimatedSprite2D specAttackAnimRight;
@@ -22,39 +24,67 @@ public partial class BossUndead : Enemy
         maxHP = 120 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
         damage = 25 * Globals.diffMultipliers[Globals.Difficulty];
-        atkCooldown.WaitTime = 2f;
+        atkCD = 1.5f;
+        specAtkMoveCD = 2;
         specAtkCooldown.WaitTime = 10f;
+        attackFrame = 4;
         jumpStrength = 600f;
         shardDropRate = 300 * Mathf.RoundToInt(Globals.diffMultipliers[Globals.Difficulty]);
 
     }
 
-    private void SpecAttackAnimLeft_AnimationFinished() { specAttackAnimLeft.Hide(); }
-    private void SpecAttackAnimRight_AnimationFinished() { specAttackAnimRight.Hide(); }
+    private void SpecAttackAnimLeft_AnimationFinished() { specAttackAnimLeft.Frame = 0; specAttackAnimLeft.Hide(); }
+    private void SpecAttackAnimRight_AnimationFinished() { specAttackAnimRight.Frame = 0; specAttackAnimRight.Hide(); }
+
+    protected override void EngageAttack()
+    {
+            base.EngageAttack();
+    }
 
     protected override void Attack()
     {
-        base.Attack();
-        int dir = 0;
-        if ((player.GlobalPosition - GlobalPosition).Normalized().X > 0)
-            dir = 1;
-        else if ((player.GlobalPosition - GlobalPosition).Normalized().X < 0)
-            dir = -1;
-        hitVector = new Vector2(500 * dir, -400);
-        player.Hit(damage, hitVector);
+        if (!(sprite.Animation == "spec_attack"))
+        {
+            int dir = 0;
+            if ((player.GlobalPosition - GlobalPosition).Normalized().X > 0)
+                dir = 1;
+            else if ((player.GlobalPosition - GlobalPosition).Normalized().X < 0)
+                dir = -1;
+            hitVector = new Vector2(500 * dir, -400);
+            player.Hit(damage, hitVector);
+        }
     }
 
 
 
 
-    private void SpecialAttack()
+    private void EngageSpecialAttack()
     {
         //defaults
-        isAttacking = true;
         sprite.Play("spec_attack");
+        isAttacking = true;
+        specattacked = false;
         Velocity = Vector2.Zero;
         speed = 0;    
         //attack transmit happens in process due to special method
+    }
+    private void SpecialAttackAnim()
+    {
+        specAttackAnimLeft.Show();
+        specAttackAnimRight.Show();
+        specAttackAnimRight.Play("attack");
+        specAttackAnimLeft.Play("attack");
+    }
+    private void SpecialAttack()
+    {
+        GD.Print("specattack damage called");
+        int dir = 0;
+        if ((player.GlobalPosition - GlobalPosition).Normalized().X > 0)
+            dir = 1;
+        else if ((player.GlobalPosition - GlobalPosition).Normalized().X < 0)
+            dir = -1;
+        hitVector = new Vector2(700 * dir, -500);
+        player.Hit(damage * 1.5f, hitVector);
     }
     public void SpecialAttackRangeBodyEntered(Node2D body)
     {
@@ -80,8 +110,11 @@ public partial class BossUndead : Enemy
         if (sprite.Animation == "spec_attack")
         {
             isAttacking = false;
+            specattacked = false;
+            specattackanimcast = false;
             sprite.Play("idle");
             specAtkCooldown.Start();
+            atkCooldown.Start(specAtkMoveCD);
         }
     }
     public override void _PhysicsProcess(double delta)
@@ -90,25 +123,22 @@ public partial class BossUndead : Enemy
 
         if (!isDead && !isHurt && !isAttacking && playerInSpecAttackRange && isChasing && specAtkCooldown.TimeLeft <=0)  //all of the conditions required for spec attack
         {
+            EngageSpecialAttack();
+        }
+        if (isAttacking && !specattackanimcast && sprite.Animation == "spec_attack" && sprite.Frame >= 17) 
+        {
+            SpecialAttackAnim();
+            specattackanimcast = true;
+        }
+        GD.Print($"spec damage conditions:\n " +
+            $"!specattacked    {!specattacked}\n" +
+            $"spec anim left:  {specAttackAnimLeft.Frame > 5}\n" +
+            $"spec anim right: {specAttackAnimRight.Frame > 5}\n" +
+            $"in range:        {playerInSpecAttackRange}");
+        if (!specattacked && specAttackAnimLeft.Frame > 5 && specAttackAnimRight.Frame > 5 && playerInSpecAttackRange)
+        {
             SpecialAttack();
-        }
-        if(isAttacking && sprite.Animation == "spec_attack" && sprite.Frame >= 17) 
-        {
-            specAttackAnimLeft.Show();
-            specAttackAnimRight.Show();
-            specAttackAnimRight.Play("attack");
-            specAttackAnimLeft.Play("attack");
-        }
-
-        if (isAttacking && sprite.Animation == "spec_attack" && specAttackAnimLeft.Frame > 5 && specAttackAnimRight.Frame > 5 && playerInSpecAttackRange)
-        {
-            int dir = 0;
-            if ((player.GlobalPosition - GlobalPosition).Normalized().X > 0)
-                dir = 1;
-            else if ((player.GlobalPosition - GlobalPosition).Normalized().X < 0)
-                dir = -1;
-            hitVector = new Vector2(700 * dir, -500);
-            player.Hit(damage * 1.5f, hitVector);
+            specattacked = true;
         }
 
     }

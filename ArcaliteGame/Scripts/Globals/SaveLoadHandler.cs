@@ -39,16 +39,19 @@ public partial class SaveLoadHandler : Node
         //cloud stuff
         if (Globals.user.Id >= 0)
         {
-            switch (DBConnector.PrepareSave(Globals.user.Id, save))
+            GD.Print("ini cloud save check");
+            switch (DBConnector.PrepareSave(Globals.runID, save))
             {
                 case Enums.SaveState.None:
+                    GD.PrintErr("preparesave() returned none");
                     break;
                 case Enums.SaveState.Created:
                     DBConnector.UploadSave(DBConnector.GetLastPlayerEntry(), save);
+                    Globals.runID = DBConnector.GetLastPlayerEntry();
                     newsave = true;
                     break;
                 case Enums.SaveState.Existing:
-                    DBConnector.UploadSave(Globals.user.Id, save);
+                    DBConnector.UploadSave(Globals.runID, save);
                     break;
                 default:
                     break;
@@ -58,7 +61,8 @@ public partial class SaveLoadHandler : Node
         {
             //if new save was created -> assign new run id
             string[] data = save.Split('\n');
-            data[9] = DBConnector.GetLastPlayerEntry().ToString();
+            data[9] = Globals.runID.ToString();
+            GD.Print("new save entry: " + data[9]);
             save = String.Join("\n", data);
         }
 
