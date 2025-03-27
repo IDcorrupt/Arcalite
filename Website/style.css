@@ -19,8 +19,8 @@
     --grey_light: #8f8295;
     --grey_dark: #35233e;
     /*cloud colors*/
-    --c_dark1: #5c3882;
-    --c_light1: #763cb5;
+    --c_dark1: #422c5a;
+    --c_light1: #9D77B0;
     --c_dark2: #432e5d;
     --c_light2: #805ca2;
     --c_light2_shadow:#624580;
@@ -585,6 +585,10 @@ d{
     flex-direction: column;
 }
 
+#login_base{
+    height: fit-content
+}
+
 #login{
     height: 100vh;
     display: flex;
@@ -600,6 +604,10 @@ d{
 
 #register_verification{
     width: 18vw;
+}
+
+form{
+    height: unset;
 }
 
 
@@ -624,6 +632,7 @@ d{
     display: block;
     height: 100%;
     position: relative;
+    min-width: fit-content
 }
 
 .profile-container{
@@ -667,7 +676,7 @@ d{
 }
 
 .loginmain{
-    min-height: 100vh;
+    height: 100%;
 }
 
 .logina{
@@ -703,7 +712,7 @@ d{
 
 form{
     width: 25vw;
-    height: 60vh;
+    height: unset;
     min-height: 400px;
     min-width: 225px;
     display:flex;
@@ -715,18 +724,19 @@ input{
     line-height: 35px;
     font-size: 20px;
     height: 7%;
-    padding: 20px;
     border: none;
     box-sizing: border-box;
+    margin: 2% 0;
 }
 
 input[type="submit"]{
-    height: 60px;
+    height: fit-content;
+    padding: 20px;
     /*width: 100px;*/
 }
 
 #login_btn{
-    margin-top: 15vh;
+    margin-top: 30%;
 }
 
 label{
@@ -867,7 +877,7 @@ th{
     background-color: var(--acc2);
     text-align: center;
     cursor: pointer;
-    padding: 13px 0;
+    padding: 13px;
 }
 
 .userrow {
@@ -972,6 +982,10 @@ th{
 
     /*----------GENERIC----------*/
 
+    h2{
+        font-size: 50px;
+    }
+
     header{
         height: 40vh !important;
     }
@@ -1046,6 +1060,10 @@ th{
 
     td:not(.text-center) {
         text-align: left;
+    }
+
+    .profiletab{
+        min-width: unset;
     }
 
     /*----------PROFLE, LOGIN, REGISTER----------*/
