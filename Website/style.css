@@ -632,6 +632,7 @@ form{
     display: block;
     height: 100%;
     position: relative;
+    min-width: fit-content
 }
 
 .profile-container{
@@ -877,7 +878,7 @@ th{
     background-color: var(--acc2);
     text-align: center;
     cursor: pointer;
-    padding: 13px 0;
+    padding: 13px;
 }
 
 .userrow {
@@ -927,6 +928,10 @@ th{
 @media (max-width: 768px) { /* medium screen */
 
     /*----------GENERIC----------*/
+
+    h2{
+        font-size: 50px;
+    }
 
     header{
         height: 40vh !important;
@@ -1002,6 +1007,10 @@ th{
 
     td:not(.text-center) {
         text-align: left;
+    }
+
+    .profiletab{
+        min-width: unset;
     }
 
     /*----------PROFLE, LOGIN, REGISTER----------*/
