@@ -8,9 +8,20 @@
     <link rel="stylesheet" href="style.css">
 
     <script src="script/jquery-3.7.1.min.js"></script>
+    <script src="script/common.js"""></script>
     <script src="script/login.js"></script>
 </head>
 <body data-bs-theme="light">
+    <div id="popup-div">
+        <p id="popup-title">Title</p>
+        <p id="popup-message">Message</p>
+        <input type="text" id="popup-textbox">
+        <p id="popup-error"></p>
+        <button class="popup-button" id="popup-cancel">Vissza</button>
+        <button class="popup-button" id="popup-send">Elküld</button>
+        <button class="popup-button" id="popup-ok">OK</button>
+    </div>
+    
     <main class="loginmain">
         <a class="logina" href="./index.html">Vissza  a főoldalra</a>        
         <div class="login" id="registerdiv" style="display: none;">
@@ -52,6 +63,7 @@
                 <div id="newpwd_authcode_container" hidden>
                     <label for="newpwd_authcode">Az e-mailben küldött kód:</label>
                     <input type="text" id="newpwd_authcode">
+                    <p id="newpwd_authcode_error"></p>
                     <input type="submit" id="newpwd_verify" value="Kód ellenőrzése">
                 </div>
                 <div id="newpwd_newpwd_container" hidden>
@@ -59,6 +71,7 @@
                     <input type="password" id="newpwd_newpwd">
                     <label for="newpwd_again">Jelszó újra:</label>
                     <input type="password" id="newpwd_again">
+                    <p id="newpwd_newpwd_error"></p>
                     <input type="submit" id="newpwd_set" value="Új jelszó beállítása">
                 </div>
                 <p id="login_error"></p>

@@ -30,6 +30,7 @@
 [data-bs-theme="dark"]{
     --font: #f5e8fb;
     --font2: #cbc5ce;
+    --error: red;
     --bg-color: var(--c_dark1);
     --bg-gradient: #3A1F47;
     --bg: url("./img/Backgrounds/dark.png");
@@ -43,6 +44,7 @@
 [data-bs-theme="light"] { 
     --font: #1A0225;
     --font2: #17061f;
+    --error: rgb(200, 0, 0);
     --bg-color: var(--c_light1);
     --bg-gradient:#492469;
     --bg: url("./img/Backgrounds/light.png");
@@ -932,7 +934,7 @@ th{
 }
 
 #popup-error {
-    color: red;
+    color: var(--error);
     font-size: small;
     margin-left: 15px;
     line-height: 1rem;

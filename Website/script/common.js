@@ -4,10 +4,11 @@ function showPopup() {
     $("#popup-div").css("transform", "translateX(calc(50vw - 50%)) translateY(0%)");
 }
 
-function setupPopup(title, message, hasCancel) {
+function setupPopup(title, message, hasCancel, cancelText) {
     $("#popup-title").text(title);
     $("#popup-message").text(message);
-    
+    $("#popup-cancel").text(cancelText);
+
     if (hasCancel) {
         $("#popup-cancel").show();
     } else {
@@ -18,8 +19,8 @@ function setupPopup(title, message, hasCancel) {
     $("#popup-ok").off("click");
 }
 
-function setAlert(title, message, hasCancel = false, callback = () => {}, okText = "OK") {
-    setupPopup(title, message, hasCancel);
+function setAlert(title, message, hasCancel = false, callback = () => {}, okText = "OK", cancelText = "Mégsem") {
+    setupPopup(title, message, hasCancel, cancelText);
 
     $("#popup-ok").text(okText);
     
@@ -34,8 +35,8 @@ function setAlert(title, message, hasCancel = false, callback = () => {}, okText
     });
 }
 
-function setPrompt(title, message, hasCancel = false, callback = () => {}, verify = () => { return $("#popup-textbox").val() != "";}, failMessage = "Töltse ki a mezőt!") {
-    setupPopup(title, message, hasCancel);
+function setPrompt(title, message, hasCancel = false, callback = () => {}, verify = () => { return $("#popup-textbox").val() != "";}, failMessage = "Töltse ki a mezőt!", cancelText = "Mégsem") {
+    setupPopup(title, message, hasCancel, cancelText);
     
     $("#popup-textbox").val("");
     $("#popup-textbox").css("border", "none");
@@ -62,20 +63,26 @@ function closePopup() {
     $("#popup-div").css("transform", "translateX(calc(50vw - 50%)) translateY(-100%)");
 }
 
-function Alert(title, message, hasCancel = false, callback = () => {}, okText = "OK") {
+function Alert(title, message, hasCancel = false, callback = () => {}, okText = "OK", cancelText = "Mégsem") {
+    let timeout = getTimeoutForTransition(); 
     closePopup();
     setTimeout(() => {
-        setAlert(title, message, hasCancel, callback, okText);
+        setAlert(title, message, hasCancel, callback, okText, cancelText);
         showPopup();
-    }, 500);
+    }, timeout);
 }
 
-function Prompt(title, message, hasCancel = false, callback = () => {}, verify = () => { return $("#popup-textbox").val() != "";}, failMessage = "Töltse ki a mezőt!") {
+function Prompt(title, message, hasCancel = false, callback = () => {}, verify = () => { return $("#popup-textbox").val() != "";}, failMessage = "Töltse ki a mezőt!" , cancelText = "Mégsem") {
+    let timeout = getTimeoutForTransition();
     closePopup();
     setTimeout(() => {
-        setPrompt(title, message, hasCancel, callback, verify, failMessage);
+        setPrompt(title, message, hasCancel, callback, verify, failMessage, cancelText);
         showPopup();
-    }, 500);
+    }, timeout);
+}
+
+function getTimeoutForTransition() {
+    return $("#popup-div").position().top < -150 ? 0 : 600;;
 }
 
 $("#popup-cancel").click(closePopup);

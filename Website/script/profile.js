@@ -63,37 +63,51 @@ function updateData(newName, newEmail) {
 
 //EMAIL CHANGE
 
-function changeEmail() {
+function askEmailChange() {
     Alert(
         "E-mail cím változtatás",
         "Biztosan meg szeretné változtatni a fiókhoz tartozó e-mail címet?",
         true,
         () => {
-            //aaaaaaa
+            getNewEmail();
         },
-        "igen");
-    /*
-    if (confirm("Biztosan meg szeretné változtatni a fiókhoz tartozó e-mail címet?")) {
-        let newEmail;
-        do {
-            newEmail = prompt("Adja meg az új e-mail címet:");
-        } while (newEmail != null && !validEmail(newEmail));
+        "Igen");
+}
 
-        if (newEmail == null || newEmail == "") {return;}
+function getNewEmail() {
+    Prompt(
+        "E-mail cím változtatás",
+        "Adja meg az új e-mail címet:",
+        true,
+        () => {
+            verifyEmail($("#popup-textbox").val());
+        },
+        () => {
+            return validEmail($("#popup-textbox").val());
+        },
+        "Helytelen formátum!");
+}
 
-        generateVerificationCode();
-        sendVerificationEmail(newEmail, getCookie("username"), verification_code);
+function verifyEmail(email) {
+    generateVerificationCode();
+    sendVerificationEmail(email, getCookie("username"), verification_code);
+    
+    Prompt(
+        "E-mail cím változtatás",
+        "Adja meg az e-mailben megkapott ellenőrző kódot:",
+        true,
+        () => {
+            updateData("", email);
+        },
+        () => {
+            return validateAuthcode($("#popup-textbox").val());
+        },
+        "Helytelen kód!"
+    );
+}
 
-        let authcode;
-        do {
-            authcode = prompt("Adja meg az e-mailben kapott kódot:");
-        } while (authcode != null && (isNaN(authcode) || parseInt(authcode) != verification_code));
-
-        if (authcode == null) {return;}
-
-        updateData("", newEmail);
-    }
-    */
+function validateAuthcode(authcode) {
+    return !isNaN(authcode) && parseInt(authcode) == verification_code;
 }
 
 function validEmail(email_input) {
@@ -126,19 +140,24 @@ function sendVerificationEmail(email, name, code) {
         contentType: "application/json",
         global: false,
         error: (data) => {
-            alert("E-mail elküldése sikertelen!");
+            Alert("Hiba", "E-mail elküldése sikertelen!");
             console.error(data);  
         }
-    })
+    });
 }
 
 //LOGOUT
 
 function askLogout() {
-    if (confirm("Biztosan ki szeretne jelentkezni?")) {
-        logout();
-        window.open("index.html", "_self");
-    }
+    Alert(
+        "Kijelentkezés",
+        "Biztosan ki szerente jelentkezni?",
+        true,
+        () => {
+            logout();
+            window.open("index.html", "_self");
+        },
+        "Igen");
 }
 
 function logout() {
@@ -148,27 +167,42 @@ function logout() {
 
 //DELETE
 
-function deleteProfile() {
-    if (confirm("Biztosan törölni szeretné a profilját?") && confirm("Ez a lépés nem visszafordítható. Biztosan törölni szeretné a profilt?")) {
-        let payload = {
-            userid: getCookie("userid")
-        }
+function askDeletion() {
+    Alert(
+        "Profiltörlés",
+        "Bizosan törölni szeretni a profilját?",
+        true,
+        () => {
+            Alert(
+                "Profiltörlés",
+                "Törlés után csak munkatársaink segítségével nyerheti vissza a fiókját. Biztosan törölni szeretné a profilt?",
+                true,
+                () => { deleteProfile(); },
+                "Igen");
+        },
+        "Igen");  
+}
 
-        $.ajax({
-            type: "POST",
-            url: "api/delete_profile.php",
-            data: payload,
-            global: false,
-            success: (data) => {
-                alert(data.message);
-                logout();
-                window.open("index.html", "_self");
-            },
-            error: (data) => {
-                alert(data.message);
-            }
-        });
+function deleteProfile() {
+    let payload = {
+        userid: getCookie("userid")
     }
+
+    $.ajax({
+        type: "POST",
+        url: "api/delete_profile.php",
+        data: payload,
+        global: false,
+        success: () => {
+            logout();
+            Alert("Üzenet", "Profil sikeresen törölve!", false, () => {
+                window.open("index.html", "_self");
+            });
+        },
+        error: (data) => {
+            Alert("Hiba", `Profil törlése sikertelen!\nHiba: ${data.message}`);
+        }
+    });
 }
 
 /* ---------- FILLING UP CHARACTER TABS ---------- */
@@ -177,7 +211,7 @@ $(document).ready(() => {
     let payload = {
         userid: getCookie("userid"),
         langid: getCookie("langid")
-    }
+    };
 
     $.ajax({
         type: "GET",
@@ -188,7 +222,7 @@ $(document).ready(() => {
             FillTabs(data);
         },
         error: (data) => {
-            alert(`Hiba az adatok lekérésében!`);
+            Alert("Hiba", "Hiba a karakteradatok lekérésében!");
             console.error(`Hiba az API kérésben: ${data.code} ${data.message}`);
         }
     });

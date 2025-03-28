@@ -12,7 +12,7 @@ $(document).ready(() => {
             showCharacters(data);
         },
         error: (data) => {
-            alert(`Hiba az adatok lekérésében!`);
+            Alert("Hiba", "Hiba az adatok lekérésében!");
             console.error(`Hiba az API kérésben: ${data.responseJSON.code} ${data.responseJSON.message}`);
         }
     });
