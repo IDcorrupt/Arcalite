@@ -239,9 +239,9 @@ function FillTabs(data) {
         $("#characterTabs").append(`<button ${(i == 0 ? 'id = \"defaultOpen\"' : '')} class="tablinks" onclick="openRank(event, 'Player_${data[i].id}')">${data[i].name}</button>`);
 
         $("#characterContents").append(`
-        <div id="Player_${data[i].id}" class="profile tabcontent">
+        <div id="Player_${data[i].id}" class="tabcontent" style="background-image: url("./img/backgrounds/${data[i].levelimage}")">
             <div class="profile-details">
-                <img class="profile-img" src="./img/Avatars/${data[i].image}" alt="${data[i].image}">
+                <img class="profile-img" src="./img/avatars/${data[i].image}" alt="${data[i].image}">
             </div>
             <div class="profile-details" id="profile-mid">
                 <p>Szoba: ${data[i].level}</p>
