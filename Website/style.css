@@ -5,7 +5,7 @@
 
 @font-face{
     font-family: 'SimpleTitle';
-    src: url('./fonts/Enchanted\Land.otf') format('opentype');
+    src: url('./fonts/Enchanted Land.otf') format('opentype');
 }
 
 :root{
@@ -341,8 +341,8 @@ h2{
 }
 
 h3{
-    font-size: 2rem ;
-    line-height: 30px;
+    font-size: 2.2rem ;
+    line-height: 2rem;
     color: var(--font2) !important;
     font-family: "SimpleTitle";
 }
@@ -350,6 +350,8 @@ h3{
 h4 {
     color: var(--font2);
     margin-top: 20px;
+    margin: 10px 0;
+    line-height: 40px;
 }
 
 h5{
@@ -493,6 +495,10 @@ ul{
     perspective: 1000px; /* Adds perspective for 3D effect */
 }
 
+.card-title{
+    margin-bottom: 0;
+}
+
 .card img{
     aspect-ratio: 3/4;
 }
@@ -510,6 +516,14 @@ ul{
 
 .control-card{
     background-image: var(--card-type-2);
+}
+
+.control-card .card-body{
+    padding: 0;
+}
+
+.card-body{
+    height: 60px;
 }
 
 .control-img{
@@ -537,6 +551,7 @@ ul{
 
 header.index-header{
     height: calc(100vh - 45px);
+    background-size: cover;
 }
 
 header.index-header h1 {
@@ -555,6 +570,12 @@ iframe{
 }
 
 /**/
+
+.control-button{
+    padding: 0;
+    height: 100%;
+    transform:translateY(-60px)
+}
 
 footer{
     height: fit-content;
@@ -801,13 +822,13 @@ label{
         width: 20rem;
     }
 
-    .devs .card{
-        width: 20rem;
-    }
-
 }
 
 @media (max-width: 1080px){/*extra large screen*/
+
+    h4{
+        line-height: 35px;
+    }
 
     footer{
         height: fit-content;
@@ -899,10 +920,6 @@ label{
     
     /*----------INDEX.HTML----------*/
 
-
-    .devs .card{
-        width: 15rem;
-    }
 
     #dev{
         flex-wrap: wrap !important;
