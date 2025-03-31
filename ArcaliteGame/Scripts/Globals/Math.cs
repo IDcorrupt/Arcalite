@@ -13,7 +13,8 @@ public partial class Math : Node
 
 
         Random random = new Random();
+        int rand = random.Next(0, 101);
         //generates random number between 0 and 100, then checks if percentage is above -> true / below -> false
-        return random.Next(0, 101) < percentage;
+        return rand < percentage;
     }
 }

@@ -122,12 +122,6 @@ public partial class BossUndead : Enemy
             SpecialAttackAnim();
             specattackanimcast = true;
         }
-        GD.Print($"spec damage conditions:\n " +
-            $"!specattacked:   {!specattacked}\n" +
-            $"specattackanim:  {specattackanimcast}\n" +
-            $"spec anim left:  {specAttackAnimLeft.Frame > 5}\n" +
-            $"spec anim right: {specAttackAnimRight.Frame > 5}\n" +
-            $"in range:        {playerInSpecAttackRange}");
         if (!specattacked && specattackanimcast && specAttackAnimLeft.Frame > 5 && specAttackAnimRight.Frame > 5 && playerInSpecAttackRange)
         {
             SpecialAttack();

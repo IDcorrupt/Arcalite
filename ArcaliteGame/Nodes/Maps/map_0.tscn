@@ -119,6 +119,7 @@ EnemyClass = 5
 position = Vector2(4160, 180)
 
 [node name="EnemySpawnPoint1" parent="Controllers/EnemyControl4" instance=ExtResource("5_kbhp1")]
+position = Vector2(0, 360)
 BossSpawner = true
 BossClass = 1
 
@@ -127,7 +128,7 @@ BossClass = 1
 [node name="FX" type="Node" parent="."]
 
 [node name="Rain" type="GPUParticles2D" parent="FX"]
-z_index = -1
+z_index = -5
 position = Vector2(280, 0)
 emitting = false
 amount = 45
@@ -154,7 +155,7 @@ shape = SubResource("RectangleShape2D_oigd3")
 disabled = true
 
 [node name="scaffolding lmao" type="StaticBody2D" parent="."]
-position = Vector2(4800, 180)
+position = Vector2(4160, 180)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="scaffolding lmao"]

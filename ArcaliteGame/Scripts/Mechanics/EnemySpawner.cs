@@ -9,7 +9,7 @@ public partial class EnemySpawner : Node2D
     [Export] Enums.EnemyClass EnemyClass;
     [Export] bool BossSpawner = false;
     [Export] Enums.BossClass BossClass;
-
+    public bool playerInRoom = false;
 
     private PackedScene lightMeleeScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/light_meele.tscn");
     private PackedScene HeavyMeleeScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/heavy_melee.tscn");
@@ -37,8 +37,8 @@ public partial class EnemySpawner : Node2D
                 case Enums.BossClass.Mech:
                     ActiveBoss = BossMechScene.Instantiate() as BossMech;
                     ActiveBoss.Name = "BossMech";
-                    ActiveBoss.GlobalPosition = Position;
                     AddSibling(ActiveBoss);
+                    ActiveBoss.GlobalPosition = GlobalPosition;
                     break;
                 default:
                     break;
@@ -117,6 +117,16 @@ public partial class EnemySpawner : Node2D
                 return false;
             }
         }
+
+    }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+
+        if (playerInRoom)
+            if(ActiveBoss != null)
+                ActiveBoss.playerInRoom = true;
 
     }
 }

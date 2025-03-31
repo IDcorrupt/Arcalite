@@ -89,6 +89,7 @@ public partial class Player : CharacterBody2D
     //signals
     [Signal] public delegate void DashedEventHandler(float cooldown);
     [Signal] public delegate void ChargeAttackedEventHandler(float cooldown);
+    [Signal] public delegate void OracleCastEventHandler(float cooldown);
     [Signal] public delegate void RapidFireCastEventHandler(float activeTime);   
     [Signal] public delegate void ShieldCastEventHandler(float activeTime);
     [Signal] public delegate void SpellEOverEventHandler(float cooldown);
@@ -152,11 +153,14 @@ public partial class Player : CharacterBody2D
         else isCrouching = false;
         if ((Input.IsActionPressed("move_dash") || Input.IsActionPressed("move_dash-alt")) && dashCooldown.TimeLeft == 0)
         {
-            dashVector = new Vector2()
+            if (Globals.DashMode == 0)
             {
-                X = Convert.ToInt32(Input.IsActionPressed("move_right")) + Convert.ToInt32(Input.IsActionPressed("move_right-alt")) - Convert.ToInt32(Input.IsActionPressed("move_left")) - Convert.ToInt32(Input.IsActionPressed("move_left-alt")),
-                Y = Convert.ToInt32(Input.IsActionPressed("move_crouch")) + Convert.ToInt32(Input.IsActionPressed("move_crouch-alt")) - Convert.ToInt32(Input.IsActionPressed("move_jump")) - Convert.ToInt32(Input.IsActionPressed("move_jump-alt")),
-            };
+                dashVector = new Vector2()
+                {
+                    X = Convert.ToInt32(Input.IsActionPressed("move_right")) + Convert.ToInt32(Input.IsActionPressed("move_right-alt")) - Convert.ToInt32(Input.IsActionPressed("move_left")) - Convert.ToInt32(Input.IsActionPressed("move_left-alt")),
+                    Y = Convert.ToInt32(Input.IsActionPressed("move_crouch")) + Convert.ToInt32(Input.IsActionPressed("move_crouch-alt")) - Convert.ToInt32(Input.IsActionPressed("move_jump")) - Convert.ToInt32(Input.IsActionPressed("move_jump-alt")),
+                };
+            }
             dashed = true;
         }
 
@@ -224,6 +228,8 @@ public partial class Player : CharacterBody2D
     public void Dash()
     {
         //set dash diretion and engage
+        if(Globals.DashMode == 1)
+            dashVector = (GetGlobalMousePosition() - GlobalPosition).Normalized();
         currentDashSpeed = dashSpeed;
         Velocity = dashVector * currentDashSpeed;
         isDashing = true;
@@ -305,6 +311,7 @@ public partial class Player : CharacterBody2D
             oracle.targetPosition = GlobalPosition;
             oracle.level = oracleLevel;
         }
+        EmitSignal(SignalName.OracleCast, SOCooldown.WaitTime);
     }
     public void SpellE()
     {
@@ -553,13 +560,11 @@ public partial class Player : CharacterBody2D
     {
         if (state)
         {
-            GD.Print("resting, hp recharge "+ amount);
             resting = true;
             if(amount > 0) 
                 HPRechargeAmount = amount;
         }else
         {
-            GD.Print("not resting");
             resting = false;
         }
     }

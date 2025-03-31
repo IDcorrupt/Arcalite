@@ -93,7 +93,6 @@ public partial class Checkpoint : Node2D
             Globals.player.ExitedRestArea += Player_ExitedRestArea;
         }
 
-       // GD.Print($"{Name} particles? {particles.Emitting}");
     }
 
     private void Player_ExitedRestArea()
