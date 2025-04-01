@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 21. 10:12
--- Kiszolgáló verziója: 10.4.32-MariaDB
--- PHP verzió: 8.0.30
+-- Létrehozás ideje: 2025. Már 31. 12:21
+-- Kiszolgáló verziója: 10.4.28-MariaDB
+-- PHP verzió: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -63,20 +63,21 @@ REPLACE INTO `achdesc` (`achievementid`, `languageid`, `name`, `description`) VA
 
 DROP TABLE IF EXISTS `achievement`;
 CREATE TABLE `achievement` (
-  `id` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `image` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- A tábla adatainak kiíratása `achievement`
 --
 
-REPLACE INTO `achievement` (`id`) VALUES
-(1),
-(2),
-(3),
-(4),
-(5),
-(6);
+REPLACE INTO `achievement` (`id`, `image`) VALUES
+(1, 'ach1.png'),
+(2, 'ach2.png'),
+(3, 'ach3.png'),
+(4, 'ach4.png'),
+(5, 'ach5.png'),
+(6, 'ach6.png');
 
 -- --------------------------------------------------------
 
