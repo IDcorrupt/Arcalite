@@ -303,9 +303,8 @@ CREATE TABLE `level` (
 --
 
 REPLACE INTO `level` (`id`, `image`) VALUES
-(1, '1'),
-(2, '2'),
-(3, '3');
+(1, 'undead.png'),
+(2, 'ruins.png');
 
 -- --------------------------------------------------------
 
@@ -330,9 +329,9 @@ CREATE TABLE `player` (
 --
 
 REPLACE INTO `player` (`id`, `name`, `hp`, `mp`, `profileid`, `avatarid`, `levelid`, `playtime`) VALUES
-(4, 'DinoHunter', 100, 100, 3, 1, 3, '00:19:44'),
-(5, 'DinoHuntingXx', 100, 100, 3, 1, 2, '00:05:02'),
-(6, 'Kálmán', 100, 100, 1, 1, 3, '00:19:14');
+(4, 'DinoHunter', 100, 100, 3, 1, 2, '00:19:44'),
+(5, 'DinoHuntingXx', 100, 100, 3, 1, 1, '00:05:02'),
+(6, 'Kálmán', 100, 100, 1, 1, 2, '00:19:14');
 
 -- --------------------------------------------------------
 

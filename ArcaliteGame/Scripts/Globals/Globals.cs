@@ -43,6 +43,7 @@ public partial class Globals : Node
     public static UserData user = new UserData();
 
 
+
 /*    public override void _Process(double delta)
     {
         base._Process(delta);
