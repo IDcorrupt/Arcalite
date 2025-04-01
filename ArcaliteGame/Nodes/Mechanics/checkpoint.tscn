@@ -227,9 +227,7 @@ shape = SubResource("RectangleShape2D_271on")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_co8ip")
-animation = &"triggered"
-frame = 16
-frame_progress = 1.0
+animation = &"empty"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false
@@ -241,3 +239,4 @@ process_material = SubResource("ParticleProcessMaterial_673b8")
 
 [connection signal="body_entered" from="TriggerArea" to="." method="TriggerAreaBodyEntered"]
 [connection signal="body_exited" from="TriggerArea" to="." method="TriggerAreaBodyExited"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnAnimationFinished"]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://6u32fol80lnr"]
+
+[ext_resource type="Script" uid="uid://ctc3q4m6bmn4i" path="res://Scripts/Game/Enemies/Bosses/BossMechArm.cs" id="1_g8e4q"]
+
+[sub_resource type="Gradient" id="Gradient_g8e4q"]
+colors = PackedColorArray(0.44, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nch63"]
+gradient = SubResource("Gradient_g8e4q")
+width = 1
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gppp1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g8e4q"]
+size = Vector2(80, 200)
+
+[node name="BossMechArm" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 0
+motion_mode = 1
+platform_on_leave = 2
+script = ExtResource("1_g8e4q")
+
+[node name="tempsprite" type="Sprite2D" parent="."]
+scale = Vector2(80, 200)
+texture = SubResource("GradientTexture1D_nch63")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gppp1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_g8e4q")
+
+[node name="LaunchSequenceTimer" type="Timer" parent="."]
+one_shot = true

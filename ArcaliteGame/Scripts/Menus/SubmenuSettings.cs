@@ -31,8 +31,19 @@ public partial class SubmenuSettings : Control
 		Save = GetNode<Button>("Panel/Margin/SettingsContainer/Actions/Hbox/Save");
 
 
-		//set option selectors
-		UpdateSelectors();
+		//set option selectors, if error occurs, reset settings
+		try
+		{
+            UpdateSelectors();
+        }
+        catch (Exception)
+		{
+            Control popup = (Control)Globals.popupScene.Instantiate();
+            ((Popup)popup).SetMessageType("filecorrupt");
+            AddChild(popup);
+            ConfigFileHandler.DefaultSettings();
+			UpdateSelectors();
+		}
 
 		//set button actions
 		Back.Pressed += BackPressed;
@@ -66,6 +77,7 @@ public partial class SubmenuSettings : Control
     public void UpdateSelectors()
 	{
 		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/difficulty/Selector").Selected = ConfigFileHandler.LoadSetting("game")["difficulty"].AsInt32();
+		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/dashMode/Selector").Selected = ConfigFileHandler.LoadSetting("game")["dashmode"].AsInt32();
 		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/windowmode/Selector").Selected = ConfigFileHandler.LoadSetting("video")["windowmode"].AsInt32() - 1;
 		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/resolution/Selector").Selected = ConfigFileHandler.LoadSetting("video")["resolutionX"].AsInt32() - 1;
 		GetNode<BaseButton>("Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/vsync/CheckButton").ButtonPressed = ConfigFileHandler.LoadSetting("video")["vsync"].AsBool();
@@ -81,6 +93,11 @@ public partial class SubmenuSettings : Control
     //setting change handlers
     //game
     public void DiffSelect(int index)
+	{
+		ConfigFileHandler.settingChanges["game"]["difficulty"] = index;
+		isSaved = false;
+	}
+	public void DashModeSelect(int index)
 	{
 		ConfigFileHandler.settingChanges["game"]["difficulty"] = index;
 		isSaved = false;

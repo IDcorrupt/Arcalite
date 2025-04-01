@@ -218,18 +218,25 @@ public static class DBConnector
     {
         try
         {
+            GD.Print("prepare called, runID is: " + playerId);
+            bool existing = false;
             conn.Open();
             string query = $"SELECT id FROM player WHERE id = {playerId};";
             using (MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader())
             {
                 //if player exists
                 if (reader.HasRows)
-                {
-                    conn.Close();
-                    return Enums.SaveState.Existing;
-                }
+                    existing = true;
             }
-
+            if (existing)
+            {
+                query = $"UPDATE player SET playtime={Globals.playTime} WHERE id={playerId};";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    cmd.ExecuteNonQuery();
+                GD.Print("save exists");
+                conn.Close();
+                return Enums.SaveState.Existing;
+            }
             //if player entry doesn't exist
             string[] savedata = save.Split('\n');
             query = "INSERT INTO player (name, hp, mp, profileid, avatarid, levelid, playtime) " +
@@ -247,7 +254,10 @@ public static class DBConnector
                 bool result = cmd.ExecuteNonQuery() != 0;
                 conn.Close();
                 if (result)
+                {
+                    GD.Print("save created");
                     return Enums.SaveState.Created;
+                }
                 else
                     return Enums.SaveState.None;
             }
@@ -264,6 +274,12 @@ public static class DBConnector
     {
         try
         {
+            GD.Print("upload called");
+            //these 3 lines insert the runID if it was newly created
+            string[] data = save.Split('\n');
+            data[9] = playerId.ToString();
+            save = String.Join("\n", data);
+
             conn.Open();
             string query = "INSERT INTO saves (playerid, save) VALUES (@playerid, @save)";
             using (MySqlCommand cmd = new MySqlCommand(query, conn))

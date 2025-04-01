@@ -29,6 +29,7 @@ public partial class Globals : Node
 
     //settings
     public static int Difficulty = 2;
+    public static int DashMode = 0;
     public static float[] diffMultipliers = { 1, 1.5f, 2f };
     public static bool PopupResult = false;
     public static bool PopupOpen = false;
@@ -39,7 +40,8 @@ public partial class Globals : Node
     public static int buttontoggle = 0;
 
     //website connection stuff
-    public static UserData user;
+    public static UserData user = new UserData();
+
 
 
 /*    public override void _Process(double delta)

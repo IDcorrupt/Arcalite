@@ -32,7 +32,8 @@ public partial class ConfigFileHandler : Node
 
     public static void DefaultSettings()
     {
-        config.SetValue("game", "difficulty", 2); //easy = 1 | normal = 2 | hard = 3
+        config.SetValue("game", "difficulty", 1);   //easy = 0 | normal = 1 | hard = 2
+        config.SetValue("game", "dashmode", 0);     //8dir = 0 | mouse = 1
 
         config.SetValue("video", "windowmode", 1); //windowed = 1 | borderless = 2 | exclusive = 3
         config.SetValue("video", "resolutionX", 5); //4k = 1 | 2k = 2 | 1080p = 3 | 720p = 4 | 360p(source res) = 5
@@ -121,7 +122,7 @@ public partial class ConfigFileHandler : Node
         {
             //game
             Globals.Difficulty = (int)settingChanges["game"]["difficulty"];
-
+            Globals.DashMode = (int)settingChanges["game"]["dashmode"];
             //video
             int winmode = (int)settingChanges["video"]["windowmode"];
             switch (winmode)

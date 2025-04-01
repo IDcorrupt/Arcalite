@@ -8,11 +8,14 @@ public partial class Ui : Control
     //HP & MP
     Sprite2D HPBar;
     Sprite2D MPBar;
+    Label hpNum;
 
     AnimatedSprite2D dashIcon;
     Sprite2D dashCooldownBar;
     AnimatedSprite2D CAIcon;
     Sprite2D CACooldownBar;
+    AnimatedSprite2D OracleIcon;
+    Sprite2D OracleCooldownBar;
     AnimatedSprite2D SpellEIcon;
     Sprite2D SpellECooldownBar; 
     AnimatedSprite2D SpellQIcon;
@@ -27,6 +30,7 @@ public partial class Ui : Control
     {
         HPBar = GetNode("HPBar/HPBarMask") as Sprite2D;
         MPBar = GetNode("MPBar/MPBarMask") as Sprite2D;
+        hpNum = GetNode("HPBar/hpnum") as Label;
 
 
         //cooldown components
@@ -34,6 +38,8 @@ public partial class Ui : Control
         dashCooldownBar = GetNode("Icons/Dash/CooldownBar") as Sprite2D;
         CAIcon = GetNode("Icons/ChargeAttack/Icon") as AnimatedSprite2D;
         CACooldownBar = GetNode("Icons/ChargeAttack/CooldownBar") as Sprite2D;
+        OracleIcon = GetNode("Icons/Oracle/Icon") as AnimatedSprite2D;
+        OracleCooldownBar = GetNode("Icons/Oracle/CooldownBar") as Sprite2D;
         SpellEIcon = GetNode("Icons/SpellE/Icon") as AnimatedSprite2D;
         SpellECooldownBar = GetNode("Icons/SpellE/CooldownBar") as Sprite2D;
         SpellQIcon = GetNode("Icons/SpellQ/Icon") as AnimatedSprite2D;
@@ -41,6 +47,7 @@ public partial class Ui : Control
 
         CACooldownBar.Hide();
         dashCooldownBar.Hide();
+        OracleCooldownBar.Hide();
         SpellECooldownBar.Hide();
         SpellQCooldownBar.Hide();
     }
@@ -73,8 +80,21 @@ public partial class Ui : Control
         CACooldownBar.Hide();
         CAIcon.Play("Ready");
     }
+    private void Player_OracleCast(float cooldown)
+    {
+        OracleCooldownBar.Show();
+        OracleCooldownBar.Scale = new Vector2(0, OracleCooldownBar.Scale.Y);
+        var oracleCooldown = GetTree().CreateTween();
+        oracleCooldown.Finished += OracleCooldown_Finished;
+        oracleCooldown.TweenProperty(OracleCooldownBar, "scale", new Vector2(32.0f, dashCooldownBar.Scale.Y), cooldown);
+        OracleIcon.Play("Cooldown");
+    }
 
-
+    private void OracleCooldown_Finished()
+    {
+        OracleCooldownBar.Hide();
+        OracleIcon.Play("Ready");
+    }
 
     private void Player_RapidFireCast(float activeTime)
     {
@@ -165,8 +185,10 @@ public partial class Ui : Control
         }
     }
 
-    private void UpdateStatBars()
+    private void UpdateStats()
     {
+        hpNum.Text = Mathf.Round(player.GetCurrentHP()) + "/" + Mathf.Round(player.GetMaxHP());
+
         float HPRatio = Mathf.Round(Globals.player.GetCurrentHP()) / Globals.player.GetMaxHP();
         float MPRatio = Mathf.Round(Globals.player.GetCurrentMP()) / Globals.player.GetMaxMP();
         if (HPBar.Texture is PlaceholderTexture2D HPtexture)
@@ -182,6 +204,7 @@ public partial class Ui : Control
             player = Globals.player;
             player.Dashed += Player_Dashed;
             player.ChargeAttacked += Player_ChargeAttacked;
+            player.OracleCast += Player_OracleCast;
             player.RapidFireCast += Player_RapidFireCast;
             player.ShieldCast += Player_ShieldCast;
             player.SpellEOver += Player_SpellEOver;
@@ -190,8 +213,7 @@ public partial class Ui : Control
             UpdateItems(player.GetEquips());
         }
 
-        UpdateStatBars();
-        
+        UpdateStats();
     }
 
 
