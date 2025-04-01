@@ -10,6 +10,7 @@ public partial class EnemyControl : Node2D
     private bool enemiesActive = false;
     private bool despawningInProgress = false;
     private bool roomCleared = false;
+    private bool camState = false;
 
     private List<Node2D> enemySpawnPoints = new List<Node2D>();
     private Timer SpawnTimer;
@@ -34,14 +35,18 @@ public partial class EnemyControl : Node2D
         if(area.GetCollisionLayerValue(9))
             playerInRange = true;
         else if (area.GetCollisionLayerValue(6))
+        {
             playerInRoom = true;
+        }
     }
     public void AreaExited(Area2D area)
     {
         if (area.GetCollisionLayerValue(9))
             playerInRange = false;
         else if (area.GetCollisionLayerValue(6))
+        {
             playerInRoom = false;
+        }
     }
 
 
@@ -74,34 +79,40 @@ public partial class EnemyControl : Node2D
             }
             enemiesActive = false;
         }
+        camState = false;
+        playerInRoom = false;
         despawningInProgress = false;
     }
 
     public void SetRoomCleared(bool cleared)
     {
+        playerInRoom = false;
         roomCleared = cleared;
     }
     public override void _Process(double delta)
     {
         if (!roomCleared)
         {
+            //stop chase if player dead
             if (Globals.player.GetIsDead())
             {
                 playerInRoom = false;
             }
+            //spawn enemies if player close
             if (playerInRange && !enemiesActive)
             {
                 SpawnEnemies();
             }
+            //start despawning if player too far
             else if (!playerInRange && !despawningInProgress && enemiesActive)
             {
                 despawningInProgress = true;
                 SpawnTimer.WaitTime = 2;
                 SpawnTimer.Start();
             }
+            //cancel despawn if player moves back in range
             else if (playerInRange && despawningInProgress)
             {
-                //cancel despawn if player moves back in range
                 SpawnTimer.Stop();
             }
 
@@ -109,15 +120,26 @@ public partial class EnemyControl : Node2D
             //fight mode
             if (playerInRoom)
             {
-                camera.LockPlayer(true);
+                if (!camState)
+                {
+                    camera.LockPlayer(true);
+                    camState = true;
+                }
+                foreach(EnemySpawner spawner in enemySpawnPoints)
+                {
+                    spawner.playerInRoom = true;
+                }
             }
             if (enemyAmount == 0 && playerInRoom)
             {
                 roomCleared = true;
             }
         }
-        else
+        else if (camState)
+        {
             camera.LockPlayer(false);
+            camState = false;
+        }
     }
 
     public bool isRoomCleared() { return roomCleared; }

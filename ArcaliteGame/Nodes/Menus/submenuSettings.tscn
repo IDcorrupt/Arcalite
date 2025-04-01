@@ -103,6 +103,34 @@ popup/item_1/id = 2
 popup/item_2/text = "Hard"
 popup/item_2/id = 3
 
+[node name="dashMode" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/dashMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+bbcode_enabled = true
+text = "[center]Dash Mode[/center]
+"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Selector" type="OptionButton" parent="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/dashMode"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_vertical = 0
+flat = true
+alignment = 1
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "8 Direction"
+popup/item_0/id = 0
+popup/item_1/text = "Follow mouse"
+popup/item_1/id = 1
+
 [node name="Video" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
 visible = false
 layout_mode = 2
@@ -476,6 +504,7 @@ text = "Save"
 flat = true
 
 [connection signal="item_selected" from="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/difficulty/Selector" to="." method="DiffSelect"]
+[connection signal="item_selected" from="Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/dashMode/Selector" to="." method="DashModeSelect"]
 [connection signal="item_selected" from="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/windowmode/Selector" to="." method="WindowSelect"]
 [connection signal="item_selected" from="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/resolution/Selector" to="." method="ResSelect"]
 [connection signal="toggled" from="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/vsync/CheckButton" to="." method="VsyncToggle"]

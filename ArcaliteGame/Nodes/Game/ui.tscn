@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://d4mg7kpomu4je"]
+[gd_scene load_steps=35 format=3 uid="uid://d4mg7kpomu4je"]
 
 [ext_resource type="Script" uid="uid://bw81mk3jt7fwe" path="res://Scripts/Mechanics/Ui.cs" id="1_f025f"]
 [ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_gb0wl"]
@@ -6,20 +6,22 @@
 [ext_resource type="Texture2D" uid="uid://cy8hqhi3lph21" path="res://Assets/UI/Icons/Dash/dash_Ready.png" id="4_ks7op"]
 [ext_resource type="Texture2D" uid="uid://cyp8gf66hrhdi" path="res://Assets/UI/Icons/ChargeAttack/ca_Cooldown.png" id="5_numjr"]
 [ext_resource type="Texture2D" uid="uid://bqucfy8ub1eny" path="res://Assets/UI/Icons/ChargeAttack/ca_Ready.png" id="6_1cjww"]
+[ext_resource type="Texture2D" uid="uid://cnvk0qy7fidpc" path="res://Assets/UI/Icons/Oracle/oracle_Active.png" id="7_1pvpa"]
 [ext_resource type="Texture2D" uid="uid://oflebjcxwd6s" path="res://Assets/UI/Icons/Necklace/necklace_Active.png" id="7_ffavq"]
 [ext_resource type="Texture2D" uid="uid://ss724n1rhqwn" path="res://Assets/UI/Icons/Necklace/necklace_Cooldown.png" id="8_1pvpa"]
+[ext_resource type="Texture2D" uid="uid://maliqbib5o4c" path="res://Assets/UI/Icons/Oracle/oracle_Cooldown.png" id="8_8ix2l"]
 [ext_resource type="Texture2D" uid="uid://c25u34ai4e5ib" path="res://Assets/UI/Icons/Necklace/necklace_Ready.png" id="9_8ix2l"]
+[ext_resource type="Texture2D" uid="uid://wn2tydwp7nik" path="res://Assets/UI/Icons/Oracle/oracle_Ready.png" id="9_ama4t"]
 [ext_resource type="Texture2D" uid="uid://cgeeap23ik47n" path="res://Assets/UI/Icons/Shield/shield_Active.png" id="10_ama4t"]
 [ext_resource type="Texture2D" uid="uid://byqmmeu2l110b" path="res://Assets/UI/Icons/Shield/shield_Cooldown.png" id="11_6y8v3"]
 [ext_resource type="Texture2D" uid="uid://lq70xbogwtpy" path="res://Assets/UI/Icons/Shield/shield_Ready.png" id="12_rwe5w"]
 [ext_resource type="Texture2D" uid="uid://noxh1xko13it" path="res://Assets/UI/Bars/health_border.png" id="13_mv3ti"]
 [ext_resource type="Texture2D" uid="uid://brrpy2xca714l" path="res://Assets/UI/Bars/health_bar.png" id="14_ks7op"]
+[ext_resource type="FontFile" uid="uid://0wk3iqgdcbuy" path="res://Assets/Resources/fonts/PressStart2P.ttf" id="15_numjr"]
 [ext_resource type="Texture2D" uid="uid://dyj08fvu188jb" path="res://Assets/UI/Bars/mana_border.png" id="16_numjr"]
 [ext_resource type="Texture2D" uid="uid://gnjx42iqts73" path="res://Assets/UI/Bars/mana_bar.png" id="17_1cjww"]
 [ext_resource type="Texture2D" uid="uid://dd4frqxaqqr84" path="res://Assets/UI/Bars/health_border_decor.png" id="17_mv3ti"]
 [ext_resource type="Texture2D" uid="uid://cnsfs6ptrjnor" path="res://Assets/UI/Bars/mana_border_decor.png" id="18_ffavq"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_ubv0j"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1r34d"]
 animations = [{
@@ -40,7 +42,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_h20vd"]
+[sub_resource type="CanvasTexture" id="CanvasTexture_ubv0j"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0dtax"]
 animations = [{
@@ -60,6 +62,37 @@ animations = [{
 "name": &"Ready",
 "speed": 5.0
 }]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_h20vd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_numjr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_1pvpa")
+}],
+"loop": true,
+"name": &"Active",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_8ix2l")
+}],
+"loop": true,
+"name": &"Cooldown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_ama4t")
+}],
+"loop": true,
+"name": &"Ready",
+"speed": 5.0
+}]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_1cjww"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qoyub"]
 animations = [{
@@ -119,6 +152,11 @@ animations = [{
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1pvpa"]
 size = Vector2(200, 20)
 
+[sub_resource type="LabelSettings" id="LabelSettings_ks7op"]
+font = ExtResource("15_numjr")
+font_size = 8
+font_color = Color(0.46, 0, 0, 1)
+
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8ix2l"]
 size = Vector2(200, 20)
 
@@ -137,18 +175,22 @@ script = ExtResource("1_f025f")
 [node name="Dash" type="Node2D" parent="Icons"]
 position = Vector2(610, 20)
 
+[node name="Icon" type="AnimatedSprite2D" parent="Icons/Dash"]
+sprite_frames = SubResource("SpriteFrames_1r34d")
+animation = &"Ready"
+
 [node name="CooldownBar" type="Sprite2D" parent="Icons/Dash"]
 position = Vector2(-16, 15)
 scale = Vector2(32, 5)
 texture = SubResource("CanvasTexture_ubv0j")
 centered = false
 
-[node name="Icon" type="AnimatedSprite2D" parent="Icons/Dash"]
-sprite_frames = SubResource("SpriteFrames_1r34d")
-animation = &"Ready"
-
 [node name="ChargeAttack" type="Node2D" parent="Icons"]
 position = Vector2(570, 20)
+
+[node name="Icon" type="AnimatedSprite2D" parent="Icons/ChargeAttack"]
+sprite_frames = SubResource("SpriteFrames_0dtax")
+animation = &"Ready"
 
 [node name="CooldownBar" type="Sprite2D" parent="Icons/ChargeAttack"]
 position = Vector2(-16, 15)
@@ -156,12 +198,21 @@ scale = Vector2(32, 5)
 texture = SubResource("CanvasTexture_h20vd")
 centered = false
 
-[node name="Icon" type="AnimatedSprite2D" parent="Icons/ChargeAttack"]
-sprite_frames = SubResource("SpriteFrames_0dtax")
+[node name="Oracle" type="Node2D" parent="Icons"]
+position = Vector2(530, 20)
+
+[node name="Icon" type="AnimatedSprite2D" parent="Icons/Oracle"]
+sprite_frames = SubResource("SpriteFrames_numjr")
 animation = &"Ready"
 
+[node name="CooldownBar" type="Sprite2D" parent="Icons/Oracle"]
+position = Vector2(-16, 15)
+scale = Vector2(32, 5)
+texture = SubResource("CanvasTexture_1cjww")
+centered = false
+
 [node name="SpellE" type="Node2D" parent="Icons"]
-position = Vector2(530, 20)
+position = Vector2(490, 20)
 
 [node name="Icon" type="AnimatedSprite2D" parent="Icons/SpellE"]
 sprite_frames = SubResource("SpriteFrames_qoyub")
@@ -174,7 +225,7 @@ texture = SubResource("CanvasTexture_24col")
 centered = false
 
 [node name="SpellQ" type="Node2D" parent="Icons"]
-position = Vector2(490, 20)
+position = Vector2(450, 20)
 
 [node name="CooldownBar" type="Sprite2D" parent="Icons/SpellQ"]
 position = Vector2(-16, 15)
@@ -203,6 +254,17 @@ centered = false
 position = Vector2(-27, -2)
 texture = ExtResource("14_ks7op")
 centered = false
+
+[node name="hpnum" type="Label" parent="HPBar"]
+offset_left = 77.0
+offset_top = 6.0
+offset_right = 146.0
+offset_bottom = 30.0
+theme = ExtResource("1_gb0wl")
+text = "100 100"
+label_settings = SubResource("LabelSettings_ks7op")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="BorderDecor" type="Sprite2D" parent="HPBar"]
 position = Vector2(5, 5)

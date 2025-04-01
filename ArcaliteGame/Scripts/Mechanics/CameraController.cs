@@ -12,16 +12,18 @@ public partial class CameraController : Node2D
     [Signal] public delegate void CameraMovedEventHandler(string dir);
 
     private Camera2D camera;
-    private StaticBody2D hitBox;
+    private StaticBody2D solidBorder;
     private Area2D enemyTrigger;
+    private CollisionShape2D hitbox;
+
 
     Timer cooldownTimer;
     bool cooling = true;
     public override void _Ready()
     {
         camera = GetNode<Camera2D>("Camera");
-        hitBox = GetNode("Camera/edgeCollisions") as StaticBody2D;
-
+        solidBorder = GetNode("Camera/edgeCollisions") as StaticBody2D;
+        hitbox = GetNode("Camera/Hitbox/CollisionShape2D") as CollisionShape2D;
         enemyTrigger = GetNode<Area2D>("Camera/EnemyTrigger");
 
         cooldownTimer = GetNode<Timer>("CooldownTimer");
@@ -31,13 +33,14 @@ public partial class CameraController : Node2D
     public void RespawnMove()
     {
         camera.PositionSmoothingEnabled = false;
-        cooldownTimer.Start();
+        hitbox.Disabled = true;
         LockPlayer(false);
+        cooldownTimer.Start();
     }
 
     public void LockPlayer(bool value)
     {
-        hitBox.SetCollisionLayerValue(3, value);
+        solidBorder.SetCollisionLayerValue(3, value);
     }
 
     //camera movement
@@ -64,80 +67,21 @@ public partial class CameraController : Node2D
         EmitSignal(SignalName.CameraMoved, direction);
     }
 
-
-    //MIGHT BE DEPRECATED CUZ OF NEW THING
-    public void LeftTriggerEntered(Node2D body)
-    {
-        if(body is Player)
-        {
-            MoveCamera("left");
-        }
-    }
-    public void LeftTriggerExited(Node2D body)
-    {
-        if(body is Player)
-        {
-            //right room check TBD
-        }
-    }
-    public void RightTriggerEntered(Node2D body)
-    {
-        if (body is Player)
-        {
-            MoveCamera("right");
-        }
-    }
-    public void RightTriggerExited(Node2D body)
-    {
-        if (body is Player)
-        {
-            //right room check TBD
-        }
-    }
-    public void TopTriggerEntered(Node2D body)
-    {
-        if (body is Player)
-        {
-            MoveCamera("top");
-        }
-    }
-    public void TopTriggerExited(Node2D body)
-    {
-        if (body is Player)
-        {
-            //right room check TBD
-        }
-    }
-    public void BotTriggerEntered(Node2D body)
-    {
-        if (body is Player)
-        {
-            MoveCamera("bot");
-        }
-    }
-    public void BotTriggerExited(Node2D body)
-    {
-        if (body is Player)
-        {
-            //right room check TBD
-        }
-    }
-
     public void CooldownTimerTimeout()
     {
         cooling = false;
+        hitbox.Disabled = false;
         camera.PositionSmoothingEnabled = true;
     }
     public override void _Process(double delta)
     {
-        //room correction / new room switcher
+        //room correction
 
         if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X > 330)
             MoveCamera("left");
         else if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X < -330)
             MoveCamera("right");
 
-        //VECTICAL CURRENTLY REMOVED
         if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y > 190)
             MoveCamera("top");
         else if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y < -190)

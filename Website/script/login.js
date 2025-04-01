@@ -32,12 +32,12 @@ function register(event) {
 
 function verifyRegister() {
     if ($('#register_code').val() == "" || isNaN($('#register_code').val())) {
-        alert("Adja meg az e-mailben kapott kódot!");
+        $("#newpwd_authcode_error").text("Adja meg az e-mailben kapott kódot!");
         return;
     }
 
     if (parseInt($('#register_code').val()) != verification_code) {
-        alert("Helytelen kód!");
+        $("#newpwd_authcode_error").text("Helytelen kód!");
         return;
     }
     
@@ -59,9 +59,10 @@ function uploadNewProfile() {
         global: false,
         success: (data) => {
             $('#register_error').html("");
-            alert(data.message);
-            location.replace(location.href.split("?")[0]);
-            location.reload();
+            Alert("Üzenet", data.message, false, () => {
+                location.replace(location.href.split("?")[0]);
+                location.reload();
+            });
         },
         error: (data) => {
             $('#register_error').html(data.message);
@@ -106,12 +107,12 @@ function forgotten_sendCode() {
     let email_input = $('#login_email').val();
 
     if (email_input == "") {
-        alert('Adjon meg egy e-mail címet!');
+        $("#login_error").text("Adjon meg egy e-mail címet!");
         return;   
     }
 
     if (!validEmail(email_input)) {
-        alert('Adjon meg egy helyes e-mail címet!');
+        $("#login_error").text("Helytelen e-mail cím formátum!");
         return;
     }
 
@@ -131,9 +132,9 @@ function forgotten_sendCode() {
                 $('#login_error').html("Nincs ilyen e-mail cím regisztrálva!");
                 return;
             }
-            
-            generateVerificationCode();
+            $('#login_error').html("");
 
+            generateVerificationCode();
             sendVerificationEmail(data.email, data.username, verification_code, "Forgotten");
             
             $('#login_base').hide();
@@ -190,21 +191,22 @@ function sendVerificationEmail(email, name, code, template) {
         contentType: "application/json",
         global: false,
         error: (data) => {
-            alert("E-mail elküldése sikertelen!");
-            window.open("login.html", "_self");
-            console.error(data);  
+            Alert("Hiba", "E-mail elküldése sikertelen!", false, () => {
+                window.open("login.html", "_self");
+                console.error(data);  
+            });
         }
     })
 }
 
 function forgotten_verifyCode() {
     if ($('#newpwd_authcode').val() == "" || isNaN($('#newpwd_authcode').val())) {
-        alert("Adja meg az e-mailben kapott kódot!");
+        $("#newpwd_authcode_error").text("Adja meg az e-mailben kapott kódot!");
         return;
     }
 
     if (parseInt($('#newpwd_authcode').val()) != verification_code) {
-        alert("Helytelen kód!");
+        $("#newpwd_authcode_error").text("Helytelen kód!");
         return;
     }
 
@@ -216,12 +218,12 @@ function forgotten_verifyCode() {
 
 function forgotten_setNewPassword(){
     if ($('#newpwd_newpwd').val() == "") {
-        alert("Adjon meg egy új jelszót!");
+        $("#newpwd_newpwd_error").text("Adjon meg egy új jelszót!");
         return;
     }
 
     if ($('#newpwd_newpwd').val() != $('#newpwd_again').val()) {
-        alert("A megerősítő jelszó nem egyezik az előtte megadottal!");
+        $("#newpwd_newpwd_error").text("A megerősítő jelszó nem egyezik az előtte megadottal!");
         return;
     }
 
@@ -236,15 +238,19 @@ function forgotten_setNewPassword(){
         data: payload,
         global: false,
         success: (data) => {
-            alert(data.message);
+            Alert("Üzenet", data.message, false, () => {
+                $('#newpwd_newpwd_container').hide();
+                $('#login_base').show();
+            });
         },
         error: (data) => {
-            alert(data.message);
+            Alert("Hiba", data.message, false, () => {
+                $('#newpwd_newpwd_container').hide();
+                $('#login_base').show();
+            });
         }
     });
 
-    $('#newpwd_newpwd_container').hide();
-    $('#login_base').show();
 }
 
 function switchToLogin() {

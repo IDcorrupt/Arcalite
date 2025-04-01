@@ -36,6 +36,7 @@ public partial class GameScene : Node2D
 			string mapname = Globals.currentSave[0];
 			Globals.runName = Globals.currentSave[10];
 			Globals.runID = Convert.ToInt32(Globals.currentSave[9]);
+			Globals.playTime = (float)Convert.ToDecimal(Globals.currentSave[11]);
 			MapScene = ResourceLoader.Load($"res://Nodes/Maps/{mapname}.tscn") as PackedScene;
 		}
 		else
@@ -61,7 +62,6 @@ public partial class GameScene : Node2D
 
     private void DeathTimer_Timeout()
     {
-		GD.Print("timer expired");
 		respawnScreen = RespawnScene.Instantiate() as Control;
 		UILayer.AddChild(respawnScreen);
     }

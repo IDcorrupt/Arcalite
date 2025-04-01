@@ -57,8 +57,6 @@ public partial class Map : Node2D
     }
     private void SetRoomStatus()
     {
-        GD.Print("saveile: "+Globals.hasSavefile);
-
         int i = 0;
         if (Globals.hasSavefile)
         {
