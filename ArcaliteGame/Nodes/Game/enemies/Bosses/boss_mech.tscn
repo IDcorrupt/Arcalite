@@ -1,17 +1,80 @@
-[gd_scene load_steps=9 format=3 uid="uid://b21oarmp6vq7w"]
+[gd_scene load_steps=16 format=3 uid="uid://b21oarmp6vq7w"]
 
 [ext_resource type="Script" uid="uid://dnth7syhu0c4a" path="res://Scripts/Game/Enemies/Bosses/BossMech.cs" id="1_jls1n"]
-[ext_resource type="Texture2D" uid="uid://3usmmqxmemtl" path="res://Assets/Sprites/Lajos.png" id="1_rb1g4"]
+[ext_resource type="Texture2D" uid="uid://8f03ny4jni6e" path="res://Assets/Sprites/enemies/Bosses/MechBoss/cage_closed.png" id="2_r16cw"]
 [ext_resource type="PackedScene" uid="uid://6u32fol80lnr" path="res://Nodes/Game/enemies/Bosses/boss_mech_arm.tscn" id="3_gtnea"]
+[ext_resource type="Texture2D" uid="uid://ct7ouj0bhnaqw" path="res://Assets/Sprites/enemies/Bosses/MechBoss/cage_open.png" id="3_mmpxq"]
+[ext_resource type="Texture2D" uid="uid://bi38gbli2gxl6" path="res://Assets/Sprites/enemies/Bosses/MechBoss/death.png" id="4_q3s8m"]
+[ext_resource type="Texture2D" uid="uid://5s5lt0ylwyoh" path="res://Assets/Sprites/enemies/Bosses/MechBoss/eye_flash_1.png" id="5_7du3g"]
+[ext_resource type="Texture2D" uid="uid://dn8xypmmewx5" path="res://Assets/Sprites/enemies/Bosses/MechBoss/eye_flash_2.png" id="6_py6l5"]
+[ext_resource type="Texture2D" uid="uid://d0ybtkwaf2cbo" path="res://Assets/Sprites/enemies/Bosses/MechBoss/hurt.png" id="7_4ihsn"]
+[ext_resource type="Texture2D" uid="uid://c8261hcub3lyv" path="res://Assets/Sprites/enemies/Bosses/MechBoss/Idle_closed.png" id="8_k46kv"]
+[ext_resource type="Texture2D" uid="uid://bd54qtdcrus83" path="res://Assets/Sprites/enemies/Bosses/MechBoss/Idle_open.png" id="9_w7ymk"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0hp8d"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_rb1g4")
+"texture": ExtResource("2_r16cw")
+}],
+"loop": false,
+"name": &"cage_close",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mmpxq")
+}],
+"loop": false,
+"name": &"cage_open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_q3s8m")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_7du3g")
+}],
+"loop": false,
+"name": &"eye_flash_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_py6l5")
+}],
+"loop": false,
+"name": &"eye_flash_2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_4ihsn")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_k46kv")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle_closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_w7ymk")
+}],
+"loop": true,
+"name": &"idle_open",
 "speed": 5.0
 }]
 
@@ -29,7 +92,7 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0, 0, 1, 1, 0, 0, 0, 0),
-"points": PackedFloat32Array(5, -0.25, 0, 1, 0, -650, -0.6, 0, 0, 0, -650, 0, 0, 0, 0, -517, 0, 0, 0, 0, -517, 0, 0, 0, 0, 23, -1, 0, 0, 0, 23, 0, 0, 0.25, 0, 5, -0.25, 0, 0, 0),
+"points": PackedFloat32Array(-25, -0.25, 0, 1, 0, -650, -0.6, 0, 0, 0, -650, 0, 0, 0, 0, -517, 0, 0, 0, 0, -517, 0, 0, 0, 0, 23, -1, 0, 0, 0, 23, 0, 0, 0.25, 0, -25, -0.25, 0, 0, 0),
 "times": PackedFloat32Array(0, 1.5, 2, 2.1, 5, 8, 8.5, 10)
 }
 tracks/1/type = "bezier"
@@ -39,9 +102,9 @@ tracks/1/path = NodePath("Arms/BossMechArmRight:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 1, 1, 0, 0, 0, 0),
-"points": PackedFloat32Array(5, -0.25, 0, 1, 0, -650, -0.6, 0, 0, 0, -650, 0, 0, 0, 0, -517, 0, 0, 0, 0, -517, 0, 0, 0, 0, 23, -1, 0, 0, 0, 23, 0, 0, 0.25, 0, 5, -0.25, 0, 0, 0),
-"times": PackedFloat32Array(2.5, 4, 4.5, 4.6, 5, 8, 8.5, 10)
+"handle_modes": PackedInt32Array(0, 0, 0, 1, 1, 0, 0, 0, 0),
+"points": PackedFloat32Array(-25, -0.25, 0, 0.25, 0, -25, -0.25, 0, 1, 0, -650, -0.6, 0, 0, 0, -650, 0, 0, 0, 0, -517, 0, 0, 0, 0, -517, 0, 0, 0, 0, 23, -1, 0, 0, 0, 23, 0, 0, 0.25, 0, -25, -0.25, 0, 0, 0),
+"times": PackedFloat32Array(0, 2.5, 4, 4.5, 4.6, 5, 8, 8.5, 10)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
@@ -119,6 +182,7 @@ script = ExtResource("1_jls1n")
 position = Vector2(0, 10)
 scale = Vector2(20, 20)
 sprite_frames = SubResource("SpriteFrames_0hp8d")
+animation = &"cage_close"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_jls1n")
@@ -128,7 +192,7 @@ disabled = true
 z_index = 1
 
 [node name="BossMechArmLeft" parent="Arms" instance=ExtResource("3_gtnea")]
-position = Vector2(-198, 5)
+position = Vector2(-200, -25)
 
 [node name="BossMechArmRight" parent="Arms" instance=ExtResource("3_gtnea")]
 position = Vector2(200, 5)
@@ -146,14 +210,16 @@ one_shot = true
 one_shot = true
 
 [node name="Vulnerability" type="Timer" parent="Timers"]
+wait_time = 10.0
 one_shot = true
 
-[node name="FightTrigger" type="RayCast2D" parent="."]
-position = Vector2(0, -140)
-target_position = Vector2(0, -100)
-collision_mask = 129
+[node name="AnimFlashTimer" type="Timer" parent="Timers"]
+one_shot = true
 
 [node name="LaunchAnim" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_gtnea")
 }
+
+[connection signal="animation_finished" from="Sprite" to="." method="OnSpriteAnimationFinished"]
+[connection signal="animation_finished" from="LaunchAnim" to="." method="OnAnimationFinished"]

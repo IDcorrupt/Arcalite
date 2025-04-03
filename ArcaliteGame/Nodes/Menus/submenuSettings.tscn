@@ -438,49 +438,6 @@ actionName = "attack_charge"
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_0v2bk")
 
-[node name="Accessibility" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
-visible = false
-layout_mode = 2
-tab_alignment = 1
-clip_tabs = false
-metadata/_tab_index = 4
-
-[node name="MarginContainer" type="MarginContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Accessibility"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 10
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Accessibility/MarginContainer"]
-layout_mode = 2
-
-[node name="Vbox" type="VBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Accessibility/MarginContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 11.41
-
-[node name="idek" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Accessibility/MarginContainer/ScrollContainer/Vbox"]
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Text" type="RichTextLabel" parent="Panel/Margin/SettingsContainer/SettingTabs/Accessibility/MarginContainer/ScrollContainer/Vbox/idek"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-bbcode_enabled = true
-text = "[center]idk[/center]
-"
-fit_content = true
-autowrap_mode = 0
-
 [node name="Actions" type="PanelContainer" parent="Panel/Margin/SettingsContainer"]
 layout_mode = 2
 

@@ -153,11 +153,9 @@ public partial class ConfigFileHandler : Node
             //resolution
             int resSize = (int)settingChanges["video"]["resolutionX"];
             //check if res setting exceeds user's screen -> if so, reset to highest value
-            GD.Print($"resize int is {resSize}, corresponding resXValue: {resXvalues[resSize]}");
             bool resMod = false;
             while (resXvalues[resSize] > DisplayServer.ScreenGetSize(screenId).X)
             {
-                GD.Print("set resolution too big");
                 resMod = true;
                 resSize++;
             }

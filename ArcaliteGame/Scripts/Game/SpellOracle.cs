@@ -65,8 +65,10 @@ public partial class SpellOracle : Node2D
     {
         if (body is Enemy enemy)
             affectedEntities.Add(enemy);
-        else if(body is CasterProjectile proj)
+        else if (body is CasterProjectile proj)
             affectedEntities.Add(proj);
+        else if (body is BossMechArm arm)
+            affectedEntities.Add(arm);
     }
     public void OnBodyExited(Node2D body)
     {
@@ -74,13 +76,19 @@ public partial class SpellOracle : Node2D
         {
             enemy.isSlowed = false;
             enemy.slowFactor = 1;
-            GD.Print("enemy removed? " + affectedEntities.Remove((Enemy)enemy));
+            affectedEntities.Remove(enemy);
         }
         else if (body is CasterProjectile proj)
         {
             proj.isSlowed = false;
             proj.slowFactor = 1;
-            GD.Print("projectile removed? " + affectedEntities.Remove((CasterProjectile)proj));
+            affectedEntities.Remove(proj);
+        }
+        else if (body is BossMechArm arm)
+        {
+            arm.isSlowed = false;
+            arm.slowFactor = 1;
+            affectedEntities.Remove(arm);   
         }
     }
 
@@ -98,12 +106,19 @@ public partial class SpellOracle : Node2D
                 castproj.isSlowed = false;
                 castproj.slowFactor = 1;
             }
+            else if (obj is BossMechArm arm)
+            {
+                arm.isSlowed = false;
+                arm.slowFactor = 1;
+            }
         }
         QueueFree();
     }
     public override void _Process(double delta)
     {
+        //cancel if player dies
         if(Globals.player.GetIsDead()) OnDurationTimeout();
+
         GlobalPosition = targetPosition;
         if (slowing)
         {
@@ -137,6 +152,11 @@ public partial class SpellOracle : Node2D
                     castproj.isSlowed = true;
                     castproj.slowFactor = slowFactor;
                 }
+                else if (obj is BossMechArm arm)
+                {
+                    arm.isSlowed = true;
+                    arm.slowFactor = slowFactor;
+                }
             }
         }
         else
@@ -152,6 +172,11 @@ public partial class SpellOracle : Node2D
                 {
                     castproj.isSlowed = false;
                     castproj.slowFactor = 1;
+                }
+                else if (obj is BossMechArm arm)
+                {
+                    arm.isSlowed = false;
+                    arm.slowFactor = 1;
                 }
             }
         }

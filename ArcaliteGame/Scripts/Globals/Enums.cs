@@ -25,6 +25,13 @@ public partial class Enums : Node
         None,
         Mech,
     }
+    public enum MechAttackType
+    {
+        Single,
+        Double,
+        Sweep,  //only if i have time
+        Laser
+    }
     public enum SaveState
     {
         Existing,

@@ -99,7 +99,7 @@ public partial class SubmenuSettings : Control
 	}
 	public void DashModeSelect(int index)
 	{
-		ConfigFileHandler.settingChanges["game"]["difficulty"] = index;
+		ConfigFileHandler.settingChanges["game"]["dashmode"] = index;
 		isSaved = false;
 	}
 	//video
