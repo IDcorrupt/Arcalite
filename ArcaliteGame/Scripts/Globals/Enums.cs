@@ -29,7 +29,7 @@ public partial class Enums : Node
     {
         Single,
         Double,
-        Sweep,  //only if i have time
+        Sweep,
         Laser
     }
     public enum SaveState

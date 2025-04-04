@@ -7,7 +7,8 @@ public partial class CameraController : Node2D
     //debug
     private bool freecamToggle = false;
     //debug
-    
+
+    private bool playerLock = false;
     
     [Signal] public delegate void CameraMovedEventHandler(string dir);
 
@@ -40,7 +41,7 @@ public partial class CameraController : Node2D
 
     public void LockPlayer(bool value)
     {
-        solidBorder.SetCollisionLayerValue(3, value);
+        playerLock = value;
     }
 
     //camera movement
@@ -75,8 +76,8 @@ public partial class CameraController : Node2D
     }
     public override void _Process(double delta)
     {
-        //room correction
-
+        
+        //room switch detection
         if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X > 330)
             MoveCamera("left");
         else if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X < -330)
@@ -86,6 +87,21 @@ public partial class CameraController : Node2D
             MoveCamera("top");
         else if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y < -190)
             MoveCamera("bot");
+
+        //updated player "caging" (previous solution didn't work if player got forced out)
+        if (playerLock)
+        {
+            if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X > 310)
+                Globals.player.GlobalPosition = new Vector2(camera.GlobalPosition.X + 310, Globals.player.GlobalPosition.Y);
+            else if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X < -310)
+                Globals.player.GlobalPosition = new Vector2(camera.GlobalPosition.X - 310, Globals.player.GlobalPosition.Y);
+
+            if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y > 170)
+                Globals.player.GlobalPosition = new Vector2(Globals.player.GlobalPosition.X, camera.GlobalPosition.Y + 170);
+            else if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y < -170)
+                Globals.player.GlobalPosition = new Vector2(Globals.player.GlobalPosition.X, camera.GlobalPosition.Y - 170);
+        }
+
 
         //debug freecam
         if (Input.IsActionJustPressed("freecam_toggle"))

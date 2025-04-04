@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://b16nh4vhtdeho"]
+[gd_scene load_steps=17 format=4 uid="uid://b16nh4vhtdeho"]
 
 [ext_resource type="Script" uid="uid://uoonx2bghxay" path="res://Scripts/Maps/Map.cs" id="1_4qp3d"]
 [ext_resource type="PackedScene" uid="uid://dbay08psod1qd" path="res://Nodes/Mechanics/camera_controller.tscn" id="2_cemhq"]
@@ -6,6 +6,15 @@
 [ext_resource type="PackedScene" uid="uid://dodk5iiiisuu4" path="res://Nodes/Game/enemies/enemy_control.tscn" id="4_38mkx"]
 [ext_resource type="PackedScene" uid="uid://rra3jq10ihxr" path="res://Nodes/Mechanics/checkpoint.tscn" id="4_n6o25"]
 [ext_resource type="PackedScene" uid="uid://c7bw1cggtiyst" path="res://Nodes/Game/enemies/enemy_spawn_point.tscn" id="5_kbhp1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_05gdh"]
+size = Vector2(500, 275)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sgn4n"]
+size = Vector2(500, 275)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wmiys"]
+size = Vector2(500, 275)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gpj2h"]
 particle_flag_disable_z = true
@@ -79,14 +88,38 @@ metadata/_edit_lock_ = true
 
 [node name="CheckPoints" type="Node2D" parent="."]
 
-[node name="Checkpoint0" parent="CheckPoints" instance=ExtResource("4_n6o25")]
+[node name="Checkpoint0" parent="CheckPoints" node_paths=PackedStringArray("triggerArea") instance=ExtResource("4_n6o25")]
 position = Vector2(265, 271)
+triggerArea = NodePath("Area2D")
 
-[node name="Checkpoint1" parent="CheckPoints" instance=ExtResource("4_n6o25")]
+[node name="Area2D" type="Area2D" parent="CheckPoints/Checkpoint0"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoints/Checkpoint0/Area2D"]
+position = Vector2(55, -91)
+shape = SubResource("RectangleShape2D_05gdh")
+debug_color = Color(0, 0.639216, 0.286275, 0.0588235)
+
+[node name="Checkpoint1" parent="CheckPoints" node_paths=PackedStringArray("triggerArea") instance=ExtResource("4_n6o25")]
 position = Vector2(2260, 282)
+triggerArea = NodePath("Area2D")
 
-[node name="Checkpoint2" parent="CheckPoints" instance=ExtResource("4_n6o25")]
+[node name="Area2D" type="Area2D" parent="CheckPoints/Checkpoint1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoints/Checkpoint1/Area2D"]
+position = Vector2(-20, -102)
+shape = SubResource("RectangleShape2D_sgn4n")
+debug_color = Color(0, 0.64, 0.288, 0.0588235)
+
+[node name="Checkpoint2" parent="CheckPoints" node_paths=PackedStringArray("triggerArea") instance=ExtResource("4_n6o25")]
 position = Vector2(3517, 286)
+triggerArea = NodePath("Area2D")
+
+[node name="Area2D" type="Area2D" parent="CheckPoints/Checkpoint2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoints/Checkpoint2/Area2D"]
+position = Vector2(3, -106)
+shape = SubResource("RectangleShape2D_wmiys")
+debug_color = Color(0, 0.639216, 0.286275, 0.0588235)
 
 [node name="Controllers" type="Node2D" parent="."]
 
@@ -115,7 +148,7 @@ position = Vector2(2880, 180)
 position = Vector2(226, 87)
 EnemyClass = 5
 
-[node name="EnemyControl4" parent="Controllers" instance=ExtResource("4_38mkx")]
+[node name="EnemyControl4" parent="Controllers" groups=["Controllers"] instance=ExtResource("4_38mkx")]
 position = Vector2(4160, 180)
 
 [node name="EnemySpawnPoint1" parent="Controllers/EnemyControl4" instance=ExtResource("5_kbhp1")]

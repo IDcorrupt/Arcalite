@@ -255,6 +255,7 @@ public partial class SubmenuSettings : Control
 		ConfigFileHandler.SaveSettings();
 		isSaved = true;
 		UpdateSelectors();
+		BackPressed();
 	}
 	
 	//exit func for nosave exit

@@ -92,7 +92,7 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0, 0, 1, 1, 0, 0, 0, 0),
-"points": PackedFloat32Array(-25, -0.25, 0, 1, 0, -650, -0.6, 0, 0, 0, -650, 0, 0, 0, 0, -517, 0, 0, 0, 0, -517, 0, 0, 0, 0, 23, -1, 0, 0, 0, 23, 0, 0, 0.25, 0, -25, -0.25, 0, 0, 0),
+"points": PackedFloat32Array(-25, -0.25, 0, 1, 0, -650, -0.6, 0, 0, 0, -650, 0, 0, 0, 0, -506, 0, 0, 0, 0, -506, 0, 0, 0, 0, 34, -1, 0, 0, 0, 34, 0, 0, 0.25, 0, -25, -0.25, 0, 0, 0),
 "times": PackedFloat32Array(0, 1.5, 2, 2.1, 5, 8, 8.5, 10)
 }
 tracks/1/type = "bezier"
@@ -103,7 +103,7 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0, 1, 1, 0, 0, 0, 0),
-"points": PackedFloat32Array(-25, -0.25, 0, 0.25, 0, -25, -0.25, 0, 1, 0, -650, -0.6, 0, 0, 0, -650, 0, 0, 0, 0, -517, 0, 0, 0, 0, -517, 0, 0, 0, 0, 23, -1, 0, 0, 0, 23, 0, 0, 0.25, 0, -25, -0.25, 0, 0, 0),
+"points": PackedFloat32Array(-25, -0.25, 0, 0.25, 0, -25, -0.25, 0, 1, 0, -650, -0.6, 0, 0, 0, -650, 0, 0, 0, 0, -506, 0, 0, 0, 0, -506, 0, 0, 0, 0, 34, -1, 0, 0, 0, 34, 0, 0, 0.25, 0, -25, -0.25, 0, 0, 0),
 "times": PackedFloat32Array(0, 2.5, 4, 4.5, 4.6, 5, 8, 8.5, 10)
 }
 tracks/2/type = "bezier"
@@ -204,6 +204,9 @@ SIDE = true
 one_shot = true
 
 [node name="DoubleAttack" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="SweepAttack" type="Timer" parent="Timers"]
 one_shot = true
 
 [node name="Laser" type="Timer" parent="Timers"]

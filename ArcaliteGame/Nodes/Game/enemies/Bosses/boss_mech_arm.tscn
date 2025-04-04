@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://6u32fol80lnr"]
+[gd_scene load_steps=8 format=3 uid="uid://6u32fol80lnr"]
 
 [ext_resource type="Script" uid="uid://ctc3q4m6bmn4i" path="res://Scripts/Game/Enemies/Bosses/BossMechArm.cs" id="1_g8e4q"]
 
@@ -15,7 +15,10 @@ width = 1
 size = Vector2(80, 180)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nch63"]
-size = Vector2(140, 20)
+size = Vector2(80, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p6y6e"]
+size = Vector2(90, 95)
 
 [node name="BossMechArm" type="CharacterBody2D"]
 z_index = -1
@@ -25,7 +28,6 @@ platform_on_leave = 2
 script = ExtResource("1_g8e4q")
 
 [node name="tempsprite" type="Sprite2D" parent="."]
-position = Vector2(0, 10)
 scale = Vector2(80, 180)
 texture = SubResource("GradientTexture1D_nch63")
 
@@ -33,7 +35,6 @@ texture = SubResource("GradientTexture1D_nch63")
 sprite_frames = SubResource("SpriteFrames_gppp1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 10)
 shape = SubResource("RectangleShape2D_g8e4q")
 
 [node name="LaunchSequenceTimer" type="Timer" parent="."]
@@ -45,15 +46,27 @@ one_shot = true
 [node name="AwaitTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="AtkRange" type="Area2D" parent="."]
+[node name="SpikeOrigin" type="Node2D" parent="."]
+position = Vector2(0, 95)
+
+[node name="PlayerHitBox" type="StaticBody2D" parent="."]
+collision_layer = 16777216
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHitBox"]
+position = Vector2(0, -45)
+shape = SubResource("RectangleShape2D_nch63")
+one_way_collision = true
+debug_color = Color(0.670684, 0.50895, 0, 0.42)
+
+[node name="PlayerDetect" type="Area2D" parent="."]
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AtkRange"]
-position = Vector2(0, 90)
-shape = SubResource("RectangleShape2D_nch63")
-debug_color = Color(0.65, 0, 0.0108332, 0.419608)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetect"]
+position = Vector2(0, 47.5)
+shape = SubResource("RectangleShape2D_p6y6e")
 
 [connection signal="timeout" from="TargetingTimer" to="." method="AtkWindupTimeout"]
 [connection signal="timeout" from="AwaitTimer" to="." method="AtkGraceTimeout"]
-[connection signal="body_entered" from="AtkRange" to="." method="AtkRangeBodyEntered"]
-[connection signal="body_exited" from="AtkRange" to="." method="AtkRangeBodyExited"]
+[connection signal="body_entered" from="PlayerDetect" to="." method="OnPlayerDetectAreaEntered"]
+[connection signal="body_exited" from="PlayerDetect" to="." method="OnPlayerDetectAreaExited"]

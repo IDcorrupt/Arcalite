@@ -28,6 +28,7 @@ public partial class BossMech : CharacterBody2D
     //timers
     private Timer singleAttackCooldown;
     private Timer doubleAttackCooldown;
+    private Timer sweepAttackCooldown;
     private Timer laserAttackCooldown;
     private Timer animFlashTimer;
     private Timer vulnerabilityCooldown;
@@ -44,6 +45,7 @@ public partial class BossMech : CharacterBody2D
 
         singleAttackCooldown = GetNode("Timers/SingleAttack") as Timer;
         doubleAttackCooldown = GetNode("Timers/DoubleAttack") as Timer;
+        sweepAttackCooldown = GetNode("Timers/SweepAttack") as Timer;
         laserAttackCooldown = GetNode("Timers/Laser") as Timer;
         animFlashTimer = GetNode("Timers/AnimFlashTimer") as Timer;
         vulnerabilityCooldown = GetNode("Timers/Vulnerability") as Timer;
@@ -53,8 +55,9 @@ public partial class BossMech : CharacterBody2D
         damage = 30 * Globals.diffMultipliers[Globals.Difficulty];
         //timings
         singleAttackCooldown.WaitTime = 5 / Globals.diffMultipliers[Globals.Difficulty];
-        doubleAttackCooldown.WaitTime = 10 / Globals.diffMultipliers[Globals.Difficulty];
-        laserAttackCooldown.WaitTime = 20 / Globals.diffMultipliers[Globals.Difficulty];
+        doubleAttackCooldown.WaitTime = 20 / Globals.diffMultipliers[Globals.Difficulty];
+        sweepAttackCooldown.WaitTime = 30 / Globals.diffMultipliers[Globals.Difficulty];
+        laserAttackCooldown.WaitTime = 60 / Globals.diffMultipliers[Globals.Difficulty];
         vulnerabilityCooldown.WaitTime = 10 / Globals.diffMultipliers[Globals.Difficulty];
         laserCount = Globals.Difficulty + 1;
 
@@ -68,7 +71,6 @@ public partial class BossMech : CharacterBody2D
     private void BossMechArm_AttackFinished(Enums.MechAttackType type)
     {
         attacking = false;
-        GD.Print("tpye: " + type);
         switch (type)
         {
             case Enums.MechAttackType.Single:
@@ -78,7 +80,7 @@ public partial class BossMech : CharacterBody2D
                 doubleAttackCooldown.Start();
                 break;
             case Enums.MechAttackType.Sweep:
-                //if i implement it
+                sweepAttackCooldown.Start();
                 break;
             case Enums.MechAttackType.Laser:
                 laserAttackCooldown.Start();
@@ -110,6 +112,7 @@ public partial class BossMech : CharacterBody2D
         {
             singleAttackCooldown.Start();
             doubleAttackCooldown.Start();
+            sweepAttackCooldown.Start();
             laserAttackCooldown.Start();
             ACTIVE = true;
         }
@@ -129,6 +132,14 @@ public partial class BossMech : CharacterBody2D
         attacking = true;
         BossMechArmLeft.AttackSignal(Enums.MechAttackType.Double);
         BossMechArmRight.AttackSignal(Enums.MechAttackType.Double);
+    }
+    private void InitiateSweepAttack()
+    {
+        attacking = true;
+        if (playerSide)
+            BossMechArmRight.AttackSignal(Enums.MechAttackType.Sweep);
+        else
+            BossMechArmLeft.AttackSignal(Enums.MechAttackType.Sweep);
     }
     private void InitiateLaser()
     {
@@ -194,41 +205,54 @@ public partial class BossMech : CharacterBody2D
 
     private void Update(double delta)
     {
-        if (ACTIVE)
-        {
-            //determine where player is in relation to itself
-            playerSide = Globals.player.GlobalPosition.X > GlobalPosition.X ? true : false;
-            //leaning
-            if (!attacking)
-            {
-                Movement(delta);
-            }else Velocity = Vector2.Zero;  
 
-            //attacks
-            if (!attacking && singleAttackCooldown.TimeLeft == 0)
-                InitiateSingleAttack();
-            if (!attacking && doubleAttackCooldown.TimeLeft == 0)
-                InitiateDoubleAttack();
-            if (!attacking && laserAttackCooldown.TimeLeft == 0)
-                InitiateLaser();
-
-
-        }
         if (playerInRoom)
         {
             StartupSequence();
         }
+        if (ACTIVE)
+        {
+            if (!Globals.player.GetIsDead())
+            {
+                //only attack and move if player is alive
+
+                //determine where player is in relation to itself
+                playerSide = Globals.player.GlobalPosition.X > GlobalPosition.X ? true : false;
+                //leaning
+                if (!attacking)
+                {
+                    Movement(delta);
+                }
+                else Velocity = Vector2.Zero;
+
+                //attacks
+                if (!attacking && singleAttackCooldown.TimeLeft == 0)
+                    InitiateSingleAttack();
+                if (!attacking && doubleAttackCooldown.TimeLeft == 0)
+                    InitiateDoubleAttack();
+                if (!attacking && sweepAttackCooldown.TimeLeft == 0)
+                    InitiateSweepAttack();
+                if (!attacking && laserAttackCooldown.TimeLeft == 0)
+                    InitiateLaser();
+
+
+            }
 
 
 
 
+        }
+        else
+        {
+
+        }
         MoveAndSlide();
         Animate();
     }
 
 
     public float GetDamage() { return damage; }
-
+    public EnemyControl GetController() { return GetParent() as EnemyControl; }
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
