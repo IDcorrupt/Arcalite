@@ -22,6 +22,8 @@ public partial class Globals : Node
     public static string activeMap = null;
     //Godot has no built-in stopwatch, so i have to use this
     public static float playTime = 0;
+    //used for stopping time after final boss was beaten
+    public static bool gameBeaten = false;
 
     //player cuz i need it everywhere
     public static Player player = null;

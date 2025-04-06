@@ -270,11 +270,16 @@ public partial class BossMech : CharacterBody2D
             health -= damage;
             if (health <= 0)
             {
-                dead = true;
-                ACTIVE = false;
-                sprite.Play("death");
+                Die();
             }
         }
+    }
+    private void Die()
+    {
+        dead = true;
+        ACTIVE = false;
+        sprite.Play("death");
+        Globals.gameBeaten = true;
     }
     private void DropItems(Enums.itemType itemtype = Enums.itemType.shard, int customDropRate = 0)
     {

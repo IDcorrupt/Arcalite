@@ -41,6 +41,8 @@ public partial class Map : Node2D
         else
         {
             Globals.spawnPoint = GetNode("CheckPoints/Checkpoint0") as Checkpoint;
+            //if active checkpoint is the final one -> game is beaten -> set it so timer doesn't activate
+            Globals.gameBeaten = Globals.spawnPoint.finalCheckPoint;
         }
         SetRoomStatus();
         Globals.spawnPoint.Empty();

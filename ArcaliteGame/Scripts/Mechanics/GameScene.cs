@@ -69,7 +69,7 @@ public partial class GameScene : Node2D
 
     public override void _Process(double delta)
 	{
-		if (Globals.gameActive && !Globals.player.GetIsDead())
+		if (Globals.gameActive && !Globals.player.GetIsDead() && !Globals.gameBeaten)
 			Globals.playTime += (float)delta;
 
 		if (Globals.player.GetIsDead() && !deadtrigger)

@@ -7,6 +7,7 @@ using System.Net.Quic;
 public partial class Checkpoint : Node2D
 {
     [Export] private Area2D triggerArea;
+    [Export] public bool finalCheckPoint = false;
     private Map map;
     private AnimatedSprite2D sprite;
     GpuParticles2D particles;

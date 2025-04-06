@@ -1,0 +1,116 @@
+[gd_scene load_steps=5 format=3 uid="uid://bad3kxjdux7st"]
+
+[ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_jolbn"]
+[ext_resource type="Script" uid="uid://m1f612j1i0dt" path="res://Scripts/Mechanics/StatScreen.cs" id="2_f256m"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_f256m"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_jolbn"]
+
+[node name="StatScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_jolbn")
+script = ExtResource("2_f256m")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -90.0
+offset_right = 58.0
+offset_bottom = -58.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(58, 16)
+text = "The End"
+label_settings = SubResource("LabelSettings_f256m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -53.5
+offset_top = -43.0
+offset_right = 13.5
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(33.5, 8)
+text = "Playtime: "
+label_settings = SubResource("LabelSettings_jolbn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Time" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 14.0
+offset_top = -43.0
+offset_right = 54.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(20, 8)
+text = "00:00"
+label_settings = SubResource("LabelSettings_jolbn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShardsLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -18.0
+offset_right = 56.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(64, 8)
+text = "Collected shards: "
+label_settings = SubResource("LabelSettings_jolbn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Shards" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 56.0
+offset_top = -18.0
+offset_right = 72.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(8, 8)
+text = "00"
+label_settings = SubResource("LabelSettings_jolbn")
+horizontal_alignment = 1
+vertical_alignment = 1
