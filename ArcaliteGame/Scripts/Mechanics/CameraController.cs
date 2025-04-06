@@ -42,6 +42,7 @@ public partial class CameraController : Node2D
     public void LockPlayer(bool value)
     {
         playerLock = value;
+        solidBorder.SetCollisionLayerValue(3, value);
     }
 
     //camera movement
@@ -92,14 +93,14 @@ public partial class CameraController : Node2D
         if (playerLock)
         {
             if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X > 310)
-                Globals.player.GlobalPosition = new Vector2(camera.GlobalPosition.X + 310, Globals.player.GlobalPosition.Y);
-            else if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X < -310)
                 Globals.player.GlobalPosition = new Vector2(camera.GlobalPosition.X - 310, Globals.player.GlobalPosition.Y);
+            else if (camera.GlobalPosition.X - Globals.player.GlobalPosition.X < -310)
+                Globals.player.GlobalPosition = new Vector2(camera.GlobalPosition.X + 310, Globals.player.GlobalPosition.Y);
 
             if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y > 170)
-                Globals.player.GlobalPosition = new Vector2(Globals.player.GlobalPosition.X, camera.GlobalPosition.Y + 170);
-            else if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y < -170)
                 Globals.player.GlobalPosition = new Vector2(Globals.player.GlobalPosition.X, camera.GlobalPosition.Y - 170);
+            else if (camera.GlobalPosition.Y - Globals.player.GlobalPosition.Y < -170)
+                Globals.player.GlobalPosition = new Vector2(Globals.player.GlobalPosition.X, camera.GlobalPosition.Y + 170);
         }
 
 

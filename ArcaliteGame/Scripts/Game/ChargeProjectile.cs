@@ -31,13 +31,16 @@ public partial class ChargeProjectile : CharacterBody2D
         animatedSprite.Position = new Vector2(-16, 0);
         animatedSprite.Play("terrain_hit");
     }
-    public void HitEnemy(Enemy enemy)
+    public void HitEnemy(Object target)
     {
         //damage stuff
-        enemy.Hit(damagePayload, this);
-
-        //animation
-        animatedSprite.Position = new Vector2(0, 0);
+        if(target is Enemy enemy)
+            enemy.Hit(damagePayload, this);
+        else if(target is BossMech bossmech)
+            bossmech.Hit(damagePayload);
+            
+            //animation
+            animatedSprite.Position = new Vector2(0, 0);
         animatedSprite.Play("enemy_hit");
     }
 
@@ -88,10 +91,10 @@ public partial class ChargeProjectile : CharacterBody2D
 
                 HitTerrain(collisionNormal);
             }
-            else if (collision != null && collision.GetCollider() is Enemy)
+            else if (collision != null && (collision.GetCollider() is Enemy || collision.GetCollider() is BossMech))
             {
                 targetHit = true;
-                HitEnemy(collision.GetCollider() as Enemy);
+                HitEnemy(collision.GetCollider());
             }
 
         }

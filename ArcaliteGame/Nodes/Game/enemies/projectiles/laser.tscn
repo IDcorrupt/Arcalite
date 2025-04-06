@@ -1,0 +1,290 @@
+[gd_scene load_steps=28 format=3 uid="uid://dk4oy16rdq6qu"]
+
+[ext_resource type="Script" uid="uid://4pcet1fbao86" path="res://Scripts/Game/Enemies/Projectiles/Laser.cs" id="1_o4fem"]
+[ext_resource type="Texture2D" uid="uid://do26jwtghl01o" path="res://Assets/Sprites/Projectilies/LaserBeam/Laser_Beam_Spritesheet_RED.png" id="2_o4fem"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cw5lw"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(0, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84048"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(48, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixmj0"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(96, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qyrmd"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(144, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ksp6t"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(0, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4eso"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(48, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4yn8"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(96, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62kmr"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(144, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n730t"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(0, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6jom"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(48, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ggcuy"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(96, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk3ja"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(144, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6dawf"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yreli"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(48, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pn36"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(96, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cxs6x"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(144, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66548"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sg7fc"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4j7i"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(96, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1k0nc"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(144, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awvbi"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5cie3"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2onp0"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2chwr"]
+atlas = ExtResource("2_o4fem")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o4fem"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cw5lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84048")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixmj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qyrmd")
+}],
+"loop": false,
+"name": &"impact_cast",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ksp6t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4eso")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4yn8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62kmr")
+}],
+"loop": true,
+"name": &"impact_sustained",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n730t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f6jom")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ggcuy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk3ja")
+}],
+"loop": false,
+"name": &"middle_cast",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6dawf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yreli")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3pn36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cxs6x")
+}],
+"loop": true,
+"name": &"middle_sustained",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66548")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sg7fc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4j7i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1k0nc")
+}],
+"loop": false,
+"name": &"start_cast",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awvbi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5cie3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2onp0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2chwr")
+}],
+"loop": true,
+"name": &"start_sustained",
+"speed": 15.0
+}]
+
+[node name="Laser" type="Node2D"]
+z_index = 2
+scale = Vector2(2, 2)
+script = ExtResource("1_o4fem")
+
+[node name="Ray" type="Node2D" parent="."]
+
+[node name="StartAnim" type="AnimatedSprite2D" parent="Ray"]
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"start_cast"
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(16, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(32, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(48, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(64, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="AnimatedSprite2D6" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(80, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="AnimatedSprite2D7" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(96, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="AnimatedSprite2D8" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(112, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="AnimatedSprite2D9" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(128, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="AnimatedSprite2D10" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(144, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="AnimatedSprite2D11" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(160, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="AnimatedSprite2D12" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(176, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="AnimatedSprite2D13" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(192, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="AnimatedSprite2D14" type="AnimatedSprite2D" parent="Ray" groups=["laserAnims"]]
+position = Vector2(208, 0)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"middle_cast"
+
+[node name="EndAnim" type="AnimatedSprite2D" parent="."]
+position = Vector2(216, 0)
+rotation = 1.5708
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_o4fem")
+animation = &"impact_cast"
+
+[connection signal="animation_finished" from="Ray/StartAnim" to="." method="OnAnimationFinished"]

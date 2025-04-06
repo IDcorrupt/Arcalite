@@ -18,8 +18,12 @@ public partial class BossMechArm : CharacterBody2D
     private Vector2 origin;
     //sequencing for update loop    0 = no attack  |  1 = windup  |  2 = grace  |  3 = attack   (2 is empty rn)
     private int atkSequence = 0;
+    //attack configs
+    private float singleAtkWindupTime = 5 / Globals.diffMultipliers[Globals.Difficulty];
+    private float doubleAtkWindupTime = 3 / Globals.diffMultipliers[Globals.Difficulty];
+    private float sweepAtkWindupTime = 2 / Globals.diffMultipliers[Globals.Difficulty];
+    private float laserAtkWindupTime = 4 / Globals.diffMultipliers[Globals.Difficulty];
     private int spikeAmount = 0;    //how many spikes the attacks generate (in each direction)
-    //attackBools
     private bool singleAtk = false;
     private bool doubleAtk = false;
     private bool sweepAtk = false;
@@ -53,6 +57,7 @@ public partial class BossMechArm : CharacterBody2D
     //signals
     [Signal] public delegate void EyeFlashEventHandler(int type);
     [Signal] public delegate void AttackFinishedEventHandler(Enums.MechAttackType type);
+    [Signal] public delegate void EngageLaserEventHandler();
 
     public override void _Ready()
     {
@@ -108,25 +113,25 @@ public partial class BossMechArm : CharacterBody2D
             case Enums.MechAttackType.Single:
                 singleAtk = true;
                 atkSequence = 1;
-                atkWindup.Start(5);
+                atkWindup.Start(singleAtkWindupTime);
                 spikeAmount = 5;
                 break;
             case Enums.MechAttackType.Double:
                 doubleAtk = true;
                 atkSequence = 1;
-                atkWindup.Start(3);
+                atkWindup.Start(doubleAtkWindupTime);
                 spikeAmount = 10;
                 break;
             case Enums.MechAttackType.Sweep:
                 sweepAtk = true;
                 SetCollisionMaskValue(3, false);
                 atkSequence = 1;
-                atkWindup.Start(2);
+                atkWindup.Start(sweepAtkWindupTime);
                 break;
             case Enums.MechAttackType.Laser:
                 laserAtk = true;
                 atkSequence = 1;
-                atkWindup.Start(5);
+                atkWindup.Start(laserAtkWindupTime);
                 break;
             default:
                 break;
@@ -144,8 +149,12 @@ public partial class BossMechArm : CharacterBody2D
     }
     public void AtkGraceTimeout()
     {
-        if(atkSequence == 2) 
+        if (atkSequence == 2)
+        {
+            if (laserAtk)
+                EmitSignal(SignalName.EngageLaser);
             atkSequence = 3;
+        }
         else
             ReturnToOrigin();
     }
@@ -166,7 +175,7 @@ public partial class BossMechArm : CharacterBody2D
     private void SweepAttack()
     {
         Vector2 hitVector = new Vector2(1200 * (SIDE ? -1 : 1), -500);
-        Globals.player.Hit(1, hitVector);
+        Globals.player.Hit(parent.GetDamage(), hitVector);
     }
     private void CreateSpikes()
     {
@@ -185,7 +194,7 @@ public partial class BossMechArm : CharacterBody2D
         rightSpike.GlobalPosition = spikeSpawnRight;
         leftSpike.Name = "RightGroundSpike"+spikeAmount.ToString();
 
-        spikeTimer = GetTree().CreateTimer(0.2);
+        spikeTimer = GetTree().CreateTimer(0.1);
         spikeTimer.Timeout += SpikeTimer_Timeout;
     }
     private void SpikeTimer_Timeout()
@@ -202,8 +211,7 @@ public partial class BossMechArm : CharacterBody2D
 
     private void ReturnToOrigin()
     {
-        if (sweepAtk)
-            RotateElements(0, 1);
+        RotateElements(0, 1);
         var returnal = GetTree().CreateTween();
         returnal.Finished += Returnal_Finished;
         returnal.TweenProperty(this, "position", origin, 1);
@@ -254,10 +262,7 @@ public partial class BossMechArm : CharacterBody2D
         PDRotTween.TweenProperty(playerDetect, "rotation", radians, timer);
         HBRotTween.TweenProperty(hbparent, "rotation", radians, timer);
     }
-    private void Animate()
-    {
 
-    }
     private void Update(double delta)
     {
 
@@ -396,8 +401,24 @@ public partial class BossMechArm : CharacterBody2D
                 }
             }
         }
+        else if (laserAtk)
+        {
+            if(atkSequence == 1)
+            {
+                Vector2 movePos = new Vector2(SIDE ? 150 : -150, Position.Y);
+                if (positionTween == null)
+                {
+                    positionTween = GetTree().CreateTween();
+                    positionTween.Finished += MovementTween_Finished;
+                    positionTween.TweenProperty(this, "position", movePos, atkWindup.TimeLeft);  //using timeleft instead of static value for dynamicity & precision
+                }
+            }if(atkSequence == 3)
+            {
+                atkSequence = 0;
+                atkGrace.Start(14);
+            }
+        }
         MoveAndSlide();
-        Animate();
     }
 
 
@@ -412,5 +433,7 @@ public partial class BossMechArm : CharacterBody2D
         }
 
         Update(delta);
+        if(SIDE)
+            GD.Print($"{Name} position: {Position}");
     }
 }

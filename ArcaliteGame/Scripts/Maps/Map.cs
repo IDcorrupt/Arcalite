@@ -6,7 +6,6 @@ using System.Linq;
 
 public partial class Map : Node2D
 {
-
     PackedScene playerScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/player.tscn");
     GameScene parent;
     Player player;

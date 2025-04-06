@@ -21,7 +21,7 @@ size = Vector2(80, 90)
 size = Vector2(90, 95)
 
 [node name="BossMechArm" type="CharacterBody2D"]
-z_index = -1
+z_index = 1
 collision_layer = 16
 collision_mask = 0
 platform_on_leave = 2
