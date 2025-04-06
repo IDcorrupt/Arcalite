@@ -562,9 +562,7 @@ script = ExtResource("1_4jsap")
 position = Vector2(0, -18)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_joyky")
-animation = &"attack2"
-frame = 7
-frame_progress = 1.0
+animation = &"idle"
 flip_h = true
 
 [node name="SpecAttackAnim" type="Node2D" parent="."]

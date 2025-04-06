@@ -11,6 +11,10 @@ script = ExtResource("1_7hdli")
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="GraceTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [node name="TriggerArea" type="Area2D" parent="."]
 collision_layer = 512
 collision_mask = 288

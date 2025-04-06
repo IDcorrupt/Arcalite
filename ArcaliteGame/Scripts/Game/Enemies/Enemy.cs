@@ -46,6 +46,7 @@ public partial class Enemy : CharacterBody2D
     protected Timer atkCooldown;
     protected Timer hurtTimer;
     protected Timer chaseBuffer;
+    private CollisionShape2D hitBox;
     private Area2D attackRange;
     private Area2D obstacleDetect;
     private CollisionPolygon2D obstacleDetectLeft;
@@ -76,7 +77,8 @@ public partial class Enemy : CharacterBody2D
         chaseBuffer = GetNode<Timer>("ChaseBuffer");
 
         chaseBuffer.WaitTime = 3f;
-        
+
+        hitBox = GetNode<CollisionShape2D>("CollisionShape2D");
         attackRange = GetNode<Area2D>("AttackRange");
         obstacleDetect = GetNode<Area2D>("ObstacleDetect");
         obstacleDetectLeft = GetNode<CollisionPolygon2D>("ObstacleDetect/left");
@@ -220,7 +222,7 @@ public partial class Enemy : CharacterBody2D
         {
             isHurt = true;
             currentHP -= damage;
-            if (attacker != null)
+            if (attacker != null && !isAttacking)
             {
                 //knockback
                 int dir = 0;
@@ -301,11 +303,9 @@ public partial class Enemy : CharacterBody2D
         if (itemtype == Enums.itemType.shard)
         {
             int dropamount = 0;
-            GD.Print("shardrate: " + shardDropRate);
             if (shardDropRate > 100)
             {
                 dropamount = Mathf.FloorToInt(shardDropRate / 100);
-                GD.Print("dropamount: " + dropamount);
                 for (int i = 0; i < dropamount; i++)
                 {
                     item = itemScene.Instantiate() as Item;
@@ -318,22 +318,15 @@ public partial class Enemy : CharacterBody2D
                     }
                 }
             }
+            //regular calc & drop
             if (Math.RNG(shardDropRate - dropamount * 100))
             {
                 item = itemScene.Instantiate() as Item;
                 item.type = itemtype;
             }
-
-
-
-
-            GD.Print("dropping shard");
-            item = itemScene.Instantiate() as Item;
-            item.type = itemtype;
         }
         else if (Math.RNG(customDropRate))
         {
-            GD.Print("dropping special");
             item = itemScene.Instantiate() as Item;
             item.type = itemtype;
         }
@@ -391,6 +384,9 @@ public partial class Enemy : CharacterBody2D
         }
         else
         {
+            //remove enemyself layer from itself -> essentially disabling collisions without falling through the map (those work on collisions too)
+            SetCollisionLayerValue(2, false);
+            
             //fall and only die on floor
             if (IsOnFloor())
             {

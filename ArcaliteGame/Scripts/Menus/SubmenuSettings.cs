@@ -31,8 +31,19 @@ public partial class SubmenuSettings : Control
 		Save = GetNode<Button>("Panel/Margin/SettingsContainer/Actions/Hbox/Save");
 
 
-		//set option selectors
-		UpdateSelectors();
+		//set option selectors, if error occurs, reset settings
+		try
+		{
+            UpdateSelectors();
+        }
+        catch (Exception)
+		{
+            Control popup = (Control)Globals.popupScene.Instantiate();
+            ((Popup)popup).SetMessageType("filecorrupt");
+            AddChild(popup);
+            ConfigFileHandler.DefaultSettings();
+			UpdateSelectors();
+		}
 
 		//set button actions
 		Back.Pressed += BackPressed;
@@ -66,8 +77,9 @@ public partial class SubmenuSettings : Control
     public void UpdateSelectors()
 	{
 		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/difficulty/Selector").Selected = ConfigFileHandler.LoadSetting("game")["difficulty"].AsInt32();
-		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/windowmode/Selector").Selected = ConfigFileHandler.LoadSetting("video")["windowmode"].AsInt32() - 1;
-		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/resolution/Selector").Selected = ConfigFileHandler.LoadSetting("video")["resolutionX"].AsInt32() - 1;
+		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Game/MarginContainer/ScrollContainer/Vbox/dashMode/Selector").Selected = ConfigFileHandler.LoadSetting("game")["dashmode"].AsInt32();
+		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/windowmode/Selector").Selected = ConfigFileHandler.LoadSetting("video")["windowmode"].AsInt32();
+		GetNode<OptionButton>("Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/resolution/Selector").Selected = ConfigFileHandler.LoadSetting("video")["resolutionX"].AsInt32();
 		GetNode<BaseButton>("Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox/vsync/CheckButton").ButtonPressed = ConfigFileHandler.LoadSetting("video")["vsync"].AsBool();
 		GetNode<Slider>("Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/master_volume/HSlider").Value = ConfigFileHandler.LoadSetting("audio")["master_volume"].AsInt32();
 		GetNode<SpinBox>("Panel/Margin/SettingsContainer/SettingTabs/Audio/MarginContainer/ScrollContainer/Vbox/master_volume/SpinBox").Value = ConfigFileHandler.LoadSetting("audio")["master_volume"].AsInt32();
@@ -85,10 +97,15 @@ public partial class SubmenuSettings : Control
 		ConfigFileHandler.settingChanges["game"]["difficulty"] = index;
 		isSaved = false;
 	}
+	public void DashModeSelect(int index)
+	{
+		ConfigFileHandler.settingChanges["game"]["dashmode"] = index;
+		isSaved = false;
+	}
 	//video
 	public void WindowSelect(int index)
 	{
-		ConfigFileHandler.settingChanges["video"]["windowmode"] = index + 1;
+		ConfigFileHandler.settingChanges["video"]["windowmode"] = index;
 		isSaved = false;
 
     }
@@ -97,29 +114,29 @@ public partial class SubmenuSettings : Control
 		switch (index)
 		{
 			case 0:
-				ConfigFileHandler.settingChanges["video"]["resolutionX"] = 1;
-				ConfigFileHandler.settingChanges["video"]["resolutionY"] = 1;
+				ConfigFileHandler.settingChanges["video"]["resolutionX"] = 0;
+				ConfigFileHandler.settingChanges["video"]["resolutionY"] = 0;
 				isSaved = false;
 
                 break;
 			case 1:
+                ConfigFileHandler.settingChanges["video"]["resolutionX"] = 1;
+                ConfigFileHandler.settingChanges["video"]["resolutionY"] = 1;
+                isSaved = false;
+                break;
+			case 2:
                 ConfigFileHandler.settingChanges["video"]["resolutionX"] = 2;
                 ConfigFileHandler.settingChanges["video"]["resolutionY"] = 2;
                 isSaved = false;
                 break;
-			case 2:
+			case 3:
                 ConfigFileHandler.settingChanges["video"]["resolutionX"] = 3;
                 ConfigFileHandler.settingChanges["video"]["resolutionY"] = 3;
                 isSaved = false;
                 break;
-			case 3:
+			case 4:
                 ConfigFileHandler.settingChanges["video"]["resolutionX"] = 4;
                 ConfigFileHandler.settingChanges["video"]["resolutionY"] = 4;
-                isSaved = false;
-                break;
-			case 4:
-                ConfigFileHandler.settingChanges["video"]["resolutionX"] = 5;
-                ConfigFileHandler.settingChanges["video"]["resolutionY"] = 5;
                 isSaved = false;
                 break;
 
@@ -237,6 +254,8 @@ public partial class SubmenuSettings : Control
 	{
 		ConfigFileHandler.SaveSettings();
 		isSaved = true;
+		UpdateSelectors();
+		BackPressed();
 	}
 	
 	//exit func for nosave exit

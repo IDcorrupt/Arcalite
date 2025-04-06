@@ -65,6 +65,12 @@ public partial class Popup : Control
 				confirm.Text="Understood";
 				cancel.QueueFree();
                 break;
+			case "filecorrupt":
+				title.Text = "[center]config file error[/center]";
+				content.Text = "[center]Config file import failed, resetting settings[/center]";
+				confirm.Text = "Understood";
+				cancel.QueueFree();
+				break;
             default:
 				break;
 		}

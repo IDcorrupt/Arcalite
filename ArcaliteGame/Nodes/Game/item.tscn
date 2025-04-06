@@ -1,12 +1,40 @@
-[gd_scene load_steps=8 format=3 uid="uid://bvtb8koe5o5bu"]
+[gd_scene load_steps=15 format=3 uid="uid://bvtb8koe5o5bu"]
 
 [ext_resource type="Texture2D" uid="uid://cbflaoc16h6ce" path="res://Assets/Placeholder assets/Free RPG asset Pack/PACK/separate files/circlet.png" id="1_ixxw6"]
 [ext_resource type="Script" uid="uid://da22j3t35yojk" path="res://Scripts/Game/Item.cs" id="1_pi8uj"]
 [ext_resource type="Texture2D" uid="uid://do767uvuws88x" path="res://Assets/Placeholder assets/Free RPG asset Pack/PACK/separate files/watermelon.png" id="3_ygrbr"]
-[ext_resource type="Texture2D" uid="uid://bu7ik7fuvi5bm" path="res://Assets/Placeholder assets/Free RPG asset Pack/PACK/separate files/shield_01.png" id="4_egtyp"]
+[ext_resource type="Texture2D" uid="uid://d3hf2tuvdb5ua" path="res://Assets/Sprites/Items/orichalcum-core.png" id="4_ygrbr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pi8uj"]
 radius = 7.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egtyp"]
+atlas = ExtResource("4_ygrbr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ashcq"]
+atlas = ExtResource("4_ygrbr")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhdwm"]
+atlas = ExtResource("4_ygrbr")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jmb3"]
+atlas = ExtResource("4_ygrbr")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1rs2e"]
+atlas = ExtResource("4_ygrbr")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tu2ge"]
+atlas = ExtResource("4_ygrbr")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kflln"]
+atlas = ExtResource("4_ygrbr")
+region = Rect2(96, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8dqdw"]
 animations = [{
@@ -28,11 +56,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_egtyp")
+"texture": SubResource("AtlasTexture_egtyp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ashcq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uhdwm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jmb3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1rs2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tu2ge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kflln")
 }],
 "loop": true,
 "name": &"shield",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ygrbr"]
@@ -53,6 +99,7 @@ shape = SubResource("CircleShape2D_pi8uj")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_8dqdw")
 animation = &"shield"
+frame_progress = 0.240595
 
 [node name="FloatTrigger" type="RayCast2D" parent="."]
 target_position = Vector2(0, 12)

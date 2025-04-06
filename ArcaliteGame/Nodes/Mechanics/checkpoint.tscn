@@ -216,14 +216,15 @@ gravity = Vector3(0, -6, 0)
 color_ramp = SubResource("GradientTexture1D_i4cvh")
 
 [node name="Checkpoint" type="Node2D"]
+editor_description = "add area2D and Collshape as child elements and connect to set trigger area"
 script = ExtResource("1_lhg5q")
 
 [node name="TriggerArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 2048
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
 shape = SubResource("RectangleShape2D_271on")
+debug_color = Color(0, 0.64, 0.330667, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_co8ip")

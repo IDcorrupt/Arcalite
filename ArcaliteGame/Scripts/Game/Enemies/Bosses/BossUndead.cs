@@ -21,7 +21,7 @@ public partial class BossUndead : Enemy
         specAttackAnimRight.AnimationFinished += SpecAttackAnimRight_AnimationFinished;
         specAttackAnimLeft.Hide();
         specAttackAnimRight.Hide();
-        maxHP = 120 * Globals.diffMultipliers[Globals.Difficulty];
+        maxHP = 200 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
         damage = 25 * Globals.diffMultipliers[Globals.Difficulty];
         atkCD = 1.5f;
@@ -36,11 +36,6 @@ public partial class BossUndead : Enemy
     private void SpecAttackAnimLeft_AnimationFinished() { specAttackAnimLeft.Frame = 0; specAttackAnimLeft.Hide(); }
     private void SpecAttackAnimRight_AnimationFinished() { specAttackAnimRight.Frame = 0; specAttackAnimRight.Hide(); }
 
-    protected override void EngageAttack()
-    {
-            base.EngageAttack();
-    }
-
     protected override void Attack()
     {
         if (!(sprite.Animation == "spec_attack"))
@@ -54,9 +49,6 @@ public partial class BossUndead : Enemy
             player.Hit(damage, hitVector);
         }
     }
-
-
-
 
     private void EngageSpecialAttack()
     {
@@ -130,12 +122,8 @@ public partial class BossUndead : Enemy
             SpecialAttackAnim();
             specattackanimcast = true;
         }
-        GD.Print($"spec damage conditions:\n " +
-            $"!specattacked    {!specattacked}\n" +
-            $"spec anim left:  {specAttackAnimLeft.Frame > 5}\n" +
-            $"spec anim right: {specAttackAnimRight.Frame > 5}\n" +
-            $"in range:        {playerInSpecAttackRange}");
-        if (!specattacked && specAttackAnimLeft.Frame > 5 && specAttackAnimRight.Frame > 5 && playerInSpecAttackRange)
+
+        if (!specattacked && specattackanimcast && specAttackAnimLeft.Frame > 5 && specAttackAnimRight.Frame > 5 && playerInSpecAttackRange)
         {
             SpecialAttack();
             specattacked = true;

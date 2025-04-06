@@ -2,6 +2,7 @@ using Godot;
 using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Runtime.CompilerServices;
 
 public partial class ConfigFileHandler : Node
@@ -12,6 +13,7 @@ public partial class ConfigFileHandler : Node
 
     static int[] resXvalues = { 3840, 2560, 1920, 1280, 640 };
     static int[] resYvalues = { 2160, 1440, 1080, 720, 360 };
+    static int screenId;
     static Window window;
 
     public override void _Ready()
@@ -25,18 +27,20 @@ public partial class ConfigFileHandler : Node
             config.Load(SETTINGS_FILE_PATH);
             
         }
-        ResetSTChanges();
-        ApplySettings();
         window = GetWindow();
+        screenId = DisplayServer.WindowGetCurrentScreen();
+        ResetSTChanges();
+        ApplySettings();            
     }
 
     public static void DefaultSettings()
     {
-        config.SetValue("game", "difficulty", 2); //easy = 1 | normal = 2 | hard = 3
+        config.SetValue("game", "difficulty", 1);   //easy = 0 | normal = 1 | hard = 2
+        config.SetValue("game", "dashmode", 0);     //8dir = 0 | mouse = 1
 
-        config.SetValue("video", "windowmode", 1); //windowed = 1 | borderless = 2 | exclusive = 3
-        config.SetValue("video", "resolutionX", 5); //4k = 1 | 2k = 2 | 1080p = 3 | 720p = 4 | 360p(source res) = 5
-        config.SetValue("video", "resolutionY", 5);
+        config.SetValue("video", "windowmode", 0); //windowed = 0 | borderless = 1 | exclusive = 2
+        config.SetValue("video", "resolutionX", 4); //4k = 0 | 2k = 1 | 1080p = 2 | 720p = 3 | 360p(native) = 4
+        config.SetValue("video", "resolutionY", 4);
         config.SetValue("video", "vsync", true);
 
 
@@ -119,45 +123,71 @@ public partial class ConfigFileHandler : Node
     {
         try
         {
-            //game
+        //game
+            //difficulty
             Globals.Difficulty = (int)settingChanges["game"]["difficulty"];
+            //dash mode
+            Globals.DashMode = (int)settingChanges["game"]["dashmode"];
 
-            //video
+        //video
+            //window mode
             int winmode = (int)settingChanges["video"]["windowmode"];
             switch (winmode)
             {
-                case 1:
+                case 0:
 
                     DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
                     DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.Borderless, false);
                     break;
-                case 2:
+                case 1:
                     DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
                     DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.Borderless, true);
 
                     break;
-                case 3:
+                case 2:
                     DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
                     DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.Borderless, false);
                     break;
 
             }
+            //resolution
             int resSize = (int)settingChanges["video"]["resolutionX"];
+            //check if res setting exceeds user's screen -> if so, reset to highest value
+            bool resMod = false;
+            while (resXvalues[resSize] > DisplayServer.ScreenGetSize(screenId).X)
+            {
+                resMod = true;
+                resSize++;
+            }
+            if (resMod)
+            {
+                config.SetValue("video", "resolutionX", resSize);
+                config.SetValue("video", "resolutionY", resSize);
+                config.Save(SETTINGS_FILE_PATH);
+            }
+            DisplayServer.WindowSetSize(new Vector2I(resXvalues[resSize], resYvalues[resSize]));
             
-            DisplayServer.WindowSetSize(new Vector2I(resXvalues[resSize - 1], resYvalues[resSize - 1]));
+            //vsync
             if ((bool)settingChanges["video"]["vsync"])
                 DisplayServer.WindowSetVsyncMode(DisplayServer.VSyncMode.Enabled);
             else
                 DisplayServer.WindowSetVsyncMode(DisplayServer.VSyncMode.Disabled);
-            //reposition screen: -- doesn't work
-            //var centerScreen = DisplayServer.ScreenGetPosition() + DisplayServer.ScreenGetSize()/2;
-            //var windowSize = window.GetSizeWithDecorations();
-            //window.Position = centerScreen-windowSize/2;
-            
-            //audio
-            //i'Ll do this when we have audio :3
 
-            //controls
+            //reposition screen
+            Vector2I screenRes = DisplayServer.ScreenGetSize(screenId);
+            Vector2I gamerRes = DisplayServer.WindowGetSize();
+            Vector2I centerPos = new Vector2I
+            {
+                X = screenRes.X / 2 - gamerRes.X / 2,
+                Y = screenRes.Y / 2 - gamerRes.Y / 2
+            };
+            window.Position = centerPos;
+            
+            
+        //audio
+            //[NOT YET IMPLEMENTED]
+
+        //controls
             foreach (KeyValuePair<string, Variant> setting in settingChanges["controls"])
             {
                 string keyString = LoadSetting("controls")[setting.Key].ToString();
@@ -207,8 +237,8 @@ public partial class ConfigFileHandler : Node
 
             }
 
-            //accessibility
-            //say what now?
+        //accessibility
+            //[NOT YET IMPLEMENTED]
         }
         catch (Exception ex)
         {

@@ -63,7 +63,7 @@ public partial class Player : CharacterBody2D
 
     private int oracleLevel;
 
-//nodes
+//components
     private CollisionShape2D HitBox;
     private PackedScene basicProjectile;
     private PackedScene chargeProjectile;
@@ -85,9 +85,11 @@ public partial class Player : CharacterBody2D
 
     private GpuParticles2D FX_Charge;
     private AnimatedSprite2D FX_Rapid;
+    private AnimatedSprite2D FX_Shield;
     //signals
     [Signal] public delegate void DashedEventHandler(float cooldown);
     [Signal] public delegate void ChargeAttackedEventHandler(float cooldown);
+    [Signal] public delegate void OracleCastEventHandler(float cooldown);
     [Signal] public delegate void RapidFireCastEventHandler(float activeTime);   
     [Signal] public delegate void ShieldCastEventHandler(float activeTime);
     [Signal] public delegate void SpellEOverEventHandler(float cooldown);
@@ -118,6 +120,7 @@ public partial class Player : CharacterBody2D
 
         FX_Charge = GetNode("FX/Charge") as GpuParticles2D;
         FX_Rapid = GetNode("FX/Rapid") as AnimatedSprite2D;
+        FX_Shield = GetNode("FX/Shield") as AnimatedSprite2D;
 
         basicProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/basic_projectile.tscn");
         chargeProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/charge_projectile.tscn");
@@ -146,8 +149,21 @@ public partial class Player : CharacterBody2D
                 direction.Y = -1;
             }
         }
-        if (Input.IsActionPressed("move_crouch") || Input.IsActionPressed("move_crouch-alt")) isCrouching = true; else isCrouching = false;
-        if ((Input.IsActionPressed("move_dash") || Input.IsActionPressed("move_dash-alt")) && dashCooldown.TimeLeft == 0) dashed = true;
+        if (Input.IsActionPressed("move_crouch") || Input.IsActionPressed("move_crouch-alt"))isCrouching = true;
+        else isCrouching = false;
+        if ((Input.IsActionPressed("move_dash") || Input.IsActionPressed("move_dash-alt")) && dashCooldown.TimeLeft == 0)
+        {
+            if (Globals.DashMode == 0)
+            {
+                dashVector = new Vector2()
+                {
+                    X = Convert.ToInt32(Input.IsActionPressed("move_right")) + Convert.ToInt32(Input.IsActionPressed("move_right-alt")) - Convert.ToInt32(Input.IsActionPressed("move_left")) - Convert.ToInt32(Input.IsActionPressed("move_left-alt")),
+                    Y = Convert.ToInt32(Input.IsActionPressed("move_crouch")) + Convert.ToInt32(Input.IsActionPressed("move_crouch-alt")) - Convert.ToInt32(Input.IsActionPressed("move_jump")) - Convert.ToInt32(Input.IsActionPressed("move_jump-alt")),
+                };
+            }
+            dashed = true;
+        }
+
         return direction;
     }
     public void Movement(double delta)
@@ -212,7 +228,8 @@ public partial class Player : CharacterBody2D
     public void Dash()
     {
         //set dash diretion and engage
-        dashVector = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+        if(Globals.DashMode == 1)
+            dashVector = (GetGlobalMousePosition() - GlobalPosition).Normalized();
         currentDashSpeed = dashSpeed;
         Velocity = dashVector * currentDashSpeed;
         isDashing = true;
@@ -294,6 +311,7 @@ public partial class Player : CharacterBody2D
             oracle.targetPosition = GlobalPosition;
             oracle.level = oracleLevel;
         }
+        EmitSignal(SignalName.OracleCast, SOCooldown.WaitTime);
     }
     public void SpellE()
     {
@@ -333,6 +351,7 @@ public partial class Player : CharacterBody2D
                 break;
             case Enums.itemType.shield:
                 shielded = false;
+                FX_Shield.SpriteFrames.SetAnimationLoop("default", false);
                 break;
             default:
                 break;
@@ -349,6 +368,7 @@ public partial class Player : CharacterBody2D
                 break;
             case Enums.itemType.shield:
                 shielded = false;
+                FX_Shield.SpriteFrames.SetAnimationLoop("default", false);
                 break;
             default:
                 break;
@@ -382,6 +402,8 @@ public partial class Player : CharacterBody2D
     {
         //attack immunity for 2 sec (time not final)
         shielded = true;
+        FX_Shield.Play("default");
+        FX_Shield.SpriteFrames.SetAnimationLoop("default", true);
         currentMP -= 20;
         switch (slot)
         {
@@ -450,7 +472,8 @@ public partial class Player : CharacterBody2D
             default:
                 break;
         }
-        EmitSignal(SignalName.ItemsModified);
+        if(itemtype != Enums.itemType.shard)
+            EmitSignal(SignalName.ItemsModified);
 
     }
 
@@ -460,10 +483,12 @@ public partial class Player : CharacterBody2D
         if (!isHurt && !shielded && !isDashing)
         {
             currentHP -= damage;
+            
             //reset dash speed to avoid dash buffering
             currentDashSpeed = 0;
             if(currentHP <= 0)
             {
+                currentHP = 0;
                 isDead = true;
                 return;
             }
@@ -479,6 +504,16 @@ public partial class Player : CharacterBody2D
             }
             hurtTimer.Start();
 
+        }
+    }
+    public void HitTick(float damage)
+    {
+        currentHP -= damage;
+        if (currentHP <= 0)
+        {
+            currentHP = 0;
+            isDead = true;
+            return;
         }
     }
     public void OnHurtTimerTimeout() { isHurt = false; }
@@ -535,13 +570,11 @@ public partial class Player : CharacterBody2D
     {
         if (state)
         {
-            GD.Print("resting, hp recharge "+ amount);
             resting = true;
             if(amount > 0) 
                 HPRechargeAmount = amount;
         }else
         {
-            GD.Print("not resting");
             resting = false;
         }
     }
@@ -554,7 +587,7 @@ public partial class Player : CharacterBody2D
             currentMP++;
             statTimer = true;
         }
-        if (statRecharge.TimeLeft == 0 && currentHP < MaxHP && HPRechargeAmount > 0)
+        if (resting && statRecharge.TimeLeft == 0 && currentHP < MaxHP && HPRechargeAmount > 0)
         {
             currentHP++;
             HPRechargeAmount--;
@@ -583,7 +616,7 @@ public partial class Player : CharacterBody2D
             damage = (float)Convert.ToDecimal(Globals.currentSave[7]);
 
             //items
-            oracleLevel = 1;
+            oracleLevel = 2;
             string[] items = Globals.currentSave[8].Split(";");
             spellItemE = (Enums.itemType)Convert.ToInt32(items[0]);
             spellItemQ = (Enums.itemType)Convert.ToInt32(items[1]);
@@ -597,7 +630,7 @@ public partial class Player : CharacterBody2D
             currentHP = MaxHP;
             currentMP = MaxMP;
             damage = 5;
-            oracleLevel = 1;
+            oracleLevel = 2;
 
         }
 
@@ -755,8 +788,8 @@ public partial class Player : CharacterBody2D
     public float GetMaxHP() { return MaxHP; }
     public float GetMaxMP() { return MaxMP; }
     public float GetCurrentHP() { return currentHP; }
-    //needed because exiting right after checkpoint doesn't save the recharging hp
-    public float GetPotentialHP() { return currentHP + HPRechargeAmount; }
+    //needed because exiting right after checkpoint doesn't save the recharging hp (caps at maxhp so it doesn't exceed it)
+    public float GetPotentialHP() { return Mathf.Min(currentHP + HPRechargeAmount, MaxHP); }
     public float GetCurrentMP() { return currentMP; }
     public float GetAttackDamage() { return damage; }
     public List<int> GetEquips()

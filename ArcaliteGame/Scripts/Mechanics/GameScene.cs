@@ -63,7 +63,6 @@ public partial class GameScene : Node2D
 
     private void DeathTimer_Timeout()
     {
-		GD.Print("timer expired");
 		respawnScreen = RespawnScene.Instantiate() as Control;
 		UILayer.AddChild(respawnScreen);
     }

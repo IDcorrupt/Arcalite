@@ -20,7 +20,18 @@ public partial class Enums : Node
         HeavyRanged,
         Elite
     }
-
+    public enum BossClass
+    {
+        None,
+        Mech,
+    }
+    public enum MechAttackType
+    {
+        Single,
+        Double,
+        Sweep,
+        Laser
+    }
     public enum SaveState
     {
         Existing,

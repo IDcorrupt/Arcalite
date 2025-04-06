@@ -6,7 +6,6 @@ using System.Linq;
 
 public partial class Map : Node2D
 {
-
     PackedScene playerScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/player.tscn");
     GameScene parent;
     Player player;
@@ -57,8 +56,6 @@ public partial class Map : Node2D
     }
     private void SetRoomStatus()
     {
-        GD.Print("saveile: "+Globals.hasSavefile);
-
         int i = 0;
         if (Globals.hasSavefile)
         {
