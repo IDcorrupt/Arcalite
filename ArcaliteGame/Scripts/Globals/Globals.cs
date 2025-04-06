@@ -42,15 +42,4 @@ public partial class Globals : Node
     //website connection stuff
     public static UserData user = new UserData();
 
-
-
-/*    public override void _Process(double delta)
-    {
-        base._Process(delta);
-        bool login = user.Id >= 0 ? true : false;
-        GD.Print($"user logged in: {login}, user id is: {user.Id}");
-        if (login)
-            GD.Print("username. " + user.Username);
-    }*/
-
 }
