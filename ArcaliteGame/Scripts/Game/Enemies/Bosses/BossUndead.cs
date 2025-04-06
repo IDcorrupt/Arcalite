@@ -122,6 +122,7 @@ public partial class BossUndead : Enemy
             SpecialAttackAnim();
             specattackanimcast = true;
         }
+
         if (!specattacked && specattackanimcast && specAttackAnimLeft.Frame > 5 && specAttackAnimRight.Frame > 5 && playerInSpecAttackRange)
         {
             SpecialAttack();

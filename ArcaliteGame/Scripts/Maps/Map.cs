@@ -6,7 +6,6 @@ using System.Linq;
 
 public partial class Map : Node2D
 {
-
     PackedScene playerScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/player.tscn");
     GameScene parent;
     Player player;
@@ -42,6 +41,8 @@ public partial class Map : Node2D
         else
         {
             Globals.spawnPoint = GetNode("CheckPoints/Checkpoint0") as Checkpoint;
+            //if active checkpoint is the final one -> game is beaten -> set it so timer doesn't activate
+            Globals.gameBeaten = Globals.spawnPoint.finalCheckPoint;
         }
         SetRoomStatus();
         Globals.spawnPoint.Empty();

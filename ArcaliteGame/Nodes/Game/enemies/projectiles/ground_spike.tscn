@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3 uid="uid://cqu21nyv7yjxo"]
+
+[ext_resource type="Script" uid="uid://bh8jt13v36kbv" path="res://Scripts/Game/Enemies/Projectiles/GroundSpike.cs" id="1_bdcp7"]
+[ext_resource type="Texture2D" uid="uid://bm1r3pxbjk8mh" path="res://Assets/Sprites/Projectilies/Ground Spike/groundSpike-Sheet.png" id="1_rs4fr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdcp7"]
+atlas = ExtResource("1_rs4fr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxr57"]
+atlas = ExtResource("1_rs4fr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hj7db"]
+atlas = ExtResource("1_rs4fr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66dp7"]
+atlas = ExtResource("1_rs4fr")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3u1as"]
+atlas = ExtResource("1_rs4fr")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pr7u"]
+atlas = ExtResource("1_rs4fr")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fso3k"]
+atlas = ExtResource("1_rs4fr")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iof8d"]
+atlas = ExtResource("1_rs4fr")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67qoa"]
+atlas = ExtResource("1_rs4fr")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xv2gb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdcp7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxr57")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hj7db")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66dp7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3u1as")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1pr7u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fso3k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iof8d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_67qoa")
+}],
+"loop": false,
+"name": &"default",
+"speed": 45.0
+}]
+
+[node name="GroundSpike" type="Node2D"]
+z_index = -1
+script = ExtResource("1_bdcp7")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(6, -16)
+sprite_frames = SubResource("SpriteFrames_xv2gb")
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 16
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitBox"]
+polygon = PackedVector2Array(-9, 0, 0, -15, 15, -32, 18, -31, 6, 0)
+
+[node name="StillTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="animation_finished" from="Sprite" to="." method="OnSpriteAnimationFinised"]
+[connection signal="body_entered" from="HitBox" to="." method="OnHitBoxAreaEntered"]
+[connection signal="body_exited" from="HitBox" to="." method="OnHitBoxAreaExited"]
+[connection signal="timeout" from="StillTimer" to="." method="OnStillTimerTimeout"]

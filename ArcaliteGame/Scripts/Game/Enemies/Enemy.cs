@@ -222,7 +222,7 @@ public partial class Enemy : CharacterBody2D
         {
             isHurt = true;
             currentHP -= damage;
-            if (attacker != null)
+            if (attacker != null && !isAttacking)
             {
                 //knockback
                 int dir = 0;

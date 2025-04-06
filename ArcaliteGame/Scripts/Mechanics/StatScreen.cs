@@ -1,0 +1,36 @@
+using Godot;
+using System;
+
+public partial class StatScreen : Control
+{
+    Label Time;
+    Label Shards;
+
+    bool loaded = false;
+
+    public override void _Ready()
+    {
+        base._Ready();
+        Time = GetNode("Time") as Label;
+        Shards = GetNode("Shards") as Label;
+
+        TimeSpan time = TimeSpan.FromSeconds(Mathf.Round((double)Globals.playTime));
+        Time.Text = time.ToString(@"mm\:ss");
+    }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        if (!loaded)
+        {
+            if (Globals.player != null)
+            {
+                int hpShards = Mathf.FloorToInt(Globals.player.GetMaxHP() - 100) / 10;
+                int mpShards = Mathf.FloorToInt(Globals.player.GetMaxMP() - 100) / 10;
+                int dmgShards = Mathf.FloorToInt(Globals.player.GetAttackDamage() - 5) / 2;
+                Shards.Text = (hpShards + mpShards + dmgShards).ToString();
+                loaded = true;
+            }
+        }
+    }
+}

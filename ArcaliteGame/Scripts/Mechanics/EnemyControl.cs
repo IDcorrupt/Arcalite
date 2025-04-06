@@ -70,6 +70,13 @@ public partial class EnemyControl : Node2D
     }
     public void DespawnEnemies()
     {
+        //despawn mechBoss spikes
+        playerInRoom = false;
+        foreach (Node node in GetChildren())
+        {
+            if(node is GroundSpike spike)   
+                spike.QueueFree();
+        }
         foreach (Node2D node in enemySpawnPoints)
         {
             if (node is EnemySpawner spawner)
@@ -80,7 +87,6 @@ public partial class EnemyControl : Node2D
             enemiesActive = false;
         }
         camState = false;
-        playerInRoom = false;
         despawningInProgress = false;
     }
 

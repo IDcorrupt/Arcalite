@@ -63,7 +63,7 @@ public partial class Player : CharacterBody2D
 
     private int oracleLevel;
 
-//nodes
+//components
     private CollisionShape2D HitBox;
     private PackedScene basicProjectile;
     private PackedScene chargeProjectile;
@@ -506,6 +506,16 @@ public partial class Player : CharacterBody2D
 
         }
     }
+    public void HitTick(float damage)
+    {
+        currentHP -= damage;
+        if (currentHP <= 0)
+        {
+            currentHP = 0;
+            isDead = true;
+            return;
+        }
+    }
     public void OnHurtTimerTimeout() { isHurt = false; }
 
 
@@ -577,7 +587,7 @@ public partial class Player : CharacterBody2D
             currentMP++;
             statTimer = true;
         }
-        if (statRecharge.TimeLeft == 0 && currentHP < MaxHP && HPRechargeAmount > 0)
+        if (resting && statRecharge.TimeLeft == 0 && currentHP < MaxHP && HPRechargeAmount > 0)
         {
             currentHP++;
             HPRechargeAmount--;
@@ -606,7 +616,7 @@ public partial class Player : CharacterBody2D
             damage = (float)Convert.ToDecimal(Globals.currentSave[7]);
 
             //items
-            oracleLevel = 1;
+            oracleLevel = 2;
             string[] items = Globals.currentSave[8].Split(";");
             spellItemE = (Enums.itemType)Convert.ToInt32(items[0]);
             spellItemQ = (Enums.itemType)Convert.ToInt32(items[1]);
@@ -620,7 +630,7 @@ public partial class Player : CharacterBody2D
             currentHP = MaxHP;
             currentMP = MaxMP;
             damage = 5;
-            oracleLevel = 1;
+            oracleLevel = 2;
 
         }
 
@@ -778,8 +788,8 @@ public partial class Player : CharacterBody2D
     public float GetMaxHP() { return MaxHP; }
     public float GetMaxMP() { return MaxMP; }
     public float GetCurrentHP() { return currentHP; }
-    //needed because exiting right after checkpoint doesn't save the recharging hp
-    public float GetPotentialHP() { return currentHP + HPRechargeAmount; }
+    //needed because exiting right after checkpoint doesn't save the recharging hp (caps at maxhp so it doesn't exceed it)
+    public float GetPotentialHP() { return Mathf.Min(currentHP + HPRechargeAmount, MaxHP); }
     public float GetCurrentMP() { return currentMP; }
     public float GetAttackDamage() { return damage; }
     public List<int> GetEquips()

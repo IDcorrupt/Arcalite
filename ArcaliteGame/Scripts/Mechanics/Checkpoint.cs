@@ -6,8 +6,9 @@ using System.Net.Quic;
 
 public partial class Checkpoint : Node2D
 {
+    [Export] private Area2D triggerArea;
+    [Export] public bool finalCheckPoint = false;
     private Map map;
-    private Area2D triggerArea;
     private AnimatedSprite2D sprite;
     GpuParticles2D particles;
     public bool playerEntered = false;
@@ -16,13 +17,30 @@ public partial class Checkpoint : Node2D
     public override void _Ready()
     {
         base._Ready();
-        triggerArea = GetNode("TriggerArea") as Area2D;
         sprite = GetNode("AnimatedSprite2D") as AnimatedSprite2D;
         particles = GetNode("GPUParticles2D") as GpuParticles2D;
         map = GetParent().GetParent() as Map;
 
+        if(triggerArea == null)
+        {
+            //if no custom TA set, set the default one
+            triggerArea = GetNode("TriggerArea") as Area2D;
+        }
+        else
+        {
+            //delete default trigger if there is custom
+            Area2D defaultTrigger = GetNode("TriggerArea") as Area2D;
+            defaultTrigger.QueueFree();
 
-        sprite.Play("idle");
+            //connect custom TA signals
+            triggerArea.CollisionLayer = 12;    //not expecting it to be set in inspector
+            triggerArea.CollisionMask = 1;
+            triggerArea.BodyEntered += TriggerAreaBodyEntered;
+            triggerArea.BodyExited += TriggerAreaBodyExited;
+        }
+
+
+            sprite.Play("idle");
     }
 
 

@@ -89,6 +89,7 @@ public partial class EnemySpawner : Node2D
     }
     public bool Despawn()
     {
+        playerInRoom = false;
         if (BossSpawner)
         {
             if (ActiveBoss != null && IsInstanceValid(ActiveBoss))

@@ -22,6 +22,8 @@ public partial class Globals : Node
     public static string activeMap = null;
     //Godot has no built-in stopwatch, so i have to use this
     public static float playTime = 0;
+    //used for stopping time after final boss was beaten
+    public static bool gameBeaten = false;
 
     //player cuz i need it everywhere
     public static Player player = null;
@@ -41,16 +43,5 @@ public partial class Globals : Node
 
     //website connection stuff
     public static UserData user = new UserData();
-
-
-
-/*    public override void _Process(double delta)
-    {
-        base._Process(delta);
-        bool login = user.Id >= 0 ? true : false;
-        GD.Print($"user logged in: {login}, user id is: {user.Id}");
-        if (login)
-            GD.Print("username. " + user.Username);
-    }*/
 
 }
