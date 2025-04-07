@@ -33,7 +33,7 @@ public partial class BossMech : CharacterBody2D
     private AnimatedSprite2D sprite;
     private BossMechArm BossMechArmLeft;
     private BossMechArm BossMechArmRight;
-    private CollisionShape2D hitBox;
+    private CollisionPolygon2D hitBox;
     private AnimationPlayer animPlayer;
     private RayCast2D laserLine;
     private ShapeCast2D laserHitBox;
@@ -62,7 +62,7 @@ public partial class BossMech : CharacterBody2D
         sprite = GetNode("Sprite") as AnimatedSprite2D;
         BossMechArmLeft = GetNode("Arms/BossMechArmLeft") as BossMechArm;
         BossMechArmRight = GetNode("Arms/BossMechArmRight") as BossMechArm;
-        hitBox = GetNode("CollisionShape2D") as CollisionShape2D;
+        hitBox = GetNode("CoreHitBox") as CollisionPolygon2D;
         animPlayer = GetNode("AnimPlayer") as AnimationPlayer;
         laserLine = GetNode("LaserLine") as RayCast2D;
         laserHitBox = GetNode("LaserHitBox") as ShapeCast2D;
@@ -144,7 +144,8 @@ public partial class BossMech : CharacterBody2D
             singleAttackCooldown.Start();
             doubleAttackCooldown.Start();
             sweepAttackCooldown.Start();
-            laserAttackCooldown.Start();
+            //laserAttackCooldown.Start();
+            sprite.Play("idle_closed");
             ACTIVE = true;
         }
         else if (anim.ToString() == "BossMechDeath")
@@ -205,7 +206,7 @@ public partial class BossMech : CharacterBody2D
     private void LaserBeam_TreeExiting()
     {
         laserSlashes = 3;
-        laserLine.TargetPosition = new Vector2(-330, 239);
+        laserLine.TargetPosition = new Vector2(-330, 199);
         laserHitBox.TargetPosition = laserLine.TargetPosition;
         laserActive = false;
         laserHitBox.CollideWithBodies = false;
@@ -278,7 +279,9 @@ public partial class BossMech : CharacterBody2D
     {
         dead = true;
         ACTIVE = false;
-        sprite.Play("death");
+        DropItems(Enums.itemType.shield, 100);
+        DropItems();
+        animPlayer.Play("BossMechDeath");
         Globals.gameBeaten = true;
     }
     private void DropItems(Enums.itemType itemtype = Enums.itemType.shard, int customDropRate = 0)
@@ -366,9 +369,7 @@ public partial class BossMech : CharacterBody2D
     {
         if (sprite.Animation == "death")
         {
-            DropItems(Enums.itemType.shield, 100);
-            DropItems();
-            animPlayer.Play("BossMechDeath");
+            
         }
         else if (sprite.Animation == "eye_flash_1")
             sprite.Play("idle_closed");
@@ -393,11 +394,6 @@ public partial class BossMech : CharacterBody2D
 
         if (ACTIVE)
         {
-            #region DEBUG
-                health = 1;
-                vulnerable = true;
-                Hit(1);
-            #endregion
             if (!Globals.player.GetIsDead() && !vulnerable && !dead)
             {
                 //determine where player is in relation to itself
@@ -409,7 +405,6 @@ public partial class BossMech : CharacterBody2D
                 }
                 else Velocity = Vector2.Zero;
 
-                GD.Print("inner loop");
                 //attacks
                 if (!attacking && laserAttackCooldown.TimeLeft == 0)
                     InitiateLaser();

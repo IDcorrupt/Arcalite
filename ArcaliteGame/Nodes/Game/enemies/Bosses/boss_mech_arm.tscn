@@ -1,21 +1,56 @@
-[gd_scene load_steps=8 format=3 uid="uid://6u32fol80lnr"]
+[gd_scene load_steps=12 format=3 uid="uid://6u32fol80lnr"]
 
 [ext_resource type="Script" uid="uid://ctc3q4m6bmn4i" path="res://Scripts/Game/Enemies/Bosses/BossMechArm.cs" id="1_g8e4q"]
+[ext_resource type="Texture2D" uid="uid://fxwr1icnu38f" path="res://Assets/Sprites/enemies/Bosses/MechBoss/idle_arm-Sheet.png" id="2_nch63"]
 
-[sub_resource type="Gradient" id="Gradient_g8e4q"]
-colors = PackedColorArray(0.44, 0, 0, 1, 1, 1, 1, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6y6e"]
+atlas = ExtResource("2_nch63")
+region = Rect2(0, 0, 61, 152)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_nch63"]
-gradient = SubResource("Gradient_g8e4q")
-width = 1
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pl38"]
+atlas = ExtResource("2_nch63")
+region = Rect2(61, 0, 61, 152)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jovfk"]
+atlas = ExtResource("2_nch63")
+region = Rect2(122, 0, 61, 152)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_itr1n"]
+atlas = ExtResource("2_nch63")
+region = Rect2(183, 0, 61, 152)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n5ch7"]
+atlas = ExtResource("2_nch63")
+region = Rect2(244, 0, 61, 152)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gppp1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6y6e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1pl38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jovfk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_itr1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n5ch7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g8e4q"]
-size = Vector2(80, 180)
+size = Vector2(80, 168)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nch63"]
-size = Vector2(80, 90)
+size = Vector2(80, 78)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p6y6e"]
 size = Vector2(90, 95)
@@ -27,11 +62,9 @@ collision_mask = 0
 platform_on_leave = 2
 script = ExtResource("1_g8e4q")
 
-[node name="tempsprite" type="Sprite2D" parent="."]
-scale = Vector2(80, 180)
-texture = SubResource("GradientTexture1D_nch63")
-
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -11.45)
+scale = Vector2(1.335, 1.335)
 sprite_frames = SubResource("SpriteFrames_gppp1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -50,21 +83,24 @@ one_shot = true
 position = Vector2(0, 95)
 
 [node name="PlayerHitBox" type="StaticBody2D" parent="."]
+position = Vector2(0, -6)
 collision_layer = 16777216
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHitBox"]
-position = Vector2(0, -45)
+position = Vector2(0, -39)
 shape = SubResource("RectangleShape2D_nch63")
 one_way_collision = true
 debug_color = Color(0.670684, 0.50895, 0, 0.42)
 
 [node name="PlayerDetect" type="Area2D" parent="."]
+position = Vector2(0, -6)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetect"]
 position = Vector2(0, 47.5)
 shape = SubResource("RectangleShape2D_p6y6e")
+debug_color = Color(0.993308, 0, 0.239522, 0.42)
 
 [connection signal="timeout" from="TargetingTimer" to="." method="AtkWindupTimeout"]
 [connection signal="timeout" from="AwaitTimer" to="." method="AtkGraceTimeout"]

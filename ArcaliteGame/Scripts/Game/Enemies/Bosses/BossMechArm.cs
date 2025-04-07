@@ -51,7 +51,6 @@ public partial class BossMechArm : CharacterBody2D
     private Timer atkGrace;
 
 
-    private Sprite2D TEMPSPRITE;
 
 
     //signals
@@ -63,7 +62,6 @@ public partial class BossMechArm : CharacterBody2D
     {
         base._Ready();
 
-        TEMPSPRITE = GetNode("tempsprite") as Sprite2D; 
 
         parent = GetParent().GetParent() as BossMech;
         sprite = GetNode("Sprite") as AnimatedSprite2D;
@@ -78,9 +76,15 @@ public partial class BossMechArm : CharacterBody2D
         solidHitBox.Disabled = false;
         //dynamic didn't work because of animplayer, need to change this when final sprites are done
         if (SIDE)
+        {
+            sprite.FlipH = false;
             origin = new Vector2(200, -25);
+        }
         else
+        {
+            sprite.FlipH = true;
             origin = new Vector2(-200, -25);
+        }
     }
 
 
@@ -91,6 +95,7 @@ public partial class BossMechArm : CharacterBody2D
     private void LaunchSequenceTimer_Timeout() 
     {
         SetCollisionMaskValue(3, true);
+        sprite.Play("default");
     }
 
     public void OnPlayerDetectAreaEntered(Node2D body)
@@ -258,7 +263,7 @@ public partial class BossMechArm : CharacterBody2D
         var PDRotTween = GetTree().CreateTween();
         var HBRotTween = GetTree().CreateTween();
 
-        spriteRotTween.TweenProperty(TEMPSPRITE, "rotation", radians, timer);
+        spriteRotTween.TweenProperty(sprite, "rotation", radians, timer);
         PDRotTween.TweenProperty(playerDetect, "rotation", radians, timer);
         HBRotTween.TweenProperty(hbparent, "rotation", radians, timer);
     }
@@ -433,7 +438,5 @@ public partial class BossMechArm : CharacterBody2D
         }
 
         Update(delta);
-        if(SIDE)
-            GD.Print($"{Name} position: {Position}");
     }
 }

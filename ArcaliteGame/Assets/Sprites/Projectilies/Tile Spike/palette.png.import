@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8261hcub3lyv"
-path="res://.godot/imported/Idle_closed.png-1e99e6621625dd07b7c3cbcc4dbb9db8.ctex"
+uid="uid://hy2sn4hovy2r"
+path="res://.godot/imported/palette.png-1938fbc422c8730dcd4879c5df70cb1e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/enemies/Bosses/MechBoss/Idle_closed.png"
-dest_files=["res://.godot/imported/Idle_closed.png-1e99e6621625dd07b7c3cbcc4dbb9db8.ctex"]
+source_file="res://Assets/Sprites/Projectilies/Tile Spike/palette.png"
+dest_files=["res://.godot/imported/palette.png-1938fbc422c8730dcd4879c5df70cb1e.ctex"]
 
 [params]
 

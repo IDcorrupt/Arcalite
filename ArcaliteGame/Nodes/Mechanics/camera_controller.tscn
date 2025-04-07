@@ -30,7 +30,6 @@ script = ExtResource("1_bkkum")
 position_smoothing_enabled = true
 
 [node name="EnemyTrigger" type="Area2D" parent="Camera"]
-visible = false
 position = Vector2(-320, -180)
 collision_layer = 256
 collision_mask = 512

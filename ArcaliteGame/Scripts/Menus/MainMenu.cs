@@ -52,8 +52,7 @@ public partial class MainMenu : Control
 
     private void Register_Pressed()
     {
-        //LINK DOESN'T WORK BECAUSE REGISTER PAGE DOESN'T HAVE UNIQUE LINK (it goes to sign in page)
-        OS.ShellOpen("http://localhost/school/Website/login.html#");    //REDO LINK FOR FINAL (file structure will probably change)
+        OS.ShellOpen("http://localhost/Arcalite/login.html#");
     }
 
     private void SignIn_Pressed()
@@ -112,7 +111,7 @@ public partial class MainMenu : Control
     }
     public void WebsitePressed()
     {
-        OS.ShellOpen("http://localhost/school/Arcalite/.index.html");       //REDO LINK FOR FINAL (file structure will probably change)
+        OS.ShellOpen("http://localhost/Arcalite/index.html");
     }
     public void QuitPressed()
     {

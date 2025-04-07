@@ -179,7 +179,7 @@ EnemyClass = 2
 position = Vector2(2880, 180)
 
 [node name="EnemySpawnPoint1" parent="Controllers/EnemyControl3" instance=ExtResource("5_kbhp1")]
-position = Vector2(245, -130)
+position = Vector2(247, -76)
 EnemyClass = 1
 
 [node name="EnemySpawnPoint2" parent="Controllers/EnemyControl3" instance=ExtResource("5_kbhp1")]
@@ -187,7 +187,7 @@ position = Vector2(-8, 97)
 EnemyClass = 4
 
 [node name="EnemySpawnPoint3" parent="Controllers/EnemyControl3" instance=ExtResource("5_kbhp1")]
-position = Vector2(-242, -130)
+position = Vector2(-248, -77)
 EnemyClass = 1
 
 [node name="EnemyControl4" parent="Controllers" groups=["Controllers"] instance=ExtResource("4_38mkx")]
@@ -220,18 +220,18 @@ position = Vector2(116, 56)
 EnemyClass = 4
 
 [node name="EnemyControl7" parent="Controllers" groups=["Controllers"] instance=ExtResource("4_38mkx")]
-position = Vector2(7360, 192)
+position = Vector2(7360, 180)
 
 [node name="EnemySpawnPoint1" parent="Controllers/EnemyControl7" instance=ExtResource("5_kbhp1")]
-position = Vector2(303, 70)
+position = Vector2(304, 82)
 EnemyClass = 1
 
 [node name="EnemySpawnPoint2" parent="Controllers/EnemyControl7" instance=ExtResource("5_kbhp1")]
-position = Vector2(303, 9)
+position = Vector2(304, 22)
 EnemyClass = 1
 
 [node name="EnemySpawnPoint3" parent="Controllers/EnemyControl7" instance=ExtResource("5_kbhp1")]
-position = Vector2(302, -55)
+position = Vector2(302, -42)
 EnemyClass = 1
 
 [node name="EnemyControl8" parent="Controllers" groups=["Controllers"] instance=ExtResource("4_38mkx")]

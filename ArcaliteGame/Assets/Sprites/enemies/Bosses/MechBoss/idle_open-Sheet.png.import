@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ct7ouj0bhnaqw"
-path="res://.godot/imported/cage_open.png-9b3c631e547686db09e257ef221f8a6b.ctex"
+uid="uid://dtq3s1uidy5kr"
+path="res://.godot/imported/idle_open-Sheet.png-eb354e3340237dea3a577f7c41a5fbab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/enemies/Bosses/MechBoss/cage_open.png"
-dest_files=["res://.godot/imported/cage_open.png-9b3c631e547686db09e257ef221f8a6b.ctex"]
+source_file="res://Assets/Sprites/enemies/Bosses/MechBoss/idle_open-Sheet.png"
+dest_files=["res://.godot/imported/idle_open-Sheet.png-eb354e3340237dea3a577f7c41a5fbab.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bd54qtdcrus83"
-path="res://.godot/imported/Idle_open.png-a22a6c3d2950717ebc2d092f35420b90.ctex"
+uid="uid://ys2f5gcb4fb4"
+path="res://.godot/imported/ribcage_open-Sheet.png-541e80076034234997b3f8d48577f0cf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/enemies/Bosses/MechBoss/Idle_open.png"
-dest_files=["res://.godot/imported/Idle_open.png-a22a6c3d2950717ebc2d092f35420b90.ctex"]
+source_file="res://Assets/Sprites/enemies/Bosses/MechBoss/ribcage_open-Sheet.png"
+dest_files=["res://.godot/imported/ribcage_open-Sheet.png-541e80076034234997b3f8d48577f0cf.ctex"]
 
 [params]
 

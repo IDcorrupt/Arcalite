@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bi38gbli2gxl6"
-path="res://.godot/imported/death.png-85b579338ab5d7ba629782ca1ef6ab5d.ctex"
+uid="uid://cle08gynqewxc"
+path="res://.godot/imported/idle_body-Sheet.png-45f7bfa27bb62b94b557b4116c4c9c05.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/enemies/Bosses/MechBoss/death.png"
-dest_files=["res://.godot/imported/death.png-85b579338ab5d7ba629782ca1ef6ab5d.ctex"]
+source_file="res://Assets/Sprites/enemies/Bosses/MechBoss/idle_body-Sheet.png"
+dest_files=["res://.godot/imported/idle_body-Sheet.png-45f7bfa27bb62b94b557b4116c4c9c05.ctex"]
 
 [params]
 

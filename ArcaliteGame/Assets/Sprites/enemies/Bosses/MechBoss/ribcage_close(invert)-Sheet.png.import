@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8f03ny4jni6e"
-path="res://.godot/imported/cage_closed.png-900131de95a2d94dc2569454769e82aa.ctex"
+uid="uid://dnliemrvjt241"
+path="res://.godot/imported/ribcage_close(invert)-Sheet.png-ebf6b25812b6e9dd6d3fbb63c3e5f0fe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/enemies/Bosses/MechBoss/cage_closed.png"
-dest_files=["res://.godot/imported/cage_closed.png-900131de95a2d94dc2569454769e82aa.ctex"]
+source_file="res://Assets/Sprites/enemies/Bosses/MechBoss/ribcage_close(invert)-Sheet.png"
+dest_files=["res://.godot/imported/ribcage_close(invert)-Sheet.png-ebf6b25812b6e9dd6d3fbb63c3e5f0fe.ctex"]
 
 [params]
 
