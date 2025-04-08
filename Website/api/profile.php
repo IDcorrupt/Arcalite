@@ -7,8 +7,11 @@ checkValidity("GET", "userid", "langid");
 $userid = $_GET["userid"];
 $langid = $_GET["langid"];
 
+<<<<<<< Updated upstream
 $sql = "SELECT player.id AS id, player.name AS name, player.hp AS hp, player.mp AS mp, player.levelid AS level, player.playtime AS playtime, avatar.splash AS image, level.image AS levelimage
+=======
 $sql = "SELECT player.id AS id, player.name AS name, player.hp AS hp, player.mp AS mp, player.levelid AS level, player.playtime AS playtime, avatar.splash AS image
+>>>>>>> Stashed changes
         FROM 
             player 
             INNER JOIN avatar ON player.avatarid = avatar.id
