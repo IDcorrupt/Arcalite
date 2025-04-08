@@ -452,17 +452,13 @@ public partial class Player : CharacterBody2D
                 break;
             case Enums.itemType.shard:
                 Random random = new Random();
-                switch (random.Next(0,3))
+                switch (random.Next(0,2))
                 {
                     case 0:
                         MaxHP += 10;
                         currentHP += 10;
                         break;
                     case 1:
-                        MaxMP += 10;
-                        currentMP += 10;
-                        break;
-                    case 2:
                         damage += 2;
                         break;
                     default:

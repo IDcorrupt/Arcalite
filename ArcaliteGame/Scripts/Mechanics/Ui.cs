@@ -10,6 +10,7 @@ public partial class Ui : Control
     Sprite2D MPBar;
     Label hpNum;
 
+    //cooldowns
     AnimatedSprite2D dashIcon;
     Sprite2D dashCooldownBar;
     AnimatedSprite2D CAIcon;
@@ -21,6 +22,10 @@ public partial class Ui : Control
     AnimatedSprite2D SpellQIcon;
     Sprite2D SpellQCooldownBar;
 
+    //other stats
+    Label Time;
+    Label Damage;
+
     //equipped items
     Enums.itemType spellE = Enums.itemType.empty;
     Enums.itemType spellQ = Enums.itemType.empty;
@@ -31,7 +36,8 @@ public partial class Ui : Control
         HPBar = GetNode("HPBar/HPBarMask") as Sprite2D;
         MPBar = GetNode("MPBar/MPBarMask") as Sprite2D;
         hpNum = GetNode("HPBar/hpnum") as Label;
-
+        Time = GetNode("Time") as Label;
+        Damage = GetNode("Dmg") as Label;
 
         //cooldown components
         dashIcon = GetNode("Icons/Dash/Icon") as AnimatedSprite2D;
@@ -89,7 +95,6 @@ public partial class Ui : Control
         oracleCooldown.TweenProperty(OracleCooldownBar, "scale", new Vector2(32.0f, dashCooldownBar.Scale.Y), cooldown);
         OracleIcon.Play("Cooldown");
     }
-
     private void OracleCooldown_Finished()
     {
         OracleCooldownBar.Hide();
@@ -155,11 +160,13 @@ public partial class Ui : Control
                 SpellECooldownBar.Hide();
                 break;
             case Enums.itemType.necklace:
-                SpellEIcon.Play(spellE.ToString() + "_Ready");
+                if(SpellEIcon.Animation != spellE.ToString()+"_Cooldown")
+                    SpellEIcon.Play(spellE.ToString() + "_Ready");
                 SpellEIcon.Show();
                 break;
             case Enums.itemType.shield:
-                SpellEIcon.Play(spellE.ToString() + "_Ready");
+                if(SpellEIcon.Animation != spellE.ToString()+"_Cooldown")
+                    SpellEIcon.Play(spellE.ToString() + "_Ready");
                 SpellEIcon.Show();
                 break;
             default:
@@ -173,11 +180,13 @@ public partial class Ui : Control
                 SpellQCooldownBar.Hide();
                 break;
             case Enums.itemType.necklace:
-                SpellQIcon.Play(spellQ.ToString() + "_Ready");
+                if(SpellQIcon.Animation != spellQ.ToString()+"_Cooldown")
+                    SpellQIcon.Play(spellQ.ToString() + "_Ready");
                 SpellQIcon.Show();
                 break;
             case Enums.itemType.shield:
-                SpellQIcon.Play(spellQ.ToString() + "_Ready");
+                if(SpellQIcon.Animation != spellQ.ToString()+"_Cooldown")
+                    SpellQIcon.Play(spellQ.ToString() + "_Ready");
                 SpellQIcon.Show();
                 break;
             default:
@@ -195,6 +204,10 @@ public partial class Ui : Control
             HPtexture.Size = new Vector2(HPRatio * 200, HPtexture.Size.Y);
         if(MPBar.Texture is PlaceholderTexture2D MPtexture)
             MPtexture.Size = new Vector2(MPRatio * 200, MPtexture.Size.Y);
+
+        TimeSpan time = TimeSpan.FromSeconds(Mathf.Round((double)Globals.playTime));
+        Time.Text = time.ToString(@"mm\:ss");
+        Damage.Text = Mathf.FloorToInt(Globals.player.GetAttackDamage()).ToString();
     }
 
     public override void _Process(double delta)

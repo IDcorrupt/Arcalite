@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://d4mg7kpomu4je"]
+[gd_scene load_steps=36 format=3 uid="uid://d4mg7kpomu4je"]
 
 [ext_resource type="Script" uid="uid://bw81mk3jt7fwe" path="res://Scripts/Mechanics/Ui.cs" id="1_f025f"]
 [ext_resource type="Theme" uid="uid://ngtukvv8yava" path="res://Assets/Resources/menubuttons.tres" id="1_gb0wl"]
@@ -160,6 +160,9 @@ font_color = Color(0.46, 0, 0, 1)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8ix2l"]
 size = Vector2(200, 20)
 
+[sub_resource type="LabelSettings" id="LabelSettings_1pvpa"]
+font_color = Color(0.65, 0.65, 0.65, 1)
+
 [node name="UI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -295,3 +298,47 @@ centered = false
 position = Vector2(5, 5)
 texture = ExtResource("18_ffavq")
 centered = false
+
+[node name="TimeLBL" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 315.0
+offset_right = 63.0
+offset_bottom = 331.0
+text = "Time: "
+label_settings = SubResource("LabelSettings_1pvpa")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Time" type="Label" parent="."]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 315.0
+offset_right = 103.0
+offset_bottom = 331.0
+text = "00:00"
+label_settings = SubResource("LabelSettings_1pvpa")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DmgLBL" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 335.0
+offset_right = 85.0
+offset_bottom = 351.0
+text = "Damage: "
+label_settings = SubResource("LabelSettings_1pvpa")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Dmg" type="Label" parent="."]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 335.0
+offset_right = 112.0
+offset_bottom = 351.0
+text = "100"
+label_settings = SubResource("LabelSettings_1pvpa")
+horizontal_alignment = 1
+vertical_alignment = 1

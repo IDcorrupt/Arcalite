@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public partial class Globals : Node
 {
@@ -20,6 +21,7 @@ public partial class Globals : Node
     //active stuff
     public static Checkpoint spawnPoint = null;
     public static string activeMap = null;
+    public static StatScreen statScreen = null;
     //Godot has no built-in stopwatch, so i have to use this
     public static float playTime = 0;
     //used for stopping time after final boss was beaten
@@ -44,4 +46,12 @@ public partial class Globals : Node
     //website connection stuff
     public static UserData user = new UserData();
 
+
+
+    public static void GameBeaten()
+    {
+        gameBeaten = true;
+        statScreen.UpdateStats();
+    }
+    
 }

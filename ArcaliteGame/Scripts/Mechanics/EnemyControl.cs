@@ -121,8 +121,7 @@ public partial class EnemyControl : Node2D
             {
                 SpawnTimer.Stop();
             }
-            if(Name.ToString() =="EnemyControl6" ||Name.ToString() == "EnemyControl7")
-                GD.Print(Name.ToString()+" enemyamount: " + enemyAmount);
+
             //fight mode
             if (playerInRoom)
             {

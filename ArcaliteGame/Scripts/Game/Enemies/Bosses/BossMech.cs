@@ -144,7 +144,7 @@ public partial class BossMech : CharacterBody2D
             singleAttackCooldown.Start();
             doubleAttackCooldown.Start();
             sweepAttackCooldown.Start();
-            //laserAttackCooldown.Start();
+            laserAttackCooldown.Start();
             sprite.Play("idle_closed");
             ACTIVE = true;
         }
@@ -282,7 +282,7 @@ public partial class BossMech : CharacterBody2D
         DropItems(Enums.itemType.shield, 100);
         DropItems();
         animPlayer.Play("BossMechDeath");
-        Globals.gameBeaten = true;
+        Globals.GameBeaten();
     }
     private void DropItems(Enums.itemType itemtype = Enums.itemType.shard, int customDropRate = 0)
     {

@@ -218,7 +218,6 @@ public static class DBConnector
     {
         try
         {
-            GD.Print("prepare called, runID is: " + playerId);
             bool existing = false;
             conn.Open();
             string query = $"SELECT id FROM player WHERE id = {playerId};";
@@ -230,10 +229,9 @@ public static class DBConnector
             }
             if (existing)
             {
-                query = $"UPDATE player SET playtime={Globals.playTime} WHERE id={playerId};";
+                query = $"UPDATE player SET playtime={Globals.playTime.ToString()} WHERE id={playerId};";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     cmd.ExecuteNonQuery();
-                GD.Print("save exists");
                 conn.Close();
                 return Enums.SaveState.Existing;
             }
@@ -255,7 +253,6 @@ public static class DBConnector
                 conn.Close();
                 if (result)
                 {
-                    GD.Print("save created");
                     return Enums.SaveState.Created;
                 }
                 else
@@ -274,7 +271,6 @@ public static class DBConnector
     {
         try
         {
-            GD.Print("upload called");
             //these 3 lines insert the runID if it was newly created
             string[] data = save.Split('\n');
             data[9] = playerId.ToString();
