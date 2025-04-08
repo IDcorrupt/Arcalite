@@ -12,11 +12,11 @@ Bemutatás
 
 ## A fájlrendszer
 
-- A játék az **ArcaliteGame** mappában található. Ez egy GODOT-project mappája, a futtatható állomány az **Exe** mappában található.
-    - Jelenleg a játék legfrissebb állapota a *game* ágon található. A véglegesítés után a *main*-re kerül, ekkor ez a sor törlésre fog kerülni.
+- A játék az **ArcaliteGame** mappában található. Ez egy GODOT-project mappája, a futtatható állomány az **kéne egy mappanév** mappában található.
 - A weboldal a **Website** mappában található. A helyes működéshez ez kell legyen a webszerver gyökere.
-- A dokumentáció Word-dokumentuma a **Dok** mappában található.
-    - A legfrissebb verzió a *docs* ágon található. A véglegesítés után a *main*-re kerül, ekkor ez a sor törlésre fog kerülni.
+- A dokumentáció Word-dokumentuma és a prezentációnk a **Dok** mappában található.
+    - A dokumentáció legfrissebb verziója a *docs* ágon található. A véglegesítés után a *main*-re kerül, ekkor ez a sor törlésre fog kerülni.
+    - A prezentáció legfrissebb verziója a *Presentation* ágon található. A véglegesítés után a *main*-re kerül, ekkor ez a sor törlésre fog kerülni.
 
 ## A webszerver felállítása a XAMPP segítségével
 
