@@ -2,9 +2,9 @@
 
 ## Tartalomjegyzék
 
-1. [A projekt bemutatása](#Aprojektbemutatása)
-2. [A fájlrendszer](#Afájlrendszer)
-3. [A webszerver felállítása a XAMPP segítségével](#AwebszerverfelállításaaXAMPPsegítségével)
+1. [A projekt bemutatása](#A-projekt-bemutatása)
+2. [A fájlrendszer](#A-fájlrendszer)
+3. [A webszerver felállítása a XAMPP segítségével](#A-webszerver-felállítása-a-XAMPP-segítségével)
 
 ## A projekt bemutatása
 
