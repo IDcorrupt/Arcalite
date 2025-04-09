@@ -5,9 +5,6 @@ using System.Runtime.CompilerServices;
 
 public partial class SubmenuStart : Control
 {
-    private PackedScene submenuContinueScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/submenuContinue.tscn");
-    private PackedScene newGameLaunchScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/newGame_launch.tscn");
-
     Node Parent;
     private Button Continue;
     private Button NewGame;
@@ -59,7 +56,7 @@ public partial class SubmenuStart : Control
         if (Globals.user.Id >= 0)
         {
             SaveLoadHandler.Load();
-            SubmenuContinue submenuContinueNode = submenuContinueScene.Instantiate() as SubmenuContinue;
+            SubmenuContinue submenuContinueNode = PreloadRegistry.ControlNodes.submenuContinueScene.Instantiate() as SubmenuContinue;
             submenuContinueNode.MenuClosed += SubmenuContinueNode_MenuClosed;
             ButtonControl(false);
             AddSibling(submenuContinueNode);
@@ -75,7 +72,7 @@ public partial class SubmenuStart : Control
 
     public void NewGamePressed()
     {
-        NewGameLaunch newGameLaunchNode = newGameLaunchScene.Instantiate() as NewGameLaunch;
+        NewGameLaunch newGameLaunchNode = PreloadRegistry.ControlNodes.newGameLaunchScene.Instantiate() as NewGameLaunch;
         ButtonControl(false);
         newGameLaunchNode.Cancel += NewGameLaunchNode_Cancel;
         AddChild(newGameLaunchNode);

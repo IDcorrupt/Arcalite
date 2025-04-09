@@ -24,8 +24,6 @@ public partial class BossMech : CharacterBody2D
     public bool playerInRoom = false;
 
     //components
-    private PackedScene itemScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/item.tscn");
-    private PackedScene laserBeamScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/Enemies/projectiles/laser.tscn");
     private Laser laserBeam;
 
     private EnemyControl parent;
@@ -75,14 +73,14 @@ public partial class BossMech : CharacterBody2D
         vulnerabilityTime = GetNode("Timers/Vulnerability") as Timer;
 
 
-        health = 750 * Globals.diffMultipliers[Globals.Difficulty];
+        health = 1000 * Globals.diffMultipliers[Globals.Difficulty];
         damage = 30 * Globals.diffMultipliers[Globals.Difficulty];
         shardDropRate = Mathf.RoundToInt(500 * Globals.diffMultipliers[Globals.Difficulty]);
         //timings
-        singleAttackCooldown.WaitTime = 5 / Globals.diffMultipliers[Globals.Difficulty];
-        doubleAttackCooldown.WaitTime = 20 / Globals.diffMultipliers[Globals.Difficulty];
-        sweepAttackCooldown.WaitTime = 30 / Globals.diffMultipliers[Globals.Difficulty];
-        laserAttackCooldown.WaitTime = 90 / Globals.diffMultipliers[Globals.Difficulty];
+        singleAttackCooldown.WaitTime = 4 / Globals.diffMultipliers[Globals.Difficulty];
+        doubleAttackCooldown.WaitTime = 15 / Globals.diffMultipliers[Globals.Difficulty];
+        sweepAttackCooldown.WaitTime = 20 / Globals.diffMultipliers[Globals.Difficulty];
+        laserAttackCooldown.WaitTime = 60 / Globals.diffMultipliers[Globals.Difficulty];
         vulnerabilityTime.WaitTime = 20 / Globals.diffMultipliers[Globals.Difficulty];
         laserCount = Globals.Difficulty + 1;
 
@@ -187,7 +185,7 @@ public partial class BossMech : CharacterBody2D
     private void LaserPowerUp()
     {
         //for animation
-        laserBeam = laserBeamScene.Instantiate() as Laser;
+        laserBeam = PreloadRegistry.Game.Projectiles.laserBeamScene.Instantiate() as Laser;
         AddChild(laserBeam);
         laserBeam.TreeExiting += LaserBeam_TreeExiting;
         laserBeam.Position = laserLine.Position;
@@ -221,7 +219,7 @@ public partial class BossMech : CharacterBody2D
         else 
             dir = 1;
         Vector2 targetPos = new Vector2(laserLine.TargetPosition.X + (660*dir), laserLine.TargetPosition.Y);
-        laserMove.TweenProperty(laserLine, "target_position", targetPos, 2);
+        laserMove.TweenProperty(laserLine, "target_position", targetPos, Globals.diffMultipliers[Mathf.Abs(Globals.Difficulty-2)]); //reversed diff value
     }
     private void LaserGrace_Timeout()
     {
@@ -234,7 +232,7 @@ public partial class BossMech : CharacterBody2D
         laserSlashes--;
         if (laserSlashes > 0)
         {
-            laserGrace = GetTree().CreateTimer(2);
+            laserGrace = GetTree().CreateTimer(Globals.diffMultipliers[Mathf.Abs(Globals.Difficulty - 2)]); //reversed diff value
             laserGrace.Timeout += LaserGrace_Timeout;
         }
         else
@@ -295,7 +293,7 @@ public partial class BossMech : CharacterBody2D
                 dropamount = Mathf.FloorToInt(shardDropRate / 100);
                 for (int i = 0; i < dropamount; i++)
                 {
-                    item = itemScene.Instantiate() as Item;
+                    item = PreloadRegistry.Game.Entities.itemScene.Instantiate() as Item;
                     item.type = itemtype;
                     if (item is not null)
                     {
@@ -308,13 +306,13 @@ public partial class BossMech : CharacterBody2D
             //regular calc & drop
             if (Math.RNG(shardDropRate - dropamount * 100))
             {
-                item = itemScene.Instantiate() as Item;
+                item = PreloadRegistry.Game.Entities.itemScene.Instantiate() as Item;
                 item.type = itemtype;
             }
         }
         else if (Math.RNG(customDropRate))
         {
-            item = itemScene.Instantiate() as Item;
+            item = PreloadRegistry.Game.Entities.itemScene.Instantiate() as Item;
             item.type = itemtype;
         }
 
@@ -325,8 +323,6 @@ public partial class BossMech : CharacterBody2D
             itemContainer.AddChild(item);
         }
     }
-
-
 
     private void Movement(double delta)
     {
@@ -367,11 +363,7 @@ public partial class BossMech : CharacterBody2D
     }
     public void OnSpriteAnimationFinished()
     {
-        if (sprite.Animation == "death")
-        {
-            
-        }
-        else if (sprite.Animation == "eye_flash_1")
+        if (sprite.Animation == "eye_flash_1")
             sprite.Play("idle_closed");
         else if (sprite.Animation == "eye_flash_2")
             sprite.Play("idle_closed");
@@ -408,12 +400,12 @@ public partial class BossMech : CharacterBody2D
                 //attacks
                 if (!attacking && laserAttackCooldown.TimeLeft == 0)
                     InitiateLaser();
-                if (!attacking && singleAttackCooldown.TimeLeft == 0)
-                    InitiateSingleAttack();
                 if (!attacking && doubleAttackCooldown.TimeLeft == 0)
                     InitiateDoubleAttack();
                 if (!attacking && sweepAttackCooldown.TimeLeft == 0)
                     InitiateSweepAttack();
+                if (!attacking && singleAttackCooldown.TimeLeft == 0)
+                    InitiateSingleAttack();
 
                 if (laserActive)
                 {

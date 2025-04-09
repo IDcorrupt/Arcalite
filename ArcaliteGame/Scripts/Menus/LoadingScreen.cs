@@ -6,7 +6,7 @@ public partial class LoadingScreen : Control
     public override async void _Ready()
     {
         base._Ready();
-        await TilesetLoader.LoadTilesetAsync();
+        await PreloadRegistry.LoadTilesetAsync();
         MainNode main = GetParent() as MainNode;
         main.LoadingFinished();
 

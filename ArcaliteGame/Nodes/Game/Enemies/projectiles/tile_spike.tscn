@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3 uid="uid://du4lpk46xiq6b"]
+
+[ext_resource type="Script" uid="uid://bpydrqrrloerh" path="res://Scripts/Game/Enemies/Projectiles/Spike.cs" id="1_p8fgh"]
+[ext_resource type="Texture2D" uid="uid://dd0d37o31v2xy" path="res://Assets/Sprites/Projectilies/Tile Spike/tileSpike-Sheet.png" id="2_p8fgh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cu44g"]
+atlas = ExtResource("2_p8fgh")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwql2"]
+atlas = ExtResource("2_p8fgh")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rdtq"]
+atlas = ExtResource("2_p8fgh")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7iaf6"]
+atlas = ExtResource("2_p8fgh")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l57l4"]
+atlas = ExtResource("2_p8fgh")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_huisc"]
+atlas = ExtResource("2_p8fgh")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fynv8"]
+atlas = ExtResource("2_p8fgh")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sxdmk"]
+atlas = ExtResource("2_p8fgh")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kion1"]
+atlas = ExtResource("2_p8fgh")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xv2gb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cu44g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vwql2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5rdtq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7iaf6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l57l4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_huisc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fynv8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sxdmk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kion1")
+}],
+"loop": false,
+"name": &"default",
+"speed": 45.0
+}]
+
+[node name="TileSpike" type="Node2D"]
+z_index = -1
+script = ExtResource("1_p8fgh")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(6, -16)
+sprite_frames = SubResource("SpriteFrames_xv2gb")
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 16
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitBox"]
+polygon = PackedVector2Array(-9, 0, 0, -15, 15, -32, 18, -31, 6, 0)
+
+[node name="StillTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="animation_finished" from="Sprite" to="." method="OnSpriteAnimationFinised"]
+[connection signal="body_entered" from="HitBox" to="." method="OnHitBoxAreaEntered"]
+[connection signal="body_exited" from="HitBox" to="." method="OnHitBoxAreaExited"]
+[connection signal="timeout" from="StillTimer" to="." method="OnStillTimerTimeout"]

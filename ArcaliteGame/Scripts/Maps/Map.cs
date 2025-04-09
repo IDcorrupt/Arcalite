@@ -6,7 +6,6 @@ using System.Linq;
 
 public partial class Map : Node2D
 {
-    PackedScene playerScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/player.tscn");
     GameScene parent;
     Player player;
     GpuParticles2D rain;
@@ -41,9 +40,12 @@ public partial class Map : Node2D
         else
         {
             Globals.spawnPoint = GetNode("CheckPoints/Checkpoint0") as Checkpoint;
-            //if active checkpoint is the final one -> game is beaten -> set it so timer doesn't activate
-            Globals.gameBeaten = Globals.spawnPoint.finalCheckPoint;
+
         }
+        //if active checkpoint is the final one -> game is beaten -> set it so timer doesn't activate
+        GD.Print("finalcheck: " + Globals.spawnPoint.finalCheckPoint);
+        if (Globals.spawnPoint.finalCheckPoint)
+            Globals.GameBeaten();
         SetRoomStatus();
         Globals.spawnPoint.Empty();
 
@@ -52,7 +54,7 @@ public partial class Map : Node2D
         rain.Emitting = true;
 
         //player
-        player = playerScene.Instantiate() as Player;
+        player = PreloadRegistry.Game.Entities.playerScene.Instantiate() as Player;
         AddChild(player);
 
     }

@@ -8,8 +8,6 @@ public partial class SubmenuSettings : Control
 {
 	static Node Parent;
 
-
-
 	private bool popupOpen = false;
     public bool isSaved = true;
 
@@ -38,7 +36,7 @@ public partial class SubmenuSettings : Control
         }
         catch (Exception)
 		{
-            Control popup = (Control)Globals.popupScene.Instantiate();
+            Control popup = PreloadRegistry.ControlNodes.popupScene.Instantiate() as Control;
             ((Popup)popup).SetMessageType("filecorrupt");
             AddChild(popup);
             ConfigFileHandler.DefaultSettings();
@@ -231,7 +229,7 @@ public partial class SubmenuSettings : Control
 		if (!isSaved) {
 
 			//if changes are not saved
-			Control popup = (Control)Globals.popupScene.Instantiate();
+			Control popup = PreloadRegistry.ControlNodes.popupScene.Instantiate() as Control;
 			((Popup)popup).SetMessageType("nosave");
 			AddChild(popup);
 			//popupresult will initiate exit() in _process func if promted

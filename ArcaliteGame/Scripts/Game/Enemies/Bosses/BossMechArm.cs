@@ -19,10 +19,10 @@ public partial class BossMechArm : CharacterBody2D
     //sequencing for update loop    0 = no attack  |  1 = windup  |  2 = grace  |  3 = attack   (2 is empty rn)
     private int atkSequence = 0;
     //attack configs
-    private float singleAtkWindupTime = 5 / Globals.diffMultipliers[Globals.Difficulty];
+    private float singleAtkWindupTime = 3 / Globals.diffMultipliers[Globals.Difficulty];
     private float doubleAtkWindupTime = 3 / Globals.diffMultipliers[Globals.Difficulty];
     private float sweepAtkWindupTime = 2 / Globals.diffMultipliers[Globals.Difficulty];
-    private float laserAtkWindupTime = 4 / Globals.diffMultipliers[Globals.Difficulty];
+    private float laserAtkWindupTime = 2 / Globals.diffMultipliers[Globals.Difficulty];
     private int spikeAmount = 0;    //how many spikes the attacks generate (in each direction)
     private bool singleAtk = false;
     private bool doubleAtk = false;
@@ -40,7 +40,6 @@ public partial class BossMechArm : CharacterBody2D
     public float slowFactor = 1f;
 
     //components
-    private PackedScene groundSpikeScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/projectiles/ground_spike.tscn");
     private Node2D spikeOrigin;
     private BossMech parent;
     private AnimatedSprite2D sprite;
@@ -119,7 +118,7 @@ public partial class BossMechArm : CharacterBody2D
                 singleAtk = true;
                 atkSequence = 1;
                 atkWindup.Start(singleAtkWindupTime);
-                spikeAmount = 5;
+                spikeAmount = 8;
                 break;
             case Enums.MechAttackType.Double:
                 doubleAtk = true;
@@ -150,7 +149,7 @@ public partial class BossMechArm : CharacterBody2D
             EmitSignal(SignalName.EyeFlash, 1);
         Velocity = Vector2.Zero;
         atkSequence = 2;
-        atkGrace.Start(0.5);
+        atkGrace.Start(0.3);
     }
     public void AtkGraceTimeout()
     {
@@ -168,14 +167,14 @@ public partial class BossMechArm : CharacterBody2D
         atkSequence = 0;
         if(spikeAmount > 0)
             CreateSpikes();
-        atkGrace.Start(2);
+        atkGrace.Start(1);
     }
     private void DoubleAttack()
     {
         atkSequence = 0;
         if (spikeAmount > 0)
             CreateSpikes();
-        atkGrace.Start(3);
+        atkGrace.Start(2);
     }
     private void SweepAttack()
     {
@@ -188,18 +187,18 @@ public partial class BossMechArm : CharacterBody2D
             spikeSpawnLeft = spikeOrigin.GlobalPosition + new Vector2(-10, 0);
         if(spikeSpawnRight == Vector2.Zero)
             spikeSpawnRight = spikeOrigin.GlobalPosition + new Vector2(10, 0);
-        GroundSpike leftSpike = groundSpikeScene.Instantiate() as GroundSpike;
+        Spike leftSpike = PreloadRegistry.Game.Projectiles.SpikeScene.Instantiate() as Spike;
         parent.GetController().AddChild(leftSpike);
         leftSpike.SetStats(parent.GetDamage(), true);
         leftSpike.GlobalPosition = spikeSpawnLeft;
         leftSpike.Name = "LeftGroundSpike"+spikeAmount.ToString();
-        GroundSpike rightSpike = groundSpikeScene.Instantiate() as GroundSpike;
+        Spike rightSpike = PreloadRegistry.Game.Projectiles.SpikeScene.Instantiate() as Spike;
         parent.GetController().AddChild(rightSpike);
         rightSpike.SetStats(parent.GetDamage(), false);
         rightSpike.GlobalPosition = spikeSpawnRight;
         leftSpike.Name = "RightGroundSpike"+spikeAmount.ToString();
 
-        spikeTimer = GetTree().CreateTimer(0.1);
+        spikeTimer = GetTree().CreateTimer(0.05);
         spikeTimer.Timeout += SpikeTimer_Timeout;
     }
     private void SpikeTimer_Timeout()
@@ -420,7 +419,7 @@ public partial class BossMechArm : CharacterBody2D
             }if(atkSequence == 3)
             {
                 atkSequence = 0;
-                atkGrace.Start(14);
+                atkGrace.Start(7 * Globals.diffMultipliers[Mathf.Abs(Globals.Difficulty-2)]);   //reversing diff order, since this needs to get smaller with each level
             }
         }
         MoveAndSlide();

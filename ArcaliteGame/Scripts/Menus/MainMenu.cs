@@ -15,10 +15,7 @@ public partial class MainMenu : Control
 
     public bool submenuOpen = false;
 
-    private PackedScene submenuStart = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/submenuStart.tscn");
-    private PackedScene submenuSettings = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/submenuSettings.tscn");
-    private PackedScene submenuWebsite = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/submenuWebsite.tscn");
-    private PackedScene signInPopupScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/sign_in_popup.tscn");
+
 
     private TileMapLayer background;
     public override void _Ready()
@@ -39,7 +36,7 @@ public partial class MainMenu : Control
         Register.Pressed += Register_Pressed;
         
         background = GetNode("bg") as TileMapLayer;
-        background.TileSet = TilesetLoader.LoadedTileset;
+        background.TileSet = PreloadRegistry.Assets.tileSet;
         if(Globals.user.Id >= 0)
         {
             AccountName.Text = Globals.user.Username;
@@ -69,7 +66,7 @@ public partial class MainMenu : Control
         }
         else
         {
-            SignInPopup signInPopup = signInPopupScene.Instantiate() as SignInPopup;
+            SignInPopup signInPopup = PreloadRegistry.ControlNodes.signInPopupScene.Instantiate() as SignInPopup;
             AddChild(signInPopup);
             signInPopup.Login += SignInPopup_Login;
             submenuOpen = true;
@@ -99,13 +96,13 @@ public partial class MainMenu : Control
 
     public void StartPressed()
     {
-        Node startNode = submenuStart.Instantiate();
+        Node startNode = PreloadRegistry.ControlNodes.submenuStart.Instantiate();
         AddChild(startNode);
         submenuOpen = true;
     }
     public void SettingsPressed()
     {
-        Node settingNode = submenuSettings.Instantiate();
+        Node settingNode = PreloadRegistry.ControlNodes.submenuSettings.Instantiate();
         AddChild(settingNode);
         submenuOpen = true;
     }
@@ -140,8 +137,8 @@ public partial class MainMenu : Control
 
     public override void _Process(double delta)
     {
-        if (TilesetLoader.LoadedTileset != null)
-            background.TileSet = TilesetLoader.LoadedTileset;
+        if (PreloadRegistry.Assets.tileSet != null)
+            background.TileSet = PreloadRegistry.Assets.tileSet;
         if (submenuOpen)
             ButtonControls(false);
         else

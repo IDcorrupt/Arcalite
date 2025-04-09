@@ -38,7 +38,6 @@ public partial class Globals : Node
     public static bool PopupResult = false;
     public static bool PopupOpen = false;
     public static bool invalidSettings = false;
-    public static PackedScene popupScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/popup.tscn");
 
     //for controls - decides which button is being rebound
     public static int buttontoggle = 0;
@@ -51,7 +50,6 @@ public partial class Globals : Node
     public static void GameBeaten()
     {
         gameBeaten = true;
-        statScreen.UpdateStats();
     }
     
 }

@@ -3,7 +3,7 @@ using System;
 
 public partial class SubmenuContinue : Control
 {
-	PackedScene saveItemScene = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/save_item.tscn");
+
 	Label nosave;
 	VBoxContainer list;
 
@@ -22,7 +22,7 @@ public partial class SubmenuContinue : Control
 			//add local save with id = -1;
 			if (Globals.currentSave[9] == "-1")
 			{
-				SaveItem saveItemNode = saveItemScene.Instantiate() as SaveItem;
+				SaveItem saveItemNode = PreloadRegistry.ControlNodes.saveItemScene.Instantiate() as SaveItem;
 				saveItemNode.ID = -1;
 				list.AddChild(saveItemNode);
 
@@ -33,7 +33,7 @@ public partial class SubmenuContinue : Control
 		for (int i = 0; i < Globals.user.Characters.Count; i++)
 		{
 			//add saveitems from profile if there are
-			SaveItem saveItemNode = saveItemScene.Instantiate() as SaveItem;
+			SaveItem saveItemNode = PreloadRegistry.ControlNodes.saveItemScene.Instantiate() as SaveItem;
 			saveItemNode.ID = i;
 
 			list.AddChild(saveItemNode);

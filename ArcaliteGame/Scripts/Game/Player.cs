@@ -65,9 +65,6 @@ public partial class Player : CharacterBody2D
 
 //components
     private CollisionShape2D HitBox;
-    private PackedScene basicProjectile;
-    private PackedScene chargeProjectile;
-    private PackedScene spellOracle;
     private AnimatedSprite2D Sprite;
 
     private Timer hurtTimer;
@@ -122,9 +119,7 @@ public partial class Player : CharacterBody2D
         FX_Rapid = GetNode("FX/Rapid") as AnimatedSprite2D;
         FX_Shield = GetNode("FX/Shield") as AnimatedSprite2D;
 
-        basicProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/basic_projectile.tscn");
-        chargeProjectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/charge_projectile.tscn");
-        spellOracle = (PackedScene)ResourceLoader.Load("res://Nodes/Game/spell_oracle.tscn");
+
 
         //set stats
         SetStats();
@@ -269,48 +264,39 @@ public partial class Player : CharacterBody2D
     //attack functions
     public void BasicAttack()
     {
-        Node2D node = (Node2D)basicProjectile.Instantiate();
-        GetParent().GetParent().AddChild(node);
-        if (node is BasicProjectile projectile)
+        BasicProjectile projectile = PreloadRegistry.Game.Projectiles.basicProjectile.Instantiate() as BasicProjectile;
+        GetParent().GetParent().AddChild(projectile);
+        projectile.Position = GlobalPosition;
+        Vector2 direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+        if (BADispersion > 0)
         {
-            projectile.Position = GlobalPosition;
-            Vector2 direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
-            if (BADispersion > 0)
-            {
-                Random disp = new Random();
-                direction = direction.Rotated(((float)disp.NextDouble()-0.5f)/2);
-            }
-            projectile.Rotation = direction.Angle();
-            projectile.direction = direction;
-            projectile.damagePayload = damage;
+            Random disp = new Random();
+            direction = direction.Rotated(((float)disp.NextDouble()-0.5f)/2);
         }
+        projectile.Rotation = direction.Angle();
+        projectile.direction = direction;
+        projectile.damagePayload = damage;
 
     }
     public void ChargeAttack(int chargeLevel)
     {
-        Node2D node = (Node2D)chargeProjectile.Instantiate();
-        GetParent().GetParent().AddChild(node);
-        if (node is ChargeProjectile projectile)
-        {
-            projectile.Position = GlobalPosition;
-            Vector2 direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
-            projectile.chargeLevel = chargeLevel;
-            projectile.Rotation = direction.Angle();
-            projectile.direction = direction;
-            projectile.damagePayload = damage;
-            projectile.imports = true;
-            EmitSignal(SignalName.ChargeAttacked, CACooldown.WaitTime);
-        }
+        ChargeProjectile projectile = PreloadRegistry.Game.Projectiles.chargeProjectile.Instantiate() as ChargeProjectile;
+        GetParent().GetParent().AddChild(projectile);
+        projectile.Position = GlobalPosition;
+        Vector2 direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+        projectile.chargeLevel = chargeLevel;
+        projectile.Rotation = direction.Angle();
+        projectile.direction = direction;
+        projectile.damagePayload = damage;
+        projectile.imports = true;
+        EmitSignal(SignalName.ChargeAttacked, CACooldown.WaitTime);
     }
     public void SpellOracle()
     {
-        Node2D node = (Node2D)spellOracle.Instantiate();
-        GetParent().AddChild(node);
-        if (node is SpellOracle oracle)
-        {
-            oracle.targetPosition = GlobalPosition;
-            oracle.level = oracleLevel;
-        }
+        SpellOracle oracle = PreloadRegistry.Game.Projectiles.spellOracle.Instantiate() as SpellOracle;
+        GetParent().AddChild(oracle);
+        oracle.targetPosition = GlobalPosition;
+        oracle.level = oracleLevel;
         EmitSignal(SignalName.OracleCast, SOCooldown.WaitTime);
     }
     public void SpellE()
@@ -451,19 +437,9 @@ public partial class Player : CharacterBody2D
                 }
                 break;
             case Enums.itemType.shard:
-                Random random = new Random();
-                switch (random.Next(0,2))
-                {
-                    case 0:
-                        MaxHP += 10;
-                        currentHP += 10;
-                        break;
-                    case 1:
-                        damage += 2;
-                        break;
-                    default:
-                        break;
-                }
+                MaxHP += 10;
+                currentHP += 10;
+                damage += 2;
                 break;
             default:
                 break;

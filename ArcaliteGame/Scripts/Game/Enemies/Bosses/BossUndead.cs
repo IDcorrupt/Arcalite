@@ -21,7 +21,7 @@ public partial class BossUndead : Enemy
         specAttackAnimRight.AnimationFinished += SpecAttackAnimRight_AnimationFinished;
         specAttackAnimLeft.Hide();
         specAttackAnimRight.Hide();
-        maxHP = 200 * Globals.diffMultipliers[Globals.Difficulty];
+        maxHP = 350 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
         damage = 25 * Globals.diffMultipliers[Globals.Difficulty];
         atkCD = 1.5f;

@@ -17,10 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Globals="*res://Scripts/Globals/Globals.cs"
+PreloadRegistry="*res://Scripts/Globals/PreloadRegistry.cs"
 ConfigFileHandler="*res://Scripts/Globals/ConfigFileHandler.cs"
-TilesetLoader="*res://Scripts/Globals/TilesetLoader.cs"
 SaveLoadHandler="*res://Scripts/Globals/SaveLoadHandler.cs"
+Globals="*res://Scripts/Globals/Globals.cs"
 Enums="*res://Scripts/Globals/Enums.cs"
 Math="*res://Scripts/Globals/Math.cs"
 

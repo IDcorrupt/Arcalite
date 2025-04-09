@@ -3,7 +3,6 @@ using System;
 
 public partial class LightRanged : Enemy
 {
-    private PackedScene projectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/projectiles/caster_projectile.tscn");
     private RayCast2D targetingLine;
     private Node2D launchLocation;
 
@@ -12,9 +11,9 @@ public partial class LightRanged : Enemy
         base._Ready();
         targetingLine = GetNode("Targeting") as RayCast2D;
         launchLocation = GetNode("LaunchLocation") as Node2D;
-        maxHP = 20 * Globals.diffMultipliers[Globals.Difficulty];
+        maxHP = 35 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
-        damage = 10 * Globals.diffMultipliers[Globals.Difficulty];
+        damage = 20 * Globals.diffMultipliers[Globals.Difficulty];
         atkCD = 1.5f;
         attackFrame = 4;
         jumpStrength = 400;
@@ -43,7 +42,7 @@ public partial class LightRanged : Enemy
     protected override void Attack()
     {
         //shoot
-        CasterProjectile castproj = (CasterProjectile)projectile.Instantiate();
+        CasterProjectile castproj = PreloadRegistry.Game.Projectiles.casterProjectile.Instantiate() as CasterProjectile;
         AddSibling(castproj);
         castproj.GlobalPosition = launchLocation.GlobalPosition;
         Vector2 direction = (player.GlobalPosition - GlobalPosition).Normalized();

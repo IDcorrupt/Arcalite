@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://uoonx2bghxay" path="res://Scripts/Maps/Map.cs" id="1_5ga0h"]
 [ext_resource type="Texture2D" uid="uid://bm61jaa36wan2" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_forest.png" id="1_41e25"]
 [ext_resource type="Texture2D" uid="uid://b51u80tameory" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_snow.png" id="3_ey2y2"]
-[ext_resource type="PackedScene" uid="uid://dodk5iiiisuu4" path="res://Nodes/Game/enemies/enemy_control.tscn" id="4_krw5v"]
+[ext_resource type="PackedScene" uid="uid://dodk5iiiisuu4" path="res://Nodes/Game/Enemies/enemy_control.tscn" id="4_krw5v"]
 [ext_resource type="Texture2D" uid="uid://xw0yamxevqgy" path="res://Assets/Placeholder assets/Rocky Roads/Tilesets/tileset_lava.png" id="4_v8gao"]
-[ext_resource type="PackedScene" uid="uid://c7bw1cggtiyst" path="res://Nodes/Game/enemies/enemy_spawn_point.tscn" id="5_prshm"]
+[ext_resource type="PackedScene" uid="uid://c7bw1cggtiyst" path="res://Nodes/Game/Enemies/enemy_spawn_point.tscn" id="5_prshm"]
 [ext_resource type="PackedScene" uid="uid://dbay08psod1qd" path="res://Nodes/Mechanics/camera_controller.tscn" id="7_2n7uy"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_b14dg"]

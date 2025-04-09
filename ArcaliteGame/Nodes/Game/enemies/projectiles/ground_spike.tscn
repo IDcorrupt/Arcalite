@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://cqu21nyv7yjxo"]
 
-[ext_resource type="Script" uid="uid://bh8jt13v36kbv" path="res://Scripts/Game/Enemies/Projectiles/GroundSpike.cs" id="1_bdcp7"]
+[ext_resource type="Script" uid="uid://bpydrqrrloerh" path="res://Scripts/Game/Enemies/Projectiles/Spike.cs" id="1_bdcp7"]
 [ext_resource type="Texture2D" uid="uid://bm1r3pxbjk8mh" path="res://Assets/Sprites/Projectilies/Ground Spike/groundSpike-Sheet.png" id="1_rs4fr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bdcp7"]

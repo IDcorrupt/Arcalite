@@ -73,9 +73,9 @@ public partial class SaveItem : Panel
 					//LOAD SPECIFIED CHARACTER TO SAVEFILE
 					SaveLoadHandler.Load(Globals.user.Characters[ID].Save);
 					GD.Print(Globals.user.Characters[ID].Save);
-				} 
+				}
 				//enter game
-				GetTree().ChangeSceneToFile("res://Nodes/Maps/gameScene.tscn");
+				GetTree().ChangeSceneToPacked(PreloadRegistry.Game.Maps.gameScene);
 				Globals.playerControl = true;
 			}
 		}

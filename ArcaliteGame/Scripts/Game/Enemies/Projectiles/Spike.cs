@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class GroundSpike : Node2D
+public partial class Spike : Node2D
 {
     private AnimatedSprite2D sprite;
     private Area2D hitBox;
@@ -22,8 +22,10 @@ public partial class GroundSpike : Node2D
     {
         this.damage = damage;
         this.facing = facing;
-        Random rotation = new Random();
-        RotationDegrees = rotation.Next(-20, 21);
+        Random rand = new Random();
+        RotationDegrees = rand.Next(-20, 21);
+        float scaleMod = (float)Mathf.Clamp((0.4 + rand.NextDouble()) * 2, 0.8, 1.4);
+        Scale = new Vector2(scaleMod, scaleMod);    
         if (facing)
             sprite.FlipH = true;
         else

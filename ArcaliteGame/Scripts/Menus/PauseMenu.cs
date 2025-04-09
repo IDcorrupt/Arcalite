@@ -10,9 +10,6 @@ public partial class PauseMenu : Control
     private Node parent;
 
     private bool settingsOpen;
-
-    private PackedScene submenuSettings = (PackedScene)ResourceLoader.Load("res://Nodes/Menus/submenuSettings.tscn");
-
     public override void _Ready()
     {
         Continue = GetNode<Button>("Continue");
@@ -45,7 +42,7 @@ public partial class PauseMenu : Control
 
     private void SettingsPressed()
     {
-        Node SettingsNode = submenuSettings.Instantiate();
+        Node SettingsNode = PreloadRegistry.ControlNodes.submenuSettings.Instantiate();
         SettingsNode.TreeExited += settingsClosed;
         AddChild(SettingsNode);
         settingsOpen = true;
@@ -58,7 +55,7 @@ public partial class PauseMenu : Control
     {
         Globals.playerControl = false;
         GetTree().Paused = false;
-        GetTree().ChangeSceneToFile("res://Nodes/main.tscn");
+        GetTree().ChangeSceneToPacked(PreloadRegistry.ControlNodes.mainScene);
     }
     private void QuitPressed()
     {

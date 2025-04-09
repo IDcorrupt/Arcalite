@@ -29,7 +29,7 @@ public partial class RespawnScreen : Control
     private void MainMenu_Pressed()
     {
         Globals.playerControl = false;
-        GetTree().ChangeSceneToFile("res://Nodes/main.tscn");
+        GetTree().ChangeSceneToPacked(PreloadRegistry.ControlNodes.mainScene);
     }
 
     private void Respawn_Pressed()

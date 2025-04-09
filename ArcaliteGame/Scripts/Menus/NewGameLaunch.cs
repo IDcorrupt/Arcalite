@@ -20,7 +20,7 @@ public partial class NewGameLaunch : Control
         Globals.runName = saveName.Text.Length > 0 ? saveName.Text : "New save";
         Globals.playerControl = true;
         Globals.hasSavefile = false;
-        GetTree().ChangeSceneToFile("res://Nodes/Maps/gameScene.tscn");
+        GetTree().ChangeSceneToPacked(PreloadRegistry.Game.Maps.gameScene);
     }
 
     public override void _Process(double delta)

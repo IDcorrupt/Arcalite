@@ -74,7 +74,7 @@ public partial class EnemyControl : Node2D
         playerInRoom = false;
         foreach (Node node in GetChildren())
         {
-            if(node is GroundSpike spike)   
+            if(node is Spike spike)   
                 spike.QueueFree();
         }
         foreach (Node2D node in enemySpawnPoints)

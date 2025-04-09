@@ -11,9 +11,9 @@ public partial class LightMeele : Enemy
     public override void _Ready()
     {
         base._Ready();
-        maxHP = 40 * Globals.diffMultipliers[Globals.Difficulty];
+        maxHP = 60 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
-        damage = 5 * Globals.diffMultipliers[Globals.Difficulty];
+        damage = 15 * Globals.diffMultipliers[Globals.Difficulty];
         atkCD = 1;
         attackFrame = 2;
         jumpStrength = 400;

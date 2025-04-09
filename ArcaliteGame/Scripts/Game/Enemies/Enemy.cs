@@ -60,7 +60,6 @@ public partial class Enemy : CharacterBody2D
     protected EnemyControl parent;
     private Node2D itemContainer;
 
-    private PackedScene itemScene = (PackedScene)ResourceLoader.Load("res://Nodes/Game/item.tscn");
 
 
     public override void _Ready()
@@ -308,7 +307,7 @@ public partial class Enemy : CharacterBody2D
                 dropamount = Mathf.FloorToInt(shardDropRate / 100);
                 for (int i = 0; i < dropamount; i++)
                 {
-                    item = itemScene.Instantiate() as Item;
+                    item = PreloadRegistry.Game.Entities.itemScene.Instantiate() as Item;
                     item.type = itemtype;
                     if (item is not null)
                     {
@@ -321,13 +320,13 @@ public partial class Enemy : CharacterBody2D
             //regular calc & drop
             if (Math.RNG(shardDropRate - dropamount * 100))
             {
-                item = itemScene.Instantiate() as Item;
+                item = PreloadRegistry.Game.Entities.itemScene.Instantiate() as Item;
                 item.type = itemtype;
             }
         }
         else if (Math.RNG(customDropRate))
         {
-            item = itemScene.Instantiate() as Item;
+            item = PreloadRegistry.Game.Entities.itemScene.Instantiate() as Item;
             item.type = itemtype;
         }
         if (item is not null)

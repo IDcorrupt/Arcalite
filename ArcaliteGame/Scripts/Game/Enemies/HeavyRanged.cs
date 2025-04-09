@@ -3,7 +3,6 @@ using System;
 
 public partial class HeavyRanged : Enemy
 {
-    private PackedScene projectile = (PackedScene)ResourceLoader.Load("res://Nodes/Game/enemies/projectiles/caster_projectile.tscn");
     private RayCast2D targetingLine;
     private Node2D launchLocation;
     public override void _Ready()
@@ -11,7 +10,7 @@ public partial class HeavyRanged : Enemy
         base._Ready();
         targetingLine = GetNode("Targeting") as RayCast2D;
         launchLocation = GetNode("LaunchLocation") as Node2D;
-        maxHP = 40 * Globals.diffMultipliers[Globals.Difficulty];
+        maxHP = 50 * Globals.diffMultipliers[Globals.Difficulty];
         currentHP = maxHP;
         damage = 25 * Globals.diffMultipliers[Globals.Difficulty];
         atkCD = 2f;
@@ -42,7 +41,7 @@ public partial class HeavyRanged : Enemy
     protected override void Attack()
     {
         //shoot
-        CasterProjectile castproj = (CasterProjectile)projectile.Instantiate();
+        CasterProjectile castproj = PreloadRegistry.Game.Projectiles.casterProjectile.Instantiate() as CasterProjectile;
         AddSibling(castproj);
         castproj.GlobalPosition = GlobalPosition + new Vector2(0, -2);
         Vector2 direction = (player.GlobalPosition - GlobalPosition).Normalized();

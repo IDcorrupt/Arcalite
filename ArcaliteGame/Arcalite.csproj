@@ -6,9 +6,6 @@
     <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Scripts\Game\Enemies\Projectiles\" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="MySql.Data">
       <HintPath>Lib\MySql.Data.dll</HintPath>
     </Reference>

@@ -28,4 +28,15 @@ public partial class StatScreen : Control
         Shards.Text = (hpShards + mpShards + dmgShards).ToString();
     }
 
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        if (Globals.gameBeaten && !loaded)
+        {
+            UpdateStats();
+            loaded = true;
+        }
+    }
+
 }
