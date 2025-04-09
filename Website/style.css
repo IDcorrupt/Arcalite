@@ -28,9 +28,8 @@
 }
 
 [data-bs-theme="dark"]{
-    --font: #f5e8fb;
-    --font2: #cbc5ce;
-    --error: red;
+    --font: #b8b0bc;
+    --error: var(--red);
     --bg-color: var(--c_dark1);
     --bg-gradient: #3A1F47;
     --bg: url("./img/backgrounds/dark.png");
@@ -41,10 +40,10 @@
     --card-type-2: url("./img/backgrounds/dark_controlcard.png");
     --offcanvas: url("./img/backgrounds/dark_offcanvas.png");
 }
+
 [data-bs-theme="light"] { 
     --font: #1A0225;
-    --font2: #17061f;
-    --error: rgb(200, 0, 0);
+    --error: #6b1b1b;
     --bg-color: var(--c_light1);
     --bg-gradient:#492469;
     --bg: url("./img/backgrounds/light.png");
@@ -295,7 +294,7 @@ body{
     width: 100vw;
     margin: 0;
     font-size: min(20px) ;
-    color: var(--font2);
+    color: var(--font);
     height: 100%; 
     background-color: var(--bg-color);
 }
@@ -308,7 +307,7 @@ main{
 
 p{
     font-size: smaller;
-    color: var(--font2)
+    color: var(--font)
 }
 
 header{
@@ -343,23 +342,23 @@ h2{
 h3{
     font-size: 2.2rem ;
     line-height: 2rem;
-    color: var(--font2) !important;
+    color: var(--font) !important;
     font-family: "SimpleTitle";
 }
 
 h4 {
-    color: var(--font2);
+    color: var(--font);
     margin-top: 20px;
     margin: 10px 0;
     line-height: 40px;
 }
 
 h5{
-    color: var(--font2);
+    color: var(--font);
 }
 
 a{
-    color: var(--font2) !important;
+    color: var(--font) !important;
 }
 
 li{

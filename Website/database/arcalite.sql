@@ -166,11 +166,12 @@ CREATE TABLE `enemy` (
 --
 
 REPLACE INTO `enemy` (`id`, `hp`, `image`) VALUES
-(1, NULL, 'skeleton.png'),
-(2, NULL, 'witch.png'),
-(3, NULL, 'cyclops.png'),
-(4, NULL, 'lich.png'),
-(5, NULL, 'undead_boss.png');
+(1, 60, 'skeleton.png'),
+(2, 60, 'witch.png'),
+(3, 90, 'cyclops.png'),
+(4, 30, 'lich.png'),
+(5, 300, 'undead_boss.png'),
+(6, 1125, 'mecha_boss.png');
 
 -- --------------------------------------------------------
 
@@ -193,14 +194,16 @@ CREATE TABLE `enemydesc` (
 REPLACE INTO `enemydesc` (`enemyid`, `languageid`, `name`, `description`) VALUES
 (1, 1, 'Csontváz harcos', 'Alapszintű közelharci szörny. Közel jön, megüt.'),
 (1, 2, 'Skeleton Warrior', 'Basic melee monster. It hits when it gets close to the player.'),
-(2, 1, 'Boszorkány', 'Alapszintű mágus.'),
-(2, 2, 'Witch', 'Basic caster.'),
+(2, 1, 'Boszorkány', 'Elit mágus.'),
+(2, 2, 'Witch', 'Elite caster.'),
 (3, 1, 'Küklopsz', 'Elit közelharci szörny. Az átlagnál nagyobbat üt.'),
 (3, 2, 'Cyclops', 'Elite melee monster. It hits harder than the average. '),
-(4, 1, 'Holt mágus', 'Elit mágus. '),
-(4, 2, 'Lich', 'Elite caster.'),
+(4, 1, 'Holt mágus', 'Basic mágus. '),
+(4, 2, 'Lich', 'Basic caster.'),
 (5, 1, 'Élőhalott főellenség', '???'),
-(5, 2, 'Undead boss', '???');
+(5, 2, 'Undead boss', '???'),
+(6, 1, 'Eltemetett robot főellenség','???'),
+(6, 2, 'Buried mecha boss','???');
 
 -- --------------------------------------------------------
 
