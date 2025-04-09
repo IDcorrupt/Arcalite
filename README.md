@@ -12,7 +12,7 @@ Bemutatás
 
 ## A fájlrendszer
 
-- A játék az **ArcaliteGame** mappában található. Ez egy GODOT-project mappája, a futtatható állomány az **kéne egy mappanév** mappában található.
+- A játék forráskódja az **ArcaliteGame** mappában található. Ez egy GODOT-project mappája, a futtatható állomány az **Exports\Exe** mappában található.
 - A weboldal a **Website** mappában található. A helyes működéshez ez kell legyen a webszerver gyökere.
 - A dokumentáció Word-dokumentuma és a prezentációnk a **Dok** mappában található.
     - A dokumentáció legfrissebb verziója a *docs* ágon található. A véglegesítés után a *main*-re kerül, ekkor ez a sor törlésre fog kerülni.
