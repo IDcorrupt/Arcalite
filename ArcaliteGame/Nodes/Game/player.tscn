@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ddx0i2g5cvejm" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 13/633.png" id="4_k7apo"]
 [ext_resource type="Texture2D" uid="uid://k3kg7hcjy1h7" path="res://Assets/Sprites/ase spritesheets/char_walk.png" id="5_cm63i"]
 [ext_resource type="Texture2D" uid="uid://cmv8crqt0wbob" path="res://Assets/empty.png" id="5_nfai4"]
+[ext_resource type="Texture2D" uid="uid://dgsuqm4laru34" path="res://Assets/Sprites/idle.png" id="7_r4fte"]
 [ext_resource type="Texture2D" uid="uid://54j1p08trid8" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 2/64.png" id="8_krt1g"]
 [ext_resource type="Texture2D" uid="uid://cgaos462k8cxb" path="res://Assets/Placeholder assets/Effect and FX Pixel All Free/Part 13/622.png" id="9_lv04m"]
 
@@ -108,10 +109,6 @@ region = Rect2(896, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_6e0tv"]
 atlas = ExtResource("4_eas1s")
 region = Rect2(60, 50, 60, 50)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i5x5t"]
-atlas = ExtResource("2_qyefv")
-region = Rect2(0, 0, 60, 50)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tckjj"]
 atlas = ExtResource("4_eas1s")
@@ -263,7 +260,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_i5x5t")
+"texture": ExtResource("7_r4fte")
 }],
 "loop": true,
 "name": &"idle",
@@ -316,7 +313,7 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="Image" id="Image_lv04m"]
+[sub_resource type="Image" id="Image_8fif7"]
 data = {
 "data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 155, 173, 183, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255),
 "format": "RGBA8",
@@ -326,7 +323,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_l30sx"]
-image = SubResource("Image_lv04m")
+image = SubResource("Image_8fif7")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j4qxm"]
 spread = 180.0
@@ -528,7 +525,7 @@ texture_filter = 1
 position = Vector2(0, -2)
 scale = Vector2(0.638, 0.638)
 sprite_frames = SubResource("SpriteFrames_rhc80")
-animation = &"crouch"
+animation = &"idle"
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": false,
