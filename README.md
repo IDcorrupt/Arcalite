@@ -3,14 +3,42 @@
 ## Tartalomjegyzék
 
 1. [A projekt bemutatása](#A-projekt-bemutatása)
-2. [A fájlrendszer](#A-fájlrendszer)
-3. [A webszerver felállítása a XAMPP segítségével](#A-webszerver-felállítása-a-XAMPP-segítségével)
+    1. [A játék](#A-játék)
+    1. [A weboldal](#A-weboldal)
+1. [A repository fájlrendszere](#A-repository-fájlrendszere)
+1. [A webszerver felállítása a XAMPP segítségével](#A-webszerver-felállítása-a-XAMPP-segítségével)
 
 ## A projekt bemutatása
 
-Bemutatás
+Projektünk két fő részből áll: egy játék és egy hozzá kapcsolódó weboldal.
 
-## A fájlrendszer
+### A játék
+
+A játék egy kétdimenziós, oldalnézetes platformer. Főhösünk egy mágus, aki pályákon átkelve, szörnyeket legyőzve próbál eljutni céljához. Hogy mi a célja? A játék végén kiderül...
+
+#### Főbb irányítások
+
+- `A/D` - mozgás balra/jobbra
+- `W` - ugrás
+- `S` - guggolás
+- `Shift` - dash (előreugrás)
+- `Bal egérgomb` - lövés
+- `Jobb egérgomb` - töltőlövés (minél tovább tartjuk lent, annál nagyobbat lő)
+- `Szóköz` - oracle (lassító varázskör)
+- ˙E` - 1. varázslat
+- `Q` - 2. varázslat
+
+### A weboldal
+
+A weboldal három célt szolgál: egy bemutató és tudástár a játékhoz, néhány statisztika megjelenítése és profilkezelés.
+
+Az oldalra alapból vendégként lépünk fel, viszont a menüben lehetőségünk van bejelentkezni. A bejelentkezés oldalon tudunk regisztrálni is. Bejelentkezés után megjelenik a *Profil* menüpont, melybe belépve láthatjuk külön játékmeneteink adatait, illetve a profilműveleteket végző gombokat. Itt lehetőségünk van nevet, e-mailt, jelszót változtatni, kijelentkezni és törölni a profilt. Az ezekhez szükséges kommunikáció, bemenet stb. az oldal tetején felugróablakokkal történik.
+
+A tudástár vendégként nem elérhető. Bejelentkezés után válik elérhetővé, viszont akkor is csak arról olvashatunk el információkat, amikkel már találkoztunk.
+
+A statisztika oldal elérhető vendégként is, viszont bejelentkezés után kiemelve látjuk a hozzánk tartozó adatokat.
+
+## A repository fájlrendszere
 
 - A játék forráskódja az **ArcaliteGame** mappában található. Ez egy GODOT-project mappája, a futtatható állomány az **Exports\Exe** mappában található.
 - A weboldal a **Website** mappában található. A helyes működéshez ez kell legyen a webszerver gyökere.
