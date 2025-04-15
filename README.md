@@ -25,7 +25,7 @@ A játék egy kétdimenziós, oldalnézetes platformer. Főhösünk egy mágus, 
 - `Bal egérgomb` - lövés
 - `Jobb egérgomb` - töltőlövés (minél tovább tartjuk lent, annál nagyobbat lő)
 - `Szóköz` - oracle (lassító varázskör)
-- ˙E` - 1. varázslat
+- `E` - 1. varázslat
 - `Q` - 2. varázslat
 
 ### A weboldal
@@ -34,7 +34,7 @@ A weboldal három célt szolgál: egy bemutató és tudástár a játékhoz, né
 
 Az oldalra alapból vendégként lépünk fel, viszont a menüben lehetőségünk van bejelentkezni. A bejelentkezés oldalon tudunk regisztrálni is. Bejelentkezés után megjelenik a *Profil* menüpont, melybe belépve láthatjuk külön játékmeneteink adatait, illetve a profilműveleteket végző gombokat. Itt lehetőségünk van nevet, e-mailt, jelszót változtatni, kijelentkezni és törölni a profilt. Az ezekhez szükséges kommunikáció, bemenet stb. az oldal tetején felugróablakokkal történik.
 
-A tudástár vendégként nem elérhető. Bejelentkezés után válik elérhetővé, viszont akkor is csak arról olvashatunk el információkat, amikkel már találkoztunk.
+A tudástár vendégként nem elérhető. Bejelentkezés után válik elérhetővé, viszont akkor is csak arról olvashatunk információkat, amikkel már találkoztunk.
 
 A statisztika oldal elérhető vendégként is, viszont bejelentkezés után kiemelve látjuk a hozzánk tartozó adatokat.
 
@@ -42,7 +42,7 @@ A statisztika oldal elérhető vendégként is, viszont bejelentkezés után kie
 
 - A játék forráskódja az **ArcaliteGame** mappában található. Ez egy GODOT-project mappája, a futtatható állomány az **Exports\Exe** mappában található.
 - A weboldal a **Website** mappában található. A helyes működéshez ez kell legyen a webszerver gyökere.
-- A dokumentáció Word-dokumentuma és a prezentációnk a **Dok** mappában található.
+- A dokumentáció Word-dokumentuma és a prezentációnk a **Dok** mappában találhatóak.
 
 ## A webszerver felállítása a XAMPP segítségével
 
