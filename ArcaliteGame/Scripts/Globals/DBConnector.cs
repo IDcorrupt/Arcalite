@@ -290,7 +290,7 @@ public static class DBConnector
         }
         catch (Exception)
         {
-            conn.Clone();
+            conn.Close();
             throw;
         }
     }
