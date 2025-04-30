@@ -6,7 +6,6 @@ public partial class ChargeProjectile : CharacterBody2D
     //values
     [Export] public int chargeLevel;
     [Export] public Vector2 direction;
-    [Export] public float rotation;
     [Export] public float damagePayload;
     [Export] public bool imports = false; //needed because the export values don't arrive in time to be useful in the ready func
 

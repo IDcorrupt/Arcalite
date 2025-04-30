@@ -49,7 +49,6 @@ public partial class Laser : Node2D
             QueueFree();
         
     }
-
     public void TurnOff()
     {
         speedScale = -1;
