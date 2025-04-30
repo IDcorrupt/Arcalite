@@ -43,10 +43,11 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
-current_tab = 0
+current_tab = 3
 clip_tabs = false
 
 [node name="Game" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
+visible = false
 layout_mode = 2
 tab_alignment = 1
 clip_tabs = false
@@ -351,7 +352,6 @@ size_flags_vertical = 4
 alignment = 1
 
 [node name="Controls" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
-visible = false
 layout_mode = 2
 tab_alignment = 1
 clip_tabs = false
