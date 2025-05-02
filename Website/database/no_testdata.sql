@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Máj 02. 14:03
+-- Létrehozás ideje: 2025. Máj 02. 14:04
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -133,21 +133,6 @@ CREATE TABLE `enemplay` (
   `playerid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- A tábla adatainak kiíratása `enemplay`
---
-
-REPLACE INTO `enemplay` (`enemyid`, `playerid`) VALUES
-(1, 4),
-(1, 5),
-(1, 6),
-(2, 4),
-(2, 5),
-(2, 6),
-(3, 4),
-(3, 5),
-(4, 4);
-
 -- --------------------------------------------------------
 
 --
@@ -261,15 +246,6 @@ CREATE TABLE `itemplay` (
   `playerid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- A tábla adatainak kiíratása `itemplay`
---
-
-REPLACE INTO `itemplay` (`itemid`, `playerid`) VALUES
-(1, 4),
-(1, 5),
-(2, 4);
-
 -- --------------------------------------------------------
 
 --
@@ -328,15 +304,6 @@ CREATE TABLE `player` (
   `playtime` time DEFAULT '00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- A tábla adatainak kiíratása `player`
---
-
-REPLACE INTO `player` (`id`, `name`, `hp`, `mp`, `profileid`, `avatarid`, `levelid`, `playtime`) VALUES
-(4, 'DinoHunter', 100, 100, 3, 1, 2, '00:19:44'),
-(5, 'DinoHuntingXx', 100, 100, 3, 1, 1, '00:05:02'),
-(6, 'Kálmán', 100, 100, 1, 1, 2, '00:19:14');
-
 -- --------------------------------------------------------
 
 --
@@ -348,16 +315,6 @@ CREATE TABLE `proach` (
   `profileid` int(11) NOT NULL,
   `achievementid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- A tábla adatainak kiíratása `proach`
---
-
-REPLACE INTO `proach` (`profileid`, `achievementid`) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(3, 1);
 
 -- --------------------------------------------------------
 
@@ -374,16 +331,6 @@ CREATE TABLE `profile` (
   `email` varchar(128) DEFAULT NULL,
   `deletedAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- A tábla adatainak kiíratása `profile`
---
-
-REPLACE INTO `profile` (`id`, `username`, `password`, `played`, `email`, `deletedAt`) VALUES
-(1, 'Zoli26', '*F2DE9CCD4C692570BBEB3218207B889F3204635C', '00:26:42', 'zoli26@gmail.com', NULL),
-(2, 'kovi_', '*D20E7CC6442EDED698EDA0A855F3C1FF5AC100EC', '00:00:00', 'kovacs.norbi.2004@gmail.com', NULL),
-(3, 'DinoHunter2004', '*011CFB74686EDAFBF89D738975DB0FACF2D7D105', '00:19:14', 'nagy.geza@gmail.com', NULL),
-(4, 'JancsikT', '*5FE246E222D42A7F2734128072B50237136A6A5D', '00:00:00', 'jani.t@gmail.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -552,13 +499,13 @@ ALTER TABLE `level`
 -- AUTO_INCREMENT a táblához `player`
 --
 ALTER TABLE `player`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Megkötések a kiírt táblákhoz
