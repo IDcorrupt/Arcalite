@@ -23,7 +23,6 @@ public partial class Ui : Control
     Sprite2D SpellQCooldownBar;
 
     //other stats
-    Label Time;
     Label Damage;
 
     //equipped items
@@ -36,7 +35,6 @@ public partial class Ui : Control
         HPBar = GetNode("HPBar/HPBarMask") as Sprite2D;
         MPBar = GetNode("MPBar/MPBarMask") as Sprite2D;
         hpNum = GetNode("HPBar/hpnum") as Label;
-        Time = GetNode("Time") as Label;
         Damage = GetNode("Dmg") as Label;
 
         //cooldown components
@@ -205,8 +203,6 @@ public partial class Ui : Control
         if(MPBar.Texture is PlaceholderTexture2D MPtexture)
             MPtexture.Size = new Vector2(MPRatio * 200, MPtexture.Size.Y);
 
-        TimeSpan time = TimeSpan.FromSeconds(Mathf.Round((double)Globals.playTime));
-        Time.Text = time.ToString(@"mm\:ss");
         Damage.Text = Mathf.FloorToInt(Globals.player.GetAttackDamage()).ToString();
     }
 

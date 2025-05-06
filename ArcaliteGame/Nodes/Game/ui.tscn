@@ -299,34 +299,12 @@ position = Vector2(5, 5)
 texture = ExtResource("18_ffavq")
 centered = false
 
-[node name="TimeLBL" type="Label" parent="."]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 315.0
-offset_right = 63.0
-offset_bottom = 331.0
-text = "Time: "
-label_settings = SubResource("LabelSettings_1pvpa")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Time" type="Label" parent="."]
-layout_mode = 0
-offset_left = 63.0
-offset_top = 315.0
-offset_right = 103.0
-offset_bottom = 331.0
-text = "00:00"
-label_settings = SubResource("LabelSettings_1pvpa")
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="DmgLBL" type="Label" parent="."]
 layout_mode = 0
 offset_left = 20.0
-offset_top = 335.0
+offset_top = 61.0
 offset_right = 85.0
-offset_bottom = 351.0
+offset_bottom = 77.0
 text = "Damage: "
 label_settings = SubResource("LabelSettings_1pvpa")
 horizontal_alignment = 1
@@ -335,9 +313,9 @@ vertical_alignment = 1
 [node name="Dmg" type="Label" parent="."]
 layout_mode = 0
 offset_left = 85.0
-offset_top = 335.0
+offset_top = 61.0
 offset_right = 112.0
-offset_bottom = 351.0
+offset_bottom = 77.0
 text = "100"
 label_settings = SubResource("LabelSettings_1pvpa")
 horizontal_alignment = 1

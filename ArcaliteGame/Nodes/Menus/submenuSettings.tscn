@@ -43,11 +43,10 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
-current_tab = 3
+current_tab = 0
 clip_tabs = false
 
 [node name="Game" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
-visible = false
 layout_mode = 2
 tab_alignment = 1
 clip_tabs = false
@@ -181,13 +180,11 @@ size_flags_vertical = 0
 flat = true
 alignment = 1
 fit_to_longest_item = false
-item_count = 3
+item_count = 2
 popup/item_0/text = "Windowed"
 popup/item_0/id = 0
-popup/item_1/text = "Borderless"
+popup/item_1/text = "FullScreen"
 popup/item_1/id = 1
-popup/item_2/text = "Exclusive"
-popup/item_2/id = 2
 
 [node name="resolution" type="HBoxContainer" parent="Panel/Margin/SettingsContainer/SettingTabs/Video/MarginContainer/ScrollContainer/Vbox"]
 custom_minimum_size = Vector2(0, 30)
@@ -352,6 +349,7 @@ size_flags_vertical = 4
 alignment = 1
 
 [node name="Controls" type="TabBar" parent="Panel/Margin/SettingsContainer/SettingTabs"]
+visible = false
 layout_mode = 2
 tab_alignment = 1
 clip_tabs = false

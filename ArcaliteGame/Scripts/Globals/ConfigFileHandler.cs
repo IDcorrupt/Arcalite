@@ -28,7 +28,6 @@ public partial class ConfigFileHandler : Node
             
         }
         window = GetWindow();
-        screenId = DisplayServer.WindowGetCurrentScreen();
         ResetSTChanges();
         ApplySettings();            
     }
@@ -144,11 +143,6 @@ public partial class ConfigFileHandler : Node
                     DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.Borderless, true);
 
                     break;
-                case 2:
-                    DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
-                    DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.Borderless, false);
-                    break;
-
             }
             //resolution
             int resSize = (int)settingChanges["video"]["resolutionX"];
@@ -174,16 +168,8 @@ public partial class ConfigFileHandler : Node
                 DisplayServer.WindowSetVsyncMode(DisplayServer.VSyncMode.Disabled);
 
             //reposition screen
-            Vector2I screenRes = DisplayServer.ScreenGetSize(screenId);
-            Vector2I gamerRes = DisplayServer.WindowGetSize();
-            Vector2I centerPos = new Vector2I
-            {
-                X = screenRes.X / 2 - gamerRes.X / 2,
-                Y = screenRes.Y / 2 - gamerRes.Y / 2
-            };
-            window.Position = centerPos;
-            
-            
+            CenterWindowOnScreen(GetScreenUnderMouse());
+
         //audio
             //[NOT YET IMPLEMENTED]
 
@@ -247,6 +233,40 @@ public partial class ConfigFileHandler : Node
         }
     }
 
+    static int GetScreenUnderMouse()
+    {
+        Vector2I mousePosition = DisplayServer.MouseGetPosition();
+        int screenCount = DisplayServer.GetScreenCount();
+
+        for (int i = 0; i < screenCount; i++)
+        {
+            Vector2I screenPosition = DisplayServer.ScreenGetPosition(i);
+            Vector2I screenSize = DisplayServer.ScreenGetSize(i);
+            Rect2I screenRect = new Rect2I(screenPosition, screenSize);
+
+            if (screenRect.HasPoint(mousePosition))
+            {
+                return i;
+            }
+        }
+
+        // Fallback to primary screen if mouse position doesn't match any screen
+        return DisplayServer.GetPrimaryScreen();
+    }
+
+    static void CenterWindowOnScreen(int screenIndex)
+    {
+        Vector2I screenPosition = DisplayServer.ScreenGetPosition(screenIndex);
+        Vector2I screenSize = DisplayServer.ScreenGetSize(screenIndex);
+        Vector2I windowSize = window.GetSizeWithDecorations();
+
+        Vector2I newPosition = screenPosition + (screenSize - windowSize) / 2;
+        window.Position = newPosition;
+    }
+
+
+
+
     public static void ResetSTChanges()
     {
         foreach (var item in new string[5] { "game", "video", "audio", "controls", "accessibility" })
@@ -254,4 +274,5 @@ public partial class ConfigFileHandler : Node
             settingChanges[item] = LoadSetting(item);
         }
     }
+
 }

@@ -9,6 +9,7 @@ public partial class PauseMenu : Control
     private Button Quit;
     private Node parent;
 
+    private Label Time;
     private bool settingsOpen;
     public override void _Ready()
     {
@@ -16,6 +17,7 @@ public partial class PauseMenu : Control
         Settings = GetNode<Button>("Settings");
         Exit = GetNode<Button>("Exit");
         Quit = GetNode<Button>("Quit");
+        Time = GetNode("Time") as Label;
         parent = GetParent();
         ProcessMode = ProcessModeEnum.Always;
         Continue.Pressed += ContinuePressed;
@@ -27,6 +29,8 @@ public partial class PauseMenu : Control
 
     public override void _Process(double delta)
     {
+        TimeSpan time = TimeSpan.FromSeconds(Mathf.Round((double)Globals.playTime));
+        Time.Text = time.ToString(@"mm\:ss");
         if (!settingsOpen && Input.IsActionJustPressed("ui_cancel"))
         {
             ContinuePressed();
