@@ -49,7 +49,7 @@ public partial class MainMenu : Control
 
     private void Register_Pressed()
     {
-        OS.ShellOpen("http://localhost/Arcalite/login.html#");
+        OS.ShellOpen("http://localhost/login.html#");
     }
 
     private void SignIn_Pressed()
@@ -108,7 +108,7 @@ public partial class MainMenu : Control
     }
     public void WebsitePressed()
     {
-        OS.ShellOpen("http://localhost/Arcalite/index.html");
+        OS.ShellOpen("http://localhost/index.html");
     }
     public void QuitPressed()
     {

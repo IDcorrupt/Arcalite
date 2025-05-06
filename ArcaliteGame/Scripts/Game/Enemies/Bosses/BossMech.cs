@@ -434,6 +434,7 @@ public partial class BossMech : CharacterBody2D
         base._PhysicsProcess(delta);
 
         Update(delta);
+        GD.Print("lasercount: " + laserCount);
 
     }
 

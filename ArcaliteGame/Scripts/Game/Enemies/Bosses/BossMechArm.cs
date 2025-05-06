@@ -241,7 +241,9 @@ public partial class BossMechArm : CharacterBody2D
         else if (laserAtk)
         {
             laserAtk = false;
-            EmitSignal(SignalName.AttackFinished, 3);
+            //only make one arm emit the signal
+            if(SIDE)
+                EmitSignal(SignalName.AttackFinished, 3);
         }
     }
     private void RotateTween_Finished()

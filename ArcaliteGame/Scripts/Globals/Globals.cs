@@ -47,9 +47,9 @@ public partial class Globals : Node
 
 
 
-    public static void GameBeaten()
+    public static void GameBeaten(bool state = true)
     {
-        gameBeaten = true;
+        gameBeaten = state;
     }
     
 }

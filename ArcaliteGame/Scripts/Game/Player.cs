@@ -202,14 +202,9 @@ public partial class Player : CharacterBody2D
         else if (input.X == 0)
         {
             if (vel > 0)
-            {
                 vel -= delta * 2500;
-            }
             else
-            {
                 vel = 0;
-                prevDir = 0;
-            }
             Velocity = new Vector2((float)(prevDir * vel) * speedmodifier, Velocity.Y);
         }
         if (input.Y != 0)
@@ -223,8 +218,10 @@ public partial class Player : CharacterBody2D
     public void Dash()
     {
         //set dash diretion and engage
-        if(Globals.DashMode == 1)
+        if (Globals.DashMode == 1)
             dashVector = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+        else if (dashVector == Vector2.Zero)
+            dashVector = new Vector2(prevDir, 0);
         currentDashSpeed = dashSpeed;
         Velocity = dashVector * currentDashSpeed;
         isDashing = true;
